@@ -180,13 +180,6 @@
         }else{
             var url = "<?php echo base_url('index.php/administrativo/actualizarusuario'); ?>";
         }
-        "<?php
-//        if (empty($usuario[0]->usu_id))
-//            echo base_url('index.php/administrativo/guardarusuario');
-//        else
-//            echo base_url('index.php/administrativo/actualizarusuario');
-        ?>"
-        
         if (obligatorio('obligatorio') == true) {
             $.post(url,$('#f3').serialize()).
                 done(function (msg) {

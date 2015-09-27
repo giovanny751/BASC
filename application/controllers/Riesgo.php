@@ -12,23 +12,39 @@ class Riesgo extends My_Controller {
         $this->load->helper('security');
         validate_login($this->session->userdata('usu_id'));
     }
-    function nuevoriesgo(){
-        $this->layout->view("riesgo/nuevoriesgo");
+
+    function nuevoriesgo() {
+        $this->load->model('Dimension2_model');
+        $this->load->model('Dimension_model');
+        $this->load->model('Cargo_model');
+        $this->load->model('Tipo_model');
+        $this->data['tipo'] = $this->Tipo_model->detail();
+        $this->data['dimension'] = $this->Dimension_model->detail();
+        $this->data['dimension2'] = $this->Dimension2_model->detail();
+        $this->data['cargo'] = $this->Cargo_model->allcargos();
+        $this->layout->view("riesgo/nuevoriesgo", $this->data);
     }
-    function clasificacionriesgo(){
-        
+
+    function clasificacionriesgo() {
+
         $this->layout->view("riesgo/clasificacionriesgo");
-        
     }
-    function listadoriesgo(){
-        
-        $this->layout->view("riesgo/listadoriesgo");
-        
+
+    function listadoriesgo() {
+        $this->load->model('Dimension2_model');
+        $this->load->model('Dimension_model');
+        $this->load->model('Tipo_model');
+        $this->load->model('Cargo_model');
+        $this->data['cargo'] = $this->Cargo_model->allcargos();
+        $this->data['tipo'] = $this->Tipo_model->detail();
+        $this->data['dimension'] = $this->Dimension_model->detail();
+        $this->data['dimension2'] = $this->Dimension2_model->detail();
+        $this->layout->view("riesgo/listadoriesgo",$this->data);
     }
-    function estadosaceptacion(){
-        
+
+    function estadosaceptacion() {
+
         $this->layout->view("riesgo/estadosaceptacion");
-        
     }
 
 }

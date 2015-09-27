@@ -62,21 +62,11 @@
             <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-lg-5 col-md-5 col-sm-5 col-xs-5">  
                 <div class="row">
                     <label for="dimension1">Dimensión 1</label>
-                    <select id="dimension1" name="dimension1" class="form-control" >
-                        <option value="">::Seleccionar::</option>
-                        <?php foreach ($dimensionuno as $d) { ?>
-                            <option <?php echo ($d->dim_id == $informacion[0]->Dim_id ) ? "selected" : ""; ?> value="<?php echo $d->dim_id ?>"><?php echo $d->dim_descripcion ?></option>
-                        <?php } ?>
-                    </select>    
+                    <input type="text" id="dimension1" name="dimension1" class="form-control" /> 
                 </div>
                 <div class="row">
                     <label for="dimension2">Dimensión 2</label>
-                    <select id="dimension2" name="dimension2" class="form-control" >
-                        <option value="">::Seleccionar::</option>
-                        <?php foreach ($dimensiondos as $d2) { ?>
-                            <option <?php echo ($d2->dim_id == $informacion[0]->Dimdos_id ) ? "selected" : ""; ?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
-                        <?php } ?>
-                    </select>  
+                    <input type="text" id="dimension2" name="dimension2" class="form-control" >
                 </div>
                 <div class="row">
                     <label for="representante">Representante</label>

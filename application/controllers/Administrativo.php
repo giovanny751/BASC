@@ -446,15 +446,10 @@ class Administrativo extends My_Controller {
         $this->load->model("Empresa_model");
         $this->load->model('Tamano_empresa_model');
         $this->load->model('Numero_empleados_model');
-        $this->load->model('Dimension_model');
-        $this->load->model('Dimension2_model');
-        $this->load->model('Dimension2_model');
         $this->load->model('Ingreso_model');
         $this->data['ciudad'] = $this->Ingreso_model->ciudades();
         $this->data['tamano'] = $this->Tamano_empresa_model->detail();
         $this->data['numero'] = $this->Numero_empleados_model->detail();
-        $this->data['dimensionuno'] = $this->Dimension_model->detail();
-        $this->data['dimensiondos'] = $this->Dimension2_model->detail();
         $this->data['informacion'] = $this->Empresa_model->detail();
 //        var_dump($this->data['informacion']);die;
         $this->layout->view("administrativo/empresa", $this->data);

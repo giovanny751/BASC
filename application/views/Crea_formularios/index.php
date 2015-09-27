@@ -71,8 +71,6 @@
     $('#tabla').change(function() {
         var url = "<?php echo base_url("index.php/Crea_formularios/info_table") ?>";
         var tabla = $("#tabla option:selected").text()
-//        tabla=tabla.capitalize();
-//        $('#titulo').val(tabla);
         $.post(url, {tabla: $('#tabla').val()})
                 .done(function(msg) {
                     var table = "";

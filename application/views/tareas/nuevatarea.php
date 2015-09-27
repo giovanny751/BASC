@@ -6,6 +6,17 @@
 <div class='well'>
     <form method="post" id="f8">
         <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <center>
+                    <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
+                    <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
+                    <div class="flecha flechaDerecha" metodo="flechaDerecha"></div>
+                    <div class="flecha flechaDerechaDoble" metodo="flechaDerechaDoble"></div>
+                    <div class="flecha documento" metodo="documento"></div>
+                </center>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -20,7 +31,12 @@
                         <label for="plan"><span class="campoobligatorio">*</span>Plan</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="plan" id="plan" class="form-control obligatorio" />
+                        <select name="plan" id="plan" class="form-control obligatorio" >
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach($planes as $p){?>
+                            <option value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
+                            <?php }?>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -33,18 +49,28 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="sucursal">Sucursal (Dim1)</label>
+                        <label for="dimensionuno">Sucursal (Dim1)</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="sucursal" id="sucursal" class="form-control" />
+                        <select type="text" name="dimensionuno" id="dimensionuno" class="form-control" >
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach($dimension as $d1){?>
+                            <option value="<?php echo $d1->dim_id  ?>"><?php echo $d1->dim_descripcion  ?></option>
+                            <?php } ?>
+                        </select> 
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="areadetrabajo">Area de Trabajo (Dim2)</label>
+                        <label for="dimensiondos">Area de Trabajo (Dim2)</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="areadetrabajo" id="areadetrabajo" class="form-control" />
+                        <select type="text" name="dimensiondos" id="dimensiondos" class="form-control" >
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach($dimension2 as $d2){?>
+                            <option value="<?php echo $d2->dim_id  ?>"><?php echo $d2->dim_descripcion  ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -52,7 +78,12 @@
                         <label for="tipo"><span class="campoobligatorio">*</span>Tipo</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="tipo" id="tipo" class="form-control obligatorio" />
+                        <select name="tipo" id="tipo" class="form-control obligatorio" >
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach($tipo as $t ){ ?>
+                            <option value="<?php echo $t->tip_id ?>"><?php echo $t->tip_tipo ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -111,10 +142,10 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="cargo">Nombre</label>
+                        <label for="nombreempleado">Nombre</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <select name="cargo" id="cargo" class="form-control">
+                        <select name="nombreempleado" id="nombreempleado" class="form-control">
                             <option value="">::Seleccionar::</option>
                         </select>
                     </div>
@@ -155,7 +186,7 @@
                                 <label for="fechacreacion">Fecha Creación</label>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <input type="text" name="fechacreacion" id="fechacreacion" class="form-control" />
+                                <input type="text" name="fechacreacion" id="fechacreacion" class="form-control fecha" />
                             </div>
                         </div>
                         <div class="row">
@@ -163,7 +194,7 @@
                                 <label for="fechacreacion">Fecha ultima modificación</label>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <input type="text" name="fechaultimamod" id="fechaultimamod" class="form-control" />
+                                <input type="text" name="fechaultimamod" id="fechaultimamod" class="form-control fecha" />
                             </div>
                         </div>
                     </div>
@@ -203,6 +234,38 @@
     </form>
 </div>
 <script>
+    $(".flecha").click(function(){
+        var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
+        var idUsuarioCreado = $("#usuid").val();
+        var metodo = $(this).attr("metodo");
+        if(metodo != "documento"){
+            $.post(url,{idUsuarioCreado:idUsuarioCreado,metodo:metodo})
+                    .done(function(msg){
+                        $("input[type='text'],select").val("");
+                        $("#usuid").val(msg.usu_id);
+                        $("#cedula").val(msg.usu_cedula);
+                        $("#nombres").val(msg.usu_nombre);
+                        $("#apellidos").val(msg.usu_apellido);
+                        $("#usuario").val(msg.usu_usuario);
+                        $("#contrasena").val(msg.usu_contrasena);
+                        $("#email").val(msg.usu_email);
+                        $("#genero").val(msg.sex_id);
+                        $("#estado").val(msg.est_id);//estado
+                        $("#cargo").val(msg.car_id);//cargo
+                        $("#empleado").val(msg.emp_id);//empleado
+                        if(msg.cambiocontrasena == "1"){
+                            $("#cambiocontrasena").is(":checked");
+                        }
+                    })
+                    .fail(function(msg){
+                        alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+                        $("input[type='text'], select").val();
+                    })
+        }else{
+            window.location = "<?php echo  base_url("index.php/tareas/listadoplanes"); ?>";
+        }   
+        
+    });
     $('#guardartarea').click(function () {
 
         $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
@@ -213,5 +276,23 @@
 
         });
 
+    });
+    $('#cargo').change(function () {
+
+        $.post(
+                "<?php echo base_url("index.php/administrativo/consultausuarioscargo") ?>",
+                {
+                    cargo: $(this).val()
+                }
+        ).done(function (msg) {
+            var data = "";
+            $('#nombreempleado *').remove();
+            $.each(msg, function (key, val) {
+                data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
+            });
+            $('#nombreempleado').append(data);
+        }).fail(function (msg) {
+
+        })
     });
 </script>    

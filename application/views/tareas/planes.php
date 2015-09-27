@@ -6,6 +6,17 @@
 <div class='well'>
     <form method="post" id="f7">
         <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <center>
+                    <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
+                    <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
+                    <div class="flecha flechaDerecha" metodo="flechaDerecha"></div>
+                    <div class="flecha flechaDerechaDoble" metodo="flechaDerechaDoble"></div>
+                    <div class="flecha documento" metodo="documento"></div>
+                </center>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <div class="form-group">
                     <label for="nombre">
@@ -81,6 +92,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id))?$plan[0]->pla_id:""; ?>" name="pla_id" id="pla_id">
     </form>    
     <div class="row" style="text-align: center">
         <?php if (empty($plan[0]->pla_id)) { ?>
@@ -248,6 +260,39 @@
     </div>
 </div>
 <script>
+    $(".flecha").click(function(){
+        var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
+        var idUsuarioCreado = $("#usuid").val();
+        var metodo = $(this).attr("metodo");
+        if(metodo != "documento"){
+            $.post(url,{idUsuarioCreado:idUsuarioCreado,metodo:metodo})
+                    .done(function(msg){
+                        $("input[type='text'],select").val("");
+                        $("#usuid").val(msg.usu_id);
+                        $("#cedula").val(msg.usu_cedula);
+                        $("#nombres").val(msg.usu_nombre);
+                        $("#apellidos").val(msg.usu_apellido);
+                        $("#usuario").val(msg.usu_usuario);
+                        $("#contrasena").val(msg.usu_contrasena);
+                        $("#email").val(msg.usu_email);
+                        $("#genero").val(msg.sex_id);
+                        $("#estado").val(msg.est_id);//estado
+                        $("#cargo").val(msg.car_id);//cargo
+                        $("#empleado").val(msg.emp_id);//empleado
+                        if(msg.cambiocontrasena == "1"){
+                            $("#cambiocontrasena").is(":checked");
+                        }
+                    })
+                    .fail(function(msg){
+                        alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+                        $("input[type='text'], select").val();
+                    })
+        }else{
+            window.location = "<?php echo  base_url("index.php/tareas/listadoplanes"); ?>";
+        }   
+        
+    });
+    
     $('#cargo').change(function () {
 
         $.post(
@@ -264,17 +309,14 @@
             $('#empleado').append(data);
         }).fail(function (msg) {
 
-        })
+        });
     });
     $('#guardarplan').click(function () {
         if (obligatorio('obligatorio') == true) {
             $.post(
                     "<?php
-        if (empty($plan[0]->pla_id))
-            echo base_url('index.php/tareas/guardarplan');
-        else
-            echo base_url('index.php/tareas/actualizarplan');
-        ?>",
+                        echo (empty($plan[0]->pla_id))?base_url('index.php/tareas/guardarplan'):base_url('index.php/tareas/actualizarplan');
+                    ?>",
                     $('#f7').serialize()
                     ).done(function (msg) {
                 alerta("verde", "Datos guardados correctamente");

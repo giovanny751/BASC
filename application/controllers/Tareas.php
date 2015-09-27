@@ -18,8 +18,16 @@ class Tareas extends My_Controller {
     function nuevatarea() {
         $this->load->model('Estados_model');
         $this->load->model('Cargo_model');
+        $this->load->model('Planes_model');
+        $this->load->model('Dimension2_model');
+        $this->load->model('Dimension_model');
+        $this->load->model('Tipo_model');
         $this->data['estados'] = $this->Estados_model->detail();
+        $this->data['tipo'] = $this->Tipo_model->detail();
+        $this->data['planes'] = $this->Planes_model->detail();
         $this->data['cargo'] = $this->Cargo_model->allcargos();
+        $this->data['dimension'] = $this->Dimension_model->detail();
+        $this->data['dimension2'] = $this->Dimension2_model->detail();
         $this->layout->view("tareas/nuevatarea",$this->data);
     }
 
@@ -40,6 +48,7 @@ class Tareas extends My_Controller {
     }
     
     function listadoactividades(){
+        $this->load->model('Estados_model');
         $this->layout->view("tareas/listadoactividades");
     }
     function registro(){
@@ -80,6 +89,31 @@ class Tareas extends My_Controller {
         $this->data['cargo'] = $this->Cargo_model->allcargos();
         $this->layout->view("tareas/planes",$this->data);
     }
+    
+    function actualizarplan(){
+        try{
+            $data = array(
+                    "pla_avanceProgramado"=>$this->input->post("avanceprogramado"),
+                    "pla_avanceReal"=>$this->input->post("avancereal"),
+                    "car_id"=>$this->input->post("cargo"),
+                    "pla_costoReal"=>$this->input->post("costoreal"),
+                    "pla_descripcion"=>$this->input->post("descripcion"),
+                    "pla_eficiencia"=>$this->input->post("eficiencia"),
+                    "emp_id"=>$this->input->post("empleado"),
+                    "est_id"=>$this->input->post("estado"),
+                    "pla_fechaFin"=>$this->input->post("fechafin"),
+                    "pla_fechaInicio"=>$this->input->post("fechainicio"),
+                    "pla_nombre"=>$this->input->post("nombre"),
+                    "nor_id"=>$this->input->post("norma"),
+                    "pla_presupuesto"=>$this->input->post("presupuesto")
+            ); 
+            $this->load->model("Planes_model");
+            $this->Planes_model->actualizar($data,$this->input->post('pla_id'));
+            
+        }  catch (Exception $e){
+            
+        }
+    }
 
     function guardarplan() {
         $this->load->model("Planes_model");
@@ -103,8 +137,10 @@ class Tareas extends My_Controller {
 
     function listadoplanes() {
         $this->load->model("Estados_model");
-        $this->data['estado'] = $this->Estados_model->detail();
-//        var_dump($this->data['estado']);die;
+        $this->load->model("Planes_model");
+        $this->data['responsable'] = $this->Planes_model->responsables();
+        $this->data['estados'] = $this->Estados_model->finalizados();
+//        var_dump($this->data['responsable']);die;
         $this->layout->view("tareas/listadoplanes",$this->data);
     }
 
@@ -112,7 +148,6 @@ class Tareas extends My_Controller {
         $this->load->model("Planes_model");
         $planes = $this->Planes_model->filtrobusqueda(
                 $this->input->post("codigo"), $this->input->post("nombre"), $this->input->post("fecha"), $this->input->post("estado"), $this->input->post("responsable"));
-    
         $this->output->set_content_type('application/json')->set_output(json_encode($planes));
     }
     function eliminarplan(){
