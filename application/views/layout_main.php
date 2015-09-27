@@ -1,4 +1,4 @@
-<title></title>
+<title></title> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="<?= base_url('js/jquery-1.10.2.js') ?>" type="text/javascript"></script>

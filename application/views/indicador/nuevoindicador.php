@@ -96,7 +96,7 @@
                         <label for="cargo">Empleado</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                        <select name="empleado" id="empleado" class="form-control">
+                        <select name="nombreempleado" id="nombreempleado" class="form-control">
                             <option value="">::Seleccionar::</option>
                         </select>
                     </div>
