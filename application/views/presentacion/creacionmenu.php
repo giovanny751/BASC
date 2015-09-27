@@ -4,21 +4,31 @@
         background-color: #f5f5f5 !important;
     }
 </style>
-<div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>ADMINISTRACIÓN DE MODULOS
-    </h5>
-</div>
-<div class='well'>
+<div class="alert alert-info"><center><b>ADMINISTRACIÓN DE MODULOS</b></center></div>
 <div class="row">
     <button type="button" data-toggle="modal" data-target="#myModal2"  class="btn btn-info opciones">Nuevo Modulo</button>
 </div>
+<br />
+<div class="page-bar" style="background-color: transparent !important;">
+    <ul class="page-breadcrumb">
+        <?php if (!empty($nombrepadre)) { ?>
+            <?= $nombrepadre ?>
+        <?php }else{?>
+            <li class="devolver">
+                <i class="fa fa-home"></i>
+                <a href="index.html">Principal</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+        <?php } ?>
+    </ul>
+</div>
+<!--
 <?php if (!empty($nombrepadre)) {
     ?> <div padre="<?= $hijo ?>"  class="row devolver" ><b><?= $nombrepadre ?></b></div>
 <?php } else { ?>
     <div class="row devolver"><b>Principal</b></div>
 <?php } ?>
-
+-->
 <div class="row">
     <form method="post" id="formulario">
         <div class="table-responsive">
@@ -56,7 +66,6 @@
 <div id="desicion">
     <input type="hidden" id="papa">
     
-</div>    
 </div>    
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1004,7 +1013,7 @@
                     
                 });
     });
-    $('a').click(function () {
+    $('.page-breadcrumb a').click(function () {
         var papa = $(this).attr('padre');
         $('a').each(function (key, val) {
             if ($(this).attr('padre') > papa) {
@@ -1012,7 +1021,7 @@
             }
         });
         $('#idgeneral2').val(papa);
-        $('#nombrepadre2').val($('.devolver b').html());
+        $('#nombrepadre2').val($('.page-breadcrumb').html());
         $('#redireccion').attr('href', "<?= base_url('index.php/presentacion/menu') ?>");
         $('#redireccion').submit();
     });
@@ -1049,7 +1058,8 @@
     $('body').delegate(".submodulo", "click", function () {
         $('#menu').val($(this).attr('menu'));
         $('#idgeneral').val($(this).attr('idgeneral'));
-        $('#nombrepadre').val($('.devolver b').html() + "<i class='glyphicon glyphicon-chevron-right'></i><a padre='" + $(this).attr('menu') + "'>" + $(this).attr('nombrepadre') + "</a>");
+        $("#nombrepadre").val($(".page-breadcrumb").html() + "<li><a padre='" + $(this).attr('menu') + "'>" + $(this).attr('nombrepadre') + "</a><i class='fa fa-angle-right'></i></li>")
+        //$('#nombrepadre').val($('.devolver b').html() + "<i class='glyphicon glyphicon-chevron-right'></i><a padre='" + $(this).attr('menu') + "'>" + $(this).attr('nombrepadre') + "</a>");
         $('#formulario').attr('href', "<?= base_url('index.php/presentacion/menu') ?>");
         $('#formulario').submit();
     });
