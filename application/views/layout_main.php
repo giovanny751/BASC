@@ -1,7 +1,7 @@
 <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+<script src="<?= base_url('js/jquery-1.10.2.js') ?>" type="text/javascript"></script>
   
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
@@ -32,6 +32,44 @@
 <!-- Flechas para cambio de usuario, empleados y más cosas -->
 <link rel="stylesheet" href="<?= base_url('css/flechas.css') ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/estilos.css'); ?>"/>
+<script src="<?= base_url('js/jquery.blockUI.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery-migrate.min.js') ?>" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="<?= base_url('assets/global/plugins/jquery-ui/jquery-ui.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap/js/bootstrap.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.blockui.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.cokie.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/uniform/jquery.uniform.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') ?>" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<!--<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js') ?>" type="text/javascript"></script>-->
+<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.resize.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.categories.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.pulsate.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/moment.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js') ?>" type="text/javascript"></script>
+<!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
+<script src="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.sparkline.min.js') ?>" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="<?= base_url('assets/global/scripts/metronic.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/layout/scripts/layout.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/layout/scripts/quick-sidebar.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/layout/scripts/demo.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/pages/scripts/index.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/pages/scripts/tasks.js') ?>" type="text/javascript"></script>
 <?php
 function modulos($datosmodulos, $idusuario, $dato = null) {
 
@@ -44,6 +82,7 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
         $i[$modulo['menu_id']][$modulo['menu_nombrepadre']][$modulo['menu_idpadre']] [] = array($modulo['menu_idhijo'], $modulo['menu_controlador'], $modulo['menu_accion']);
     if ($datosmodulos == 'prueba'){
     echo "<ul class='page-sidebar-menu' data-keep-expanded='false' data-auto-scroll='true' data-slide-speed='200'>"
+
         . "<li class='sidebar-toggler-wrapper'>
                         <div class='sidebar-toggler'>
                         </div>
@@ -69,36 +108,6 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
     echo "</ul>";
 }
 ?>
-<!--<div class="row" >
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="<?php echo base_url('index.php/presentacion/principal') ?>"></a>
-        </div>
-        <div class="navbar-collapse collapse">
-            
-            <?php echo modulos('prueba', $id, null); ?>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><b><?php echo strtoupper($nombre); ?></b></a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">OPCIONES</a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo base_url('index.php/presentacion/recordarcontrasena'); ?>">Cambiar Contraseña</a></li>
-                        <li><a href="<?php echo base_url('index.php/presentacion/rol'); ?>">Cambiar de Rol</a></li>
-                        <li class="divider"></li>
-                        <li><a href="<?php echo base_url('index.php/login/logout'); ?>">Cerrar sesion</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>-->
-
 <div class="page-container">
     <div class="page-sidebar-wrapper">
         <div class="page-sidebar navbar-collapse collapse">
@@ -110,24 +119,7 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
             <?php echo $content_for_layout ?>
         </div>
     </div>
-<!--    <div class="container ">
-        <div class="row contenido" >
-        </div>
-    </div>-->
 </div>
-<!--<footer class="footer">
-    <div class="row" style="">
-        <div class="container">
-            <div class="col-md-4 col-lg-4 col-sm-4 col-sx-4" align="center">
-                <img src="<?php echo base_url('uploads/Logo_PSAT_Final.png'); ?>" style="width: 90px">
-            </div>
-            <div class="col-md-4 col-lg-4 col-sm-4 col-sx-4"><center><p class="text-muted" style='margin-top:10%'>Copyright -  Reserved</p></center></div>
-            <div class="col-md-4 col-lg-4 col-sm-4 col-sx-4" align="center">
-                <a href="http://www.nygsoft.com"><img src="<?php echo base_url('img/blanco.jpg'); ?>" style="width: 31%;height: 16%"></a>
-            </div>
-        </div>  
-    </div>  
-</footer>-->
 <style>
     .obligado{
         background-color: rgb(250, 255, 189);
@@ -183,43 +175,6 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
 
 
 
-<script src="<?= base_url('assets/global/plugins/jquery-migrate.min.js') ?>" type="text/javascript"></script>
-<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-<script src="<?= base_url('assets/global/plugins/jquery-ui/jquery-ui.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/bootstrap/js/bootstrap.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery.blockui.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery.cokie.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/uniform/jquery.uniform.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') ?>" type="text/javascript"></script>
-<!-- END CORE PLUGINS -->
-<!-- BEGIN PAGE LEVEL PLUGINS -->
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.resize.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.categories.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery.pulsate.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/moment.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js') ?>" type="text/javascript"></script>
-<!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
-<script src="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery.sparkline.min.js') ?>" type="text/javascript"></script>
-<!-- END PAGE LEVEL PLUGINS -->
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="<?= base_url('assets/global/scripts/metronic.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/admin/layout/scripts/layout.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/admin/layout/scripts/quick-sidebar.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/admin/layout/scripts/demo.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/admin/pages/scripts/index.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/admin/pages/scripts/tasks.js') ?>" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {    
