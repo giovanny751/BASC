@@ -1,3 +1,6 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
 <title></title> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -92,6 +95,65 @@
 <script src="<?= base_url('assets/admin/layout/scripts/demo.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/admin/pages/scripts/index.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/admin/pages/scripts/tasks.js') ?>" type="text/javascript"></script>
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
+<!-- BEGIN HEADER -->
+<div class="page-header -i navbar navbar-fixed-top">
+	<!-- BEGIN HEADER INNER -->
+	<div class="page-header-inner">
+		<!-- BEGIN LOGO -->
+		<div class="page-logo">
+			<a href="index.html">
+			<img src="../../assets/admin/layout/img/logo.png" alt="logo" class="logo-default"/>
+			</a>
+			<div class="menu-toggler sidebar-toggler hide">
+			</div>
+		</div>
+		<!-- END LOGO -->
+		<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+		<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+		</a>
+		<!-- END RESPONSIVE MENU TOGGLER -->
+                <!-- BEGIN TOP NAVIGATION MENU -->
+		<div class="top-menu">
+                    <ul class="nav navbar-nav pull-right">
+                        <!-- BEGIN USER LOGIN DROPDOWN -->
+                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                        <li class="dropdown dropdown-user">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                <img alt="" class="img-circle" src="<?=  base_url("uploads/logo_nygsoft.jpg") ?>"/>
+                                <span class="username username-hide-on-mobile">
+                                    Usuario 
+                                </span>
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-default">
+                                <li>
+                                    <a href="<?php echo base_url("index.php/presentacion/recordarcontrasena") ?>" >
+                                    <i class="icon-lock"></i> Cambio de contraseña </a>
+                                </li>
+                                <li>
+                                    <a href="<?php echo base_url("index.php/presentacion/rol") ?>">
+                                    <i class="icon-calendar"></i> Cambiar de Rol </a>
+                                </li>
+                               
+                                <li class="divider">
+                                </li>
+                                
+                                <li>
+                                    <a href="<?php echo base_url("index.php/login/logout") ?>">
+                                    <i class="icon-key"></i> Salir </a>
+                                </li>
+                            </ul>
+                        </li>
+				<!-- END USER LOGIN DROPDOWN -->
+                    </ul>
+		</div>
+		<!-- END TOP NAVIGATION MENU -->
+	</div>
+	<!-- END HEADER INNER -->
+</div>
+<!-- END HEADER -->
 <?php
 function modulos($datosmodulos, $idusuario, $dato = null) {
 
@@ -132,6 +194,7 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
 }
 ?>
 <div class="page-container">
+    
     <div class="page-sidebar-wrapper">
         <div class="page-sidebar navbar-collapse collapse">
             <?php echo modulos('prueba', $id, null); ?>
@@ -196,29 +259,25 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
     }
 </style>
 
+</body>
+</html>
 
 
-<!-- END PAGE LEVEL SCRIPTS -->
 <script>
-jQuery(document).ready(function() {    
-   Metronic.init(); // init metronic core componets
-   Layout.init(); // init layout
-   QuickSidebar.init(); // init quick sidebar
-Demo.init(); // init demo features
-   Index.init();   
-   Index.initDashboardDaterange();
-   Index.initJQVMAP(); // init index page's custom scripts
-   Index.initCalendar(); // init index page's custom scripts
-   Index.initCharts(); // init index page's custom scripts
-   Index.initChat();
-   Index.initMiniCharts();
-   Tasks.initDashboardWidget();
+jQuery(document).ready(function() { 
+    Metronic.init(); // init metronic core componets
+    Layout.init(); // init layout
+    QuickSidebar.init(); // init quick sidebar
+    Demo.init(); // init demo features
+    Index.init();   
+    Index.initDashboardDaterange();
+    Index.initJQVMAP(); // init index page's custom scripts
+    Index.initCalendar(); // init index page's custom scripts
+    Index.initCharts(); // init index page's custom scripts
+    Index.initChat();
+    Index.initMiniCharts();
+    Tasks.initDashboardWidget();
 });
-</script>
-<!-- END JAVASCRIPTS -->
-
-
-<script>
     $('.limpiar').click(function () {
         $('select,input').val('');
     });
