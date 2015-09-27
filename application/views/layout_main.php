@@ -27,6 +27,7 @@
 <link href="<?= base_url('assets/admin/layout/css/custom.css') ?>" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
+<script src="<?= base_url('assets/global/plugins/jquery.min.js') ?>" type="text/javascript"></script>
 
 <!-- Flechas para cambio de usuario, empleados y más cosas -->
 <link rel="stylesheet" href="<?= base_url('css/flechas.css') ?>" />
@@ -181,7 +182,7 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
 </style>
 
 
-<script src="<?= base_url('assets/global/plugins/jquery.min.js') ?>" type="text/javascript"></script>
+
 <script src="<?= base_url('assets/global/plugins/jquery-migrate.min.js') ?>" type="text/javascript"></script>
 <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 <script src="<?= base_url('assets/global/plugins/jquery-ui/jquery-ui.min.js') ?>" type="text/javascript"></script>

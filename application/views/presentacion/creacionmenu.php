@@ -7,6 +7,8 @@
 <?php } else { ?>
     <div class="row devolver"><b>Principal</b></div>
 <?php } ?>
+            <i class="icon-map"></i><span class="name">social-gplus</span>
+
 <div class="row">
     <form method="post" id="formulario">
         <div class="table-responsive">
@@ -37,7 +39,7 @@
 </div>    
 <div id="desicion">
     <input type="hidden" id="papa">
-
+    
 </div>    
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
