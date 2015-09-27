@@ -1,61 +1,36 @@
 <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="<?= base_url('js/jquery-1.10.2.js') ?>" type="text/javascript"></script>
-
-
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   
   
-  
-
-<!--<script src='//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js'></script>-->
-<!--<script src="<?= base_url('js/dataTables.responsive.js') ?>" type="text/javascript"></script>-->
-<!--<link href="<?= base_url('css/dataTables.responsive.css') ?>" rel="stylesheet" type="text/css"/>-->
-<link href="<?php // echo base_url('img/blanco.jpg'); ?>" rel="shortcut icon" type="image/x-icon">
-<script src="<?= base_url('js/jquery.smartmenus.js') ?>" type="text/javascript"></script>
-<!--<script src="<?= base_url('js/validCampoFranz.js') ?>" type="text/javascript"></script>-->
-<script src="<?= base_url('js/jquery.smartmenus.bootstrap.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('js/bootstrap.js') ?>" type="text/javascript"></script>
-<link href="<?= base_url('css/bootstrap.css') ?>" rel="stylesheet" type="text/css"/>
-<link href="<?= base_url('css/style.css') ?>" rel="stylesheet" type="text/css"/>
-<link href="<?= base_url('css/jquery.smartmenus.bootstrap.css') ?>" rel="stylesheet">
-<script src="<?php echo base_url('/assets/global/scripts/metronic.js'); ?>" type="text/javascript"></script>
-<!--<script src="<?php echo base_url('/assets/admin/pages/scripts/ui-blockui.js'); ?>"></script>-->
-<!--<script src="<?php echo base_url('/assets/global/plugins/jquery.blockui.min.js'); ?>" type="text/javascript"></script>-->
-<!--<link href="<?php echo base_url('/assets/global/css/plugins.css'); ?>" rel="stylesheet" type="text/css"/>-->
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/global/plugins/jquery-notific8/jquery.notific8.min.css'); ?>"/>
-<script src="<?php echo base_url('/assets/global/plugins/jquery-notific8/jquery.notific8.min.js'); ?>"></script>
-<script src="<?php echo base_url('/assets/admin/pages/scripts/ui-notific8.js'); ?>"></script>
-<!--<link href="<?php echo base_url('/assets/global/plugins/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet" type="text/css"/>-->
-<link href="<?php echo base_url('/assets/global/plugins/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css"/>
-<!--<link href="<?php echo base_url('/css/font_google.css'); ?>" rel="stylesheet" type="text/css"/>-->
-<!--<link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/global/plugins/datatables/extensions/Scroller/css/dataTables.scroller.min.css'); ?>"/>-->
-<!--<link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/global/plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css'); ?>"/>-->
-<!--<link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css'); ?>"/>-->  
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/estilos.css'); ?>"/>  
-<!--<link href="<?php echo base_url('/assets/global/plugins/bootstrap-select/bootstrap-select.min.css'); ?>" rel="stylesheet">-->
-<!--<link href="<?php echo base_url('/assets/global/plugins/select2/select2.css'); ?>" rel="stylesheet">-->
-<!--<link href="<?php echo base_url('/assets/global/plugins/jquery-multi-select/css/multi-select.css'); ?>" rel="stylesheet">-->
-<!--<link href="<?php echo base_url('/assets/global/css/components.css'); ?>" rel="stylesheet" type="text/css"/>-->
-<script type="text/javascript" src="<?php echo base_url('/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('/assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('/assets/global/plugins/datatables/extensions/ColReorder/js/dataTables.colReorder.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('/assets/global/plugins/datatables/extensions/Scroller/js/dataTables.scroller.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js'); ?>"></script>
-<script src="<?php echo base_url('/assets/global/scripts/datatable.js'); ?>"></script>
-<!--<script type="text/javascript" src="<?php echo base_url('/assets/admin/pages/scripts/table-ajax.js'); ?>"></script>-->
-<!--<script src="<?php echo base_url('/assets/global/plugins/bootstrap-daterangepicker/moment.min.js'); ?>" type="text/javascript"></script>-->
-<!--<script src="<?php echo base_url('/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js'); ?>" type="text/javascript"></script>-->
-<!--<script type="text/javascript" src="<?php echo base_url('/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js'); ?>"></script>-->
-<!--<script src="<?php echo base_url('/assets/admin/pages/scripts/components-pickers.js'); ?>"></script>-->
-<script src="<?= base_url('js/jquery.blockUI.js') ?>" type="text/javascript"></script>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+<link href="<?= base_url('assets/global/plugins/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css"/>
+<link href="<?= base_url('assets/global/plugins/simple-line-icons/simple-line-icons.min.css') ?>" rel="stylesheet" type="text/css"/>
+<link href="<?= base_url('assets/global/plugins/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css"/>
+<link href="<?= base_url('assets/global/plugins/uniform/css/uniform.default.css') ?>" rel="stylesheet" type="text/css"/>
+<link href="<?= base_url('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') ?>" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
+<link href="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') ?>" rel="stylesheet" type="text/css"/>
+<link href="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.css') ?>" rel="stylesheet" type="text/css"/>
+<link href="<?= base_url('assets/global/plugins/jqvmap/jqvmap/jqvmap.css') ?>" rel="stylesheet" type="text/css"/>
+<!-- END PAGE LEVEL PLUGIN STYLES -->
+<!-- BEGIN PAGE STYLES -->
+<link href="<?= base_url('assets/admin/pages/css/tasks.css') ?>" rel="stylesheet" type="text/css"/>
+<!-- END PAGE STYLES -->
+<!-- BEGIN THEME STYLES -->
+<link href="<?= base_url('assets/global/css/components.css') ?>" id="style_components" rel="stylesheet" type="text/css"/>
+<link href="<?= base_url('assets/global/css/plugins.css') ?>" rel="stylesheet" type="text/css"/>
+<link href="<?= base_url('assets/admin/layout/css/layout.css') ?>" rel="stylesheet" type="text/css"/>
+<link href="<?= base_url('assets/admin/layout/css/themes/darkblue.css') ?>" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="<?= base_url('assets/admin/layout/css/custom.css') ?>" rel="stylesheet" type="text/css"/>
+<!-- END THEME STYLES -->
+<link rel="shortcut icon" href="favicon.ico"/>
 
 <!-- Flechas para cambio de usuario, empleados y más cosas -->
 <link rel="stylesheet" href="<?= base_url('css/flechas.css') ?>" />
-
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('css/estilos.css'); ?>"/>
 <?php
 function modulos($datosmodulos, $idusuario, $dato = null) {
 
@@ -66,15 +41,25 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
     $i = array();
     foreach ($menu as $modulo)
         $i[$modulo['menu_id']][$modulo['menu_nombrepadre']][$modulo['menu_idpadre']] [] = array($modulo['menu_idhijo'], $modulo['menu_controlador'], $modulo['menu_accion']);
-    echo ($datosmodulos == 'prueba')?"<ul class='nav navbar-nav'>":"<ul class='dropdown-menu'>";
+    if ($datosmodulos == 'prueba'){
+    echo "<ul class='page-sidebar-menu' data-keep-expanded='false' data-auto-scroll='true' data-slide-speed='200'>"
+        . "<li class='sidebar-toggler-wrapper'>
+                        <div class='sidebar-toggler'>
+                        </div>
+                </li>";
+    }
+    else{
+    echo"<ul class='sub-menu'>";
+    
+    }
     foreach ($i as $padre => $nombrepapa)
         foreach ($nombrepapa as $nombrepapa => $menuidpadre)
             foreach ($menuidpadre as $modulos => $menu)
                 foreach ($menu as $submenus):
                     if ($submenus[1] == "" && $submenus[2] == "") {
-                        echo "<li><a href='#'>" . strtoupper($nombrepapa) . "</a>";
+                        echo "<li class=''><a href='#'><i class='icon-folder'></i><span class='title'>" . strtoupper($nombrepapa) . "</span><span class='arrow'></span></a>";
                     } else {
-                        echo "<li><a href='" . base_url("index.php/" . $submenus[1] . "/" . $submenus[2]) . "'>" . strtoupper($nombrepapa) . "</a>";
+                        echo "<li class=''><a href='" . base_url("index.php/" . $submenus[1] . "/" . $submenus[2]) . "'>" . strtoupper($nombrepapa) . "</a>";
                     }
                     if (!empty($submenus[0]))
                         modulos($submenus[0], $idusuario);
@@ -83,7 +68,7 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
     echo "</ul>";
 }
 ?>
-<div class="row" >
+<!--<div class="row" >
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -111,33 +96,37 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
             </ul>
         </div>
     </div>
-</div>
-<!--    <div class="row">
-                <div class="col-md-2 col-sx-2 col-lg-2" style="text-align:center">PLANES</div>
-                <div class="col-md-2 col-sx-2 col-lg-2" style="text-align:center">TAREAS</div>
-                <div class="col-md-2 col-sx-2 col-lg-2" style="text-align:center">INDICADORES</div>
-                <div class="col-md-2 col-sx-2 col-lg-2" style="text-align:center">RIESGOS</div>
-                <div class="col-md-2 col-sx-2 col-lg-2" style="text-align:center">DOCUMENTOS</div>
-            </div>-->
-<div class="container ">
+</div>-->
 
-    <div class="row contenido" >
-        <?php echo $content_for_layout ?>
+<div class="page-container">
+    <div class="page-sidebar-wrapper">
+        <div class="page-sidebar navbar-collapse collapse">
+            <?php echo modulos('prueba', $id, null); ?>
+        </div>
     </div>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <?php echo $content_for_layout ?>
+        </div>
+    </div>
+<!--    <div class="container ">
+        <div class="row contenido" >
+        </div>
+    </div>-->
 </div>
-<footer class="footer">
+<!--<footer class="footer">
     <div class="row" style="">
         <div class="container">
             <div class="col-md-4 col-lg-4 col-sm-4 col-sx-4" align="center">
-                <!--<img src="<?php echo base_url('uploads/Logo_PSAT_Final.png'); ?>" style="width: 90px">-->
+                <img src="<?php echo base_url('uploads/Logo_PSAT_Final.png'); ?>" style="width: 90px">
             </div>
             <div class="col-md-4 col-lg-4 col-sm-4 col-sx-4"><center><p class="text-muted" style='margin-top:10%'>Copyright -  Reserved</p></center></div>
             <div class="col-md-4 col-lg-4 col-sm-4 col-sx-4" align="center">
-                <!--<a href="http://www.nygsoft.com"><img src="<?php echo base_url('img/blanco.jpg'); ?>" style="width: 31%;height: 16%"></a>-->
+                <a href="http://www.nygsoft.com"><img src="<?php echo base_url('img/blanco.jpg'); ?>" style="width: 31%;height: 16%"></a>
             </div>
         </div>  
     </div>  
-</footer>
+</footer>-->
 <style>
     .obligado{
         background-color: rgb(250, 255, 189);
@@ -190,6 +179,66 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
         color: #FFF
     }
 </style>
+
+
+<script src="<?= base_url('assets/global/plugins/jquery.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery-migrate.min.js') ?>" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="<?= base_url('assets/global/plugins/jquery-ui/jquery-ui.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap/js/bootstrap.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.blockui.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.cokie.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/uniform/jquery.uniform.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') ?>" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.resize.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.categories.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.pulsate.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/moment.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js') ?>" type="text/javascript"></script>
+<!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
+<script src="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.sparkline.min.js') ?>" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="<?= base_url('assets/global/scripts/metronic.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/layout/scripts/layout.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/layout/scripts/quick-sidebar.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/layout/scripts/demo.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/pages/scripts/index.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/pages/scripts/tasks.js') ?>" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script>
+jQuery(document).ready(function() {    
+   Metronic.init(); // init metronic core componets
+   Layout.init(); // init layout
+   QuickSidebar.init(); // init quick sidebar
+Demo.init(); // init demo features
+   Index.init();   
+   Index.initDashboardDaterange();
+   Index.initJQVMAP(); // init index page's custom scripts
+   Index.initCalendar(); // init index page's custom scripts
+   Index.initCharts(); // init index page's custom scripts
+   Index.initChat();
+   Index.initMiniCharts();
+   Tasks.initDashboardWidget();
+});
+</script>
+<!-- END JAVASCRIPTS -->
+
+
 <script>
     $('.limpiar').click(function () {
         $('select,input').val('');
@@ -256,29 +305,6 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
     }
 
 
-    jQuery(document).ready(function () {
-        Metronic.init(); // init metronic core componets
-//        Layout.init(); // init layout
-//        TableAjax.init();
-//        UIBlockUI.init();
-        //TableAdvanced.init();
-//        ComponentsPickers.init();
-        //QuickSidebar.init() // init quick sidebar
-        //Index.init();
-        //Index.initDashboardDaterange();
-        //Index.initJQVMAP(); // init index page's custom scripts
-        //Index.initCalendar(); // init index page's custom scripts
-        //Index.initCharts(); // init index page's custom scripts
-        //Index.initChat();
-        //TableAdvanced.init();
-        //Index.initMiniCharts();
-        //Index.initIntro();
-        //Tasks.initDashboardWidget();
-        //ComponentsDropdowns.init();
-        //FormValidation.init();
-//        UIAlertDialogApi.init();
-        UINotific8.init();
-    });
     $('.fecha').datepicker({
         dateFormat: "yy-mm-dd",
         autoclose: true
