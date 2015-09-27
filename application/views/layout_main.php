@@ -101,7 +101,7 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
     $menu = $ci->ingreso_model->menu($datosmodulos, $idusuario, 2);
     $i = array();
     foreach ($menu as $modulo)
-        $i[$modulo['menu_id']][$modulo['menu_nombrepadre']][$modulo['menu_idpadre']] [] = array($modulo['menu_idhijo'], $modulo['menu_controlador'], $modulo['menu_accion']);
+        $i[$modulo['menu_id']][$modulo['menu_nombrepadre']][$modulo['menu_idpadre']] [] = array($modulo['menu_idhijo'], $modulo['menu_controlador'], $modulo['menu_accion'],$modulo['mod_icons']);
     if ($datosmodulos == 'prueba'){
     echo "<ul class='page-sidebar-menu' data-keep-expanded='false' data-auto-scroll='true' data-slide-speed='200'>"
 
@@ -119,7 +119,8 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
             foreach ($menuidpadre as $modulos => $menu)
                 foreach ($menu as $submenus):
                     if ($submenus[1] == "" && $submenus[2] == "") {
-                        echo "<li class=''><a href='#'><i class='icon-folder'></i><span class='title'>" . strtoupper($nombrepapa) . "</span><span class='arrow'></span></a>";
+                        (!empty($submenus[3]))?$icon = $submenus[3]:$icon = "icon-folder";
+                        echo "<li class=''><a href='#'><i class='".$icon."'></i><span class='title'>" . strtoupper($nombrepapa) . "</span><span class='arrow'></span></a>";
                     } else {
                         echo "<li class=''><a href='" . base_url("index.php/" . $submenus[1] . "/" . $submenus[2]) . "'>" . strtoupper($nombrepapa) . "</a>";
                     }

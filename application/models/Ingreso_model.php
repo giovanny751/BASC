@@ -19,7 +19,7 @@ class Ingreso_model extends CI_Model {
         $this->db->where('user.usu_id', $idusuario);
         
         $this->db->select('modulo.menu_id,modulo.menu_idpadre,modulo.menu_nombrepadre,modulo.menu_idhijo,'
-                . 'modulo.menu_controlador,modulo.menu_accion,modulo.menu_estado,permisos_rol.menu_id menudos');
+                . 'modulo.menu_controlador,modulo.menu_accion,modulo.menu_estado,permisos_rol.menu_id menudos,modulo.mod_icons');
        
             $this->db->join("permisos", "user.rol_id = permisos.rol_id and user.usu_id = permisos.usu_id");
             $this->db->join('permisos_rol',' permisos_rol.rol_id = permisos.rol_id');
@@ -113,6 +113,11 @@ class Ingreso_model extends CI_Model {
         $this->db->insert('modulo', $data);
 
         return $this->db->insert_id();
+    }
+    function actualizarIcono($nuevoIcono,$idgeneral){
+        $this->db->where("menu_id",$idgeneral);
+        $this->db->set("mod_icons",$nuevoIcono);
+        $this->db->update("modulo");
     }
 
     function actualizahijos($padre) {

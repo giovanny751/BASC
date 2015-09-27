@@ -273,6 +273,16 @@ class Presentacion extends My_Controller {
     function guardaratributosmenu() {
         $this->Ingreso_model->guardaratributosmenu($this->input->post('nombre'), $this->input->post('controlador'), $this->input->post('accion'), $this->input->post('estado'), $this->input->post('id'));
     }
+    function actualizarIcono(){
+        try{
+            $nuevoIcono = $this->input->post('nuevoIcono');
+            $idgeneral = $this->input->post('idgeneral');
+            $this->Ingreso_model->actualizarIcono($nuevoIcono,$idgeneral);
+        }catch(Exception $e){
+            
+        }
+        
+    }
 
     function administracionareas() {
         $this->data['cargos'] = $this->Ingreso_model->areas();
