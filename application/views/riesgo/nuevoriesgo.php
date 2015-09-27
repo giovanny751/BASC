@@ -159,6 +159,163 @@
     <div class="row" style="text-align:center">
         <button type="button" class="btn btn-success" id="guardar">Guardar</button>
     </div>
+    <div class="portlet box blue">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>
+                Tab drop
+            </div>
+            <div class="tools">
+                <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
+                <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
+                <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
+                <a class="remove" href="javascript:;" data-original-title="" title=""> </a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <p> Basic exemple. Resize the window to see how the tabs are moved into the dropdown </p>
+            <div class="tabbable tabbable-tabdrop">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab1">Tareas</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab2">Tareas inactivas</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab3">Avance de tareas</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab4">Gráfica de Grantt</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab4">Registros</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab1" class="tab-pane active">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <th>Fecha</th>
+                            <th>Comentario</th>
+                            <th>Valor</th>
+                            <th>Usuario</th>
+                            <th>Costo</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" style="text-align:center">Ingresar Informaciòn</td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="tab2" class="tab-pane">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                        <label for="fecha">Fecha</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                        <input type="text" name="fecha" id="fecha" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                        <label for="valor">Valor</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                        <input type="text" name="valor" id="valor" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                        <label for="usuario">Usuario</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                        <input type="text" name="usuario" id="usuario" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
+                                <label for="comentarios">Comentarios</label>
+                                <textarea name="comentarios" id="comentarios" class="form-control"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="row" style="text-align: center">
+                            <button type="button" class="btn btn-success">Guardar</button>
+                        </div>
+                    </div>
+                    <div id="tab3" class="tab-pane">
+
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <th>Fecha</th>
+                            <th>Resumen</th>
+                            <th>Usuario</th>
+                            <th>Horas</th>
+                            <th>Costo</th>
+                            <th>Comentarios</th>
+                            <th>Acción</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="7"></td>
+                                </tr>
+                            </tbody>
+                        </table>   
+
+                    </div>
+                    <div id="tab4" class="tab-pane">
+
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <th>Nombre Archivo</th>
+                            <th>Descripción</th>
+                            <th>Versión</th>
+                            <th>Responsable</th>
+                            <th>Tamaño</th>
+                            <th>Fecha</th>
+                            <th>Acción</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="7"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div id="tab5" class="tab-pane">
+
+                    </div>
+                    <div id="tab6" class="tab-pane">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <th>Nombre archivo</th>
+                            <th>Descripción</th>
+                            <th>Versión</th>
+                            <th>Responsable</th>
+                            <th>Tamaño</th>
+                            <th>Fecha</th>
+                            <th>Accion</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <p>   </p>
+            <p>   </p>
+            <div class="tabbable tabbable-tabdrop">
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     $(".flecha").click(function(){

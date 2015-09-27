@@ -5,6 +5,7 @@
 </div>
 <div class='well'>
     <div class="row">
+        <form method="post" id="busquedariesgo">
         <div class="col-lg-3 col-sm-3 col-md-3">
             <div class="form-group">
                 <label for="clasificacion">Clasificación</label>
@@ -52,9 +53,10 @@
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-danger" style="margin-top: 28px">Limpiar</button>
-                <button type="button" class="btn btn-success" style="margin-top: 28px">Buscar</button>
+                <button type="button" class="btn btn-success buscar" style="margin-top: 28px">Buscar</button>
             </div>
         </div>
+        </form>
     </div>
     <div class="row">
         <table class='table table-bordered table-hover'>
@@ -70,7 +72,7 @@
             <th>Estado de aceptación</th>
             <th>Tareas(activas)</th>
             </thead>
-            <tbody>
+            <tbody id="inforiesgo">
                 <tr>
                     <td colspan="10"></td>
                 </tr>
@@ -78,3 +80,33 @@
         </table>
     </div>
 </div>
+<script>
+    $('.buscar').click(function(){
+        
+        $.post("<?php echo base_url("index.php/riesgo/busquedariesgo") ?>",
+                $('#busquedariesgo').serialize()
+            ).done(function(msg){
+                var tbody = "";
+                $.each(msg,function(key,val){
+                    tbody += "<tr>";
+                    tbody += "<td>"+val.tip_tipo+"</td>";
+                    tbody += "<td>"+val.rie_descripcion+"</td>";
+                    tbody += "<td>"+val.des1+"</td>";
+                    tbody += "<td>"+val.des2+"</td>";
+                    tbody += "<td>"+val.rie_zona+"</td>";
+                    tbody += "<td></td>";
+                    tbody += "<td></td>";
+                    tbody += "<td>"+val.rie_fecha+"</td>";
+                    tbody += "<td></td>";
+                    tbody += "<td></td>";
+                    tbody += "</tr>";
+                });
+                $('#inforiesgo *').remove();
+                $('#inforiesgo').append(tbody);
+                alerta("verde","Datos cargados con exito");
+            }).fail(function(msg){
+                alert("rojo","Error en el sistema por favor comunicarse con el administrador");
+            });
+        
+    });
+</script>    

@@ -26,7 +26,24 @@ class Riesgo extends My_Controller {
         $this->data['cargo'] = $this->Cargo_model->allcargos();
         $this->layout->view("riesgo/nuevoriesgo", $this->data);
     }
-    
+    function busquedariesgo(){
+        
+        try{
+            $this->load->model('Riesgo_model');
+            $riesgos = $this->Riesgo_model->filtrobusqueda(
+                    $this->input->post("cargo"),
+                    $this->input->post("clasificacion"),
+                    $this->input->post("dimensiondos"),
+                    $this->input->post("dimensionuno"),
+                    $this->input->post("tipo")
+                    );
+            
+        $this->output->set_content_type('application/json')->set_output(json_encode($riesgos));
+        }catch(exception $e){
+            
+        }
+        
+    }
     function guardarriesgo(){
         try{
             $this->load->model('Riesgo_model');
@@ -54,6 +71,23 @@ class Riesgo extends My_Controller {
     function clasificacionriesgo() {
 
         $this->layout->view("riesgo/clasificacionriesgo");
+    }
+    function guardarcategoria(){
+        try{
+            $this->load->model('Categoria_model');
+            $categoria = $this->Categoria_model->search($this->input->post("categoria"));
+            if(!empty($categoria)){
+                
+            }else{
+                $categoria = $this->Categoria_model->insert($this->input->post("categoria"));
+            }
+        }catch(exception $e){
+            
+        }
+    }
+    function autocompletarcategoria() {
+        $info = auto("categoria", "cat_id", "cat_categoria", $this->input->get('term'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($info));
     }
 
     function listadoriesgo() {

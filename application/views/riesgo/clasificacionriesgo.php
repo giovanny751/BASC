@@ -63,11 +63,16 @@
     </div>
 </div>
 <script>
-    $('#categoria').click(function () {
+    $('#cat').autocomplete({
+        source: "<?php echo base_url("index.php/riesgo/autocompletarcategoria") ?>",
+        minLength: 1
+    });
+    
+    $('.categoria').click(function () {
 
-        var categoria = $('#categoria').val();
+        var categoria = $('#cat').val();
 
-        $.post("<?php echo base_url("index.php/administrativo/guardarcategoria") ?>",
+        $.post("<?php echo base_url("index.php/riesgo/guardarcategoria") ?>",
                 {categoria: categoria}
         ).done(function (msg) {
 
