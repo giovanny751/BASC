@@ -5,10 +5,12 @@
 </div>
 <div class='well'>
     <div class="row">
-        <div class="form-group">
-            <label>Categoria</label>
-            <input type="text" name="categoria" id="cat">
-            <button type="button" class="btn btn-success categoria">Agregar</button>
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="cat">Categoria</label>
+                <input type="text" name="categoria" id="cat" class="form-control">
+                <button type="button" class="btn btn-success categoria">Agregar</button>
+            </div>
         </div>
     </div>
     <div class="row">

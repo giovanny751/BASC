@@ -4,7 +4,12 @@
         background-color: #f5f5f5 !important;
     }
 </style>
-<div class="alert alert-info"><center><b>ADMINISTRACIÓN DE MODULOS</b></center></div>
+<div class="widgetTitle" >
+    <h5>
+        <i class="glyphicon glyphicon-ok"></i>ADMINISTRACIÓN DE MODULOS
+    </h5>
+</div>
+<div class='well'>
 <div class="row">
     <button type="button" data-toggle="modal" data-target="#myModal2"  class="btn btn-info opciones">Nuevo Modulo</button>
 </div>
@@ -51,6 +56,7 @@
 <div id="desicion">
     <input type="hidden" id="papa">
     
+</div>    
 </div>    
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

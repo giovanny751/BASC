@@ -43,6 +43,13 @@
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') ?>"/>
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ?>"/>
 
+
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.css') ?>"/>
+
+
+
+
 <script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/global/plugins/clockface/js/clockface.js') ?>"></script>
@@ -95,6 +102,11 @@
 <script src="<?= base_url('assets/admin/layout/scripts/demo.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/admin/pages/scripts/index.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/admin/pages/scripts/tasks.js') ?>" type="text/javascript"></script>
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.js') ?>"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script src="<?= base_url('assets/admin/pages/scripts/ui-notific8.js') ?>"></script>
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
 <!-- BEGIN HEADER -->
@@ -277,6 +289,7 @@ jQuery(document).ready(function() {
     Index.initChat();
     Index.initMiniCharts();
     Tasks.initDashboardWidget();
+    UINotific8.init();
 });
     $('.limpiar').click(function () {
         $('select,input').val('');
@@ -332,27 +345,15 @@ jQuery(document).ready(function() {
         if (i == 0)
             return true;
         else{
-            $.notific8('', {
-                horizontalEdge: 'bottom',
-                life: 5000,
-                theme: 'ruby sticky',
-                heading: 'FALTAN CAMPOS POR LLENAR'
-            });
+            alerta('naranja',"FALTAN CAMPOS POR LLENAR");
             return false;
             }
     }
 
 
     $('.fecha').datepicker({
-        dateFormat: "yy-mm-dd",
-        autoclose: true
-          
+        dateFormat: "yy-mm-dd"
     });
-    
-    
-    
-    
-    
 //    $('body').on('keyup', 'input[type=text]', function () {
 //        var start = this.selectionStart,
 //                end = this.selectionEnd;

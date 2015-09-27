@@ -152,10 +152,10 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="cargo">Tarea Padre</label>
+                        <label for="tareapadre">Tarea Padre</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <select name="cargo" id="cargo" class="form-control">
+                        <select name="tareapadre" id="tareapadre" class="form-control">
                             <option value="">::Seleccionar::</option>
                         </select>
                     </div>
@@ -267,14 +267,16 @@
         
     });
     $('#guardartarea').click(function () {
+    
+        if(obligatorio("obligatorio")){
+            $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
+                    $('#f8').serialize()
+                    ).done(function (msg) {
 
-        $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
-                $('#f8').serialize()
-                ).done(function (msg) {
+            }).fail(function (msg) {
 
-        }).fail(function (msg) {
-
-        });
+            });
+        }
 
     });
     $('#cargo').change(function () {

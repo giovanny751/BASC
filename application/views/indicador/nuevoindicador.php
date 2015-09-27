@@ -1,3 +1,8 @@
+<style>
+    label{
+        color: black;
+    }
+</style>    
 <div class="widgetTitle">
     <h5>
         <i class="glyphicon glyphicon-ok"></i>CREACIÓN INDICADOR
@@ -31,8 +36,11 @@
                         <label for="tipo">Tipo</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">       
-                        <select name="tipo" id="tipo" class="form-control">
+                         <select name="tipo" id="tipo" class="form-control obligatorio" >
                             <option value="">::Seleccionar::</option>
+                            <?php foreach($tipo as $t ){ ?>
+                            <option value="<?php echo $t->tip_id ?>"><?php echo $t->tip_tipo ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -206,7 +214,7 @@
                             <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                        Fecha
+                                        <label for="fecha">Fecha</label>
                                     </div>
                                     <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
                                         <input type="text" name="fecha" id="fecha" class="form-control">
@@ -233,11 +241,11 @@
                                 <label for="comentarios">Comentarios</label>
                                 <textarea name="comentarios" id="comentarios" class="form-control"></textarea>
                             </div>
-                            <div class="row" style="text-align: center">
-                                <button type="button" class="btn btn-success">Guardar</button>
-                            </div>
-                        </div>
 
+                        </div>
+                        <div class="row" style="text-align: center">
+                            <button type="button" class="btn btn-success">Guardar</button>
+                        </div>
                     </div>
                     <div id="tab3" class="tab-pane">
 
@@ -263,15 +271,17 @@
 
                         <table class="table table-bordered table-hover">
                             <thead>
-                            <th>Fecha inicio</th>
-                            <th>Fecha fin</th>
-                            <th>Presupuesto</th>
-                            <th>Dirección</th>
+                            <th>Nombre Archivo</th>
+                            <th>Descripción</th>
+                            <th>Versión</th>
+                            <th>Responsable</th>
+                            <th>Tamaño</th>
+                            <th>Fecha</th>
                             <th>Acción</th>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td colspan="5"></td>
+                                    <td colspan="7"></td>
                                 </tr>
                             </tbody>
                         </table>

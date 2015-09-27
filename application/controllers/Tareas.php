@@ -32,8 +32,34 @@ class Tareas extends My_Controller {
     }
 
     function guardartarea() {
-        $data[] = array(
-        );
+        try{
+        $this->load->model('Tarea_model');
+            $data = array(
+                "act_id"=>$this->input->post("actividad"),
+//                ""=>$this->input->post("articulosnorma"),
+                "car_id"=>$this->input->post("cargo"),
+//                ""=>$this->input->post("tareapadre"),
+                "claRie_id"=>$this->input->post("clasificacionriesgo"),
+                "tar_costopresupuestado"=>$this->input->post("costrospresupuestados"),
+                "tar_descripcion"=>$this->input->post("descripcion"),
+                "dim_id"=>$this->input->post("dimensiondos"),
+                "dim2_id"=>$this->input->post("dimensionuno"),
+                "est_id"=>$this->input->post("estado"),
+                "tar_fechaInicio"=>$this->input->post("fechaIncio"),
+                "tar_fechaCreacion"=>$this->input->post("fechacreacion"),
+                "tar_fechaAfiliacion"=>$this->input->post("fechafinalizacion"),
+                "tar_fechaUltimaMod"=>$this->input->post("fechaultimamod"),
+                "tar_nombre"=>$this->input->post("nombre"),
+                "emp_id"=>$this->input->post("nombreempleado"),
+                "tar_peso"=>$this->input->post("peso"),
+                "tar_plan"=>$this->input->post("plan"),
+                "tip_id"=>$this->input->post("tipo"),
+                "tipRie_id"=>$this->input->post("tiposriesgos")
+            );
+            $this->Tarea_model->create($data);
+        }catch(Exception $e){
+            
+        }
     }
     function listadotareas(){
         

@@ -19,13 +19,23 @@ class Indicador extends My_Controller {
         $this->load->model('Empleado_model');
         $this->load->model('Dimension2_model');
         $this->load->model('Dimension_model');
-        
+        $this->load->model('Tipo_model');
+        $this->data['tipo'] = $this->Tipo_model->detail();
         $this->data['estados'] = $this->Estados_model->detail();
         $this->data['cargo'] = $this->Cargo_model->allcargos();
         $this->data['dimension'] = $this->Dimension_model->detail();
         $this->data['dimension2'] = $this->Dimension2_model->detail();
         $this->layout->view("indicador/nuevoindicador",$this->data);
         
+    }
+    function verindicadores(){
+        $this->load->model('Tipo_model');
+        $this->load->model('Dimension2_model');
+        $this->load->model('Dimension_model');
+        $this->data['dimension'] = $this->Dimension_model->detail();
+        $this->data['dimension2'] = $this->Dimension2_model->detail();
+        $this->data['tipo'] = $this->Tipo_model->detail();
+        $this->layout->view("indicador/verindicadores",$this->data);
     }
 
 }
