@@ -12,7 +12,7 @@
 <link href="<?= base_url('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') ?>" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
-<link href="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') ?>" rel="stylesheet" type="text/css"/>
+
 <link href="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.css') ?>" rel="stylesheet" type="text/css"/>
 <link href="<?= base_url('assets/global/plugins/jqvmap/jqvmap/jqvmap.css') ?>" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL PLUGIN STYLES -->
@@ -25,6 +25,29 @@
 <link href="<?= base_url('assets/admin/layout/css/layout.css') ?>" rel="stylesheet" type="text/css"/>
 <link href="<?= base_url('assets/admin/layout/css/themes/darkblue.css') ?>" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="<?= base_url('assets/admin/layout/css/custom.css') ?>" rel="stylesheet" type="text/css"/>
+
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/select2/select2.css') ?>"/>
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') ?>"/>
+
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/select2/select2.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') ?>"></script>
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/clockface/css/clockface.css') ?>"/>
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-datepicker/css/datepicker3.css') ?>"/>
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') ?>"/>
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') ?>"/>
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') ?>"/>
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ?>"/>
+
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/clockface/js/clockface.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/moment.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') ?>"></script>
+
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
 <script src="<?= base_url('assets/global/plugins/jquery.min.js') ?>" type="text/javascript"></script>
@@ -56,8 +79,7 @@
 <script src="<?= base_url('assets/global/plugins/flot/jquery.flot.resize.min.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/global/plugins/flot/jquery.flot.categories.min.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/global/plugins/jquery.pulsate.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/moment.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js') ?>" type="text/javascript"></script>
+
 <!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
 <script src="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js') ?>" type="text/javascript"></script>

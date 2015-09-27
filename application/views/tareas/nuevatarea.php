@@ -52,7 +52,7 @@
                         <label for="dimensionuno">Sucursal (Dim1)</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <select type="text" name="dimensionuno" id="dimensionuno" class="form-control" >
+                        <select name="dimensionuno" id="dimensionuno" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach($dimension as $d1){?>
                             <option value="<?php echo $d1->dim_id  ?>"><?php echo $d1->dim_descripcion  ?></option>
@@ -65,7 +65,7 @@
                         <label for="dimensiondos">Area de Trabajo (Dim2)</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <select type="text" name="dimensiondos" id="dimensiondos" class="form-control" >
+                        <select  name="dimensiondos" id="dimensiondos" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach($dimension2 as $d2){?>
                             <option value="<?php echo $d2->dim_id  ?>"><?php echo $d2->dim_descripcion  ?></option>
