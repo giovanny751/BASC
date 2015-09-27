@@ -39,7 +39,7 @@
                         <td><?php echo $c->car_nombre ?></td> 
                         <td><?php echo $c->jefe ?></td> 
                         <td><?php echo $c->car_porcentajearl ?></td> 
-                        <td></td>
+                        <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="<?php echo $c->car_id ?>"></i></td>
                         <td>
                             <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="<?php echo $c->car_id ?>"></i>
                             <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="<?php echo $c->car_id ?>"  data-toggle="modal" data-target="#myModal"></i>

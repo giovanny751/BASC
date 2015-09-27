@@ -5,7 +5,7 @@
 </div>
 <div class='well'>
     <div class="row">
-        <form method="post" id="riesgo">
+        <form method="post" id="riesgos">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <center>
@@ -114,7 +114,12 @@
                         <label for="color">Color</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">
-                        <input type="text" name="color" id="color" class="form-control">
+                        <select name="color" id="color" class="form-control">
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach($color as $c){ ?>
+                            <option value="<?php echo $c->col_id ?>"><?php echo $c->col_color ?></option>
+                            <?php }?>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -189,7 +194,7 @@
     });
     $("#guardar").click(function () {
 
-        $.post("<?php echo base_url("index.php/administrativo/guardarriesgo") ?>"
+        $.post("<?php echo base_url("index.php/riesgo/guardarriesgo") ?>"
                 , $("#riesgos").serialize()
                 ).done(function (msg) {
 
