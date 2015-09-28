@@ -36,6 +36,15 @@ class Dimension_model extends CI_Model {
         $this->db->set("dim_descripcion",$descripcion);
         $this->db->update("dimension");
     }
+    function dimensionunoriesgo($dimriesgo){
+        $this->db->where("dimension.dim_id",$dimriesgo);
+        $this->db->select("riesgo.rie_descripcion");
+        $this->db->distinct("riesgo.rie_descripcion");
+        $this->db->join("riesgo","riesgo.dim1_id = dimension.dim_id");
+        $cargo = $this->db->get("dimension");
+//        echo $this->db->last_query();die;
+        return $cargo->result();
+    }
 }
 
 ?>

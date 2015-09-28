@@ -36,7 +36,6 @@ class Tareas extends My_Controller {
         $this->load->model('Tarea_model');
             $data = array(
                 "act_id"=>$this->input->post("actividad"),
-//                ""=>$this->input->post("articulosnorma"),
                 "car_id"=>$this->input->post("cargo"),
 //                ""=>$this->input->post("tareapadre"),
                 "claRie_id"=>$this->input->post("clasificacionriesgo"),
@@ -56,7 +55,19 @@ class Tareas extends My_Controller {
                 "tip_id"=>$this->input->post("tipo"),
                 "tipRie_id"=>$this->input->post("tiposriesgos")
             );
-            $this->Tarea_model->create($data);
+            $idtarea = $this->Tarea_model->create($data);
+            
+            $articulosnorma = $this->input->post("articulosnorma");
+            $data = array();
+            for($i = 0; $i<count($articulosnorma); $i++){
+                $data[$i] = array(
+                    "nor_id" => $articulosnorma[$i],
+                    "tar_id" => $idtarea
+                );
+            }
+            
+            $this->Tarea_model->tareanorma($data);
+            
         }catch(Exception $e){
             
         }

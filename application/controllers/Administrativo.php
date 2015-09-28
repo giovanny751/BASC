@@ -284,6 +284,33 @@ class Administrativo extends My_Controller {
         $this->data["cargo"] = $this->Cargo_model->detail();
         $this->layout->view("administrativo/cargos", $this->data);
     }
+    function cargoriesgo(){
+        try{
+            $this->load->model('Cargo_model');
+            $riesgocargo = $this->Cargo_model->cargoriesgo($this->input->post('car_id'));
+            $this->output->set_content_type('application/json')->set_output(json_encode($riesgocargo));
+        }catch(exception $e){
+            
+        }
+    }
+    function dimensionunoriesgo(){
+        try{
+            $this->load->model('Dimension_model');
+            $riesgocargo = $this->Dimension_model->dimensionunoriesgo($this->input->post('dim_id'));
+            $this->output->set_content_type('application/json')->set_output(json_encode($riesgocargo));
+        }catch(exception $e){
+            
+        }
+    }
+    function dimensiondosriesgo(){
+        try{
+            $this->load->model('Dimension2_model');
+            $riesgocargo = $this->Dimension2_model->dimensionunoriesgo($this->input->post('dim_id'));
+            $this->output->set_content_type('application/json')->set_output(json_encode($riesgocargo));
+        }catch(exception $e){
+            
+        }
+    }
     
     function consultausuarioscargo() {
 

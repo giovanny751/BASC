@@ -94,7 +94,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <th>RIESGOS</th>
+                            </thead>
+                            <tbody id="riesgocargo">
+                                
+                            </tbody>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -105,7 +112,27 @@
     </div>
 </div>
 <script>
-
+    $('body').delegate(".riesgo","click",function(){
+        
+        var car_id = $(this).attr("car_id");
+        $.post(
+                "<?php echo base_url("index.php/administrativo/cargoriesgo") ?>",
+                {
+                    car_id:car_id,
+                }
+        ).done(function (msg) {
+            $("#riesgocargo *").remove();
+            var body = "";
+            $.each(msg,function(key,val){
+                body += "<tr>";
+                body += "<td>"+val.rie_descripcion+"</td>";
+                body += "</tr>";
+            });
+            $("#riesgocargo").append(body);
+        }).fail(function (msg) {
+            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+        });
+    });
     $('.guardarmodificacion').click(function () {
         $.post(
                 "<?php echo base_url("index.php/administrativo/modificacioncargo") ?>",

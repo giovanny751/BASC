@@ -25,8 +25,8 @@
                 <?php foreach ($dimension as $d) { ?>
                     <tr>
                         <td><?php echo $d->dim_descripcion ?></td>
-                        <td></td>
-                        <td>
+                        <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
+                        <td style="text-align: center">
                             <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" ></i>
                             <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#myModal"></i>
                         </td>
@@ -61,9 +61,54 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="riesgo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">RIESGOS ASOCIADOS</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <th>RIESGOS</th>
+                            </thead>
+                            <tbody id="riesgodimension">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
-
+$('body').delegate(".riesgo","click",function(){
+        
+        var dim_id = $(this).attr("dim_id");
+        $.post(
+                "<?php echo base_url("index.php/administrativo/dimensiondosriesgo") ?>",
+                {
+                    dim_id:dim_id,
+                }
+        ).done(function (msg) {
+            $("#riesgodimension *").remove();
+            var body = "";
+            $.each(msg,function(key,val){
+                body += "<tr>";
+                body += "<td>"+val.rie_descripcion+"</td>";
+                body += "</tr>";
+            });
+            $("#riesgodimension").append(body);
+        }).fail(function (msg) {
+            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+        });
+    });
     $('.guardarmodificacion').click(function () {
 
         $.post(

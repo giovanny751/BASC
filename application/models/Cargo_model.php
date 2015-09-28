@@ -77,6 +77,16 @@ class Cargo_model extends CI_Model {
         return $cargo->result_array();
         
     }
+    function cargoriesgo(){
+        
+        $this->db->select("riesgo.rie_descripcion");
+        $this->db->distinct("riesgo.rie_descripcion");
+        $this->db->join("riesgo_cargo","riesgo_cargo.car_id = cargo.car_id");
+        $this->db->join("riesgo","riesgo.rie_id = riesgo_cargo.rie_id");
+        $cargo = $this->db->get("cargo");
+        return $cargo->result();
+        
+    }
 
 }
 

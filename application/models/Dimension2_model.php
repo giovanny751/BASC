@@ -15,27 +15,40 @@ class Dimension2_model extends CI_Model {
     }
 
     function detail() {
-        $this->db->where("est_id",1);
+        $this->db->where("est_id", 1);
         $cargo = $this->db->get("dimension2");
         return $cargo->result();
     }
 
     function delete($id) {
         $this->db->where("dim_id", $id);
-        $this->db->set("est_id",3);
+        $this->db->set("est_id", 3);
         $this->db->update("dimension2");
     }
-    function consultadimensionxid($dimid){
-        $this->db->where("dim_id",$dimid);
-        $this->db->where("est_id",1);
+
+    function consultadimensionxid($dimid) {
+        $this->db->where("dim_id", $dimid);
+        $this->db->where("est_id", 1);
         $dim = $this->db->get("dimension2");
         return $dim->result();
     }
-    function guardarmodificaciondimension($descripcion,$id){
-        $this->db->where("dim_id",$id);
-        $this->db->set("dim_descripcion",$descripcion);
+
+    function guardarmodificaciondimension($descripcion, $id) {
+        $this->db->where("dim_id", $id);
+        $this->db->set("dim_descripcion", $descripcion);
         $this->db->update("dimension2");
     }
+
+    function dimensionunoriesgo($dimriesgo) {
+        $this->db->where("dimension2.dim_id", $dimriesgo);
+        $this->db->select("riesgo.rie_descripcion");
+        $this->db->distinct("riesgo.rie_descripcion");
+        $this->db->join("riesgo", "riesgo.dim2_id = dimension2.dim_id");
+        $cargo = $this->db->get("dimension2");
+//        echo $this->db->last_query();die;
+        return $cargo->result();
+    }
+
 }
 
 ?>

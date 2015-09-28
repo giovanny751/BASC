@@ -88,10 +88,11 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="articulosnorma">Articulos Norma</label>
+                        <label for="norma">Artículos Norma</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="articulosnorma" id="articulosnorma" class="form-control" />
+                        <?php // echo listaMultiple2("cargo[]","cargo","form-control","cargo","car_id","car_nombre",null,null,null) ?>
+                        <?php echo listaMultiple2("articulosnorma[]","norma","form-control","norma","nor_id","nor_norma",null,null,null) ?>
                     </div>
                 </div>
                 <div class="row">

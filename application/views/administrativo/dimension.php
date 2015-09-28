@@ -70,7 +70,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <th>RIESGOS</th>
+                            </thead>
+                            <tbody id="riesgodimension">
+                                
+                            </tbody>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -81,7 +88,27 @@
     </div>
 </div>
 <script>
-
+$('body').delegate(".riesgo","click",function(){
+        
+        var dim_id = $(this).attr("dim_id");
+        $.post(
+                "<?php echo base_url("index.php/administrativo/dimensionunoriesgo") ?>",
+                {
+                    dim_id:dim_id,
+                }
+        ).done(function (msg) {
+            $("#riesgodimension *").remove();
+            var body = "";
+            $.each(msg,function(key,val){
+                body += "<tr>";
+                body += "<td>"+val.rie_descripcion+"</td>";
+                body += "</tr>";
+            });
+            $("#riesgodimension").append(body);
+        }).fail(function (msg) {
+            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+        });
+    });
     $('.guardarmodificacion').click(function () {
 
         $.post(
