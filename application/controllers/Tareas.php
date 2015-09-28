@@ -34,7 +34,7 @@ class Tareas extends My_Controller {
             $this->data['dimension2'] = $this->Dimension2_model->detail();
             $this->layout->view("tareas/nuevatarea",$this->data);
         }else{
-            echo "no tiene permisos";
+            $this->layout->view("permisos");
         }
     }
 

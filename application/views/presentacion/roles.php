@@ -71,10 +71,17 @@
     </div>
 </div>    
 <script>
-//    
-//    $('.seleccionados').click(function(){
-//        $(this).parents('')
-//    });
+$('.seleccionados').click(function() {
+        var atr = $(this).attr('atr')
+        var marcado = $(this).is(":checked");
+        if(marcado==true)
+            var r=true;
+        else
+            var r=false;
+        $("."+atr).each(function() {
+            $(this).prop('checked', r);
+        });
+    })
 //    
 //------------------------------------------------------------------------------
 //                      ELIMINAR ROL    
