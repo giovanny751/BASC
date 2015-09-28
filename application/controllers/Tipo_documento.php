@@ -7,12 +7,13 @@ class Tipo_documento extends My_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->database();
+        
         $this->load->model('Tipo_documento__model');
         $this->load->helper('security');
         $this->load->helper('miscellaneous');
         $this->load->library('tcpdf/tcpdf.php');
-        validate_login($this->session->userdata('usu_id'));
+        $this->data["usu_id"] = $this->session->userdata('usu_id');
+        validate_login($this->data["usu_id"]);
     }
     function index(){
         $this->data['post']=$this->input->post();

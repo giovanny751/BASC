@@ -26,6 +26,7 @@ class MY_Controller extends CI_Controller {
         // creación dinámica del menú
         parent::__construct();
         header('Pragma: no-cache');
+        $this->load->database();
         $this->load->library('layout', 'layout_main');
         $this->load->helper('miscellaneous');
         $this->data['user']=$this->session->userdata();
@@ -41,10 +42,7 @@ class MY_Controller extends CI_Controller {
         $ci =& get_instance();
         $controller = $ci->router->fetch_class();
         $method = $ci->router->fetch_method();
-        $consulta = $this->Ingreso_model->consultapermisosmenu($usu_id['usu_id'],$controller,$method);
-        
-//        var_dump($consulta);die;
-        
+        $consulta = $this->Ingreso_model->consultapermisosmenu($usu_id,$controller,$method);
         if(!empty($consulta)){
             return true;
         }else{

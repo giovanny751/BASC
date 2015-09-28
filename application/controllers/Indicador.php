@@ -10,7 +10,8 @@ class Indicador extends My_Controller {
         $this->load->database();
         $this->load->helper('miscellaneous');
         $this->load->helper('security');
-        validate_login($this->session->userdata('usu_id'));
+        $this->data["usu_id"] = $this->session->userdata('usu_id');
+        validate_login($this->data["usu_id"]);
     }
 
     function nuevoindicador(){

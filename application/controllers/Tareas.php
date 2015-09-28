@@ -12,23 +12,30 @@ class Tareas extends My_Controller {
         $this->load->model('Roles_model');
         $this->load->helper('miscellaneous');
         $this->load->helper('security');
-        validate_login($this->session->userdata('usu_id'));
+        $this->data["usu_id"] = $this->session->userdata('usu_id');
+        validate_login($this->data["usu_id"]);
     }
 
     function nuevatarea() {
-        $this->load->model('Estados_model');
-        $this->load->model('Cargo_model');
-        $this->load->model('Planes_model');
-        $this->load->model('Dimension2_model');
-        $this->load->model('Dimension_model');
-        $this->load->model('Tipo_model');
-        $this->data['estados'] = $this->Estados_model->detail();
-        $this->data['tipo'] = $this->Tipo_model->detail();
-        $this->data['planes'] = $this->Planes_model->detail();
-        $this->data['cargo'] = $this->Cargo_model->allcargos();
-        $this->data['dimension'] = $this->Dimension_model->detail();
-        $this->data['dimension2'] = $this->Dimension2_model->detail();
-        $this->layout->view("tareas/nuevatarea",$this->data);
+        
+        if($this->consultaacceso($this->data["usu_id"]))
+        {  
+            $this->load->model('Estados_model');
+            $this->load->model('Cargo_model');
+            $this->load->model('Planes_model');
+            $this->load->model('Dimension2_model');
+            $this->load->model('Dimension_model');
+            $this->load->model('Tipo_model');
+            $this->data['estados'] = $this->Estados_model->detail();
+            $this->data['tipo'] = $this->Tipo_model->detail();
+            $this->data['planes'] = $this->Planes_model->detail();
+            $this->data['cargo'] = $this->Cargo_model->allcargos();
+            $this->data['dimension'] = $this->Dimension_model->detail();
+            $this->data['dimension2'] = $this->Dimension2_model->detail();
+            $this->layout->view("tareas/nuevatarea",$this->data);
+        }else{
+            echo "no tiene permisos";
+        }
     }
 
     function guardartarea() {
@@ -37,7 +44,6 @@ class Tareas extends My_Controller {
             $data = array(
                 "act_id"=>$this->input->post("actividad"),
                 "car_id"=>$this->input->post("cargo"),
-//                ""=>$this->input->post("tareapadre"),
                 "claRie_id"=>$this->input->post("clasificacionriesgo"),
                 "tar_costopresupuestado"=>$this->input->post("costrospresupuestados"),
                 "tar_descripcion"=>$this->input->post("descripcion"),
@@ -56,16 +62,14 @@ class Tareas extends My_Controller {
                 "tipRie_id"=>$this->input->post("tiposriesgos")
             );
             $idtarea = $this->Tarea_model->create($data);
-            
             $articulosnorma = $this->input->post("articulosnorma");
             $data = array();
-            for($i = 0; $i<count($articulosnorma); $i++){
+            for($i = 0; $i<count($articulosnorma); $i++):
                 $data[$i] = array(
                     "nor_id" => $articulosnorma[$i],
                     "tar_id" => $idtarea
                 );
-            }
-            
+            endfor;
             $this->Tarea_model->tareanorma($data);
             
         }catch(Exception $e){
