@@ -33,6 +33,9 @@
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">
                         <select name="categoria" id="categoria" class="form-control">
                             <option value="">::Seleccionar::</option>
+                            <?php foreach($categoria as $ca){?>
+                            <option value="<?php echo $ca->cat_id ?>"><?php echo $ca->cat_categoria ?></option>
+                            <?php }?>
                         </select>
                     </div>
                 </div>
@@ -106,6 +109,9 @@
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">
                         <select name="estado" id="estado" class="form-control">
                             <option value="">::Seleccionar::</option>
+                            <?php foreach($estadoaceptacion as $ea):?>
+                            <option value="<?php echo $ea->estAce_id?>"><?php echo $ea->estAce_estado?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>

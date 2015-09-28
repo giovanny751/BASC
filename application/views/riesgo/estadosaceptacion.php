@@ -5,10 +5,12 @@
 </div>
 <div class='well'>
     <div class="row">
-        <div class="form-group">
-            <label>Estado de aceptación</label>
-            <input type="text" name="categoria" id="cat">
-            <button type="button" class="btn btn-success categoria">Agregar</button>
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="estadoaceptacion">Estado de aceptación</label>
+                <input type="text" name="estadoaceptacion" id="estadoaceptacion" class="form-control">
+                <button type="button" class="btn btn-success estado">Agregar</button>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -19,11 +21,13 @@
             <th>Acción</th>
             </thead>
             <tbody>
+                <?php foreach($estadoaceptacion as $ea):?>
                 <tr>
-                    <td></td>
+                    <td><?php echo $ea->estAce_estado?></td>
                     <td></td>
                     <td></td>
                 </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
@@ -61,12 +65,17 @@
     </div>
 </div>
 <script>
-    $('#categoria').click(function () {
+    $('#estadoaceptacion').autocomplete({
+        source: "<?php echo base_url("index.php/riesgo/autocompletarestadoaceptacion") ?>",
+        minLength: 1
+    });
+    
+    $('.estado').click(function () {
 
-        var categoria = $('#categoria').val();
+        var estadoaceptacion = $('#estadoaceptacion').val();
 
-        $.post("<?php echo base_url("index.php/administrativo/guardarcategoria") ?>",
-                {categoria: categoria}
+        $.post("<?php echo base_url("index.php/riesgo/guardaestadoaceptacion") ?>",
+                {estadoaceptacion: estadoaceptacion}
         ).done(function (msg) {
 
         })

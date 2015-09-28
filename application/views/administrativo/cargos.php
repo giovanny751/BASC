@@ -39,7 +39,7 @@
                         <td><?php echo $c->car_nombre ?></td> 
                         <td><?php echo $c->jefe ?></td> 
                         <td><?php echo $c->car_porcentajearl ?></td> 
-                        <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="<?php echo $c->car_id ?>"></i></td>
+                        <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="<?php echo $c->car_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
                         <td>
                             <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="<?php echo $c->car_id ?>"></i>
                             <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="<?php echo $c->car_id ?>"  data-toggle="modal" data-target="#myModal"></i>
@@ -80,6 +80,24 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                         <button type="button" class="btn btn-success guardarmodificacion">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="riesgo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">RIESGOS ASOCIADOS AL CARGO</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>

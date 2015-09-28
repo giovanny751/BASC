@@ -15,6 +15,10 @@ class Categoria_model extends CI_Model {
         $this->db->set("cat_categoria",$categoria);
         $this->db->insert("categoria");
     }
+    function detail(){
+        $categoria =$this->db->get("categoria");
+        return $categoria->result();
+    }
 
 
 }

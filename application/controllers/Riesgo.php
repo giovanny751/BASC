@@ -19,6 +19,10 @@ class Riesgo extends My_Controller {
         $this->load->model('Cargo_model');
         $this->load->model('Tipo_model');
         $this->load->model('Color_model');
+        $this->load->model('Categoria_model');
+        $this->load->model('Estadoaceptacion_model');
+        $this->data['estadoaceptacion'] = $this->Estadoaceptacion_model->detail();
+        $this->data['categoria'] = $this->Categoria_model->detail();
         $this->data['color'] = $this->Color_model->detail();
         $this->data['tipo'] = $this->Tipo_model->detail();
         $this->data['dimension'] = $this->Dimension_model->detail();
@@ -89,6 +93,10 @@ class Riesgo extends My_Controller {
         $info = auto("categoria", "cat_id", "cat_categoria", $this->input->get('term'));
         $this->output->set_content_type('application/json')->set_output(json_encode($info));
     }
+    function autocompletarestadoaceptacion() {
+        $info = auto("estado_aceptacion", "estAce_id", "estAce_estado", $this->input->get('term'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($info));
+    }
 
     function listadoriesgo() {
         $this->load->model('Dimension2_model');
@@ -103,10 +111,20 @@ class Riesgo extends My_Controller {
     }
 
     function estadosaceptacion() {
-
-        $this->layout->view("riesgo/estadosaceptacion");
+        $this->load->model('Estadoaceptacion_model');
+        $this->data['estadoaceptacion'] = $this->Estadoaceptacion_model->detail();
+        $this->layout->view("riesgo/estadosaceptacion",$this->data);
     }
-
+    
+    function guardaestadoaceptacion(){
+        
+        try{
+            $this->load->model('Estadoaceptacion_model');
+            $this->Estadoaceptacion_model->insert($this->input->post("estadoaceptacion"));
+        }catch(exception $e){
+            
+        }
+    }
 }
 
 /* End of file welcome.php */
