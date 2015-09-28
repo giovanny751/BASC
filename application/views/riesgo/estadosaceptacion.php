@@ -1,3 +1,7 @@
+<script type="text/javascript">
+        $(".menRIESGOS").addClass("active open");
+        $(".subMenESTADOS_DE_ACEPTACIÓN").addClass("active");
+</script>
 <div class="widgetTitle">
     <h5>
         <i class="glyphicon glyphicon-ok"></i>ESTADOS DE ACEPTACIÓN

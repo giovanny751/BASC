@@ -1,3 +1,7 @@
+<script type="text/javascript">
+        $(".menRIESGOS").addClass("active open");
+        $(".subMenLISTADO_RIESGOS").addClass("active");
+</script>
 <div class="widgetTitle">
     <h5>
         <i class="glyphicon glyphicon-ok"></i>VER RIESGOS
@@ -71,6 +75,7 @@
             <th>Fecha Creación</th>
             <th>Estado de aceptación</th>
             <th>Tareas(activas)</th>
+            <th>Accion</th>
             </thead>
             <tbody id="inforiesgo">
                 <tr>

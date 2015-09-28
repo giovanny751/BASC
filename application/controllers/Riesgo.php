@@ -135,6 +135,19 @@ class Riesgo extends My_Controller {
             
         }
     }
+    function consultaRiesgoFlechas(){
+        try{
+            $this->load->model("Riesgo_model");
+            $idRiesgo = $this->input->post("idRiesgo");
+            $metodo = $this->input->post("metodo");
+            $campos = $this->Riesgo_model->consultaRiesgoFlechas($idRiesgo,$metodo);
+            if(!empty($campos)){
+                $this->output->set_content_type('application/json')->set_output(json_encode($campos[0]));  
+            }
+        }catch(Exception $e){
+            
+        }
+    }
 }
 
 /* End of file welcome.php */

@@ -194,9 +194,9 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
                 foreach ($menu as $submenus):
                     if ($submenus[1] == "" && $submenus[2] == "") {
                         (!empty($submenus[3]))?$icon = $submenus[3]:$icon = "icon-folder";
-                        echo "<li class=''><a href='#'><i class='".$icon."'></i><span class='title'>" . strtoupper($nombrepapa) . "</span><span class='arrow'></span></a>";
+                        echo "<li class='men".str_replace(" ","_",strtoupper($nombrepapa))."'><a href='#'><i class='".$icon."'></i><span class='title'>" . strtoupper($nombrepapa) . "</span><span class='arrow'></span></a>";
                     } else {
-                        echo "<li class=''><a href='" . base_url("index.php/" . $submenus[1] . "/" . $submenus[2]) . "'>" . strtoupper($nombrepapa) . "</a>";
+                        echo "<li class='subMen".str_replace(" ","_",strtoupper($nombrepapa))."'><a href='" . base_url("index.php/" . $submenus[1] . "/" . $submenus[2]) . "'>" . strtoupper($nombrepapa) . "</a>";
                     }
                     if (!empty($submenus[0]))
                         modulos($submenus[0], $idusuario);

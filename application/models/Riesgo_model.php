@@ -36,6 +36,29 @@ class Riesgo_model extends CI_Model {
         $this->db->insert_batch("riesgo_cargo",$riesgocargo);
         
     }
+    function consultaRiesgoFlechas($idRiesgo,$metodo){
+        switch ($metodo){
+            case "flechaIzquierdaDoble":
+                $this->db->where("rie_id = (select min(rie_id) from riesgo)");
+                break;
+            case "flechaIzquierda":
+                $this->db->where("rie_id < '".$idRiesgo."' ");
+                $this->db->order_by("rie_id desc");
+                break;
+            case "flechaDerecha":
+                $this->db->where("rie_id > '".$idRiesgo."' ");
+                $this->db->order_by("rie_id asc");
+                break;
+            case "flechaDerechaDoble":
+                $this->db->where("rie_id = (select max(rie_id) from riesgo)");
+                break;
+            default :
+                die;
+                break;
+        }
+        $usuario = $this->db->get("riesgo",1);
+        return $usuario->result();
+    }
 }
 
 ?>

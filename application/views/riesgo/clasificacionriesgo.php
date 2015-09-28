@@ -1,3 +1,7 @@
+<script type="text/javascript">
+        $(".menRIESGOS").addClass("active open");
+        $(".subMenCLASIFICACIÓN_RIESGOS").addClass("active");
+</script>
 <div class="widgetTitle">
     <h5>
         <i class="glyphicon glyphicon-ok"></i>CLASIFICACIÓN DE RIESGO

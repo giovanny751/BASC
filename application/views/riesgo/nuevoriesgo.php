@@ -1,3 +1,7 @@
+<script type="text/javascript">
+        $(".menRIESGOS").addClass("active open");
+        $(".subMenNUEVO_RIESGO").addClass("active");
+</script>
 <div class="widgetTitle">
     <h5>
         <i class="glyphicon glyphicon-ok"></i>RIESGO
@@ -323,37 +327,38 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="rieid" name="rieid" />
 </div>
 <script>
     $(".flecha").click(function(){
-        var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
-        var idUsuarioCreado = $("#usuid").val();
+        var url = "<?php echo base_url("index.php/riesgo/consultaRiesgoFlechas") ?>";
+        var idRiesgo = $("#rieid").val();
         var metodo = $(this).attr("metodo");
         if(metodo != "documento"){
-            $.post(url,{idUsuarioCreado:idUsuarioCreado,metodo:metodo})
+            $.post(url,{idRiesgo:idRiesgo,metodo:metodo})
                     .done(function(msg){
-                        $("input[type='text'],select").val("");
-                        $("#usuid").val(msg.usu_id);
-                        $("#cedula").val(msg.usu_cedula);
-                        $("#nombres").val(msg.usu_nombre);
-                        $("#apellidos").val(msg.usu_apellido);
-                        $("#usuario").val(msg.usu_usuario);
-                        $("#contrasena").val(msg.usu_contrasena);
-                        $("#email").val(msg.usu_email);
-                        $("#genero").val(msg.sex_id);
-                        $("#estado").val(msg.est_id);//estado
-                        $("#cargo").val(msg.car_id);//cargo
-                        $("#empleado").val(msg.emp_id);//empleado
-                        if(msg.cambiocontrasena == "1"){
-                            $("#cambiocontrasena").is(":checked");
-                        }
+                        $("#riesgos input[type='text'],#riesgos select").val("");
+                        $("#rieid").val(msg.rie_id);
+                        $("#descripcion").val(msg.rie_descripcion);
+                        $("#categoria").val(msg.cat_id);
+                        $("#tipo").val(msg.tip_id);
+                        $("#dimensionuno").val(msg.dim1_id);
+                        $("#dimensiondos").val(msg.dim2_id);
+                        $("#zona").val(msg.rie_zona);
+                        $("#requisito").val(msg.rie_requisito);
+                        $("#observaciones").val(msg.rie_observaciones);
+                        $("#estado").val(msg.est_id);
+                        $("#color").val(msg.col_id);
+                        $("#actividades").val(msg.act_id);
+                        $("#cargos").val(msg.car_id);
+                        $("#fecha").val(msg.rie_fecha);
                     })
                     .fail(function(msg){
                         alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
                         $("input[type='text'], select").val();
                     })
         }else{
-            window.location = "<?php echo  base_url("index.php/tareas/listadoplanes"); ?>";
+            window.location = "<?php echo  base_url("index.php/riesgo/listadoriesgo"); ?>";
         }   
     });
     $("#guardar").click(function () {
