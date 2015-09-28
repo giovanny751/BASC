@@ -16,7 +16,7 @@
         <?php }else{?>
             <li class="devolver">
                 <i class="fa fa-home"></i>
-                <a href="index.html">Principal</a>
+                <a href="<?= base_url("index.php/presentacion/creacionmenu") ?>">Principal</a>
                 <i class="fa fa-angle-right"></i>
             </li>
         <?php } ?>

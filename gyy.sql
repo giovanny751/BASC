@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-09-26 18:54:00
+Date: 2015-09-27 19:21:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -116,6 +116,24 @@ INSERT INTO `cargo` VALUES ('44', 'gerente', '40', '40', 'S', '1');
 INSERT INTO `cargo` VALUES ('45', 'gerentedos', '42', '34', 'S', '1');
 INSERT INTO `cargo` VALUES ('46', 'contador', '40', '32', 'S', '1');
 INSERT INTO `cargo` VALUES ('47', 'xhs', '40', '32', 'S', '1');
+
+-- ----------------------------
+-- Table structure for `categoria`
+-- ----------------------------
+DROP TABLE IF EXISTS `categoria`;
+CREATE TABLE `categoria` (
+  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat_categoria` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of categoria
+-- ----------------------------
+INSERT INTO `categoria` VALUES ('1', 'ss');
+INSERT INTO `categoria` VALUES ('2', 'caregoria');
+INSERT INTO `categoria` VALUES ('3', '');
+INSERT INTO `categoria` VALUES ('4', 'prueba');
 
 -- ----------------------------
 -- Table structure for `ciiu`
@@ -776,6 +794,26 @@ INSERT INTO `ciudad` VALUES ('19', 'Montería');
 INSERT INTO `ciudad` VALUES ('20', 'Neiva');
 
 -- ----------------------------
+-- Table structure for `color`
+-- ----------------------------
+DROP TABLE IF EXISTS `color`;
+CREATE TABLE `color` (
+  `col_id` varchar(255) NOT NULL DEFAULT '',
+  `col_color` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`col_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of color
+-- ----------------------------
+INSERT INTO `color` VALUES ('black', 'negro');
+INSERT INTO `color` VALUES ('blue', 'azul');
+INSERT INTO `color` VALUES ('green', 'verde');
+INSERT INTO `color` VALUES ('red', 'rojo');
+INSERT INTO `color` VALUES ('white', 'blanco');
+INSERT INTO `color` VALUES ('yellow', 'amarillo');
+
+-- ----------------------------
 -- Table structure for `contacto`
 -- ----------------------------
 DROP TABLE IF EXISTS `contacto`;
@@ -974,6 +1012,22 @@ INSERT INTO `estados` VALUES ('3', 'Eliminado');
 INSERT INTO `estados` VALUES ('4', 'Finalizados');
 
 -- ----------------------------
+-- Table structure for `estado_aceptacion`
+-- ----------------------------
+DROP TABLE IF EXISTS `estado_aceptacion`;
+CREATE TABLE `estado_aceptacion` (
+  `estAce_id` int(11) NOT NULL AUTO_INCREMENT,
+  `estAce_estado` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`estAce_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of estado_aceptacion
+-- ----------------------------
+INSERT INTO `estado_aceptacion` VALUES ('1', 'estado gg');
+INSERT INTO `estado_aceptacion` VALUES ('2', 'estado ggds');
+
+-- ----------------------------
 -- Table structure for `estado_civil`
 -- ----------------------------
 DROP TABLE IF EXISTS `estado_civil`;
@@ -1077,7 +1131,7 @@ CREATE TABLE `ingreso` (
   `usu_id` int(11) NOT NULL,
   `ing_fechaIngreso` datetime NOT NULL,
   PRIMARY KEY (`ing_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of ingreso
@@ -1140,6 +1194,8 @@ INSERT INTO `ingreso` VALUES ('55', '1', '2015-09-20 23:48:44');
 INSERT INTO `ingreso` VALUES ('56', '1', '2015-09-21 10:26:51');
 INSERT INTO `ingreso` VALUES ('57', '1', '2015-09-26 16:59:20');
 INSERT INTO `ingreso` VALUES ('58', '1', '2015-09-26 23:36:06');
+INSERT INTO `ingreso` VALUES ('59', '1', '2015-09-27 19:20:37');
+INSERT INTO `ingreso` VALUES ('60', '1', '2015-09-28 01:49:26');
 
 -- ----------------------------
 -- Table structure for `inicio`
@@ -1209,47 +1265,48 @@ CREATE TABLE `modulo` (
   `menu_accion` varchar(100) DEFAULT NULL,
   `menu_estado` int(1) DEFAULT '1' COMMENT 'se le coloca un estado 1 porque esta activo',
   `tipMet_id` int(11) DEFAULT NULL,
+  `mod_icons` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of modulo
 -- ----------------------------
-INSERT INTO `modulo` VALUES ('95', '0', 'ORGANIZACIÓN', '95', null, null, '1', '1');
-INSERT INTO `modulo` VALUES ('96', '0', 'PLAN DE TRABAJO', '96', '', '', '1', '1');
-INSERT INTO `modulo` VALUES ('97', '0', 'NUEVA TAREA', '97', null, '', '1', '1');
-INSERT INTO `modulo` VALUES ('98', '0', 'DOCUMENTOS', '98', null, null, '1', '1');
-INSERT INTO `modulo` VALUES ('99', '0', 'RIESGOS', '99', null, null, '1', '1');
-INSERT INTO `modulo` VALUES ('101', '0', 'REGISTROS', '0', null, null, '1', '1');
-INSERT INTO `modulo` VALUES ('102', '95', 'CARACTERIZAR EMPRESA', '0', 'administrativo', 'empresa', '1', '1');
-INSERT INTO `modulo` VALUES ('103', '95', 'CARGOS', '0', 'administrativo', 'cargos', '1', '1');
-INSERT INTO `modulo` VALUES ('104', '95', 'DIMENSIÓN 1', '0', 'administrativo', 'dimension', '1', '1');
-INSERT INTO `modulo` VALUES ('105', '95', 'DIMENSIÓN 2', '0', 'administrativo', 'dimension2', '1', '1');
-INSERT INTO `modulo` VALUES ('106', '95', 'EMPLEADOS', '106', 'administrativo', 'creacionempleados', '1', '1');
-INSERT INTO `modulo` VALUES ('107', '95', 'USUARIOS', '107', 'administrativo', 'creacionusuarios', '1', '1');
-INSERT INTO `modulo` VALUES ('108', '95', 'CONTRATOS', '0', null, null, '1', '1');
-INSERT INTO `modulo` VALUES ('114', '107', 'CREACIÓN USUARIO', '0', 'administrativo', 'creacionusuarios', '1', '1');
-INSERT INTO `modulo` VALUES ('115', '107', 'LISTADO USUARIOS', '0', 'administrativo', 'listadousuarios', '1', '1');
-INSERT INTO `modulo` VALUES ('116', '106', 'CREACIÓN EMPLEADO', '0', 'administrativo', 'creacionempleados', '1', '1');
-INSERT INTO `modulo` VALUES ('117', '106', 'LISTADO EMPLEADOS', '0', 'administrativo', 'listadoempleados', '1', '1');
-INSERT INTO `modulo` VALUES ('118', '95', 'TIPO ASEGURADORAS', '118', '', '', '1', '1');
-INSERT INTO `modulo` VALUES ('119', '118', 'CREACIÓN TIPOS DE ASEGURADORA', '0', 'tipo_aseguradora', 'index', '1', '1');
-INSERT INTO `modulo` VALUES ('120', '118', 'LISTADO TIPOS DE ASEGURADORA', '0', 'tipo_aseguradora', 'consult_tipo_aseguradora', '1', '1');
-INSERT INTO `modulo` VALUES ('121', '97', 'CREACIÓN TAREAS', '0', 'tareas', 'nuevatarea', '1', '1');
-INSERT INTO `modulo` VALUES ('122', '97', 'LISTADO TAREAS', '0', 'tareas', 'listadotareas', '1', '1');
-INSERT INTO `modulo` VALUES ('123', '96', 'LISTADO PLANES', '0', 'tareas', 'listadoplanes', '1', '1');
-INSERT INTO `modulo` VALUES ('124', '96', 'CREACIÓN PLAN DE TRABAJO', '0', 'tareas', 'planes', '1', '1');
-INSERT INTO `modulo` VALUES ('125', '96', 'ACTIVIDADES', '0', 'tareas', 'listadoactividades', '1', '1');
-INSERT INTO `modulo` VALUES ('126', '95', 'ROL', '0', 'presentacion', 'roles', '1', '1');
-INSERT INTO `modulo` VALUES ('130', '99', 'NUEVO RIESGO', '0', 'riesgo', 'nuevoriesgo', '1', null);
-INSERT INTO `modulo` VALUES ('131', '99', 'LISTADO RIESGOS', '0', 'riesgo', 'listadoriesgo', '1', null);
-INSERT INTO `modulo` VALUES ('132', '99', 'CLASIFICACIÓN RIESGOS', '0', 'riesgo', 'clasificacionriesgo', '1', null);
-INSERT INTO `modulo` VALUES ('133', '99', 'ESTADOS DE ACEPTACIÓN', '0', 'riesgo', 'estadosaceptacion', '1', null);
-INSERT INTO `modulo` VALUES ('134', '0', 'INDICADORES', '134', null, null, '1', null);
-INSERT INTO `modulo` VALUES ('135', '134', 'TIPOS DE INDICADORES', '0', null, null, '1', null);
-INSERT INTO `modulo` VALUES ('136', '134', 'NUEVO INDICADOR', '0', null, null, '1', null);
-INSERT INTO `modulo` VALUES ('137', '134', 'LISTADO INDICADORES', '0', null, null, '1', null);
-INSERT INTO `modulo` VALUES ('139', '98', 'TIPOS DE DOCUMENTOS', '0', 'Tipo_documento', 'index', '1', null);
+INSERT INTO `modulo` VALUES ('95', '0', 'ORGANIZACIÓN', '95', null, null, '1', '1', 'icon-users');
+INSERT INTO `modulo` VALUES ('96', '0', 'PLAN DE TRABAJO', '96', '', '', '1', '1', 'icon-book-open');
+INSERT INTO `modulo` VALUES ('97', '0', 'NUEVA TAREA', '97', null, '', '1', '1', 'icon-notebook');
+INSERT INTO `modulo` VALUES ('98', '0', 'DOCUMENTOS', '98', null, null, '1', '1', 'icon-calculator');
+INSERT INTO `modulo` VALUES ('99', '0', 'RIESGOS', '99', null, null, '1', '1', 'icon-target');
+INSERT INTO `modulo` VALUES ('101', '0', 'REGISTROS', '0', null, null, '1', '1', null);
+INSERT INTO `modulo` VALUES ('102', '95', 'CARACTERIZAR EMPRESA', '0', 'administrativo', 'empresa', '1', '1', null);
+INSERT INTO `modulo` VALUES ('103', '95', 'CARGOS', '0', 'administrativo', 'cargos', '1', '1', null);
+INSERT INTO `modulo` VALUES ('104', '95', 'DIMENSIÓN 1', '0', 'administrativo', 'dimension', '1', '1', null);
+INSERT INTO `modulo` VALUES ('105', '95', 'DIMENSIÓN 2', '0', 'administrativo', 'dimension2', '1', '1', null);
+INSERT INTO `modulo` VALUES ('106', '95', 'EMPLEADOS', '106', 'administrativo', 'creacionempleados', '1', '1', null);
+INSERT INTO `modulo` VALUES ('107', '95', 'USUARIOS', '107', 'administrativo', 'creacionusuarios', '1', '1', null);
+INSERT INTO `modulo` VALUES ('108', '95', 'CONTRATOS', '0', null, null, '1', '1', null);
+INSERT INTO `modulo` VALUES ('114', '107', 'CREACIÓN USUARIO', '0', 'administrativo', 'creacionusuarios', '1', '1', null);
+INSERT INTO `modulo` VALUES ('115', '107', 'LISTADO USUARIOS', '0', 'administrativo', 'listadousuarios', '1', '1', null);
+INSERT INTO `modulo` VALUES ('116', '106', 'CREACIÓN EMPLEADO', '0', 'administrativo', 'creacionempleados', '1', '1', null);
+INSERT INTO `modulo` VALUES ('117', '106', 'LISTADO EMPLEADOS', '0', 'administrativo', 'listadoempleados', '1', '1', null);
+INSERT INTO `modulo` VALUES ('118', '95', 'TIPO ASEGURADORAS', '118', '', '', '1', '1', null);
+INSERT INTO `modulo` VALUES ('119', '118', 'CREACIÓN TIPOS DE ASEGURADORA', '0', 'tipo_aseguradora', 'index', '1', '1', null);
+INSERT INTO `modulo` VALUES ('120', '118', 'LISTADO TIPOS DE ASEGURADORA', '0', 'tipo_aseguradora', 'consult_tipo_aseguradora', '1', '1', null);
+INSERT INTO `modulo` VALUES ('121', '97', 'CREACIÓN TAREAS', '0', 'tareas', 'nuevatarea', '1', '1', null);
+INSERT INTO `modulo` VALUES ('122', '97', 'LISTADO TAREAS', '0', 'tareas', 'listadotareas', '1', '1', null);
+INSERT INTO `modulo` VALUES ('123', '96', 'LISTADO PLANES', '0', 'tareas', 'listadoplanes', '1', '1', null);
+INSERT INTO `modulo` VALUES ('124', '96', 'CREACIÓN PLAN DE TRABAJO', '0', 'tareas', 'planes', '1', '1', null);
+INSERT INTO `modulo` VALUES ('125', '96', 'ACTIVIDADES', '0', 'tareas', 'listadoactividades', '1', '1', null);
+INSERT INTO `modulo` VALUES ('126', '95', 'ROL', '0', 'presentacion', 'roles', '1', '1', null);
+INSERT INTO `modulo` VALUES ('130', '99', 'NUEVO RIESGO', '0', 'riesgo', 'nuevoriesgo', '1', null, null);
+INSERT INTO `modulo` VALUES ('131', '99', 'LISTADO RIESGOS', '0', 'riesgo', 'listadoriesgo', '1', null, null);
+INSERT INTO `modulo` VALUES ('132', '99', 'CLASIFICACIÓN RIESGOS', '0', 'riesgo', 'clasificacionriesgo', '1', null, null);
+INSERT INTO `modulo` VALUES ('133', '99', 'ESTADOS DE ACEPTACIÓN', '0', 'riesgo', 'estadosaceptacion', '1', null, null);
+INSERT INTO `modulo` VALUES ('134', '0', 'INDICADORES', '134', null, null, '1', null, 'icon-crop');
+INSERT INTO `modulo` VALUES ('135', '134', 'TIPOS DE INDICADORES', '0', null, null, '1', null, null);
+INSERT INTO `modulo` VALUES ('136', '134', 'NUEVO INDICADOR', '0', 'indicador', 'nuevoindicador', '1', null, null);
+INSERT INTO `modulo` VALUES ('137', '134', 'LISTADO INDICADORES', '0', 'indicador', 'verindicadores', '1', null, null);
+INSERT INTO `modulo` VALUES ('139', '98', 'TIPOS DE DOCUMENTOS', '0', 'Tipo_documento', 'index', '1', null, null);
 
 -- ----------------------------
 -- Table structure for `norma`
@@ -1340,7 +1397,7 @@ CREATE TABLE `permisos_rol` (
   `menu_id` int(11) DEFAULT NULL,
   `rol_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`perRol_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1128 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1163 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of permisos_rol
@@ -1375,38 +1432,41 @@ INSERT INTO `permisos_rol` VALUES ('47', '57', '43');
 INSERT INTO `permisos_rol` VALUES ('48', '58', '43');
 INSERT INTO `permisos_rol` VALUES ('49', '9', '44');
 INSERT INTO `permisos_rol` VALUES ('50', '38', '44');
-INSERT INTO `permisos_rol` VALUES ('1096', '95', '58');
-INSERT INTO `permisos_rol` VALUES ('1097', '102', '58');
-INSERT INTO `permisos_rol` VALUES ('1098', '103', '58');
-INSERT INTO `permisos_rol` VALUES ('1099', '104', '58');
-INSERT INTO `permisos_rol` VALUES ('1100', '105', '58');
-INSERT INTO `permisos_rol` VALUES ('1101', '106', '58');
-INSERT INTO `permisos_rol` VALUES ('1102', '116', '58');
-INSERT INTO `permisos_rol` VALUES ('1103', '117', '58');
-INSERT INTO `permisos_rol` VALUES ('1104', '107', '58');
-INSERT INTO `permisos_rol` VALUES ('1105', '114', '58');
-INSERT INTO `permisos_rol` VALUES ('1106', '115', '58');
-INSERT INTO `permisos_rol` VALUES ('1107', '108', '58');
-INSERT INTO `permisos_rol` VALUES ('1108', '118', '58');
-INSERT INTO `permisos_rol` VALUES ('1109', '119', '58');
-INSERT INTO `permisos_rol` VALUES ('1110', '120', '58');
-INSERT INTO `permisos_rol` VALUES ('1111', '126', '58');
-INSERT INTO `permisos_rol` VALUES ('1112', '138', '58');
-INSERT INTO `permisos_rol` VALUES ('1113', '96', '58');
-INSERT INTO `permisos_rol` VALUES ('1114', '123', '58');
-INSERT INTO `permisos_rol` VALUES ('1115', '124', '58');
-INSERT INTO `permisos_rol` VALUES ('1116', '125', '58');
-INSERT INTO `permisos_rol` VALUES ('1117', '97', '58');
-INSERT INTO `permisos_rol` VALUES ('1118', '121', '58');
-INSERT INTO `permisos_rol` VALUES ('1119', '122', '58');
-INSERT INTO `permisos_rol` VALUES ('1120', '98', '58');
-INSERT INTO `permisos_rol` VALUES ('1121', '139', '58');
-INSERT INTO `permisos_rol` VALUES ('1122', '99', '58');
-INSERT INTO `permisos_rol` VALUES ('1123', '130', '58');
-INSERT INTO `permisos_rol` VALUES ('1124', '131', '58');
-INSERT INTO `permisos_rol` VALUES ('1125', '132', '58');
-INSERT INTO `permisos_rol` VALUES ('1126', '133', '58');
-INSERT INTO `permisos_rol` VALUES ('1127', '101', '58');
+INSERT INTO `permisos_rol` VALUES ('1128', '95', '58');
+INSERT INTO `permisos_rol` VALUES ('1129', '102', '58');
+INSERT INTO `permisos_rol` VALUES ('1130', '103', '58');
+INSERT INTO `permisos_rol` VALUES ('1131', '104', '58');
+INSERT INTO `permisos_rol` VALUES ('1132', '105', '58');
+INSERT INTO `permisos_rol` VALUES ('1133', '106', '58');
+INSERT INTO `permisos_rol` VALUES ('1134', '116', '58');
+INSERT INTO `permisos_rol` VALUES ('1135', '117', '58');
+INSERT INTO `permisos_rol` VALUES ('1136', '107', '58');
+INSERT INTO `permisos_rol` VALUES ('1137', '114', '58');
+INSERT INTO `permisos_rol` VALUES ('1138', '115', '58');
+INSERT INTO `permisos_rol` VALUES ('1139', '108', '58');
+INSERT INTO `permisos_rol` VALUES ('1140', '118', '58');
+INSERT INTO `permisos_rol` VALUES ('1141', '119', '58');
+INSERT INTO `permisos_rol` VALUES ('1142', '120', '58');
+INSERT INTO `permisos_rol` VALUES ('1143', '126', '58');
+INSERT INTO `permisos_rol` VALUES ('1144', '96', '58');
+INSERT INTO `permisos_rol` VALUES ('1145', '123', '58');
+INSERT INTO `permisos_rol` VALUES ('1146', '124', '58');
+INSERT INTO `permisos_rol` VALUES ('1147', '125', '58');
+INSERT INTO `permisos_rol` VALUES ('1148', '97', '58');
+INSERT INTO `permisos_rol` VALUES ('1149', '121', '58');
+INSERT INTO `permisos_rol` VALUES ('1150', '122', '58');
+INSERT INTO `permisos_rol` VALUES ('1151', '98', '58');
+INSERT INTO `permisos_rol` VALUES ('1152', '139', '58');
+INSERT INTO `permisos_rol` VALUES ('1153', '99', '58');
+INSERT INTO `permisos_rol` VALUES ('1154', '130', '58');
+INSERT INTO `permisos_rol` VALUES ('1155', '131', '58');
+INSERT INTO `permisos_rol` VALUES ('1156', '132', '58');
+INSERT INTO `permisos_rol` VALUES ('1157', '133', '58');
+INSERT INTO `permisos_rol` VALUES ('1158', '101', '58');
+INSERT INTO `permisos_rol` VALUES ('1159', '134', '58');
+INSERT INTO `permisos_rol` VALUES ('1160', '135', '58');
+INSERT INTO `permisos_rol` VALUES ('1161', '136', '58');
+INSERT INTO `permisos_rol` VALUES ('1162', '137', '58');
 
 -- ----------------------------
 -- Table structure for `planes`
@@ -1427,14 +1487,15 @@ CREATE TABLE `planes` (
   `pla_norma` varchar(100) DEFAULT NULL,
   `emp_id` int(10) DEFAULT NULL,
   `car_id` int(10) DEFAULT NULL,
+  `nor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`pla_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of planes
 -- ----------------------------
-INSERT INTO `planes` VALUES ('6', '1', 'prueba ', 'esto es la descripcion', '2015-08-12', '2015-08-15', '123', '23456', '23', '23456', '1234', 'xyz', '2', '40');
-INSERT INTO `planes` VALUES ('7', '1', 'prueabgerson', ' asdsd', '2015-09-02', '2015-09-30', '12', '123', '12', '123', '123', '123345', '2', '40');
+INSERT INTO `planes` VALUES ('6', '1', 'prueba plan 26/09', '   esto es la descripcion', '2015-08-12', '2015-08-15', '123', '23456', '23', '23456', '1234', 'xyz', '0', '41', '0');
+INSERT INTO `planes` VALUES ('7', '1', 'prueba ', ' esto es la descripcion', '2015-08-12', '2015-08-15', '123', '23456', '23', '23456', '1234', '123345', '3', '40', '0');
 
 -- ----------------------------
 -- Table structure for `politicas`
@@ -1519,6 +1580,35 @@ INSERT INTO `reportes` VALUES ('12', '^^', '1', null, null, null, null);
 INSERT INTO `reportes` VALUES ('13', '', '1', null, null, null, null);
 
 -- ----------------------------
+-- Table structure for `riesgo`
+-- ----------------------------
+DROP TABLE IF EXISTS `riesgo`;
+CREATE TABLE `riesgo` (
+  `rie_id` int(11) NOT NULL AUTO_INCREMENT,
+  `car_id` int(11) DEFAULT NULL,
+  `act_id` int(11) DEFAULT NULL,
+  `cat_id` int(11) DEFAULT NULL,
+  `col_id` varchar(11) DEFAULT NULL,
+  `rie_descripcion` text,
+  `dim1_id` int(11) DEFAULT NULL,
+  `dim2_id` int(11) DEFAULT NULL,
+  `est_id` int(11) DEFAULT NULL,
+  `rie_fecha` date DEFAULT NULL,
+  `rie_observaciones` text,
+  `rie_requisito` text,
+  `tip_id` int(11) DEFAULT NULL,
+  `rie_zona` varchar(255) DEFAULT NULL,
+  `cla_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`rie_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of riesgo
+-- ----------------------------
+INSERT INTO `riesgo` VALUES ('1', '40', '0', '0', '0', 'xyz', '14', '9', '0', '0000-00-00', 'adsfasdfasdfa', 'sd', '1', 'xast', null);
+INSERT INTO `riesgo` VALUES ('2', '40', '0', '0', '0', 'xyz', '14', '9', '0', '2015-09-17', 'adsfasdfasdfa', 'sd', '1', 'xast', null);
+
+-- ----------------------------
 -- Table structure for `roles`
 -- ----------------------------
 DROP TABLE IF EXISTS `roles`;
@@ -1582,6 +1672,39 @@ INSERT INTO `tamano_empresa` VALUES ('MI', 'Microempresa');
 INSERT INTO `tamano_empresa` VALUES ('PE', 'Pequeña empresa');
 INSERT INTO `tamano_empresa` VALUES ('ME', 'Mediana empresa');
 INSERT INTO `tamano_empresa` VALUES ('GR', 'Gran empresa');
+
+-- ----------------------------
+-- Table structure for `tarea`
+-- ----------------------------
+DROP TABLE IF EXISTS `tarea`;
+CREATE TABLE `tarea` (
+  `tar_id` int(11) NOT NULL AUTO_INCREMENT,
+  `act_id` int(11) DEFAULT NULL,
+  `car_id` int(11) DEFAULT NULL,
+  `claRie_id` int(11) DEFAULT NULL,
+  `tar_costopresupuestado` int(11) DEFAULT NULL,
+  `tar_descripcion` text,
+  `dim_id` int(11) DEFAULT NULL,
+  `dim2_id` int(11) DEFAULT NULL,
+  `est_id` int(11) DEFAULT NULL,
+  `tar_fechaInicio` date DEFAULT NULL,
+  `tar_fechaCreacion` date DEFAULT NULL,
+  `tar_fechaAfiliacion` date DEFAULT NULL,
+  `tar_fechaUltimaMod` date DEFAULT NULL,
+  `tar_nombre` varchar(255) DEFAULT NULL,
+  `emp_id` int(11) DEFAULT NULL,
+  `tar_peso` int(11) DEFAULT NULL,
+  `tar_plan` int(11) DEFAULT NULL,
+  `tip_id` int(11) DEFAULT NULL,
+  `tipRie_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`tar_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of tarea
+-- ----------------------------
+INSERT INTO `tarea` VALUES ('1', '0', '0', '0', '0', '', '0', '0', '0', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '', '2', '0', '0', '0', '0');
+INSERT INTO `tarea` VALUES ('2', '0', '40', '0', '1234', 'sdfgsdfasdfadsfasfdasdfasdfa', '9', '14', '1', '2015-09-09', '2015-09-28', '2015-09-27', '2015-09-30', 'tarea de prueba', '2', '12343', '6', '1', '0');
 
 -- ----------------------------
 -- Table structure for `tipo`
