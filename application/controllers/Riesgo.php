@@ -52,7 +52,6 @@ class Riesgo extends My_Controller {
         try{
             $this->load->model('Riesgo_model');
             $riesgo = array(
-              "car_id"=>$this->input->post("cargo"),  
               "act_id"=>$this->input->post("actividades"),  
               "cat_id"=>$this->input->post("categoria"),  
               "col_id"=>$this->input->post("color"),  
@@ -66,7 +65,18 @@ class Riesgo extends My_Controller {
               "tip_id"=>$this->input->post("tipo"),  
               "rie_zona"=>$this->input->post("zona")
             );
-            $this->Riesgo_model->create($riesgo);
+            $id = $this->Riesgo_model->create($riesgo);
+            $cargo = $this->input->post("cargo");
+            $riesgocargo = array();
+            for($i = 0;$i<count($cargo);$i++){
+                $riesgocargo[] = array(
+                    "car_id"=>$cargo[$i],
+                    "rie_id"=>$id
+                );
+            }
+            
+            $cargoriesgo = $this->Riesgo_model->riesgocargo($riesgocargo);
+            
         }catch(Exception $e){
             
         }

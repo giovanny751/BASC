@@ -8,6 +8,7 @@ class Riesgo_model extends CI_Model {
 
     function create($data) {
         $this->db->insert("riesgo", $data);
+        return $this->db->insert_id();
     }
     function filtrobusqueda($cargo,$clasificacion,$dimension2,$dimension,$tipo){
         
@@ -30,7 +31,11 @@ class Riesgo_model extends CI_Model {
         $riesgo =$this->db->get("riesgo");
         return $riesgo->result();
     }
-    
+    function riesgocargo($riesgocargo){
+        
+        $this->db->insert_batch("riesgo_cargo",$riesgocargo);
+        
+    }
 }
 
 ?>

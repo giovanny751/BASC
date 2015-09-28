@@ -365,7 +365,7 @@ function lista($name, $id, $class, $tabla, $option_value, $option_name, $value, 
         }
         $query = $CI->db->get($tabla); //var_dump($this->db1->last_query());echo '</br>';
         if ($query->num_rows() > 0) {
-            $html = "<select id=$id class='$class' name=$name   value=$value  >";
+            $html = "<select id=$id class='$class' name=$name >";
             if ($bloqued) {
                 $html .= "<option value='' disabled=disabled>Seleccione</option>";
             } else {
@@ -400,9 +400,56 @@ function lista($name, $id, $class, $tabla, $option_value, $option_name, $value, 
             }
             return $data;
     }
-    function buscador($tabla,$nombrecampo,$palabra){
+    function buscador($tabla,$nombrecampo,$palabra,$campo1=null,$campo2=null,$campo3=null){
         $CI = & get_instance();
         $CI->db->like($nombrecampo,$palabra);
+        if($campo1!=null)
+        $CI->db->or_like($campo1,$palabra);
+        if($campo2!=null)
+        $CI->db->or_like($campo2,$palabra);
+        if($campo3!=null)
+        $CI->db->or_like($campo3,$palabra);
+        $CI->db->where($tabla.'.activo','S');
         $user = $CI->db->get($tabla);
+//        echo $CI->db->last_query();
         return $user->result();
+    }
+    function listaMultiple2($name, $id, $class, $tabla, $option_value, $option_name, $value, $where, $bloqued) {
+        $CI = & get_instance();
+        if (!isset($value)) {
+            $value = "";
+        }
+        if (isset($where)) {
+            foreach ($where as $campo => $igual) {
+                $CI->db->where($campo, $igual);
+            }
+        }
+        $query = $CI->db->get($tabla); //var_dump($this->db1->last_query());echo '</br>';
+        if ($query->num_rows() > 0) {
+            $html = "<select multiple id=$id class=$class name=$name required='required'     >";
+//            if ($bloqued) {
+//                $html .= "<option value='' disabled=disabled>Seleccione</option>";
+//            } else {
+//                $html .= "<option value=''>Seleccione</option>";
+//            }
+            $i=0;
+            if(isset($value[$i]))
+            if($value[$i]=="")
+                $i=1;
+            foreach ($query->result() as $row) {
+                if ($row->$option_value == (isset($value[$i])?$value[$i]:'')) {
+                    $html.="<option value=" . $row->$option_value . " selected>" . $row->$option_name . "</option>";
+                    $i++;
+                } else {
+                    if ($bloqued) {
+                        $html.="<option  disabled=disabled  value=" . $row->$option_value . " >" . $row->$option_name . "</option>";
+                    } else {
+                        $html.="<option   value=" . $row->$option_value . " onlyRead >" . $row->$option_name . "</option>";
+                    }
+                }
+            }
+            return $html.="</select>";
+        } else {
+            return false;
+        }
     }

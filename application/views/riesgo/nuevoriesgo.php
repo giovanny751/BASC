@@ -143,12 +143,13 @@
                         <label for="cargos">Cargos</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 "> 
-                        <select name="cargo" id="cargo" class="form-control">
+                        <?php echo listaMultiple2("cargo[]","cargo","form-control","cargo","car_id","car_nombre",null,null,null) ?>
+<!--                        <select name="cargo" id="cargo" class="form-control">
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($cargo as $c) { ?>
                                 <option value="<?php echo $c->car_id ?>"><?php echo $c->car_nombre ?></option> 
                             <?php } ?>
-                        </select>
+                        </select>-->
                     </div>
                 </div>
                 <div class="row">
