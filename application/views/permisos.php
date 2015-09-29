@@ -1,25 +1,17 @@
 <div class="row">
-	<div class="col-md-12 page-404">
-		<div class="number">
-			 404
-		</div>
-		<div class="details">
-			<h3>Oops! You're lost.</h3>
-			<p>
-				 We can not find the page you're looking for.<br/>
-				<a href="index.html">
-				Return home </a>
-				or try the search bar below.
-			</p>
-			<form action="#">
-				<div class="input-group input-medium">
-					<input type="text" class="form-control" placeholder="keyword...">
-					<span class="input-group-btn">
-					<button type="submit" class="btn blue"><i class="fa fa-search"></i></button>
-					</span>
-				</div>
-				<!-- /input-group -->
-			</form>
-		</div>
-	</div>
+    <div class="col-md-12 page-404">
+        <div class="number">
+            Error
+        </div>
+        <div class="details">
+            <h3>PERMISOS</h3>
+            <!--<h3>El Usuario no cuenta con los permisos para acceder este modulo.</h3>-->
+            <p>
+                     El Usuario no cuenta con los permisos.<br/>
+                     para acceder este modulo.<br/>
+                    <a href="<?php echo base_url("index.php/presentacion/principal") ?>">
+                    Inicio </a>
+            </p>                
+        </div>
+    </div>
 </div>

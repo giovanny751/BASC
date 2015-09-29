@@ -46,7 +46,8 @@
 
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.css') ?>"/>
-
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link href="<?= base_url('assets/admin/pages/css/error.css') ?>" rel="stylesheet" type="text/css"/>
 
 
 
