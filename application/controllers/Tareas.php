@@ -244,6 +244,19 @@ class Tareas extends My_Controller {
         $info = auto("planes", "pla_id", "pla_nombre", $this->input->get('term'));
         $this->output->set_content_type('application/json')->set_output(json_encode($info));
     }
+    function consultaTareasFlechas(){
+        try{
+            $this->load->model("Tarea_model");
+            $idTarea = $this->input->post("idTarea");
+            $metodo = $this->input->post("metodo");
+            $campos = $this->Tarea_model->consultaTareasFlechas($idTarea,$metodo);
+            if(!empty($campos)){
+                $this->output->set_content_type('application/json')->set_output(json_encode($campos[0]));  
+            }
+        }catch(Exception $e){
+            
+        }
+    }
 }
 
 /* End of file welcome.php */

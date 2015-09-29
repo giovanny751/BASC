@@ -1,3 +1,7 @@
+<script type="text/javascript">
+        $(".menNUEVA_TAREA").addClass("active open");
+        $(".subMenCREACIÓN_TAREAS").addClass("active");
+</script>
 <div class="widgetTitle" >
     <h5>
         <i class="glyphicon glyphicon-ok"></i>NUEVA TAREA
@@ -232,39 +236,26 @@
             <center><button type="button" id="guardartarea" class="btn btn-success">Guardar</button></center>
         </div>
     </form>
+    <input type="hidden" id="tareid" name="tareid" />
 </div>
 <script>
-    $(".flecha").click(function(){
-        var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
-        var idUsuarioCreado = $("#usuid").val();
+   $(".flecha").click(function(){
+        var url = "<?php echo base_url("index.php/tareas/consultaTareasFlechas") ?>";
+        var idTarea = $("#tareid").val();
         var metodo = $(this).attr("metodo");
         if(metodo != "documento"){
-            $.post(url,{idUsuarioCreado:idUsuarioCreado,metodo:metodo})
+            $.post(url,{idTarea:idTarea,metodo:metodo})
                     .done(function(msg){
-                        $("input[type='text'],select").val("");
-                        $("#usuid").val(msg.usu_id);
-                        $("#cedula").val(msg.usu_cedula);
-                        $("#nombres").val(msg.usu_nombre);
-                        $("#apellidos").val(msg.usu_apellido);
-                        $("#usuario").val(msg.usu_usuario);
-                        $("#contrasena").val(msg.usu_contrasena);
-                        $("#email").val(msg.usu_email);
-                        $("#genero").val(msg.sex_id);
-                        $("#estado").val(msg.est_id);//estado
-                        $("#cargo").val(msg.car_id);//cargo
-                        $("#empleado").val(msg.emp_id);//empleado
-                        if(msg.cambiocontrasena == "1"){
-                            $("#cambiocontrasena").is(":checked");
-                        }
+                        $("#riesgos input[type='text'],#riesgos select").val("");
+                        $("#tareid").val(msg.tar_id);
                     })
                     .fail(function(msg){
                         alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
                         $("input[type='text'], select").val();
                     })
         }else{
-            window.location = "<?php echo  base_url("index.php/tareas/listadoplanes"); ?>";
+            window.location = "<?php echo  base_url("index.php/tareas/listadotareas"); ?>";
         }   
-        
     });
     $('#guardartarea').click(function () {
     

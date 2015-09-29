@@ -1,3 +1,7 @@
+<script type="text/javascript">
+        $(".menNUEVA_TAREA").addClass("active open");
+        $(".subMenLISTADO_TAREAS").addClass("active");
+</script>
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
         <label for="Plan">Plan</label>
