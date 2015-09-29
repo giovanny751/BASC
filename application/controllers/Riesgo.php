@@ -30,6 +30,8 @@ class Riesgo extends My_Controller {
             $this->data['dimension2'] = $this->Dimension2_model->detail();
             $this->data['cargo'] = $this->Cargo_model->allcargos();
             $this->layout->view("riesgo/nuevoriesgo", $this->data);
+        else:
+            $this->layout->view("permisos");
         endif;
     }
 
@@ -83,6 +85,8 @@ class Riesgo extends My_Controller {
     function clasificacionriesgo() {
         if ($this->consultaacceso($this->data["usu_id"])):
             $this->layout->view("riesgo/clasificacionriesgo");
+        else:
+            $this->layout->view("permisos");
         endif;
     }
 
@@ -121,6 +125,8 @@ class Riesgo extends My_Controller {
             $this->data['dimension'] = $this->Dimension_model->detail();
             $this->data['dimension2'] = $this->Dimension2_model->detail();
             $this->layout->view("riesgo/listadoriesgo", $this->data);
+        else:
+            $this->layout->view("permisos");
         endif;
     }
 
@@ -129,6 +135,8 @@ class Riesgo extends My_Controller {
             $this->load->model('Estadoaceptacion_model');
             $this->data['estadoaceptacion'] = $this->Estadoaceptacion_model->detail();
             $this->layout->view("riesgo/estadosaceptacion", $this->data);
+        else:
+            $this->layout->view("permisos");
         endif;
     }
 

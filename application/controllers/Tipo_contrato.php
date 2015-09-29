@@ -19,6 +19,8 @@ class Tipo_contrato extends My_Controller {
         if ($this->consultaacceso($this->data["usu_id"])):
         $this->data['post']=$this->input->post();
         $this->layout->view('tipo_contrato/index', $this->data);
+        else:
+            $this->layout->view("permisos");
         endif;
     }
     function consult_tipo_contrato(){
@@ -27,6 +29,8 @@ class Tipo_contrato extends My_Controller {
         $this->data['post']=$this->input->post();
         $this->data['datos']=$this->Tipo_contrato__model->consult_tipo_contrato($post);
         $this->layout->view('tipo_contrato/consult_tipo_contrato', $this->data);
+        else:
+            $this->layout->view("permisos");
         endif;
     }
     function save_tipo_contrato(){

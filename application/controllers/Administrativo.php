@@ -18,7 +18,7 @@ class Administrativo extends My_Controller {
 
     function creacionempleados() {
 
-        if ($this->consultaacceso($this->data["usu_id"])) {
+        if ($this->consultaacceso($this->data["usu_id"])) :
             $this->data['empleado'] = "";
             if (!empty($this->input->post('emp_id'))) {
                 $this->load->model('Empleado_model');
@@ -43,7 +43,9 @@ class Administrativo extends My_Controller {
             $this->data['dimension2'] = $this->Dimension2_model->detail();
 
             $this->layout->view("administrativo/creacionempleados", $this->data);
-        }
+        else:
+            $this->layout->view("permisos");
+        endif;
     }
 
     function guardarempleado() {
@@ -124,7 +126,7 @@ class Administrativo extends My_Controller {
     }
 
     function listadoempleados() {
-        if ($this->consultaacceso($this->data["usu_id"])) {
+        if ($this->consultaacceso($this->data["usu_id"])) :
             $this->load->model('Tipo_documento_model');
             $this->load->model('Tipocontrato_model');
             $this->load->model("Estados_model");
@@ -135,7 +137,9 @@ class Administrativo extends My_Controller {
 //        var_dump($this->data['tipocontrato']);die;
             $this->data["tipodocumento"] = $this->Tipo_documento_model->detail();
             $this->layout->view("administrativo/listadoempleados", $this->data);
-        }
+        else:
+            $this->layout->view("permisos");
+        endif;
     }
 
     function consultaempleados() {
@@ -163,7 +167,7 @@ class Administrativo extends My_Controller {
     }
 
     function creacionusuarios() {
-        if ($this->consultaacceso($this->data["usu_id"])) {
+        if ($this->consultaacceso($this->data["usu_id"])) :
             $this->load->model('Sexo_model');
             $this->load->model('Cargo_model');
             $this->load->model('Empleado_model');
@@ -180,11 +184,13 @@ class Administrativo extends My_Controller {
 //            var_dump($this->data['usuario']);die;
             }
             $this->layout->view("administrativo/creacionusuarios", $this->data);
-        }
+        else:
+            $this->layout->view("permisos");
+        endif;
     }
 
     function listadousuarios() {
-        if ($this->consultaacceso($this->data["usu_id"])) {
+        if ($this->consultaacceso($this->data["usu_id"])) :
             $this->load->model('Tipo_documento_model');
             $this->load->model('Estados_model');
             $this->load->model('User_model');
@@ -194,7 +200,9 @@ class Administrativo extends My_Controller {
             $this->data["tipodocumento"] = $this->Tipo_documento_model->detail();
             $this->data["usuarios"] = $this->User_model->consultageneral();
             $this->layout->view("administrativo/listadousuarios", $this->data);
-        }
+            else:
+            $this->layout->view("permisos");
+        endif;
     }
 
     function consultarusuario() {
@@ -279,18 +287,22 @@ class Administrativo extends My_Controller {
     }
 
     function organigrama() {
-        if ($this->consultaacceso($this->data["usu_id"])) {
+        if ($this->consultaacceso($this->data["usu_id"])) :
             $this->data["organigrama"] = $this->consultaorganigrama();
             $this->layout->view("administrativo/organigrama", $this->data);
-        }
+            else:
+            $this->layout->view("permisos");
+        endif;
     }
 
     function cargos() {
-        if ($this->consultaacceso($this->data["usu_id"])) {
+        if ($this->consultaacceso($this->data["usu_id"])) :
             $this->load->model('Cargo_model');
             $this->data["cargo"] = $this->Cargo_model->detail();
             $this->layout->view("administrativo/cargos", $this->data);
-        }
+            else:
+            $this->layout->view("permisos");
+        endif;
     }
 
     function cargoriesgo() {

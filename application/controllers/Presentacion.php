@@ -19,6 +19,8 @@ class Presentacion extends My_Controller {
     function menu() {
         if ($this->consultaacceso($this->data["usu_id"])):
             $this->layout->view("presentacion/prueba");
+        else:
+            $this->layout->view("permisos");
         endif;
     }
 
@@ -82,6 +84,8 @@ class Presentacion extends My_Controller {
                 $this->data['menu'] = $this->Ingreso_model->hijos($this->data['idgeneral']);
             }
             $this->layout->view('presentacion/creacionmenu', $this->data);
+            else:
+            $this->layout->view("permisos");
         endif;
     }
 
@@ -216,6 +220,8 @@ class Presentacion extends My_Controller {
             $this->data['content'] = "<table border='0' width='100%'>" . $this->permisoroles('prueba', null) . "</table>";
             $this->data['roles'] = $this->Roles_model->roles();
             $this->layout->view('presentacion/roles', $this->data);
+            else:
+            $this->layout->view("permisos");
         endif;
     }
 
@@ -332,6 +338,9 @@ class Presentacion extends My_Controller {
         if ($this->consultaacceso($this->data["usu_id"])):
             $this->data['roles'] = $this->Roles_model->rolxusuario($this->session->userdata('usu_id'));
             $this->layout->view("presentacion/rol", $this->data);
+            else:
+            $this->layout->view("permisos");
+            
         endif;
     }
 

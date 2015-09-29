@@ -20,6 +20,8 @@ class Tipo_aseguradora extends My_Controller {
         $this->data['post']=$this->input->post();
         $this->data['aseguradoras'] = $this->Tipo_aseguradora__model->aseguradoras();
         $this->layout->view('tipo_aseguradora/index', $this->data);
+        else:
+            $this->layout->view("permisos");
         endif;
     }
     function consult_tipo_aseguradora(){
@@ -28,6 +30,8 @@ class Tipo_aseguradora extends My_Controller {
         $this->data['post']=$this->input->post();
         $this->data['datos']=$this->Tipo_aseguradora__model->consult_tipo_aseguradora($post);
         $this->layout->view('tipo_aseguradora/consult_tipo_aseguradora', $this->data);
+        else:
+            $this->layout->view("permisos");
         endif;
     }
     function save_tipo_aseguradora(){

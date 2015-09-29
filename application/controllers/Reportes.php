@@ -21,6 +21,8 @@ class reportes extends My_Controller {
             if (!empty($this->data['idgeneral']))
                 $this->data['menu'] = $this->Reportes_model->hijos($this->data['idgeneral']);
             $this->layout->view('reportes/creacionreporte', $this->data);
+        else:
+            $this->layout->view("permisos");
         endif;
     }
 
@@ -132,8 +134,10 @@ class reportes extends My_Controller {
 
     function informacionreporte() {
         if ($this->consultaacceso($this->data["usu_id"])):
-        $this->data['logicareportes'] = $this->logicareportes($datosmodulos = 'prueba');
-        $this->layout->view('reportes/informacionreporte', $this->data);
+            $this->data['logicareportes'] = $this->logicareportes($datosmodulos = 'prueba');
+            $this->layout->view('reportes/informacionreporte', $this->data);
+            else:
+            $this->layout->view("permisos");
         endif;
     }
 
