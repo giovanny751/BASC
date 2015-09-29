@@ -12,7 +12,6 @@ class Presentacion extends My_Controller {
         $this->load->model('Roles_model');
         $this->load->helper('miscellaneous');
         $this->load->helper('security');
-//        echo $this->session->userdata('usu_id')."****";die;
         $this->data["usu_id"] = $this->session->userdata('usu_id');
         validate_login($this->data["usu_id"]);
     }
@@ -122,22 +121,6 @@ class Presentacion extends My_Controller {
         }
     }
 
-    function usuario() {
-        if ($this->consultaacceso($this->data["usu_id"])):
-            $this->data['roles'] = $this->Roles_model->roles();
-            $this->data['usaurios'] = $this->Ingreso_model->totalusuarios();
-            $this->layout->view('presentacion/usuario', $this->data);
-        endif;
-    }
-
-    function eliminarusuario() {
-        try {
-            $usuario = $this->Ingreso_model->eliminarusuario($this->input->post("usu_id"));
-        } catch (exception $e) {
-            
-        }
-    }
-
     function consultarolxrolidusuario() {
         try {
             $this->data['rol'] = $this->Roles_model->totalroles($this->input->post('id'));
@@ -159,33 +142,10 @@ class Presentacion extends My_Controller {
         echo $permisos;
     }
 
-    function consultausuario() {
-        $id = $this->input->post('id');
-        if (!empty($id)) {
-            $usuario = $this->Ingreso_model->consultausuario($id);
-            $this->output->set_content_type('application/json')->set_output(json_encode($usuario[0]));
-        } else {
-            redirect('auth/login', 'refresh');
-        }
-    }
-
-    function guardarusuario() {
-        try {
-            $this->Ingreso_model->guardarusuario($this->input->post('usuario'), $this->input->post('email'), $this->input->post('contrasena'));
-        } catch (exception $e) {
-            
-        }
-    }
-
     function eliminarmodulo() {
         $idgeneral = $this->input->post('idgeneral');
         if (!empty($idgeneral))
             $eliminar = $this->Ingreso_model->eliminar($idgeneral);
-    }
-
-    function permisosusuarios() {
-        $this->data['usuarios'] = $this->Ingreso_model->usuarios();
-        $this->layout->view('presentacion/permisosusuarios', $this->data);
     }
 
     function permisosmenu($iduser, $datosmodulos = 'prueba', $dato = null) {
@@ -305,23 +265,6 @@ class Presentacion extends My_Controller {
         }
     }
 
-    function administracionareas() {
-        if ($this->consultaacceso($this->data["usu_id"])):
-            $this->data['cargos'] = $this->Ingreso_model->areas();
-            $this->data['pais'] = $this->Ingreso_model->paises();
-            $this->layout->view('presentacion/administracionareas', $this->data);
-        endif;
-    }
-
-    function guardararea() {
-        $this->Ingreso_model->guardararea($this->input->post('area'));
-        $this->output->set_content_type('application/json')->set_output(json_encode($this->Ingreso_model->areas()));
-    }
-
-    function guardarcargo() {
-        $this->Ingreso_model->guardarcargo($this->input->post('area'), $this->input->post('cargo'));
-    }
-
     function permisousuarios($datosmodulos, $html = null, $idusuario) {
 
         $tipo = 1;
@@ -370,21 +313,6 @@ class Presentacion extends My_Controller {
             );
         }
         $this->Ingreso_model->permisosusuariomenu($data);
-    }
-
-    function guardarpais() {
-        $this->Ingreso_model->guardarpais($this->input->post('pais'));
-        $pais = $this->Ingreso_model->paises();
-        $this->output->set_content_type('application/json')->set_output(json_encode($pais));
-    }
-
-    function guardarciudad() {
-        $insertar[] = array('pai_id' => $this->input->post('pais'), 'ciu_nombre' => $this->input->post('ciudad'));
-        $this->Ingreso_model->guardarciudad($insertar);
-    }
-
-    function guardartipoproducto() {
-        $this->Ingreso_model->guardartipoproducto($this->input->post('tipoproducto'));
     }
 
     function rolesasignados() {
