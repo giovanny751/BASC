@@ -28,7 +28,6 @@ class Administrativo extends My_Controller {
             $this->load->model('Tipocontrato_model');
             $this->load->model('Sexo_model');
             $this->load->model('Estadocivil_model');
-
             $this->load->model('Tipoaseguradora_model');
             $this->load->model('Dimension2_model');
             $this->load->model('Dimension_model');

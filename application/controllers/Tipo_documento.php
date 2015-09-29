@@ -16,14 +16,18 @@ class Tipo_documento extends My_Controller {
         validate_login($this->data["usu_id"]);
     }
     function index(){
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->data['post']=$this->input->post();
         $this->layout->view('tipo_documento/index', $this->data);
+        endif;
     }
     function consult_tipo_documento(){
+        if ($this->consultaacceso($this->data["usu_id"])):
         $post=$this->input->post();
         $this->data['post']=$this->input->post();
         $this->data['datos']=$this->Tipo_documento__model->consult_tipo_documento($post);
         $this->layout->view('tipo_documento/consult_tipo_documento', $this->data);
+        endif;
     }
     function save_tipo_documento(){
         $post=$this->input->post();

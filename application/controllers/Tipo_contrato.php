@@ -16,20 +16,22 @@ class Tipo_contrato extends My_Controller {
         validate_login($this->data["usu_id"]);
     }
     function index(){
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->data['post']=$this->input->post();
         $this->layout->view('tipo_contrato/index', $this->data);
+        endif;
     }
     function consult_tipo_contrato(){
+        if ($this->consultaacceso($this->data["usu_id"])):
         $post=$this->input->post();
         $this->data['post']=$this->input->post();
         $this->data['datos']=$this->Tipo_contrato__model->consult_tipo_contrato($post);
         $this->layout->view('tipo_contrato/consult_tipo_contrato', $this->data);
+        endif;
     }
     function save_tipo_contrato(){
         $post=$this->input->post();
                 $id=$this->Tipo_contrato__model->save_tipo_contrato($post);
-        
-                        
         redirect('index.php/Tipo_contrato/consult_tipo_contrato', 'location');
     }
     function delete_tipo_contrato(){

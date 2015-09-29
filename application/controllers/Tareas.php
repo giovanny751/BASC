@@ -77,29 +77,38 @@ class Tareas extends My_Controller {
         }
     }
     function listadotareas(){
-        
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->layout->view("tareas/listadotareas");
-        
+        endif;
     }
 
     function actividadhijo() {
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->load->model('Tipo_model');
         $this->data['tipo'] = $this->Tipo_model->detail();
         $this->layout->view("tareas/actividadhijo",$this->data);
+        endif;
     }
     
     function listadoactividades(){
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->load->model('Estados_model');
         $this->layout->view("tareas/listadoactividades");
+        endif;
     }
     function registro(){
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->layout->view("tareas/registro");
+        endif;
     }
     function agregarregistro(){
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->layout->view("tareas/agregarregistro");
+        endif;
     }
     
     function guardaractividadhijo() {
+        try{
         $this->load->model('Actividad_model');
         $data[] = array(
             "pad_id"=>$this->input->post("idpadre"),
@@ -115,9 +124,13 @@ class Tareas extends My_Controller {
             "act_modoVerificacion"=>$this->input->post("modoverificacion"),
         );
         $this->Actividad_model->create($data);
+        }catch(exception $e){
+            
+        }
     }
 
     function planes() {
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->load->model('User_model');
         $this->load->model("Estados_model");
         $this->load->model("Cargo_model");
@@ -129,6 +142,7 @@ class Tareas extends My_Controller {
         $this->data['estado'] = $this->Estados_model->detail();
         $this->data['cargo'] = $this->Cargo_model->allcargos();
         $this->layout->view("tareas/planes",$this->data);
+        endif;
     }
     
     function actualizarplan(){
@@ -157,6 +171,7 @@ class Tareas extends My_Controller {
     }
 
     function guardarplan() {
+        try{
         $this->load->model("Planes_model");
         $data[] = array(
             'est_id' => $this->input->post('estado'),
@@ -174,35 +189,48 @@ class Tareas extends My_Controller {
             'car_id' => $this->input->post('cargo')
         );
         $this->Planes_model->create($data);
+        }catch(exception $e){
+            
+        }
     }
 
     function listadoplanes() {
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->load->model("Estados_model");
         $this->load->model("Planes_model");
         $this->data['responsable'] = $this->Planes_model->responsables();
         $this->data['estados'] = $this->Estados_model->finalizados();
-//        var_dump($this->data['responsable']);die;
         $this->layout->view("tareas/listadoplanes",$this->data);
+        endif;
     }
 
     function consultaplanes() {
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->load->model("Planes_model");
         $planes = $this->Planes_model->filtrobusqueda(
                 $this->input->post("codigo"), $this->input->post("nombre"), $this->input->post("fecha"), $this->input->post("estado"), $this->input->post("responsable"));
         $this->output->set_content_type('application/json')->set_output(json_encode($planes));
+        endif;
     }
     function eliminarplan(){
-        $this->load->model("Planes_model");
-        $this->Planes_model->delete($this->input->post('id'));
+        try{
+            $this->load->model("Planes_model");
+            $this->Planes_model->delete($this->input->post('id'));
+        }catch(exception $e){
+            
+        }
     }
 
     function listadoregistros() {
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->layout->view("tareas/listadoregistros");
+        endif;
     }
 
     function configuracionsistema() {
-
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->layout->view("tareas/configuracionsistema");
+        endif;
     }
     function autocompletar() {
         $info = auto("planes", "pla_id", "pla_nombre", $this->input->get('term'));

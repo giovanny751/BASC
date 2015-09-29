@@ -16,15 +16,19 @@ class Tipo_aseguradora extends My_Controller {
         validate_login($this->data["usu_id"]);
     }
     function index(){
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->data['post']=$this->input->post();
         $this->data['aseguradoras'] = $this->Tipo_aseguradora__model->aseguradoras();
         $this->layout->view('tipo_aseguradora/index', $this->data);
+        endif;
     }
     function consult_tipo_aseguradora(){
+        if ($this->consultaacceso($this->data["usu_id"])):
         $post=$this->input->post();
         $this->data['post']=$this->input->post();
         $this->data['datos']=$this->Tipo_aseguradora__model->consult_tipo_aseguradora($post);
         $this->layout->view('tipo_aseguradora/consult_tipo_aseguradora', $this->data);
+        endif;
     }
     function save_tipo_aseguradora(){
         $post=$this->input->post();

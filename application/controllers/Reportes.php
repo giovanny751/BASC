@@ -11,24 +11,29 @@ class reportes extends My_Controller {
     }
 
     public function creacionreporte() {
-        $this->data['hijo'] = $this->input->post('menu');
-        $this->data['nombrepadre'] = $this->input->post('nombrepadre');
-        $this->data['idgeneral'] = $this->input->post('idgeneral');
-        if (empty($this->data['idgeneral']))
-            $this->data['hijo'] = 0;
-        $this->data['menu'] = $this->Reportes_model->consultahijos($this->data['idgeneral']);
-        if (!empty($this->data['idgeneral']))
-            $this->data['menu'] = $this->Reportes_model->hijos($this->data['idgeneral']);
-        $this->layout->view('reportes/creacionreporte', $this->data);
+        if ($this->consultaacceso($this->data["usu_id"])):
+            $this->data['hijo'] = $this->input->post('menu');
+            $this->data['nombrepadre'] = $this->input->post('nombrepadre');
+            $this->data['idgeneral'] = $this->input->post('idgeneral');
+            if (empty($this->data['idgeneral']))
+                $this->data['hijo'] = 0;
+            $this->data['menu'] = $this->Reportes_model->consultahijos($this->data['idgeneral']);
+            if (!empty($this->data['idgeneral']))
+                $this->data['menu'] = $this->Reportes_model->hijos($this->data['idgeneral']);
+            $this->layout->view('reportes/creacionreporte', $this->data);
+        endif;
     }
 
     function guardarmodulo() {
-
-        $general = $this->input->post('general');
-        $actualizamodulo = $this->Reportes_model->actualizahijos($general);
-        $guardamodulo = $this->Reportes_model->guardarmodulo($this->input->post('modulo'), $this->input->post('padre'), $general);
-        $menu = $this->Reportes_model->cargamenu($general);
-        $this->output->set_content_type('application/json')->set_output(json_encode($menu));
+        try {
+            $general = $this->input->post('general');
+            $actualizamodulo = $this->Reportes_model->actualizahijos($general);
+            $guardamodulo = $this->Reportes_model->guardarmodulo($this->input->post('modulo'), $this->input->post('padre'), $general);
+            $menu = $this->Reportes_model->cargamenu($general);
+            $this->output->set_content_type('application/json')->set_output(json_encode($menu));
+        } catch (exception $e) {
+            
+        }
     }
 
     function consultadatosmenu() {
@@ -43,40 +48,64 @@ class reportes extends My_Controller {
     }
 
     function inforeport() {
-        $informacion = $this->Reportes_model->inforeport($this->input->post('id'));
-        $this->output->set_content_type('application/json')->set_output(json_encode($informacion[0]));
+        try {
+            $informacion = $this->Reportes_model->inforeport($this->input->post('id'));
+            $this->output->set_content_type('application/json')->set_output(json_encode($informacion[0]));
+        } catch (exception $e) {
+            
+        }
     }
 
     function editreport() {
-        $this->Reportes_model->editreport($this->input->post('id'), $this->input->post('nombre'), $this->input->post('estado'));
+        try {
+            $this->Reportes_model->editreport($this->input->post('id'), $this->input->post('nombre'), $this->input->post('estado'));
+        } catch (exception $e) {
+            
+        }
     }
 
     function allreport() {
-        $reportes = $this->Reportes_model->inforeport($this->input->post('id'));
-        $this->output->set_content_type('application/json')->set_output(json_encode($reportes[0]));
+        try {
+            $reportes = $this->Reportes_model->inforeport($this->input->post('id'));
+            $this->output->set_content_type('application/json')->set_output(json_encode($reportes[0]));
+        } catch (exception $e) {
+            
+        }
     }
 
     function guardartodoreporte() {
-        $query = $this->input->post('query');
-        $data = array(
-            'rep_nombrepadre' => $this->input->post('reporte'),
-            'rep_query' => $query,
-            'rep_host' => $this->input->post('host'),
-            'rep_user' => $this->input->post('user'),
-            'rep_password' => $this->input->post('password'),
-        );
-        $this->Reportes_model->guardartodoreporte($data, $this->input->post('idreporte'));
+        try {
+            $query = $this->input->post('query');
+            $data = array(
+                'rep_nombrepadre' => $this->input->post('reporte'),
+                'rep_query' => $query,
+                'rep_host' => $this->input->post('host'),
+                'rep_user' => $this->input->post('user'),
+                'rep_password' => $this->input->post('password'),
+            );
+            $this->Reportes_model->guardartodoreporte($data, $this->input->post('idreporte'));
+        } catch (exception $e) {
+            
+        }
     }
 
     function validarquery() {
-        $id = 1;
-        $this->Reportes_model->validarquery($id, $this->input->post('query'));
+        try {
+            $id = 1;
+            $this->Reportes_model->validarquery($id, $this->input->post('query'));
+        } catch (exception $e) {
+            
+        }
     }
 
     function guardarreporte() {
-        $this->Reportes_model->guardarreporte($this->input->post('nuevoreporte'));
-        $reportes = $this->Reportes_model->totalreportes();
-        $this->output->set_content_type('application/json')->set_output(json_encode($reportes));
+        try {
+            $this->Reportes_model->guardarreporte($this->input->post('nuevoreporte'));
+            $reportes = $this->Reportes_model->totalreportes();
+            $this->output->set_content_type('application/json')->set_output(json_encode($reportes));
+        } catch (exception $e) {
+            
+        }
     }
 
     function logicareportes($datosmodulos = 'prueba', $report = null) {
@@ -102,8 +131,10 @@ class reportes extends My_Controller {
     }
 
     function informacionreporte() {
+        if ($this->consultaacceso($this->data["usu_id"])):
         $this->data['logicareportes'] = $this->logicareportes($datosmodulos = 'prueba');
         $this->layout->view('reportes/informacionreporte', $this->data);
+        endif;
     }
 
     function abrirxml() {
