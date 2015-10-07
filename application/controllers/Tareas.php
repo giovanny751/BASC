@@ -20,11 +20,18 @@ class Tareas extends My_Controller {
 
         if ($this->consultaacceso($this->data["usu_id"])) {
             $this->load->model('Estados_model');
+            $this->load->model('Tarea_model');
             $this->load->model('Cargo_model');
             $this->load->model('Planes_model');
             $this->load->model('Dimension2_model');
             $this->load->model('Dimension_model');
             $this->load->model('Tipo_model');
+            $this->load->model('Notificacion_model');
+            if (!empty($this->input->post("tar_id"))):
+                $this->data['tarea'] = $this->Tarea_model->detailxid($this->input->post("tar_id"))[0];
+//                $this->data['tarea'] = $this->data['tarea'];
+            endif;
+            $this->data['notificacion'] = $this->Notificacion_model->detail();
             $this->data['estados'] = $this->Estados_model->detail();
             $this->data['tipo'] = $this->Tipo_model->detail();
             $this->data['planes'] = $this->Planes_model->detail();
@@ -34,6 +41,37 @@ class Tareas extends My_Controller {
             $this->layout->view("tareas/nuevatarea", $this->data);
         } else {
             $this->layout->view("permisos");
+        }
+    }
+
+    function guardaravance() {
+
+        try {
+            $this->load->model('AvanceTarea_model');
+            $this->load->model('AvanceNotificacion_model');
+            $data[] = array(
+                "tar_id" => $this->input->post('idtarea'),
+                "avaTar_fecha" => $this->input->post("fecha"),
+                "avaTar_progreso" => $this->input->post("progreso"),
+                "avaTar_horasTrabajadas" => $this->input->post("horastrabajadas"),
+                "avaTar_costo" => $this->input->post("costo"),
+                "avaTar_comentarios" => $this->input->post("comentarios"),
+                "avaTar_fechaCreacion" => date("Y-m-d H:i:s")
+            );
+            $id = $this->AvanceTarea_model->create($data);
+            $notificar = array();
+            if (!empty($this->input->post("notificar"))):
+                $notificacion = $this->input->post("notificar");
+                for ($i = 0; $i < count($notificacion); $i++) {
+                    $notificar[$i] = array(
+                        "not_id" => $notificacion[$i],
+                        "avaTar_id" => $id
+                    );
+                }
+                $this->AvanceNotificacion_model->create($notificar);
+            endif;
+        } catch (exception $e) {
+            
         }
     }
 
@@ -50,26 +88,32 @@ class Tareas extends My_Controller {
                 "dim2_id" => $this->input->post("dimensionuno"),
                 "est_id" => $this->input->post("estado"),
                 "tar_fechaInicio" => $this->input->post("fechaIncio"),
-                "tar_fechaCreacion" => $this->input->post("fechacreacion"),
-                "tar_fechaAfiliacion" => $this->input->post("fechafinalizacion"),
-                "tar_fechaUltimaMod" => $this->input->post("fechaultimamod"),
+                "tar_fechaCreacion" => date("Y-m-d H:i:s"),
+                "tar_fechaFinalizacion" => $this->input->post("fechafinalizacion"),
                 "tar_nombre" => $this->input->post("nombre"),
                 "emp_id" => $this->input->post("nombreempleado"),
                 "tar_peso" => $this->input->post("peso"),
-                "tar_plan" => $this->input->post("plan"),
+                "pla_id" => $this->input->post("plan"),
                 "tip_id" => $this->input->post("tipo"),
                 "tipRie_id" => $this->input->post("tiposriesgos")
             );
-            $idtarea = $this->Tarea_model->create($data);
+            if (!empty($this->input->post('id'))):
+                $idtarea = $this->input->post('id');
+                $actualizar = $this->Tarea_model->update($data,$idtarea);
+            else:
+                $idtarea = $this->Tarea_model->create($data);
+            endif;
             $articulosnorma = $this->input->post("articulosnorma");
             $data = array();
-            for ($i = 0; $i < count($articulosnorma); $i++):
-                $data[$i] = array(
-                    "nor_id" => $articulosnorma[$i],
-                    "tar_id" => $idtarea
-                );
-            endfor;
-            $this->Tarea_model->tareanorma($data);
+            if (!empty($articulosnorma)) {
+                for ($i = 0; $i < count($articulosnorma); $i++):
+                    $data[$i] = array(
+                        "nor_id" => $articulosnorma[$i],
+                        "tar_id" => $idtarea
+                    );
+                endfor;
+                $this->Tarea_model->tareanorma($data);
+            }
         } catch (Exception $e) {
             
         }
@@ -77,10 +121,28 @@ class Tareas extends My_Controller {
 
     function listadotareas() {
         if ($this->consultaacceso($this->data["usu_id"])):
-            $this->layout->view("tareas/listadotareas");
+            $this->load->model('Planes_model');
+            $this->load->model('Tarea_model');
+            $this->data["planes"] = $this->Planes_model->detail();
+            $this->data["tareas"] = $this->Tarea_model->detail();
+            $this->data["responsables"] = $this->Tarea_model->responsables();
+            $this->layout->view("tareas/listadotareas", $this->data);
         else:
             $this->layout->view("permisos");
         endif;
+    }
+
+    function consultatareas() {
+
+        try {
+            $this->load->model('Tarea_model');
+            $this->data["tareas"] = $this->Tarea_model->filtrobusqueda(
+                    $this->input->post("Plan"), $this->input->post("filtrotarea"), $this->input->post("responsable")
+            );
+            $this->output->set_content_type('application/json')->set_output(json_encode($this->data["tareas"]));
+        } catch (exception $e) {
+            
+        }
     }
 
     function actividadhijo() {

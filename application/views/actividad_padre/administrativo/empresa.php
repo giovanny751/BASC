@@ -28,7 +28,7 @@
                     <select id="ciudad" name="ciudad" class="form-control" >
                         <option value="">::Seleccionar::</option>
                         <?php foreach($ciudad as $c){?>
-                        <option <?php echo ($c->ciu_id == $informacion[0]->ciu_id)?"selected":""; ?> value="<?php echo $c->ciu_id ?>"><?php echo $c->ciu_nombre ?></option>
+                        <option value="<?php echo $c->ciu_id?>"><?php echo $c->ciu_nombre ?></option>
                         <?php }?>
                     </select>
                 </div>
@@ -45,7 +45,7 @@
                 <div class="row">
                     <label for="empleados">
                         <span class="campoobligatorio">*</span>Numero de empleados</label>
-                    <input type="text" id="empleados" name="empleados" class="form-control obligatorio"  value="<?php echo $informacion[0]->numEmp_id ?>" >
+                    <input type="text" id="empleados" name="empleados" class="form-control obligatorio" >
 <!--                    <select id="empleados" name="empleados" class="form-control obligatorio" >
                         <option value="">::Seleccionar::</option>
                         <?php // foreach ($numero as $n) { ?>
@@ -62,11 +62,11 @@
             <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-lg-5 col-md-5 col-sm-5 col-xs-5">  
                 <div class="row">
                     <label for="dimension1">Dimensión 1</label>
-                    <input type="text" id="dimension1" name="dimension1" class="form-control" value="<?php echo $informacion[0]->Dim_id ?>" /> 
+                    <input type="text" id="dimension1" name="dimension1" class="form-control" /> 
                 </div>
                 <div class="row">
                     <label for="dimension2">Dimensión 2</label>
-                    <input type="text" id="dimension2" name="dimension2" class="form-control" value="<?php echo $informacion[0]->Dimdos_id ?>" >
+                    <input type="text" id="dimension2" name="dimension2" class="form-control" >
                 </div>
                 <div class="row">
                     <label for="representante">Representante</label>
@@ -91,6 +91,7 @@
         <button type="button" class="btn btn-primary" >Tipos de Contrato</button>
         <a href="<?php echo base_url("index.php/administrativo/dimension") ?>"><button type="" class="btn btn-info">Dimensión 1</button></a>
         <a href="<?php echo base_url("index.php/administrativo/dimension") ?>"><button type="" class="btn btn-info">Dimensión 2</button></a>
+        <button type="button" id="guardar" class="btn btn-success">Guardar</button>
     </div>
 </div>
 <!-- Modal -->

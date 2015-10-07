@@ -87,6 +87,14 @@ class Cargo_model extends CI_Model {
         return $cargo->result();
         
     }
+    function existe($cargo,$cargojefe){
+        
+        $this->db->where("car_nombre",$cargo);
+        $this->db->where("car_jefe",$cargojefe);
+        $cargo = $this->db->get("cargo");
+        return $cargo->result();
+        
+    }
 
 }
 

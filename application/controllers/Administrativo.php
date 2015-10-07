@@ -173,6 +173,9 @@ class Administrativo extends My_Controller {
             $this->load->model('Empleado_model');
             $this->load->model('Estados_model');
             $this->load->model('User_model');
+            $this->load->model('Roles_model');
+            $this->data['roles'] = $this->Roles_model->roles();
+            var_dump($this->data['roles']);die;
             $this->data['empleado'] = $this->Empleado_model->detail();
             $this->data['estado'] = $this->Estados_model->detail();
             $this->data['sexo'] = $this->Sexo_model->detail();
@@ -200,7 +203,7 @@ class Administrativo extends My_Controller {
             $this->data["tipodocumento"] = $this->Tipo_documento_model->detail();
             $this->data["usuarios"] = $this->User_model->consultageneral();
             $this->layout->view("administrativo/listadousuarios", $this->data);
-            else:
+        else:
             $this->layout->view("permisos");
         endif;
     }
@@ -278,7 +281,7 @@ class Administrativo extends My_Controller {
         foreach ($i as $padre => $nombrepapa)
             foreach ($nombrepapa as $nombrepapa => $menuidpadre)
                 foreach ($menuidpadre as $modulos => $menu):
-                    $html .= "<li><p style='margin-top:20px'>" . strtoupper($nombrepapa) . "</p>";
+                    $html .= "<li class='liorganigrama'><p style='margin-top:20px'>" . strtoupper($nombrepapa) . "</p>";
                     $html .=$this->consultaorganigrama($padre, null);
                     $html .= "</li>";
                 endforeach;
@@ -287,12 +290,8 @@ class Administrativo extends My_Controller {
     }
 
     function organigrama() {
-        if ($this->consultaacceso($this->data["usu_id"])) :
             $this->data["organigrama"] = $this->consultaorganigrama();
             $this->layout->view("administrativo/organigrama", $this->data);
-            else:
-            $this->layout->view("permisos");
-        endif;
     }
 
     function cargos() {
@@ -300,7 +299,7 @@ class Administrativo extends My_Controller {
             $this->load->model('Cargo_model');
             $this->data["cargo"] = $this->Cargo_model->detail();
             $this->layout->view("administrativo/cargos", $this->data);
-            else:
+        else:
             $this->layout->view("permisos");
         endif;
     }
@@ -369,24 +368,30 @@ class Administrativo extends My_Controller {
     }
 
     function guardarcargo() {
-
-        $this->load->model('Cargo_model');
-
-        $cargo = $this->input->post("cargo");
-        $cargojefe = $this->input->post("cargojefe");
-        $porcentaje = $this->input->post("porcentaje");
-        $data = array();
-        for ($i = 0; $i < count($cargo); $i++) {
-            $data[$i] = array(
-                "car_nombre" => $cargo[$i],
-                "car_jefe" => $cargojefe[$i],
-                "car_porcentajearl" => $porcentaje[$i],
-            );
+        try {
+            $this->load->model('Cargo_model');
+            $cargo = $this->input->post("cargo");
+            $cargojefe = $this->input->post("cargojefe");
+            $porcentaje = $this->input->post("porcentaje");
+            
+            if (empty($this->Cargo_model->existe($cargo[0], $cargojefe[0]))) {
+                $data = array();
+                for ($i = 0; $i < count($cargo); $i++) {
+                    $data[$i] = array(
+                        "car_nombre" => $cargo[$i],
+                        "car_jefe" => $cargojefe[$i],
+                        "car_porcentajearl" => $porcentaje[$i],
+                    );
+                }
+                $this->Cargo_model->create($data);
+                $this->data["cargo"] = $this->Cargo_model->detail();
+                $this->output->set_content_type('application/json')->set_output(json_encode($this->data["cargo"]));
+            }else{
+                echo "1";
+            }
+        } catch (exception $e) {
+            echo "error";
         }
-
-        $this->Cargo_model->create($data);
-        $this->data["cargo"] = $this->Cargo_model->detail();
-        $this->output->set_content_type('application/json')->set_output(json_encode($this->data["cargo"]));
     }
 
     function eliminarcargo() {
@@ -541,6 +546,8 @@ class Administrativo extends My_Controller {
             $this->Empresa_model->create($data);
         else
             $this->Empresa_model->update($data[0]);
+        
+        redirect('index.php/administrativo/empresa','location');
     }
 
     function autocompletar() {

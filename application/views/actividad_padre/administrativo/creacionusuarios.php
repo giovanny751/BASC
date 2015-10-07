@@ -40,17 +40,6 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                 <input type="text" id="apellidos" name="apellidos" class="form-control" value="<?php echo (!empty($usuario[0]->usu_apellido)) ? $usuario[0]->usu_apellido : ""; ?>" />
             </div> 
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <label for="rol">Rol</label>
-            </div>    
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
-                <select name="rol" id="rol">
-                    <option value=""></option>
-                    <?php foreach($roles as $ro){?>
-                    <option value="<?php // echo $ro-> ?>"><?php // echo $ro-> ?></option>
-                    <?php } ?>
-                </select>
-            </div> 
         </div>
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -173,7 +162,7 @@
                     cargo: $(this).val()
                 }
         ).done(function (msg) {
-            var data = "<option value=''>::Seleccionar::</option>";
+            var data = "";
             $('#empleado *').remove();
             $.each(msg, function (key, val) {
                 data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"

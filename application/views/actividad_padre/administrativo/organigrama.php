@@ -24,10 +24,15 @@
         });
     });
     </script>
-<!--<div class='well'>-->
+    <div class="widgetTitle" >
+    <h5>
+        <i class="glyphicon glyphicon-ok"></i>ORGANIGRAMA
+    </h5>
+</div>
+<div class='well'>
     <?php echo $organigrama ?>
     <div id="chart" class="orgChart"></div>
-    <!--</div>-->
+    </div>
     <script>
         jQuery(document).ready(function() {
             $("#show-list").click(function(e){

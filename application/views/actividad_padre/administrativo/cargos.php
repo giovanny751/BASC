@@ -209,7 +209,6 @@
             $.post("<?php echo base_url('index.php/administrativo/guardarcargo') ?>",
                     $("#formcargos").serialize())
                     .done(function (msg) {
-                        if(msg != 1){
                         $('#bodycargo *').remove()
                         $('#cargojefe *').remove()
                         var body = "";
@@ -219,17 +218,13 @@
                             body += "<td>" + val.car_nombre + "</td>";
                             body += "<td>" + val.jefe + "</td>";
                             body += "<td>" + val.car_porcentajearl + "</td>";
-                            body += '<td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="' + val.car_id + '" data-toggle="modal" data-target="#riesgo"></i></td>';
                             body += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="' + val.car_id + '"></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="' + val.car_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
                             body += "</tr>";
                             option += "<option value='" + val.car_id + "'>" + val.car_nombre + "</option>";
                         });
                         $('#bodycargo').append(body);
                         $('#cargojefe').append(option);
-                            alerta("verde", "Guardado Correctamente");
-                        }else{
-                            alerta("amarillo", "Cargo ya existente");
-                        }
+                        alerta("verde", "Guardado Correctamente");
                     })
                     .fail(function (msg) {
 

@@ -292,6 +292,8 @@ jQuery(document).ready(function() {
     Tasks.initDashboardWidget();
     UINotific8.init();
 });
+
+$('.portlet').find('label,h4').css('color','black');
     $('.limpiar').click(function () {
         $('select,input').val('');
     });

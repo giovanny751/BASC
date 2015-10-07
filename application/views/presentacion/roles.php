@@ -132,8 +132,9 @@ $('.seleccionados').click(function() {
         $('input[type="checkbox"]').prop('checked', false);
         $('.agregarrol *').remove();
         $.post("<?php echo base_url('index.php/presentacion/rolesasignados'); ?>", {id: $(this).attr('rol')}, function(data) {
-            $.each(data, function(key, val) {
-                $('.seleccionados[value=' + val.menu_id + ']').prop('checked', true);
+        
+        $.each(data, function(key, val) {
+                $('.seleccionados[value="' + val.menu_id + '"]').attr('checked',true);
             });
         });
     });

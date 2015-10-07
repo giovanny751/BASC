@@ -409,9 +409,7 @@ function lista($name, $id, $class, $tabla, $option_value, $option_name, $value, 
         $CI->db->or_like($campo2,$palabra);
         if($campo3!=null)
         $CI->db->or_like($campo3,$palabra);
-        $CI->db->where($tabla.'.activo','S');
         $user = $CI->db->get($tabla);
-//        echo $CI->db->last_query();
         return $user->result();
     }
     function listaMultiple2($name, $id, $class, $tabla, $option_value, $option_name, $value, $where, $bloqued) {

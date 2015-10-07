@@ -60,6 +60,22 @@
             <th>Opciones</th>
             </thead>
             <tbody id="bodyuser">
+                <?php // foreach ($usuarios as $u) { ?>
+<!--                    <tr>
+                        <td><?php echo $u->usu_cedula ?></td>
+                        <td><?php echo $u->usu_usuario ?></td>
+                        <td><?php echo $u->usu_nombre ?></td>
+                        <td><?php echo $u->usu_apellido ?></td>
+                        <td><?php echo ($u->est_id == 1) ? "Activo" : "Inactivo"; ?></td>
+                        <td><?php echo $u->usu_fechaActualizacion ?></td>
+                        <td><?php echo $u->usu_fechaCreacion ?></td>
+                        <td><?php echo $u->ingreso ?></td>
+                        <td><button type="button"  data-toggle="modal" data-target="#myModal3"   class="btn btn-info permiso" usuarioid="<?php echo $u->usu_id; ?>">Roles</button></td>
+                        <td>
+                            <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" usu_id="<?php echo $u->id ?>"></i>
+                            <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" usu_id="<?php echo $u->id ?>"  data-toggle="modal" data-target="#myModal"></i>
+                        </td>
+                    </tr>-->
                     <tr>
                         <td colspan="10">
                             <center><b>Ingresar Filtros para realizar la consulta</b></center>
@@ -213,8 +229,8 @@
             $('#bodyuser *').remove();
             var body = "";
             $.each(msg, function (key, val) {
-                if(val.est_id == 1)var activo = "Activo";
-                if(val.est_id != 1)var activo = "Inactivo";
+                if(val.est_id == 1)var activo = "<button type='button' class='btn btn-primary'>Activo</button>";
+                if(val.est_id != 1)var activo = "<button type='button' class='btn btn-warning'>Inactivo</button>";
                 body += "<tr>";
                 body += "<td>" + val.usu_cedula + "</td>";
                 body += "<td>" + val.usu_usuario + "</td>";

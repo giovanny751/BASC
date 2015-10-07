@@ -1,7 +1,3 @@
-<script type="text/javascript">
-        $(".menRIESGOS").addClass("active open");
-        $(".subMenCLASIFICACIÓN_RIESGOS").addClass("active");
-</script>
 <div class="widgetTitle">
     <h5>
         <i class="glyphicon glyphicon-ok"></i>CLASIFICACIÓN DE RIESGO
@@ -9,12 +5,10 @@
 </div>
 <div class='well'>
     <div class="row">
-        <div class="form-inline">
-            <div class="form-group">
-                <label for="cat">Categoria</label>
-                <input type="text" name="categoria" id="cat" class="form-control">
-                <button type="button" class="btn btn-success categoria">Agregar</button>
-            </div>
+        <div class="form-group">
+            <label>Categoria</label>
+            <input type="text" name="categoria" id="cat">
+            <button type="button" class="btn btn-success categoria">Agregar</button>
         </div>
     </div>
     <div class="row">
@@ -67,16 +61,11 @@
     </div>
 </div>
 <script>
-    $('#cat').autocomplete({
-        source: "<?php echo base_url("index.php/riesgo/autocompletarcategoria") ?>",
-        minLength: 1
-    });
-    
-    $('.categoria').click(function () {
+    $('#categoria').click(function () {
 
-        var categoria = $('#cat').val();
+        var categoria = $('#categoria').val();
 
-        $.post("<?php echo base_url("index.php/riesgo/guardarcategoria") ?>",
+        $.post("<?php echo base_url("index.php/administrativo/guardarcategoria") ?>",
                 {categoria: categoria}
         ).done(function (msg) {
 
