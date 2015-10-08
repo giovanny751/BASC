@@ -208,10 +208,12 @@ class Tareas extends My_Controller {
             $this->load->model("Estados_model");
             $this->load->model("Cargo_model");
             $this->load->model("Planes_model");
+            $this->load->model("Norma_model");
             $this->data['plan'] = array();
             if (!empty($this->input->post('pla_id'))) {
                 $this->data['plan'] = $this->Planes_model->planxid($this->input->post('pla_id'));
             }
+            $this->data['norma'] = $this->Norma_model->detail();
             $this->data['estado'] = $this->Estados_model->detail();
             $this->data['cargo'] = $this->Cargo_model->allcargos();
             $this->layout->view("tareas/planes", $this->data);
@@ -258,9 +260,9 @@ class Tareas extends My_Controller {
                 'pla_avanceReal' => $this->input->post('avancereal'),
                 'pla_costoReal' => $this->input->post('costoreal'),
                 'pla_eficiencia' => $this->input->post('eficiencia'),
-                'pla_norma' => $this->input->post('norma'),
                 'emp_id' => $this->input->post('empleado'),
-                'car_id' => $this->input->post('cargo')
+                'car_id' => $this->input->post('cargo'),
+                'nor_id' => $this->input->post('norma')
             );
             $this->Planes_model->create($data);
         } catch (exception $e) {

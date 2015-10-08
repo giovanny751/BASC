@@ -248,7 +248,7 @@ class Ingreso_model extends CI_Model {
     function guardarcontrasena($contrasena,$id){
         
         $this->db->where('usu_id',$id);
-        $this->db->set('usu_password',$contrasena);
+        $this->db->set('usu_contrasena',$contrasena);
         $this->db->update('user');
         
     }

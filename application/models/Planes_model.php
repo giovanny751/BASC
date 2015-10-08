@@ -16,7 +16,6 @@ class Planes_model extends CI_Model {
     }
     function filtrobusqueda($codigo,$nombre,$fecha,$estado,$responsable){
         $this->db->where('planes.est_id !=',3);
-        if(!empty($codigo))$this->db->where('pla_id',$codigo);
         if(!empty($nombre))$this->db->where('pla_nombre',$nombre);
         if(!empty($fecha))$this->db->where('pla_fechaInicio',$fecha);
         if(!empty($estado))$this->db->where('est_id',$estado);

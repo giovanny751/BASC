@@ -34,6 +34,14 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-3 col-sx-3">
+                <label for="fecha">Nombre</label><input type="text" name="nombre" id="nombre" class="form-control">
+            </div>    
+            <div class="col-lg-3 col-sx-3">
+                <label for="fecha">Fecha</label><input type="text" name="fecha" id="fecha" class="form-control">
+            </div>  
+        </div>    
     </form>
     <hr>
     <div class="row">
@@ -73,6 +81,14 @@
 
     $('#responsable').autocomplete({
         source: "<?php echo base_url("index.php/tareas/autocompletar") ?>",
+        minLength: 3
+    });
+    $('#fecha').autocomplete({
+        source: "<?php echo base_url("index.php/tareas/autocompletarfechainicio") ?>",
+        minLength: 3
+    });
+    $('#nombre').autocomplete({
+        source: "<?php echo base_url("index.php/tareas/autocompletarresponsable") ?>",
         minLength: 3
     });
     $('.limpiar').click(function () {

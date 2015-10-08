@@ -47,6 +47,7 @@ class User_model extends CI_Model {
 
     function create($data) {
         $this->db->insert_batch('user', $data);
+        return $this->db->insert_id();
     }
 
     function filteruser($apellido = null, $cedula = null, $estado = null, $nombre = null) {

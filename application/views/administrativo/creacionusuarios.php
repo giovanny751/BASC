@@ -6,7 +6,10 @@
 <div class='well'>
     <form id="f3" method="post">
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <button type="button" class="btn btn-success" id="guardar"><?php echo (!empty($usuario[0]->usu_id)) ? "Actualizar" : "Guardar"; ?></button>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                 <center>
                     <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
                     <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
@@ -41,13 +44,13 @@
                 <input type="text" id="apellidos" name="apellidos" class="form-control" value="<?php echo (!empty($usuario[0]->usu_apellido)) ? $usuario[0]->usu_apellido : ""; ?>" />
             </div> 
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <label for="rol">Rol</label>
+                <label for="rol"><span class="campoobligatorio">*</span>Rol</label>
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
-                <select name="rol" id="rol">
-                    <option value=""></option>
+                <select name="rol" id="rol" class="form-control obligatorio">
+                    <option value="">::Seleccionar::</option>
                     <?php foreach($roles as $ro){?>
-                    <option value="<?php // echo $ro-> ?>"><?php // echo $ro-> ?></option>
+                    <option value="<?php echo $ro['rol_id'] ?>"><?php echo $ro['rol_nombre'] ?></option>
                     <?php } ?>
                 </select>
             </div> 
@@ -128,7 +131,8 @@
         <input type="hidden" name="usuid" id="usuid" value="<?php echo (!empty($usuario[0]->usu_id)) ? $usuario[0]->usu_id: "" ; ?>">
     </form>
     <div class="row" style="text-align:center">
-        <button type="button" class="btn btn-success" id="guardar"><?php echo (!empty($usuario[0]->usu_id)) ? "Actualizar" : "Guardar"; ?></button>
+        <a href="<?php echo base_url('index.php/presentacion/roles')?>"><button type="button" class="btn btn-success">Crear Rol</button></a>
+        
     </div>    
 </div>    
 <script>

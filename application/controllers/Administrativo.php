@@ -10,9 +10,6 @@ class Administrativo extends My_Controller {
         $this->load->database();
         $this->load->model('Ingreso_model');
         $this->load->model('Roles_model');
-        $this->load->helper('miscellaneous');
-        $this->load->helper('security');
-        $this->data["usu_id"] = $this->session->userdata('usu_id');
         validate_login($this->data["usu_id"]);
     }
 
@@ -46,6 +43,18 @@ class Administrativo extends My_Controller {
         else:
             $this->layout->view("permisos");
         endif;
+    }
+    function guardarcarpeta(){
+        try{
+            $this->load->model('Empleadocarpeta_model');
+            $this->Empleadocarpeta_model->create(
+                    $this->input->post("nombrecarpeta"),
+                    $this->input->post("descripcioncarpeta"),
+                    $this->input->post("emp_id")
+                    );
+        }catch(exception $e){
+            
+        }
     }
 
     function guardarempleado() {
@@ -175,7 +184,7 @@ class Administrativo extends My_Controller {
             $this->load->model('User_model');
             $this->load->model('Roles_model');
             $this->data['roles'] = $this->Roles_model->roles();
-            var_dump($this->data['roles']);die;
+//            var_dump($this->data['roles']);die;
             $this->data['empleado'] = $this->Empleado_model->detail();
             $this->data['estado'] = $this->Estados_model->detail();
             $this->data['sexo'] = $this->Sexo_model->detail();
@@ -221,7 +230,7 @@ class Administrativo extends My_Controller {
 
     function guardarusuario() {
         $this->load->model('User_model');
-
+        $this->load->model('Roles_model');
         $consultaexistencia = $this->User_model->consultausuarioxcedula($this->input->post('cedula'));
         if (empty($consultaexistencia)) {
             $data[] = array(
@@ -237,9 +246,14 @@ class Administrativo extends My_Controller {
                 'car_id' => $this->input->post('cargo'),
                 'emp_id' => $this->input->post('empleado'),
                 'usu_cambiocontrasena' => $this->input->post('cambiocontrasena'),
-                'usu_fechaCreacion' => date('Y-m-d H:i:s')
+                'usu_fechaCreacion' => date('Y-m-d H:i:s'),
+                'rol_id'=>$this->input->post('rol')
             );
-            $this->User_model->create($data);
+            
+            $id = $this->User_model->create($data);
+            if(!empty($id))
+            $this->Roles_model->permisosusuario($id,$this->input->post('rol'));
+            
         }
     }
 

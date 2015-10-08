@@ -95,6 +95,8 @@
         <a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>"><button type="button" class="btn btn-info">Nuevo Empleado</button></a>
     </div>
 </div> 
+
+
 <form id="f10" method="post" action="<?php echo base_url("index.php/administrativo/creacionempleados") ?>">
     <input type="hidden" value="" name="emp_id" id="emp_id">
 </form>

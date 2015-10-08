@@ -29,13 +29,11 @@ class MY_Controller extends CI_Controller {
         $this->load->database();
         $this->load->library('layout', 'layout_main');
         $this->load->helper('miscellaneous');
+        $this->load->helper('security');
         $this->data['user']=$this->session->userdata();
-//        $existencia = $this->consultaacceso($this->data['user']);
+        $this->data["usu_id"] = $this->session->userdata('usu_id');
         
-//        if($existencia == false){
-//            echo "No tiene permisos por favor cominicarse con el administrador del sistema";
-//            die;
-//        }
+
     }
     public function consultaacceso($usu_id){
         $this->load->model('Ingreso_model');

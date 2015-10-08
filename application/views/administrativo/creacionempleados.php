@@ -118,18 +118,9 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                 <input type="text" id="peso" name="peso" class="form-control"  value="<?php echo (!empty($empleado[0]->Emp_Peso)) ? $empleado[0]->Emp_Peso : ""; ?>" />
             </div> 
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <label for="nombreaseguradora">Nombre Aseguradora</label>
-            </div>    
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                    <select id="nombreaseguradora" name="nombreaseguradora" class="form-control">
-                    <option value="">::Seleccionar::</option>
-                    <?php foreach($aseguradoras as $a){ ?>
-                    <option <?php echo (!empty($datos[0]->ase_id) && $a->ase_id == $datos[0]->ase_id )?"selected":"";?>  value="<?php echo $a->ase_id ?>"><?php echo $a->ase_nombre ?></option>
-                    <?php } ?>
-                </select>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                <center><button type="button" id="aseguradora" class="btn btn-success" data-toggle="modal" data-target="#myModal3">Registrar seguradoras del empleado</button></center>
             </div>  
-                
         </div>
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -137,15 +128,7 @@
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                 <input type="text" id="telefono" name="telefono" class="form-control number "  value="<?php echo (!empty($empleado[0]->Emp_Telefono)) ? $empleado[0]->Emp_Telefono : ""; ?>" />
-            </div>    
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <label for="tipoaseguradora">Tipo Aseguradora</label>
-            </div>    
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <select id="tipoaseguradora" name="tipoaseguradora" class="form-control">
-                    <option value="">::Seleccionar::</option>
-                </select>
-            </div>   
+            </div>     
         </div>
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -160,7 +143,7 @@
                 <label for="contacto"><span class="campoobligatorio">*</span>Contacto</label>
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
-                <input type="text" id="contacto" name="contacto" class="form-control obligatorio"  value="<?php echo (!empty($empleado[0]->Emp_Contacto)) ? $empleado[0]->Emp_Contacto : ""; ?>" />
+                <input type="text" id="contacto" name="contacto" class="form-control obligatorio"  value="<?php echo (!empty($empleado[0]->Emp_contacto)) ? $empleado[0]->Emp_contacto : ""; ?>" />
             </div>  
         </div>
         <div class="row">
@@ -228,23 +211,286 @@
         <input type="hidden" id="emp_id" name="emp_id"  value="<?php echo (!empty($empleado[0]->Emp_Id)) ? $empleado[0]->Emp_Id : ""; ?>" />
     </form>
     <div class="row" style="text-align:center">
-            <button type="button" id="actualizar"  class="btn btn-success">Actualizar</button>   
-            <button type="button" id="btnRegistro" class="btn btn-info registro">Registro exámenes</button>
-            <button type="button" id="guardar" class="btn btn-success">Guardar</button>
+        <button type="button" id="actualizar"  class="btn btn-success">Actualizar</button>   
+        <!--<button type="button" id="btnRegistro" class="btn btn-info registro">Registro exámenes</button>-->
+        <button type="button" id="guardar" class="btn btn-success">Guardar</button>
     </div>
+    <?php if (!empty($empleado[0]->Emp_Id)) { ?>
+        <div class="portlet box blue" style="margin-top: 30px;">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>
+                </div>
+                <div class="tools">
+                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
+                    <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
+                    <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
+                    <a class="remove" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="tabbable tabbable-tabdrop">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab1">Accidentes Reportados</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#tab2">Registro</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab1" class="tab-pane active">
+                            <div style="text-align: right"><label for="anoactual"><input type="checkbox" name="anoactual" id="anoactual">Año Actual</label></div>
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                <th>Tipo de Lesión</th>
+                                <th>Días de Incapacidad</th>
+                                <th>Fecha</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></b>Resumen</b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div id="tab2" class="tab-pane">
+                            <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#myModal">Carpeta</button>
+                            <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#myModal2">Registro</button>
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                <th>Nombre archivo</th>
+                                <th>Descripción</th>
+                                <th>Versión</th>
+                                <th>Responsable</th>
+                                <th>Tamaño</th>
+                                <th>Fecha</th>
+                                <th>Acción</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <p>   </p>
+                <p>   </p>
+                <div class="tabbable tabbable-tabdrop">
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">AGREGAR CARPETA</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="formcarpeta">
+                            <input type="hidden" id="emp_id" name="emp_id"  value="<?php echo (!empty($empleado[0]->Emp_Id)) ? $empleado[0]->Emp_Id : ""; ?>" />
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="nombrecarpeta">Nombre:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <input type="nombre" id="nombrecarpeta" name="nombrecarpeta" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="descripcioncarpeta">Descripción:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <textarea  id="descripcioncarpeta" name="descripcioncarpeta" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="guardarcarpeta">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">ASEGURADORAS</h4>
+                    </div>
+                    <div class="modal-body" id="incluiraseguradoras">
+                        <div class="row" style="text-align:center">
+                            <button type="button" id="agregaraseguradora" class="btn btn-success">Agregar</button>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="tipoaseguradora">Tipo Aseguradora:</label>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <select id="tipoaseguradora" name="tipoaseguradora[]" class="form-control">
+                                    <option value="">::Seleccionar::</option>
+                                    <?php 
+                                    $option = "";
+                                    foreach($tipoaseguradora as $ta):
+                                        $option .= "<option value='".$ta->TipAse_Id."'>".$ta->TipAse_Nombre."</option>"; 
+                                     endforeach;
+                                    echo $option;
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="nombreaseguradora">Nombre Aseguradora:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <select id="nombreaseguradora" name="nombreaseguradora" class="form-control">
+                                    <option value="">::Seleccionar::</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="guardarcarpeta">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">AGREGAR REGISTRO</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="formregistro">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="nombrecarregistro">Carpeta:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <input type="nombre" id="nombrecarregistro" id="nombrecarregistro" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="version">Versión:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <input type="nombre" id="version" name="version" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="descripcionregistro">Descripción:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <textarea  id="descripcionregistro" name="descripcionregistro" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="archivocarpeta">Adjuntar archivo:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <input type="file" id="archivocarpeta" name="archivo" class="form-control">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary dirigir">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
 </div>
 <script>
-    $(function(){
+
+    $('body').delegate(".eliminaraseguradora", "click", function () {
+//        console.log($(this).parent().parent().lenght);
+//        if ($(this).parent().parent().lenght > 2) {
+            $(this).parents('.row').remove();
+//        }
+    });
+    var option = "<?php echo (!empty($option))?$option:""; ?>";
+    console.log(option);
+    var filaaseguradora = '<div class="row">\n\
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">\n\
+                            <label for="tipoaseguradora">Tipo Aseguradora:</label>\n\
+                            </div>\n\
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">\n\
+                            <select id="tipoaseguradora" name="tipoaseguradora[]" class="form-control">\n\
+                            <option value="">::Seleccionar::</option>'+option+'\n\
+                            </select>\n\
+                            </div>\n\
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">\n\
+                            <label for="nombreaseguradora">Nombre Aseguradora:</label>\n\
+                            </div>\n\
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">\n\
+                            <select id="nombreaseguradora" name="nombreaseguradora" class="form-control">\n\
+                            <option value="">::Seleccionar::</option>\n\
+                            </select>\n\
+                            </div>\n\
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">\n\
+                            <button type="button" class="btn btn-danger eliminaraseguradora">X</button>\n\
+                            </div>\n\
+                            </div>';
+    $('body').delegate("#agregaraseguradora", "click", function () {
+
+        $('#incluiraseguradoras').append(filaaseguradora);
+
+    });
+
+    $(function () {
         //$("#actualizar").hide();
-        <?php if (!empty($empleado[0])) { ?>
+<?php if (!empty($empleado[0])) { ?>
             $("#btnRegistro").hide();
             $("#guardar").hide();
             $("#actualizar").show();
-        <?php }else{ ?>
+<?php } else { ?>
             $("#actualizar").hide();
-        <?php } ?>
+<?php } ?>
     });
-    $(".flecha").click(function(){
+
+    $('#guardarcarpeta').click(function () {
+
+        $.post("<?php echo base_url("index.php/administrativo/guardarcarpeta") ?>",
+                $("#formcarpeta").serialize()
+                ).done(function (msg) {
+            alerta("verde", "Datos guardados correctamente")
+        })
+                .fail(function (msg) {
+                    alerta("rojo", "Error en el sistema por favor comunicarse con el administrador");
+                });
+
+    });
+
+    $(".flecha").click(function () {
         var url = "<?php echo base_url("index.php/administrativo/consultaempleadoflechas") ?>";
         var idEmpleadoCreado = $("#emp_id").val();
         var metodo = $(this).attr("metodo");
@@ -252,9 +498,9 @@
         $("#actualizar").show();
         $("#btnRegistro").hide();
         $("#guardar").hide();
-        if(metodo != "documento"){
-            $.post(url,{idEmpleadoCreado:idEmpleadoCreado,metodo:metodo})
-                    .done(function(msg){
+        if (metodo != "documento") {
+            $.post(url, {idEmpleadoCreado: idEmpleadoCreado, metodo: metodo})
+                    .done(function (msg) {
                         console.log(msg);
                         $("input[type='text'], select").val();
                         $("#emp_id").val(msg.Emp_Id);
@@ -282,45 +528,45 @@
                         $("#dimension1").val(msg.Dim_id);
                         $("#dimension2").val(msg.Dim_IdDos);
                         $("#cargo").val(msg.Car_id);
-                        if($("#emp_id").val() == ""){
+                        if ($("#emp_id").val() == "") {
                             $("#actualizar").hide();
                             $("#btnRegistro").show();
                             $("#guardar").show();
                         }
 
                     })
-                    .fail(function(msg){
+                    .fail(function (msg) {
                         alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
                         $("input[type='text'], select").val();
                         $("#actualizar").hide();
                         $("#btnRegistro").show();
                         $("#guardar").show();
                     })
-        }else{
-            window.location = "<?php echo  base_url("index.php/administrativo/listadoempleados"); ?>";
-        }   
-        
+        } else {
+            window.location = "<?php echo base_url("index.php/administrativo/listadoempleados"); ?>";
+        }
+
     });
-    
-    
-    $('#nombreaseguradora').change(function(){
+
+
+    $('#nombreaseguradora').change(function () {
         var id = $(this).val();
         $.post("<?php echo base_url("index.php/administrativo/consultatipoaseguradoras") ?>",
-        { id : id })
-                .done(function(msg){
+                {id: id})
+                .done(function (msg) {
                     $('#tipoaseguradora *').remove();
                     var aseguradora = "";
-                    $.each(msg,function(key,val){
-                        aseguradora += "<option value='"+val.TipAse_Id+"'>"+val.TipAse_Nombre+"</option>"
+                    $.each(msg, function (key, val) {
+                        aseguradora += "<option value='" + val.TipAse_Id + "'>" + val.TipAse_Nombre + "</option>"
                     });
                     $('#tipoaseguradora').append(aseguradora);
                 })
-                .fail(function(msg){
-            
-        });
-        
+                .fail(function (msg) {
+
+                });
+
     });
-    
+
     $('#guardar').click(function () {
 
         if (obligatorio('obligatorio') == true)

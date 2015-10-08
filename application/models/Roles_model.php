@@ -29,6 +29,7 @@ class Roles_model extends CI_Model {
         return $this->db->insert_id();
     } 
     function insertapermisos($insert){
+//        var_dump($insert);die;
         $this->db->insert_batch('permisos_rol',$insert);
     }
     
@@ -52,5 +53,12 @@ class Roles_model extends CI_Model {
         $rol = $this->db->get("permisos");
         return $rol->result();
         
+    }
+    function permisosusuario($iduser,$idrol){
+        $data = array(
+            "usu_id"=>$iduser,
+            "rol_id"=>$idrol
+        ); 
+        $this->db->insert("permisos",$data);
     }
 }

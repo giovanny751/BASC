@@ -49,6 +49,10 @@ class Login extends My_Controller {
                     'ing_fechaIngreso'=>date('Y-m-d H:i:s')   
                 );
                 $this->Ingreso_model->insertingreso($data);
+                if($user[0]['usu_cambiocontrasena'] == 1){
+                    redirect('index.php/presentacion/recordarcontrasena', 'location');
+                    die;
+                }
                 if(!empty($user[0]['rol_id'])){
                     redirect('index.php/presentacion/principal', 'location');
                 }else{

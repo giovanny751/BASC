@@ -236,6 +236,7 @@ class Presentacion extends My_Controller {
             for ($i = 0; $i < count($permisorol); $i++) {
                 $insert[] = array('rol_id' => $id, 'menu_id' => $permisorol[$i]);
             }
+//            var_dump($insert);die;
             $this->Roles_model->insertapermisos($insert);
             $roles = $this->Roles_model->roles();
             $this->output->set_content_type('application/json')->set_output(json_encode($roles));
