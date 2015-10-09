@@ -7,14 +7,14 @@ class Empleado_model extends CI_Model {
     }
 
     function create($data) {
-        
+
         $this->db->insert("empleado", $data);
     }
 
-    function update($data,$id) {
-        $this->db->where("emp_id",$id);
+    function update($data, $id) {
+        $this->db->where("emp_id", $id);
         $this->db->update("empleado", $data);
-        
+
 //        echo $this->db->last_query();die;
     }
 
@@ -29,7 +29,7 @@ class Empleado_model extends CI_Model {
         $this->db->delete("empleado");
     }
 
-    function filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado,$contratosvencidos) {
+    function filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos) {
 
         if (!empty($cedula))
             $this->db->where('Emp_Cedula', $cedula);
@@ -44,7 +44,7 @@ class Empleado_model extends CI_Model {
         if (!empty($estado))
             $this->db->where('estados.Est_id', $estado);
         if (!empty($contratosvencidos))
-            $this->db->where("Emp_FechaFinContrato <",date('Y-m-d'));
+            $this->db->where("Emp_FechaFinContrato <", date('Y-m-d'));
         $this->db->join("estados", "estados.est_id = empleado.est_id");
         $this->db->join("cargo", "cargo.car_id = empleado.car_id");
         $this->db->join("tipo_contrato", "tipo_contrato.TipCon_Id = empleado.TipCon_Id");
@@ -52,9 +52,10 @@ class Empleado_model extends CI_Model {
 //        echo $this->db->last_query();die;
         return $empleado->result();
     }
+
     function contratosvencidos() {
-        
-        $this->db->where("Emp_FechaFinContrato <",date('Y-m-d'));
+
+        $this->db->where("Emp_FechaFinContrato <", date('Y-m-d'));
         $this->db->join("estados", "estados.est_id = empleado.est_id");
         $this->db->join("cargo", "cargo.car_id = empleado.car_id");
         $this->db->join("tipo_contrato", "tipo_contrato.TipCon_Id = empleado.TipCon_Id");
@@ -69,28 +70,29 @@ class Empleado_model extends CI_Model {
     }
 
     function consultaempleadoxid($id) {
-        $this->db->where("emp_id",$id);
+        $this->db->where("emp_id", $id);
         $empleado = $this->db->get("empleado");
         return $empleado->result();
     }
-    function empleadoxcargo($id){
-        
-        $this->db->where("car_id",$id);
+
+    function empleadoxcargo($id) {
+
+        $this->db->where("car_id", $id);
         $empleado = $this->db->get("empleado");
         return $empleado->result();
-        
     }
-    function consultaempleadoflechas($idEmpleadoCreado,$metodo){
-        switch ($metodo){
+
+    function consultaempleadoflechas($idEmpleadoCreado, $metodo) {
+        switch ($metodo) {
             case "flechaIzquierdaDoble":
                 $this->db->where("Emp_Id = (select min(Emp_Id) from empleado)");
                 break;
             case "flechaIzquierda":
-                $this->db->where("Emp_Id < '".$idEmpleadoCreado."' ");
+                $this->db->where("Emp_Id < '" . $idEmpleadoCreado . "' ");
                 $this->db->order_by("Emp_Id desc");
                 break;
             case "flechaDerecha":
-                $this->db->where("Emp_Id > '".$idEmpleadoCreado."' ");
+                $this->db->where("Emp_Id > '" . $idEmpleadoCreado . "' ");
                 $this->db->order_by("Emp_Id asc");
                 break;
             case "flechaDerechaDoble":
@@ -100,8 +102,21 @@ class Empleado_model extends CI_Model {
                 die;
                 break;
         }
-        $usuario = $this->db->get("empleado",1);
+        $usuario = $this->db->get("empleado", 1);
         return $usuario->result();
+    }
+
+    function empleado_registro($post) {
+        $this->db->select('count(Emp_Id) dd'); //
+        $this->db->where('Emp_Id', $post['Emp_Id']);
+        $datos = $this->db->get('empleado_registro');
+        $datos = $datos->result();
+        if ($datos[0]->dd == 0)
+            $this->db->insert('empleado_registro', $post);
+        else {
+            $this->db->where('Emp_Id', $post['Emp_Id']);
+            $this->db->update('empleado_registro', $post);
+        }
     }
 
 }

@@ -10,7 +10,7 @@ class Administrativo extends My_Controller {
         $this->load->database();
         $this->load->model('Ingreso_model');
         $this->load->model('Roles_model');
-                $this->load->helper('security');
+        $this->load->helper('security');
         $this->load->helper('miscellaneous');
         $this->data["usu_id"] = $this->session->userdata('usu_id');
         validate_login($this->data["usu_id"]);
@@ -47,28 +47,46 @@ class Administrativo extends My_Controller {
             $this->layout->view("permisos");
         endif;
     }
-    function guardarcarpeta(){
-        try{
+
+    function guardarcarpeta() {
+        try {
             $this->load->model('Empleadocarpeta_model');
             $this->Empleadocarpeta_model->create(
-                    $this->input->post("nombrecarpeta"),
-                    $this->input->post("descripcioncarpeta"),
-                    $this->input->post("emp_id")
-                    );
-        }catch(exception $e){
+                    $this->input->post("nombrecarpeta"), $this->input->post("descripcioncarpeta"), $this->input->post("emp_id")
+            );
+        } catch (exception $e) {
             
         }
     }
-    function guardarregistroempleado(){
-        try{
-            echo "<pre>";
-            print_r($this->input->post());
-            echo "</pre>";
-            die("Hola");
-        }catch(exception $e){
+
+    function guardarregistroempleado() {
+        try {
+            $post = $this->input->post();
+            $this->load->model('Empleado_model');
+
+            if (isset($_FILES['archivo']['name']))
+                if (!empty($_FILES['archivo']['name']))
+                    $post['empReg_archivo']=basename($_FILES['archivo']['name']);
+            $this->Empleado_model->empleado_registro($post);
+
+
+            $targetPath = "./uploads/empleado";
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+            $targetPath = "./uploads/empleado/" . $post['Emp_Id'];
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+
+            $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
+            }
+        } catch (exception $e) {
             
         }
     }
+
     function guardarempleado() {
         $this->load->model('Empleado_model');
 
@@ -259,13 +277,12 @@ class Administrativo extends My_Controller {
                 'emp_id' => $this->input->post('empleado'),
                 'usu_cambiocontrasena' => $this->input->post('cambiocontrasena'),
                 'usu_fechaCreacion' => date('Y-m-d H:i:s'),
-                'rol_id'=>$this->input->post('rol')
+                'rol_id' => $this->input->post('rol')
             );
-            
+
             $id = $this->User_model->create($data);
-            if(!empty($id))
-            $this->Roles_model->permisosusuario($id,$this->input->post('rol'));
-            
+            if (!empty($id))
+                $this->Roles_model->permisosusuario($id, $this->input->post('rol'));
         }
     }
 
@@ -316,8 +333,8 @@ class Administrativo extends My_Controller {
     }
 
     function organigrama() {
-            $this->data["organigrama"] = $this->consultaorganigrama();
-            $this->layout->view("administrativo/organigrama", $this->data);
+        $this->data["organigrama"] = $this->consultaorganigrama();
+        $this->layout->view("administrativo/organigrama", $this->data);
     }
 
     function cargos() {
@@ -399,7 +416,7 @@ class Administrativo extends My_Controller {
             $cargo = $this->input->post("cargo");
             $cargojefe = $this->input->post("cargojefe");
             $porcentaje = $this->input->post("porcentaje");
-            
+
             if (empty($this->Cargo_model->existe($cargo[0], $cargojefe[0]))) {
                 $data = array();
                 for ($i = 0; $i < count($cargo); $i++) {
@@ -412,7 +429,7 @@ class Administrativo extends My_Controller {
                 $this->Cargo_model->create($data);
                 $this->data["cargo"] = $this->Cargo_model->detail();
                 $this->output->set_content_type('application/json')->set_output(json_encode($this->data["cargo"]));
-            }else{
+            } else {
                 echo "1";
             }
         } catch (exception $e) {
@@ -554,6 +571,9 @@ class Administrativo extends My_Controller {
 
 
         $this->load->model("Empresa_model");
+        if (isset($_FILES['userfile']['name']))
+            if (!empty($_FILES['userfile']['name']))
+                $this->db->set("emp_logo", basename($_FILES['userfile']['name']));
         $data[] = array(
             "emp_razonSocial" => $this->input->post("razonsocial"),
             "emp_nit" => $this->input->post("nit"),
@@ -564,16 +584,32 @@ class Administrativo extends My_Controller {
             "actEco_id" => $this->input->post("actividadeconomica"),
             "Dim_id" => $this->input->post("dimension1"),
             "Dimdos_id" => $this->input->post("dimension2"),
-            "emp_representante" => $this->input->post("representante")
+            "emp_representante" => $this->input->post("representante"),
 //            "emp_logo"=>$this->input->post("")
         );
+
         $datos = $this->Empresa_model->detail();
         if (count($datos) == 0)
-            $this->Empresa_model->create($data);
+            $dd = $this->Empresa_model->create($data);
         else
-            $this->Empresa_model->update($data[0]);
-        
-        redirect('index.php/administrativo/empresa','location');
+            $dd = $this->Empresa_model->update($data[0]);
+
+        $targetPath = "./uploads/empresa";
+        if (!file_exists($targetPath)) {
+            mkdir($targetPath, 0777, true);
+        }
+        $targetPath = "./uploads/empresa/" . $dd[0]->emp_id;
+        if (!file_exists($targetPath)) {
+            mkdir($targetPath, 0777, true);
+        }
+
+        $target_path = $targetPath . '/' . basename($_FILES['userfile']['name']);
+        if (move_uploaded_file($_FILES['userfile']['tmp_name'], $target_path)) {
+            
+        }
+
+
+        redirect('index.php/administrativo/empresa', 'location');
     }
 
     function autocompletar() {

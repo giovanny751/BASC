@@ -27,9 +27,9 @@
                     <label for="ciudad">Ciudad</label>
                     <select id="ciudad" name="ciudad" class="form-control" >
                         <option value="">::Seleccionar::</option>
-                        <?php foreach($ciudad as $c){?>
-                        <option <?php echo ($c->ciu_id == $informacion[0]->ciu_id)?"selected":""; ?> value="<?php echo $c->ciu_id ?>"><?php echo $c->ciu_nombre ?></option>
-                        <?php }?>
+                        <?php foreach ($ciudad as $c) { ?>
+                            <option <?php echo ($c->ciu_id == $informacion[0]->ciu_id) ? "selected" : ""; ?> value="<?php echo $c->ciu_id ?>"><?php echo $c->ciu_nombre ?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <div class="row">
@@ -48,15 +48,25 @@
                     <input type="text" id="empleados" name="empleados" class="form-control obligatorio"  value="<?php echo $informacion[0]->numEmp_id ?>" >
 <!--                    <select id="empleados" name="empleados" class="form-control obligatorio" >
                         <option value="">::Seleccionar::</option>
-                        <?php // foreach ($numero as $n) { ?>
+                    <?php // foreach ($numero as $n) { ?>
                             <!--<option <?php echo ($n->numEmp_id == $informacion[0]->numEmp_id ) ? "selected" : ""; ?> value="<?php echo $n->numEmp_id ?>"><?php echo $n->numEmp_descripcion ?></option>-->
-                        <?php // } ?>
+                    <?php // } ?>
                     <!--</select>-->
                 </div>
                 <div class="row">
                     <label for="actividadeconomica">
                         <span class="campoobligatorio">*</span>Actividad Economica</label>
                     <input type="text" id="actividadeconomica" name="actividadeconomica" class="form-control obligatorio"  value="<?php echo $informacion[0]->actEco_id ?>"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <?php
+                    if (isset($informacion[0]->emp_logo))
+                        if (!empty($informacion[0]->emp_logo)) {
+                            ?>
+                    <center><img  style="width: 350;height: 250px;border:2px solid #000;border-radius: 15px" src="<?php echo base_url('uploads') . '/empresa/' . $informacion[0]->emp_id . "/" . $informacion[0]->emp_logo; ?>"></center>
+                    <?php } ?>
                 </div>
             </div>
             <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-lg-5 col-md-5 col-sm-5 col-xs-5">  
@@ -78,7 +88,7 @@
                 </div>
             </div>
             <div class="row">
-                
+
             </div>
             <div class="row" style="text-align:center">
                 <input type="submit" id="guardar" class="btn btn-success" value="Guardar">
@@ -151,15 +161,18 @@
 </div>
 <script>
 
-    $('.dirigir').click(function(){
-        
-        if($('#direccionar').val() == 1) window.location.href = '<?php echo base_url("index.php/administrativo/cargos") ?>';
-        if($('#direccionar').val() == 2) window.location.href = '<?php echo base_url("index.php/administrativo/organigrama") ?>';
-        if($('#direccionar').val() == 3) window.location.href = '<?php echo base_url("index.php/administrativo/creacionempleados") ?>';
-        
+    $('.dirigir').click(function() {
+
+        if ($('#direccionar').val() == 1)
+            window.location.href = '<?php echo base_url("index.php/administrativo/cargos") ?>';
+        if ($('#direccionar').val() == 2)
+            window.location.href = '<?php echo base_url("index.php/administrativo/organigrama") ?>';
+        if ($('#direccionar').val() == 3)
+            window.location.href = '<?php echo base_url("index.php/administrativo/creacionempleados") ?>';
+
     });
 
-    $('#guardar').click(function () {
+    $('#guardar').click(function() {
         return obligatorio('obligatorio') == true
     });
 

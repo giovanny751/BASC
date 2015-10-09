@@ -388,26 +388,26 @@
                         <form method="post" id="formregistro" enctype="multipart/form-data" action="<?php echo base_url("index.php/administrativo/guardarregistroempleado") ?>">
                             <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="nombrecarregistro">Carpeta:</label>
+                                    <label for="empReg_carpeta">Carpeta:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="nombre" id="nombrecarregistro" id="nombrecarregistro" class="form-control">
+                                    <input type="text" id="empReg_carpeta" name="empReg_carpeta" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="version">Versión:</label>
+                                    <label for="empReg_version">Versión:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="nombre" id="version" name="version" class="form-control">
+                                    <input type="text" id="empReg_version" name="empReg_version" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="descripcionregistro">Descripción:</label>
+                                    <label for="empReg_descripcion">Descripción:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <textarea  id="descripcionregistro" name="descripcionregistro" class="form-control"></textarea>
+                                    <textarea  id="empReg_descripcion" name="empReg_descripcion" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -418,7 +418,7 @@
                                     <input type="file" id="archivocarpeta" name="archivo" class="form-control">
                                 </div>
                             </div>
-                            <input type="hidden" value="<?php echo $empleado[0]->Emp_Id ?>" name="usu_id" />
+                            <input type="hidden" value="<?php echo $empleado[0]->Emp_Id ?>" name="Emp_Id" />
                         </form>
                     </div>
                     <div class="modal-footer">
