@@ -55,6 +55,34 @@ class Planes_model extends CI_Model {
         $this->db->update("planes",$data);
         
     }
+    
+    function tareaxplan($pla_id){
+        
+        $this->db->select("DATEDIFF((tar_fechaFinalizacion),(tar_fechaInicio)) diferencia");
+        $this->db->select("tipo.tip_tipo,tar_nombre,tarea.tar_fechaInicio,tarea.tar_fechaFinalizacion,empleado.Emp_Nombre");
+        $this->db->where("planes.pla_id",$pla_id);
+        $this->db->join("tarea","tarea.pla_id = planes.pla_id");
+        $this->db->join("empleado","empleado.emp_id = tarea.emp_id","LEFT");
+        $this->db->join("tipo","tipo.tip_id = tarea.tip_id","LEFT");
+        $planes = $this->db->get("planes");
+        return $planes->result(); 
+        
+    }
+    function tareaxplaninactivas($pla_id){
+        
+        $this->db->select("DATEDIFF((tar_fechaFinalizacion),(tar_fechaInicio)) diferencia");
+        $this->db->select("tipo.tip_tipo,tar_nombre,tarea.tar_fechaInicio,tarea.tar_fechaFinalizacion,empleado.Emp_Nombre");
+        $this->db->where("planes.pla_id",$pla_id);
+        $this->db->where("tarea.est_id",2);
+        $this->db->join("tarea","tarea.pla_id = planes.pla_id");
+        $this->db->join("empleado","empleado.emp_id = tarea.emp_id","LEFT");
+        $this->db->join("tipo","tipo.tip_id = tarea.tip_id","LEFT");
+        $planes = $this->db->get("planes");
+        return $planes->result(); 
+        
+    }
+    
+        
 
 }
 

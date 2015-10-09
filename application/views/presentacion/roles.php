@@ -12,6 +12,8 @@
         <table class="table table-responsive table-striped table-bordered">
             <thead>
             <th>Nombre</th>
+            <th>Fecha de creación</th>
+            <th>Fecha de modificación</th>
             <th>Opciones</th>
             <th>Eliminar</th>
             </thead>
@@ -19,6 +21,8 @@
                 <?php foreach ($roles as $datos) { ?>
                     <tr>
                         <td><?php echo $datos['rol_nombre']; ?></td>
+                        <td><?php echo $datos['rol_fechaCreacion']; ?></td>
+                        <td><?php echo $datos['rol_fechaModificacion']; ?></td>
                         <td align="center"><button type="button" rol="<?php echo $datos['rol_id']; ?>"  data-toggle="modal" data-target="#myModal"  class="btn btn-info modificar">Opciones</button></td>
                         <td align="center"><button type="button" rol="<?php echo $datos['rol_id']; ?>" class="btn btn-danger eliminar">Eliminar</button></td>
                     </tr>

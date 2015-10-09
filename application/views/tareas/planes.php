@@ -119,7 +119,7 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-gift"></i>
-                    Tab drop
+                    Tareas asociadas al plan
                 </div>
                 <div class="tools">
                     <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
@@ -173,10 +173,19 @@
                                 <th>Duraciòn presupuestada</th>
                                 <th>Responsables</th>
                                 </thead>
-                                <tbody>
+                                <tbody style="color:black">
+                                    <?php foreach($tareaxplan as $tp):?>
                                     <tr>
-                                        <td colspan="8" style="text-align:center">Ingresar Informaciòn</td> 
+                                        <td ></td> 
+                                        <td ></td> 
+                                        <td ><?php  echo $tp->tip_tipo ?></td> 
+                                        <td ><?php  echo $tp->tar_nombre ?></td> 
+                                        <td ><?php  echo $tp->tar_fechaInicio ?></td> 
+                                        <td ><?php  echo $tp->tar_fechaFinalizacion ?></td> 
+                                        <td style="text-align: center"><?php  echo $tp->diferencia ?></td> 
+                                        <td ><?php  echo $tp->Emp_Nombre ?></td> 
                                     </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -191,12 +200,20 @@
                                 <th>Fecha Fin</th>
                                 <th>Duración presupuestada</th>
                                 <th>Responsables</th>
-                                <th>Acción</th>
                                 </thead>
-                                <tbody>
+                                <tbody style="color:black">
+                                    <?php foreach($tareaxplaninactivas as $tpi):?>
                                     <tr>
-                                        <td colspan="9"></td>
+                                        <td ></td> 
+                                        <td ></td> 
+                                        <td ><?php  echo $tpi->tip_tipo ?></td> 
+                                        <td ><?php  echo $tpi->tar_nombre ?></td> 
+                                        <td ><?php  echo $tpi->tar_fechaInicio ?></td> 
+                                        <td ><?php  echo $tpi->tar_fechaFinalizacion ?></td> 
+                                        <td style="text-align: center"><?php  echo $tpi->diferencia ?></td> 
+                                        <td ><?php  echo $tpi->Emp_Nombre ?></td> 
                                     </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -210,7 +227,6 @@
                                 <th>Horas</th>
                                 <th>Costo</th>
                                 <th>Comentarios</th>
-                                <th>Acción</th>
                                 </thead>
                                 <tbody>
                                     <tr>

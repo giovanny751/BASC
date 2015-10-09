@@ -10,6 +10,9 @@ class Administrativo extends My_Controller {
         $this->load->database();
         $this->load->model('Ingreso_model');
         $this->load->model('Roles_model');
+                $this->load->helper('security');
+        $this->load->helper('miscellaneous');
+        $this->data["usu_id"] = $this->session->userdata('usu_id');
         validate_login($this->data["usu_id"]);
     }
 

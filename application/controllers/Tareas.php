@@ -212,6 +212,9 @@ class Tareas extends My_Controller {
             $this->data['plan'] = array();
             if (!empty($this->input->post('pla_id'))) {
                 $this->data['plan'] = $this->Planes_model->planxid($this->input->post('pla_id'));
+                $this->data['tareaxplan'] = $this->Planes_model->tareaxplan($this->input->post('pla_id'));
+                $this->data['tareaxplaninactivas'] = $this->Planes_model->tareaxplaninactivas($this->input->post('pla_id'));
+//                var_dump($this->data['tareaxplan']);die;
             }
             $this->data['norma'] = $this->Norma_model->detail();
             $this->data['estado'] = $this->Estados_model->detail();

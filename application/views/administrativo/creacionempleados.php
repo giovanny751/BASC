@@ -438,7 +438,7 @@
 //        }
     });
     var option = "<?php echo (!empty($option))?$option:""; ?>";
-    console.log(option);
+    
     var filaaseguradora = '<div class="row">\n\
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">\n\
                             <label for="tipoaseguradora">Tipo Aseguradora:</label>\n\
@@ -576,13 +576,13 @@
                     )
                     .done(function (msg) {
                         alerta("verde", "Guardado Correctamente");
-//                        if (confirm("¿Desea Guardar otro Empleado?")) {
-//                            $('select,input').val('');
-//                            $('input[type="checkbox"]').attr("checked", false)
-//                            $('#tipoaseguradora *').remove();
-//                        } else {
-//                            window.location.href = '<?php echo base_url("index.php/administrativo/listadoempleados") ?>';
-//                        }
+                        if (confirm("¿Desea Guardar otro Empleado?")) {
+                            $('select,input').val('');
+                            $('input[type="checkbox"]').attr("checked", false)
+                            $('#tipoaseguradora *').remove();
+                        } else {
+                            window.location.href = '<?php echo base_url("index.php/administrativo/listadoempleados") ?>';
+                        }
                     }).fail(function (msg) {
                 alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
             });
