@@ -56,7 +56,9 @@
                         <label for="actividad">Actividad</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="actividad" id="actividad" class="form-control" />
+                        <select name="actividad" id="actividad" class="form-control" >
+                            <option value="">::Seleccionar::</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -194,7 +196,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <label for="descripcion">Descripción</label>
-                        <textarea  value="<?php echo (!empty($tarea->tar_descripcion)) ? $tarea->tar_descripcion : ""; ?>" name="descripcion" id="descripcion" rows="10" class="form-control"></textarea>
+                        <textarea name="descripcion" id="descripcion" rows="10" class="form-control"><?php echo (!empty($tarea->tar_descripcion)) ? $tarea->tar_descripcion : ""; ?></textarea>
                     </div>
                 </div>
                 <p class="alert alert-info"  style='margin-top:10px;font-weight: bold;text-align: center;'>Riesgos</p>
@@ -222,152 +224,255 @@
         </div>
 
     </form>
-    <?php if(!empty($tarea->tar_id)):?>
-    <div class="portlet box blue">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-gift"></i>
+    <?php if (!empty($tarea->tar_id)): ?>
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>
+                </div>
+                <div class="tools">
+                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
+                    <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
+                    <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
+                    <a class="remove" href="javascript:;" data-original-title="" title=""> </a>
+                </div>
             </div>
-            <div class="tools">
-                <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
-                <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
-                <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
-                <a class="remove" href="javascript:;" data-original-title="" title=""> </a>
-            </div>
-        </div>
-        <div class="portlet-body">
-            <div class="tabbable tabbable-tabdrop">
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a data-toggle="tab" href="#tab1">Avance</a>
-                    </li>
-                    <li>
-                        <a data-toggle="tab" href="#tab2">Agragar Avance</a>
-                    </li>
-                    <li>
-                        <a data-toggle="tab" href="#tab3">Registros</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div id="tab1" class="tab-pane active">
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                            <th>Fecha</th>
-                            <th>Resumen</th>
-                            <th>Usuario</th>
-                            <th>Horas</th>
-                            <th>Costo</th>
-                            <th>Comentarios</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="6" style="text-align:center">Ingresar Informaciòn</td> 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="tab2" class="tab-pane">
-                        <form method="post" id="guardaravance">
-                            <input type="hidden" value="<?php echo (!empty($tarea->tar_id)) ? $tarea->tar_id : ""; ?>" name="idtarea" id="interno">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                            <label for="fecha">Fecha</label>
-                                        </div>
-                                        <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                            <input type="text" name="fecha" id="fecha" class="form-control fecha avance">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                            <label for="progreso">Progreso</label>
-                                        </div>
-                                        <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                            <select name="progreso" id="progreso" class="form-control avance" style="text-align: center">
-                                                <option value="">::Seleccionar::</option>
-                                                <?php for ($i = 1; $i < 101; $i++) { ?>
-                                                    <option value="<?php echo $i; ?>"><?php echo $i . " " . "%"; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                            <label for="horastrabajadas">Horas Trabajadas</label>
-                                        </div>
-                                        <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                            <input type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                            <label for="costo">Costo</label>
-                                        </div>
-                                        <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                            <input type="text" name="costo" id="costo" class="form-control avance">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sx-12 col-sm-12">
-                                            <label for="comentarios">Comentarios</label>
-                                            <textarea name="comentarios" id="comentarios" class="form-control avance"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <center><h4>Notificar a:</h4></center>
-                                    </div>
-                                    <?php foreach ($notificacion as $n): ?>
+            <div class="portlet-body">
+                <div class="tabbable tabbable-tabdrop">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab1">Avance</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#tab2">Agragar Avance</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#tab3">Registros</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab1" class="tab-pane active">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <th>Fecha</th>
+                                <th>Resumen</th>
+                                <th>Usuario</th>
+                                <th>Horas</th>
+                                <th>Costo</th>
+                                <th>Comentarios</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="6" style="text-align:center">Ingresar Informaciòn</td> 
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tab2" class="tab-pane">
+                            <form method="post" id="guardaravance">
+                                <input type="hidden" value="<?php echo (!empty($tarea->tar_id)) ? $tarea->tar_id : ""; ?>" name="idtarea" id="interno">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
                                         <div class="row">
-                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <label for="creotarea"><?php echo $n->not_notificacion ?></label>
-                                            </div>
                                             <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                <input type="checkbox" name="notificar[]" value="<?php echo $n->not_id ?>" id="creotarea" class="form-control avance">
+                                                <label for="fecha">Fecha</label>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                <input type="text" name="fecha" id="fecha" class="form-control fecha avance">
                                             </div>
                                         </div>
-                                    <?php endforeach; ?>
-                                </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                                <label for="progreso">Progreso</label>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                <select name="progreso" id="progreso" class="form-control avance" style="text-align: center">
+                                                    <option value="">::Seleccionar::</option>
+                                                    <?php for ($i = 1; $i < 101; $i++) { ?>
+                                                        <option value="<?php echo $i; ?>"><?php echo $i . " " . "%"; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                                <label for="horastrabajadas">Horas Trabajadas</label>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                <input type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                                <label for="costo">Costo</label>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                <input type="text" name="costo" id="costo" class="form-control avance">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sx-12 col-sm-12">
+                                                <label for="comentarios">Comentarios</label>
+                                                <textarea name="comentarios" id="comentarios" class="form-control avance"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <center><h4>Notificar a:</h4></center>
+                                        </div>
+                                        <?php foreach ($notificacion as $n): ?>
+                                            <div class="row">
+                                                <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                    <label for="creotarea"><?php echo $n->not_notificacion ?></label>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                                    <input type="checkbox" name="notificar[]" value="<?php echo $n->not_id ?>" id="creotarea" class="form-control avance">
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
 
+                                </div>
+                            </form>
+                            <div class="row" style="text-align: center">
+                                <button type="button" class="btn btn-success" id="gavance">Guardar</button>
                             </div>
-                        </form>
-                        <div class="row" style="text-align: center">
-                            <button type="button" class="btn btn-success" id="gavance">Guardar</button>
+                        </div>
+                        <div id="tab3" class="tab-pane">
+                            <div style="text-align:right">
+                                <button type="button" id="nuevoregistro" class="btn btn-success" data-toggle="modal" data-target="#myModal">Nuevo registro</button>
+                            </div>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Versión</th>
+                                <th>Responsable</th>
+                                <th>Tamaño</th>
+                                <th>Fecha</th>
+                                <th>Acción</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="7"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div id="tab3" class="tab-pane">
-
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Versión</th>
-                            <th>Responsable</th>
-                            <th>Tamaño</th>
-                            <th>Fecha</th>
-                            <th>Acción</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="7"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                </div>
+                <p>   </p>
+                <p>   </p>
+                <div class="tabbable tabbable-tabdrop">
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">REGISTROS</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="formactividadpadre">
+                            <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="plan">Plan:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <select name="plan" id="plan" class="form-control obligatorio" >
+                                        <option value="">::Seleccionar::</option>
+                                        <?php foreach ($planes as $p) { ?>
+                                            <option  <?php echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : ""; ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="tarea">Tarea:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <select id="tarea" name="tarea" class="form-control acobligatorio">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="carpeta">Carpeta:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <select id="carpeta" name="carpeta" class="form-control acobligatorio">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="version">Versión:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <input type="text" id="version" name="version" class="form-control acobligatorio">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="descripcion">Descripción:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <textarea id="descripcion" name="descripcion" class="form-control acobligatorio"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="nombreactividad">Adjuntar Archivo:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <input type="file" id="nombreactividad" name="nombreactividad" class="form-control acobligatorio">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <button type="button" class="btn btn-success" id="guardarregistro">Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="guardaractividadpadre">Guardar</button>
                     </div>
                 </div>
             </div>
-            <p>   </p>
-            <p>   </p>
-            <div class="tabbable tabbable-tabdrop">
-            </div>
         </div>
-    </div>
     <?php endif; ?>
     <input type="hidden" id="tareid" name="tareid" />
 </div>
 <script>
+    $('#plan').change(function () {
+        var plan = $(this).val();
+        $.post(
+                "<?php echo base_url("index.php/tareas/consultaractividadpadre") ?>",
+                {plan: plan}
+        ).done(function (msg) {
+            $('#actividad *').remove();
+            var option = "<option value=''>::Seleccionar::</option>";
+            $.each(msg, function (key, val) {
+                option += "<option value='" + val.actPad_id + "'>" + val.actPad_nombre + "</option>";
+            })
+            $('#actividad').append(option);
+
+            alerta("verde", "Actividades padres cargadas correctamente");
+        }).fail(function () {
+            alerta("Error", "Error por favor comunicarse con el administrador");
+        });
+    });
+
     $('#gavance').click(function () {
 
         $.post(
@@ -408,7 +513,7 @@
                     $('#f8').serialize()
                     ).done(function (msg) {
                 alerta("verde", "Datos guardados correctamente");
-                if($("#interno").val() == ""){
+                if ($("#interno").val() == "") {
                     $('input,select,textarea').val("");
                 }
 

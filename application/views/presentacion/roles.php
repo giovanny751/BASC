@@ -108,14 +108,15 @@ $('.seleccionados').click(function() {
         $.post("<?php echo base_url('index.php/presentacion/guardarroles'); ?>", $('#nuevorol').serialize(), function(data) {
             $('#myModal').modal('hide');
                 var filas = "";
-                $.each(data, function(key, val) {
-                    filas += "<tr>";
-                    filas += "<td>" + val.rol_nombre + "</td>";
-                    filas += "<td>" + val.rol_estado + "</td>";
-                    filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-danger eliminar'>Eliminar</button></td>";
-                    filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-info opciones'>Opciones</button></td>";
-                    filas += "</tr>";
-                });
+//                console.log(jQuery.parseJSON(data));
+//                $.each(data, function(key, val) {
+//                    filas += "<tr>";
+//                    filas += "<td>" + val.rol_nombre + "</td>";
+//                    filas += "<td>" + val.rol_estado + "</td>";
+//                    filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-danger eliminar'>Eliminar</button></td>";
+//                    filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-info opciones'>Opciones</button></td>";
+//                    filas += "</tr>";
+//                });
                 $('#cuerporol *').remove();
                 $('#cuerporol').append(filas);
                 $('#nombre').val('');

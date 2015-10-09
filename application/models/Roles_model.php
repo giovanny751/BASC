@@ -22,6 +22,11 @@ class Roles_model extends CI_Model {
         $consulta = $this->db->get('roles');
         return $consulta->result_array();
     }
+    function rolesall(){
+        
+        $consulta = $this->db->get('roles');
+        return $consulta->result();
+    }
     
     function guardarrol($nombre){
         $this->db->set('rol_nombre',$nombre);

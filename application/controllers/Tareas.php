@@ -249,6 +249,27 @@ class Tareas extends My_Controller {
         }
     }
 
+    function guardaractividadpadre(){
+        
+        try{
+            $this->load->model("Actividadpadre_model");
+            $this->Actividadpadre_model->create(
+                        $this->input->post("idactividad"),
+                        $this->input->post("nombreactividad"),
+                        $this->input->post("pla_id")
+                    );
+        }catch(exception $e){
+            
+        }
+        
+    }
+    function consultaractividadpadre(){
+        
+        $this->load->model("Actividadpadre_model");
+        $data = $this->Actividadpadre_model->detailxid($this->input->post('plan'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+    
     function guardarplan() {
         try {
             $this->load->model("Planes_model");

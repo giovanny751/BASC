@@ -249,6 +249,7 @@ class Ingreso_model extends CI_Model {
         
         $this->db->where('usu_id',$id);
         $this->db->set('usu_contrasena',$contrasena);
+        $this->db->set('usu_cambiocontrasena',0);
         $this->db->update('user');
         
     }

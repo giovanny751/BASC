@@ -238,7 +238,8 @@ class Presentacion extends My_Controller {
             }
 //            var_dump($insert);die;
             $this->Roles_model->insertapermisos($insert);
-            $roles = $this->Roles_model->roles();
+            $roles = $this->Roles_model->rolesall();
+//            var_dump($roles);die;
             $this->output->set_content_type('application/json')->set_output(json_encode($roles));
             die;
         } else {
@@ -332,7 +333,11 @@ class Presentacion extends My_Controller {
     }
 
     function guardarcontrasena() {
+        try{
         $this->Ingreso_model->guardarcontrasena($this->input->post('password'), $this->data['user']['usu_id']);
+        }catch(exception $e){
+            
+        }
     }
 
     function rol() {
