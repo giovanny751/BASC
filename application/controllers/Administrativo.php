@@ -59,7 +59,16 @@ class Administrativo extends My_Controller {
             
         }
     }
-
+    function guardarregistroempleado(){
+        try{
+            echo "<pre>";
+            print_r($this->input->post());
+            echo "</pre>";
+            die("Hola");
+        }catch(exception $e){
+            
+        }
+    }
     function guardarempleado() {
         $this->load->model('Empleado_model');
 

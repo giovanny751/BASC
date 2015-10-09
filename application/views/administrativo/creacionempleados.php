@@ -385,7 +385,7 @@
                         <h4 class="modal-title" id="myModalLabel">AGREGAR REGISTRO</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" id="formregistro">
+                        <form method="post" id="formregistro" enctype="multipart/form-data" action="<?php echo base_url("index.php/administrativo/guardarregistroempleado") ?>">
                             <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                     <label for="nombrecarregistro">Carpeta:</label>
@@ -418,11 +418,12 @@
                                     <input type="file" id="archivocarpeta" name="archivo" class="form-control">
                                 </div>
                             </div>
+                            <input type="hidden" value="<?php echo $empleado[0]->Emp_Id ?>" name="usu_id" />
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary dirigir">Guardar</button>
+                        <button type="button" class="btn btn-primary" id="guardarRegistro">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -602,4 +603,12 @@
             });
         }
     });
+    
+    //--------------------------------------------------------------------------
+    //                              GUARDAR REGISTR0
+    //--------------------------------------------------------------------------
+    $("body").on("click","#guardarRegistro",function(){
+        $("#formregistro").submit();
+    });
+    
 </script>    
