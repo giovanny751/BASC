@@ -127,8 +127,6 @@ class Tareas extends My_Controller {
     function guardartarea() {
         try {
             $this->load->model('Tarea_model');
-
-
             if (!empty($this->input->post('id'))):
                 $data = array(
                     "act_id" => $this->input->post("actividad"),
@@ -151,7 +149,7 @@ class Tareas extends My_Controller {
                 );
                 $idtarea = $this->input->post('id');
                 $actualizar = $this->Tarea_model->update($data, $idtarea);
-                $consultaxid = $this->Tarea_model->detailxid($data);
+                $consultaxid = $this->Tarea_model->detailxid($this->input->post('id'));
             else:
                 $data = array(
                     "act_id" => $this->input->post("actividad"),
@@ -173,7 +171,7 @@ class Tareas extends My_Controller {
                     "tipRie_id" => $this->input->post("tiposriesgos")
                 );
                 $idtarea = $this->Tarea_model->create($data);
-
+                $consultaxid = $this->Tarea_model->detailxid($idtarea);
             endif;
             $articulosnorma = $this->input->post("articulosnorma");
             $data = array();

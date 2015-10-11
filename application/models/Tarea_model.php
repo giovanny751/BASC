@@ -57,7 +57,7 @@ class Tarea_model extends CI_Model {
         $this->db->join("empleado","empleado.Emp_id = tarea.emp_id","left");
         $this->db->join("planes","planes.pla_id = tarea.pla_id","left");
         $tarea = $this->db->get("tarea");
-//        echo $this->db->last_query();die;
+        echo $this->db->last_query();die;
         return $tarea->result();
         
     }
