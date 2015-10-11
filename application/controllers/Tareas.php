@@ -44,6 +44,33 @@ class Tareas extends My_Controller {
         }
     }
 
+    function listadoavance() {
+
+        $this->load->model('AvanceTarea_model');
+        $cantidad = $this->input->post("length");
+        $orden = $this->input->post("order[0][column]");
+        $inicia = intval($_REQUEST['start']);
+        $tabla = $this->AvanceTarea_model->detailxid(1,$cantidad,$orden,$inicia);
+        $total = count($tabla);
+        $sEcho = intval($_REQUEST['draw']);
+        
+        $data = array();
+        $d = 0;
+        foreach ($tabla as $total => $num):
+//            echo $total;
+            $i = 0;
+            foreach ($num as $campo => $valor):
+                $data['data'][$d][$i] =  $valor;
+                $i++;
+            endforeach;
+            $d++;
+        endforeach;
+        $data["draw"] = $sEcho;
+        $data['recordsTotal'] = count($tabla);
+        $data['recordsFiltered'] = count($tabla);
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
     function guardaravance() {
 
         try {
@@ -56,7 +83,8 @@ class Tareas extends My_Controller {
                 "avaTar_horasTrabajadas" => $this->input->post("horastrabajadas"),
                 "avaTar_costo" => $this->input->post("costo"),
                 "avaTar_comentarios" => $this->input->post("comentarios"),
-                "avaTar_fechaCreacion" => date("Y-m-d H:i:s")
+                "avaTar_fechaCreacion" => date("Y-m-d H:i:s"),
+                "usu_id" => $this->data["usu_id"]
             );
             $id = $this->AvanceTarea_model->create($data);
             $notificar = array();
@@ -78,30 +106,53 @@ class Tareas extends My_Controller {
     function guardartarea() {
         try {
             $this->load->model('Tarea_model');
-            $data = array(
-                "act_id" => $this->input->post("actividad"),
-                "car_id" => $this->input->post("cargo"),
-                "claRie_id" => $this->input->post("clasificacionriesgo"),
-                "tar_costopresupuestado" => $this->input->post("costrospresupuestados"),
-                "tar_descripcion" => $this->input->post("descripcion"),
-                "dim_id" => $this->input->post("dimensiondos"),
-                "dim2_id" => $this->input->post("dimensionuno"),
-                "est_id" => $this->input->post("estado"),
-                "tar_fechaInicio" => $this->input->post("fechaIncio"),
-                "tar_fechaCreacion" => date("Y-m-d H:i:s"),
-                "tar_fechaFinalizacion" => $this->input->post("fechafinalizacion"),
-                "tar_nombre" => $this->input->post("nombre"),
-                "emp_id" => $this->input->post("nombreempleado"),
-                "tar_peso" => $this->input->post("peso"),
-                "pla_id" => $this->input->post("plan"),
-                "tip_id" => $this->input->post("tipo"),
-                "tipRie_id" => $this->input->post("tiposriesgos")
-            );
+
+
             if (!empty($this->input->post('id'))):
+                $data = array(
+                    "act_id" => $this->input->post("actividad"),
+                    "car_id" => $this->input->post("cargo"),
+                    "claRie_id" => $this->input->post("clasificacionriesgo"),
+                    "tar_costopresupuestado" => $this->input->post("costrospresupuestados"),
+                    "tar_descripcion" => $this->input->post("descripcion"),
+                    "dim_id" => $this->input->post("dimensiondos"),
+                    "dim2_id" => $this->input->post("dimensionuno"),
+                    "est_id" => $this->input->post("estado"),
+                    "tar_fechaInicio" => $this->input->post("fechaIncio"),
+                    "tar_fechaUltimaMod" => date("Y-m-d H:i:s"),
+                    "tar_fechaFinalizacion" => $this->input->post("fechafinalizacion"),
+                    "tar_nombre" => $this->input->post("nombre"),
+                    "emp_id" => $this->input->post("nombreempleado"),
+                    "tar_peso" => $this->input->post("peso"),
+                    "pla_id" => $this->input->post("plan"),
+                    "tip_id" => $this->input->post("tipo"),
+                    "tipRie_id" => $this->input->post("tiposriesgos")
+                );
                 $idtarea = $this->input->post('id');
-                $actualizar = $this->Tarea_model->update($data,$idtarea);
+                $actualizar = $this->Tarea_model->update($data, $idtarea);
+                $consultaxid = $this->Tarea_model->detailxid($data);
             else:
+                $data = array(
+                    "act_id" => $this->input->post("actividad"),
+                    "car_id" => $this->input->post("cargo"),
+                    "claRie_id" => $this->input->post("clasificacionriesgo"),
+                    "tar_costopresupuestado" => $this->input->post("costrospresupuestados"),
+                    "tar_descripcion" => $this->input->post("descripcion"),
+                    "dim_id" => $this->input->post("dimensiondos"),
+                    "dim2_id" => $this->input->post("dimensionuno"),
+                    "est_id" => $this->input->post("estado"),
+                    "tar_fechaInicio" => $this->input->post("fechaIncio"),
+                    "tar_fechaCreacion" => date("Y-m-d H:i:s"),
+                    "tar_fechaFinalizacion" => $this->input->post("fechafinalizacion"),
+                    "tar_nombre" => $this->input->post("nombre"),
+                    "emp_id" => $this->input->post("nombreempleado"),
+                    "tar_peso" => $this->input->post("peso"),
+                    "pla_id" => $this->input->post("plan"),
+                    "tip_id" => $this->input->post("tipo"),
+                    "tipRie_id" => $this->input->post("tiposriesgos")
+                );
                 $idtarea = $this->Tarea_model->create($data);
+
             endif;
             $articulosnorma = $this->input->post("articulosnorma");
             $data = array();
@@ -114,6 +165,7 @@ class Tareas extends My_Controller {
                 endfor;
                 $this->Tarea_model->tareanorma($data);
             }
+            $this->output->set_content_type('application/json')->set_output(json_encode($consultaxid[0]));
         } catch (Exception $e) {
             
         }
@@ -249,27 +301,25 @@ class Tareas extends My_Controller {
         }
     }
 
-    function guardaractividadpadre(){
-        
-        try{
+    function guardaractividadpadre() {
+
+        try {
             $this->load->model("Actividadpadre_model");
             $this->Actividadpadre_model->create(
-                        $this->input->post("idactividad"),
-                        $this->input->post("nombreactividad"),
-                        $this->input->post("pla_id")
-                    );
-        }catch(exception $e){
+                    $this->input->post("idactividad"), $this->input->post("nombreactividad"), $this->input->post("pla_id")
+            );
+        } catch (exception $e) {
             
         }
-        
     }
-    function consultaractividadpadre(){
-        
+
+    function consultaractividadpadre() {
+
         $this->load->model("Actividadpadre_model");
         $data = $this->Actividadpadre_model->detailxid($this->input->post('plan'));
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
-    
+
     function guardarplan() {
         try {
             $this->load->model("Planes_model");

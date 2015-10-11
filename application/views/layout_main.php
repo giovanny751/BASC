@@ -2,8 +2,11 @@
 <html lang="en-US">
 <head>
 <title></title> 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta content="" name="description"/>
+<meta content="" name="author"/>
 <script src="<?= base_url('js/jquery-1.10.2.js') ?>" type="text/javascript"></script>
   
 <!-- BEGIN GLOBAL MANDATORY STYLES --> 
@@ -29,12 +32,12 @@
 <link href="<?= base_url('assets/admin/layout/css/themes/blue.css') ?>" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="<?= base_url('assets/admin/layout/css/custom.css') ?>" rel="stylesheet" type="text/css"/>
 
+<!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/select2/select2.css') ?>"/>
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css') ?>"/>
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-datepicker/css/datepicker.css') ?>"/>
+<!-- END PAGE LEVEL STYLES -->
 
-<script type="text/javascript" src="<?= base_url('assets/global/plugins/select2/select2.min.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') ?>"></script>
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/clockface/css/clockface.css') ?>"/>
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-datepicker/css/datepicker3.css') ?>"/>
@@ -42,7 +45,6 @@
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') ?>"/>
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css') ?>"/>
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') ?>"/>
-
 
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.css') ?>"/>
@@ -61,48 +63,17 @@
 
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
-<script src="<?= base_url('assets/global/plugins/jquery.min.js') ?>" type="text/javascript"></script>
+
 
 <!-- Flechas para cambio de usuario, empleados y más cosas -->
 <link rel="stylesheet" href="<?= base_url('css/flechas.css') ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/estilos.css'); ?>"/>
-<script src="<?= base_url('js/jquery.blockUI.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery-migrate.min.js') ?>" type="text/javascript"></script>
-<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-<script src="<?= base_url('assets/global/plugins/jquery-ui/jquery-ui.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/bootstrap/js/bootstrap.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery.blockui.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery.cokie.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/uniform/jquery.uniform.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') ?>" type="text/javascript"></script>
-<!-- END CORE PLUGINS -->
-<!-- BEGIN PAGE LEVEL PLUGINS -->
-<!--<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js') ?>" type="text/javascript"></script>-->
-<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.resize.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/flot/jquery.flot.categories.min.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/plugins/jquery.pulsate.min.js') ?>" type="text/javascript"></script>
 
 <!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
 <script src="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/global/plugins/jquery.sparkline.min.js') ?>" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="<?= base_url('assets/global/scripts/metronic.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/admin/layout/scripts/layout.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/admin/layout/scripts/quick-sidebar.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/admin/layout/scripts/demo.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/admin/pages/scripts/index.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/admin/pages/scripts/tasks.js') ?>" type="text/javascript"></script>
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.js') ?>"></script>
@@ -219,6 +190,36 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
         </div>
     </div>
 </div>
+<script src="<?= base_url('assets/global/plugins/jquery.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('js/jquery.blockUI.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery-migrate.min.js') ?>" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="<?= base_url('assets/global/plugins/jquery-ui/jquery-ui.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap/js/bootstrap.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.blockui.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.cokie.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/uniform/jquery.uniform.min.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') ?>" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/select2/select2.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/datatables/media/js/jquery.dataTables.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') ?>"></script>
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="<?= base_url('assets/global/scripts/metronic.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/layout/scripts/layout.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/layout/scripts/quick-sidebar.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/layout/scripts/demo.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/pages/scripts/index.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/admin/pages/scripts/tasks.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/scripts/datatable.js') ?>"></script>
+<!--<script src="<?= base_url('assets/admin/pages/scripts/table-ajax.js') ?>"></script>-->
+
 <style>
     .obligado{
         background-color: rgb(250, 255, 189);
@@ -271,17 +272,13 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
         color: #FFF
     }
 </style>
-
-</body>
-</html>
-
-
 <script>
 jQuery(document).ready(function() { 
     Metronic.init(); // init metronic core componets
     Layout.init(); // init layout
     QuickSidebar.init(); // init quick sidebar
     Demo.init(); // init demo features
+    TableAjax.init();
     Index.init();   
     Index.initDashboardDaterange();
     Index.initJQVMAP(); // init index page's custom scripts
@@ -291,6 +288,7 @@ jQuery(document).ready(function() {
     Index.initMiniCharts();
     Tasks.initDashboardWidget();
     UINotific8.init();
+    
 });
 
 $('.portlet').find('label,h4').css('color','black');
@@ -357,38 +355,7 @@ $('.portlet').find('label,h4').css('color','black');
     $('.fecha').datepicker({
         dateFormat: "yy-mm-dd"
     });
-//    $('body').on('keyup', 'input[type=text]', function () {
-//        var start = this.selectionStart,
-//                end = this.selectionEnd;
-//        $(this).val($(this).val().toUpperCase());
-//        this.setSelectionRange(start, end);
-//    });
-//
-//    $('body').on('keyup', 'input[type=search]', function () {
-//        $(this).val($(this).val().toUpperCase());
-//    });
-//
-//    $('body').on('keyup', 'input[type=text], textarea', function () {
-//        var start = this.selectionStart,
-//                end = this.selectionEnd;
-//        $(this).val($(this).val().toUpperCase());
-//        this.setSelectionRange(start, end);
-//
-//    });
-//
-//    $('body').on('keyup', 'input[type=text]', function () {
-//        var $th = $(this);
-//        $th.val($th.val().replace(/["<>^}{|\\$%'`´Ç]/g, function (str) {
-//            return '';
-//        }));
-//    });
-//
-//    $('body').on('keyup', 'input[type=text], textarea', function () {
-//        var $th = $(this);
-//        $th.val($th.val().replace(/["<>^}{|\\$%'`´Ç]/g, function (str) {
-//            return '';
-//        }));
-//    });
+
     $(function () {
     //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
     $.blockUI.defaults.message = 'Procesando...';

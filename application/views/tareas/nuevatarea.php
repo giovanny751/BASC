@@ -199,6 +199,30 @@
                         <textarea name="descripcion" id="descripcion" rows="10" class="form-control"><?php echo (!empty($tarea->tar_descripcion)) ? $tarea->tar_descripcion : ""; ?></textarea>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label for="estado">Fecha de creación</label>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" value="<?php echo (!empty($tarea->tar_fechaCreacion)) ? $tarea->tar_fechaCreacion : ""; ?>" name="fechacreacion" id="fechacreacion" readonly="readonly" class="form-control" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label for="fechamodificacion">Fecha de modificación</label>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <input type="text" value="<?php echo (!empty($tarea->tar_fechaUltimaMod)) ? $tarea->tar_fechaUltimaMod : ""; ?>" name="fechamodificacion" id="fechamodificacion" readonly="readonly" class="form-control" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <p class="alert alert-info"  style='margin-top:10px;font-weight: bold;text-align: center;'>Riesgos</p>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -228,7 +252,7 @@
         <div class="portlet box blue">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>
+                    <i class="fa fa-gift"></i>AVANCES
                 </div>
                 <div class="tools">
                     <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
@@ -278,7 +302,7 @@
                                                 <label for="fecha">Fecha</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" name="fecha" id="fecha" class="form-control fecha avance">
+                                                <input type="text" style="text-align:center" name="fecha" id="fecha" class="form-control fecha avance">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -299,7 +323,7 @@
                                                 <label for="horastrabajadas">Horas Trabajadas</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance">
+                                                <input style="text-align:center" type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance number">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -307,7 +331,7 @@
                                                 <label for="costo">Costo</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" name="costo" id="costo" class="form-control avance">
+                                                <input type="text" style="text-align:center" name="costo" id="costo" class="form-control avance">
                                             </div>
                                         </div>
                                     </div>
@@ -343,22 +367,97 @@
                             <div style="text-align:right">
                                 <button type="button" id="nuevoregistro" class="btn btn-success" data-toggle="modal" data-target="#myModal">Nuevo registro</button>
                             </div>
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Versión</th>
-                                <th>Responsable</th>
-                                <th>Tamaño</th>
-                                <th>Fecha</th>
-                                <th>Acción</th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="7"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- <div class="note note-danger">
+                                        <p>
+                                    <!-- NOTE: The below datatable is not connected to a real database so the filter and sorting is just simulated for demo purposes only.
+                                </p>
+                            </div>
+                                    -->
+                                    <!-- Begin: life time stats -->
+                                    <div class="portlet">
+
+                                        <div class="portlet-body">
+                                            <div class="table-container">
+                                                <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                                    <thead>
+                                                        <tr role="row" class="heading">
+                                                            <th>Fecha</th>
+                                                            <th>Resumen</th>
+                                                            <th>Usuario</th>
+                                                            <th>Horas</th>
+                                                            <th>Costo</th>
+                                                            <th>Comentarios</th>
+                                                        </tr>
+                                                        <tr role="row" class="filter">
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                        <!--                                    <td>
+                                                                <input type="text" class="form-control form-filter input-sm" name="order_id">
+                                                            </td>
+                                                            <td>
+                                                                <div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
+                                                                    <input type="text" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
+                                                                    <input type="text" class="form-control form-filter input-sm" readonly name="order_date_to" placeholder="To">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control form-filter input-sm" name="order_customer_name">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control form-filter input-sm" name="order_ship_to">
+                                                            </td>
+                                                            <td>
+                                                                <div class="margin-bottom-5">
+                                                                    <input type="text" class="form-control form-filter input-sm" name="order_price_from" placeholder="From"/>
+                                                                </div>
+                                                                <input type="text" class="form-control form-filter input-sm" name="order_price_to" placeholder="To"/>
+                                                            </td>
+                                                            <td>
+                                                                <div class="margin-bottom-5">
+                                                                    <input type="text" class="form-control form-filter input-sm margin-bottom-5 clearfix" name="order_quantity_from" placeholder="From"/>
+                                                                </div>
+                                                                <input type="text" class="form-control form-filter input-sm" name="order_quantity_to" placeholder="To"/>
+                                                            </td>
+                                                            <td>
+                                                                <select name="order_status" class="form-control form-filter input-sm">
+                                                                    <option value="">Select...</option>
+                                                                    <option value="pending">Pending</option>
+                                                                    <option value="closed">Closed</option>
+                                                                    <option value="hold">On Hold</option>
+                                                                    <option value="fraud">Fraud</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <div class="margin-bottom-5">
+                                                                    <button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-search"></i> Search</button>
+                                                                </div>
+                                                                <button class="btn btn-sm red filter-cancel"><i class="fa fa-times"></i> Reset</button>
+                                                            </td>-->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End: life time stats -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -452,8 +551,97 @@
         </div>
     <?php endif; ?>
     <input type="hidden" id="tareid" name="tareid" />
+
+
+
 </div>
+
+
 <script>
+
+    var TableAjax = function () {
+
+        var initPickers = function () {
+            //init date pickers
+            $('.date-picker').datepicker({
+                rtl: Metronic.isRTL(),
+                autoclose: true
+            });
+        }
+
+        var handleRecords = function () {
+
+            var grid = new Datatable();
+
+            grid.init({
+                src: $("#datatable_ajax"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+                    // execute some code on network or other general error  
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                    "lengthMenu": [
+                        [10, 20, 50, 100, 150, -1],
+                        [10, 20, 50, 100, 150, "All"] // change per page values here
+                    ],
+                    "pageLength": 10, // default record count per page
+                    "ajax": {
+                        "url": "<?php echo base_url("index.php/tareas/listadoavance") ?>", // ajax source
+                    },
+                    "order": [
+                        [1, "asc"]
+                    ]// set first column as a default sort by asc
+                }
+            });
+
+            // handle group actionsubmit button click
+            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
+                e.preventDefault();
+                var action = $(".table-group-action-input", grid.getTableWrapper());
+                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
+                    grid.setAjaxParam("avaTar_fecha", "group_action");
+                    grid.setAjaxParam("avaTar_fecha", action.val());
+                    grid.setAjaxParam("usu_id", grid.getSelectedRows());
+                    grid.getDataTable().ajax.reload();
+                    grid.clearAjaxParams();
+                } else if (action.val() == "") {
+                    Metronic.alert({
+                        type: 'danger',
+                        icon: 'warning',
+                        message: 'Please select an action',
+                        container: grid.getTableWrapper(),
+                        place: 'prepend'
+                    });
+                } else if (grid.getSelectedRowsCount() === 0) {
+                    Metronic.alert({
+                        type: 'danger',
+                        icon: 'warning',
+                        message: 'No record selected',
+                        container: grid.getTableWrapper(),
+                        place: 'prepend'
+                    });
+                }
+            });
+        }
+        return {
+            //main function to initiate the module
+            init: function () {
+
+                initPickers();
+                handleRecords();
+            }
+
+        };
+
+    }();
+
     $('#plan').change(function () {
         var plan = $(this).val();
         $.post(
@@ -512,6 +700,8 @@
             $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
                     $('#f8').serialize()
                     ).done(function (msg) {
+                $("#fechacreacion").val(msg.tar_fechaCreacion)
+                $("#fechamodificacion").val(msg.tar_fechaUltimaMod)
                 alerta("verde", "Datos guardados correctamente");
                 if ($("#interno").val() == "") {
                     $('input,select,textarea').val("");
