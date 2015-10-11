@@ -75,10 +75,7 @@
 <script src="<?= base_url('assets/global/plugins/jquery.sparkline.min.js') ?>" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.js') ?>"></script>
-<!-- END PAGE LEVEL SCRIPTS -->
-<script src="<?= base_url('assets/admin/pages/scripts/ui-notific8.js') ?>"></script>
+
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
 <!-- BEGIN HEADER -->
@@ -220,7 +217,19 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
 <script src="<?= base_url('assets/global/scripts/datatable.js') ?>"></script>
 <!--<script src="<?= base_url('assets/admin/pages/scripts/table-ajax.js') ?>"></script>-->
 
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.js') ?>"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script src="<?= base_url('assets/admin/pages/scripts/ui-notific8.js') ?>"></script>
+
 <style>
+    tbody{
+        color: black;
+    }
+    thead{
+        background-color: blue !important;
+        color: while !important;
+    }
     .obligado{
         background-color: rgb(250, 255, 189);
     }
@@ -278,7 +287,6 @@ jQuery(document).ready(function() {
     Layout.init(); // init layout
     QuickSidebar.init(); // init quick sidebar
     Demo.init(); // init demo features
-    TableAjax.init();
     Index.init();   
     Index.initDashboardDaterange();
     Index.initJQVMAP(); // init index page's custom scripts

@@ -451,3 +451,19 @@ function lista($name, $id, $class, $tabla, $option_value, $option_name, $value, 
             return false;
         }
     }
+    function arregloconsulta($tabla){
+        
+        $data = array();
+        $d = 0;
+        foreach ($tabla as $total => $num):
+//            echo $total;
+            $i = 0;
+            foreach ($num as $campo => $valor):
+                $data[$d][$i] =  $valor;
+                $i++;
+            endforeach;
+            $d++;
+        endforeach;
+        
+        return $data;
+    }

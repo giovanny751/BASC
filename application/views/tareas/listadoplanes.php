@@ -79,21 +79,21 @@
         $('select,input').val("");
     });
 
-    $('#responsable').autocomplete({
-        source: "<?php echo base_url("index.php/tareas/autocompletar") ?>",
-        minLength: 3
-    });
-    $('#fecha').autocomplete({
-        source: "<?php echo base_url("index.php/tareas/autocompletarfechainicio") ?>",
-        minLength: 3
-    });
-    $('#nombre').autocomplete({
-        source: "<?php echo base_url("index.php/tareas/autocompletarresponsable") ?>",
-        minLength: 3
-    });
-    $('.limpiar').click(function () {
-        $('select,input').val('');
-    });
+//    $('#responsable').autocomplete({
+//        source: "<?php echo base_url("index.php/tareas/autocompletar") ?>",
+//        minLength: 3
+//    });
+//    $('#fecha').autocomplete({
+//        source: "<?php echo base_url("index.php/tareas/autocompletarfechainicio") ?>",
+//        minLength: 3
+//    });
+//    $('#nombre').autocomplete({
+//        source: "<?php echo base_url("index.php/tareas/autocompletarresponsable") ?>",
+//        minLength: 3
+//    });
+//    $('.limpiar').click(function () {
+//        $('select,input').val('');
+//    });
     $('#consultar').click(function () {
         $.post("<?php echo base_url("index.php/tareas/consultaplanes") ?>",
                 $('#f9').serialize()

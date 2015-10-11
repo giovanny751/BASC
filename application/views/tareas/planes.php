@@ -166,8 +166,8 @@
                     </ul>
                     <div class="tab-content">
                         <div id="tab1" class="tab-pane active">
-                            <table class="table table-bordered table-hover">
-                                <thead>
+                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                <thead >
                                 <th>Nuevo Historial</th>
                                 <th>Avance</th>
                                 <th>Tipo</th>
@@ -177,24 +177,13 @@
                                 <th>Duraciòn presupuestada</th>
                                 <th>Responsables</th>
                                 </thead>
-                                <tbody style="color:black">
-                                    <?php foreach ($tareaxplan as $tp): ?>
-                                        <tr>
-                                            <td ></td> 
-                                            <td ></td> 
-                                            <td ><?php echo $tp->tip_tipo ?></td> 
-                                            <td ><?php echo $tp->tar_nombre ?></td> 
-                                            <td ><?php echo $tp->tar_fechaInicio ?></td> 
-                                            <td ><?php echo $tp->tar_fechaFinalizacion ?></td> 
-                                            <td style="text-align: center"><?php echo $tp->diferencia ?></td> 
-                                            <td ><?php echo $tp->Emp_Nombre ?></td> 
-                                        </tr>
-                                    <?php endforeach; ?>
+                                <tbody>
+                                    
                                 </tbody>
                             </table>
                         </div>
                         <div id="tab2" class="tab-pane">
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax2">
                                 <thead>
                                 <th>Nuevo Historial</th>
                                 <th>Avance</th>
@@ -205,19 +194,7 @@
                                 <th>Duración presupuestada</th>
                                 <th>Responsables</th>
                                 </thead>
-                                <tbody style="color:black">
-                                    <?php foreach ($tareaxplaninactivas as $tpi): ?>
-                                        <tr>
-                                            <td ></td> 
-                                            <td ></td> 
-                                            <td ><?php echo $tpi->tip_tipo ?></td> 
-                                            <td ><?php echo $tpi->tar_nombre ?></td> 
-                                            <td ><?php echo $tpi->tar_fechaInicio ?></td> 
-                                            <td ><?php echo $tpi->tar_fechaFinalizacion ?></td> 
-                                            <td style="text-align: center"><?php echo $tpi->diferencia ?></td> 
-                                            <td ><?php echo $tpi->Emp_Nombre ?></td> 
-                                        </tr>
-                                    <?php endforeach; ?>
+                                <tbody >
                                 </tbody>
                             </table>
                         </div>
@@ -307,6 +284,94 @@
 
 </div>
 <script>
+    
+    jQuery(document).ready(function () {
+        TableAjax.init();
+
+    });
+    var TableAjax = function () {
+
+        var initPickers = function () {
+            //init date pickers
+            $('.date-picker').datepicker({
+                rtl: Metronic.isRTL(),
+                autoclose: true
+            });
+        }
+
+        var handleRecords = function () {
+
+            var grid = new Datatable();
+
+            grid.init({
+                src: $("#datatable_ajax2"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+                    // execute some code on network or other general error  
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                    "lengthMenu": [
+                        [10, 20, 50, 100, 150, -1],
+                        [10, 20, 50, 100, 150, "All"] // change per page values here
+                    ],
+                    "pageLength": 10, // default record count per page
+                    "ajax": {
+                        "url": "<?php echo base_url("index.php/tareas/listadotareasinactivasxplanfiltro") ?>", // ajax source
+                    },
+                    "order": [
+                        [1, "asc"]
+                    ]// set first column as a default sort by asc
+                }
+            });
+
+            // handle group actionsubmit button click
+            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
+                e.preventDefault();
+                var action = $(".table-group-action-input", grid.getTableWrapper());
+                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
+                    grid.setAjaxParam("avaTar_fecha", "group_action");
+                    grid.setAjaxParam("avaTar_fecha", action.val());
+                    grid.setAjaxParam("usu_id", grid.getSelectedRows());
+                    grid.getDataTable().ajax.reload();
+                    grid.clearAjaxParams();
+                } else if (action.val() == "") {
+                    Metronic.alert({
+                        type: 'danger',
+                        icon: 'warning',
+                        message: 'Please select an action',
+                        container: grid.getTableWrapper(),
+                        place: 'prepend'
+                    });
+                } else if (grid.getSelectedRowsCount() === 0) {
+                    Metronic.alert({
+                        type: 'danger',
+                        icon: 'warning',
+                        message: 'No record selected',
+                        container: grid.getTableWrapper(),
+                        place: 'prepend'
+                    });
+                }
+            });
+        }
+        return {
+            //main function to initiate the module
+            init: function () {
+
+                initPickers();
+                handleRecords();
+            }
+
+        };
+
+    }();
+    
     $('#guardaractividadpadre').click(function(){
         
         if(obligatorio('acobligatorio')){

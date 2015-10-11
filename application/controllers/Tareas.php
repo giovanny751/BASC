@@ -51,23 +51,44 @@ class Tareas extends My_Controller {
         $orden = $this->input->post("order[0][column]");
         $inicia = intval($_REQUEST['start']);
         $tabla = $this->AvanceTarea_model->detailxid(1,$cantidad,$orden,$inicia);
-        $total = count($tabla);
-        $sEcho = intval($_REQUEST['draw']);
-        
+        $alldatacount = $this->AvanceTarea_model->detailxidcount(1,$cantidad,$orden,$inicia);
         $data = array();
-        $d = 0;
-        foreach ($tabla as $total => $num):
-//            echo $total;
-            $i = 0;
-            foreach ($num as $campo => $valor):
-                $data['data'][$d][$i] =  $valor;
-                $i++;
-            endforeach;
-            $d++;
-        endforeach;
-        $data["draw"] = $sEcho;
-        $data['recordsTotal'] = count($tabla);
-        $data['recordsFiltered'] = count($tabla);
+        $data['data'] = arregloconsulta($tabla);
+        $data["draw"] = intval($_REQUEST['draw']);
+        $data['recordsTotal'] = $alldatacount;
+        $data['recordsFiltered'] = $alldatacount;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+    function listadotareasxplanfiltro() {
+
+        $this->load->model('Planes_model');
+        $cantidad = $this->input->post("length");
+        $orden = $this->input->post("order[0][column]");
+        $inicia = intval($_REQUEST['start']);
+//        $this->data['tareaxplan'] = $this->Planes_model->tareaxplan(1,$cantidad,$orden,$inicia);
+        $tabla = $this->Planes_model->tareaxplan(6,$cantidad,$orden,$inicia);
+        $alldatacount = $this->Planes_model->tareaxplancount(6,$cantidad,$orden,$inicia);
+        $data = array();
+        $data['data'] = arregloconsulta($tabla);
+        $data["draw"] = intval($_REQUEST['draw']);
+        $data['recordsTotal'] = $alldatacount;
+        $data['recordsFiltered'] = $alldatacount;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+    function listadotareasinactivasxplanfiltro() {
+
+        $this->load->model('Planes_model');
+        $cantidad = $this->input->post("length");
+        $orden = $this->input->post("order[0][column]");
+        $inicia = intval($_REQUEST['start']);
+//$this->data['tareaxplaninactivas'] = $this->Planes_model->tareaxplaninactivas($this->input->post('pla_id'));
+        $tabla = $this->Planes_model->tareaxplan(6,$cantidad,$orden,$inicia);
+        $alldatacount = $this->Planes_model->tareaxplancount(6,$cantidad,$orden,$inicia);
+        $data = array();
+        $data['data'] = arregloconsulta($tabla);
+        $data["draw"] = intval($_REQUEST['draw']);
+        $data['recordsTotal'] = $alldatacount;
+        $data['recordsFiltered'] = $alldatacount;
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
@@ -264,8 +285,8 @@ class Tareas extends My_Controller {
             $this->data['plan'] = array();
             if (!empty($this->input->post('pla_id'))) {
                 $this->data['plan'] = $this->Planes_model->planxid($this->input->post('pla_id'));
-                $this->data['tareaxplan'] = $this->Planes_model->tareaxplan($this->input->post('pla_id'));
-                $this->data['tareaxplaninactivas'] = $this->Planes_model->tareaxplaninactivas($this->input->post('pla_id'));
+                
+                
 //                var_dump($this->data['tareaxplan']);die;
             }
             $this->data['norma'] = $this->Norma_model->detail();
