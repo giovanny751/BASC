@@ -82,8 +82,8 @@ class Tareas extends My_Controller {
         $orden = $this->input->post("order[0][column]");
         $inicia = intval($_REQUEST['start']);
 //$this->data['tareaxplaninactivas'] = $this->Planes_model->tareaxplaninactivas($this->input->post('pla_id'));
-        $tabla = $this->Planes_model->tareaxplan(6,$cantidad,$orden,$inicia);
-        $alldatacount = $this->Planes_model->tareaxplancount(6,$cantidad,$orden,$inicia);
+        $tabla = $this->Planes_model->tareaxplaninactivas(6,$cantidad,$orden,$inicia);
+        $alldatacount = $this->Planes_model->tareaxplaninactivascount(6,$cantidad,$orden,$inicia);
         $data = array();
         $data['data'] = arregloconsulta($tabla);
         $data["draw"] = intval($_REQUEST['draw']);

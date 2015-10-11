@@ -330,13 +330,41 @@
                     ]// set first column as a default sort by asc
                 }
             });
+            grid.init({
+                src: $("#datatable_ajax"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+                    // execute some code on network or other general error  
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Loading...',
+                dataTable: {
+                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                    "lengthMenu": [
+                        [10, 20, 50, 100, 150, -1],
+                        [10, 20, 50, 100, 150, "All"] // change per page values here
+                    ],
+                    "pageLength": 10, // default record count per page
+                    "ajax": {
+                        "url": "<?php echo base_url("index.php/tareas/listadotareasxplanfiltro") ?>", // ajax source
+                    },
+                    "order": [
+                        [1, "asc"]
+                    ]// set first column as a default sort by asc
+                }
+            });
 
             // handle group actionsubmit button click
             grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
                 e.preventDefault();
+                grid.setAjaxParam("xyz", "1");
                 var action = $(".table-group-action-input", grid.getTableWrapper());
                 if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
-                    grid.setAjaxParam("avaTar_fecha", "group_action");
+                    grid.setAjaxParam("xyz", "group_action");
                     grid.setAjaxParam("avaTar_fecha", action.val());
                     grid.setAjaxParam("usu_id", grid.getSelectedRows());
                     grid.getDataTable().ajax.reload();

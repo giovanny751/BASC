@@ -110,17 +110,60 @@ class Planes_model extends CI_Model {
         $planes = $this->db->get("planes");
         return $planes->num_rows();
     }
-    function tareaxplaninactivas($pla_id){
+    function tareaxplaninactivas($id, $cantidad = null, $orden,$inicia = null){
         
-        $this->db->select("DATEDIFF((tar_fechaFinalizacion),(tar_fechaInicio)) diferencia");
-        $this->db->select("tipo.tip_tipo,tar_nombre,tarea.tar_fechaInicio,tarea.tar_fechaFinalizacion,empleado.Emp_Nombre");
-        $this->db->where("planes.pla_id",$pla_id);
+        if (!empty($orden)):
+            $data = array(
+                "tar_id",
+                "tarea.car_id",
+                "tip_tipo",
+                "tar_nombre",
+                "tar_fechaInicio",
+                "tar_fechaFinalizacion",
+                "diferencia",
+                "Emp_Nombre"
+            );
+            $this->db->order_by($data[$orden], "asc");
+        endif;
+        if($cantidad == -1)$cantidad = "";
+        
+        
+        $this->db->select("planes.pla_id");
+        $this->db->select("tarea.tar_id");
+        $this->db->select("tipo.tip_tipo");
+        $this->db->select("tar_nombre");
+        $this->db->select("tarea.tar_fechaInicio");
+        $this->db->select("tarea.tar_fechaFinalizacion");
+        $this->db->select("DATEDIFF((tar_fechaFinalizacion),(tar_fechaInicio)) as diferencia");
+        $this->db->select("empleado.Emp_Nombre");
+        $this->db->where("planes.pla_id",$id);
+        $this->db->where("tarea.est_id",2);
+        $this->db->join("tarea","tarea.pla_id = planes.pla_id");
+        $this->db->join("empleado","empleado.emp_id = tarea.emp_id","LEFT");
+        $this->db->join("tipo","tipo.tip_id = tarea.tip_id","LEFT");
+        if(!empty($inicia))
+        $planes = $this->db->get("planes",$inicia ,$cantidad);
+        else
+            $planes = $this->db->get("planes",$cantidad);
+        return $planes->result(); 
+        
+    }
+    function tareaxplaninactivascount($id, $cantidad = null, $orden,$inicia = null){
+        
+        $this->db->select("'falta'");
+        $this->db->select("'falta'");
+        $this->db->select("tipo.tip_tipo");
+        $this->db->select("tar_nombre");
+        $this->db->select("tarea.tar_fechaInicio");
+        $this->db->select("tarea.tar_fechaFinalizacion");
+        $this->db->select("DATEDIFF((tar_fechaFinalizacion),(tar_fechaInicio)) as diferencia");
+        $this->db->select("empleado.Emp_Nombre");
+        $this->db->where("planes.pla_id",$id);
         $this->db->where("tarea.est_id",2);
         $this->db->join("tarea","tarea.pla_id = planes.pla_id");
         $this->db->join("empleado","empleado.emp_id = tarea.emp_id","LEFT");
         $this->db->join("tipo","tipo.tip_id = tarea.tip_id","LEFT");
         $planes = $this->db->get("planes");
-        return $planes->result(); 
         
     }
     
