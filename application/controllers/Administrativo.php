@@ -20,11 +20,7 @@ class Administrativo extends My_Controller {
 
         if ($this->consultaacceso($this->data["usu_id"])) :
             $this->data['empleado'] = "";
-            if (!empty($this->input->post('emp_id'))) {
-                $this->load->model('Empleado_model');
-                $this->data['empleado'] = $this->Empleado_model->consultaempleadoxid($this->input->post('emp_id'));
-            }
-
+            
             $this->load->model('Tipocontrato_model');
             $this->load->model('Sexo_model');
             $this->load->model('Estadocivil_model');
@@ -33,6 +29,14 @@ class Administrativo extends My_Controller {
             $this->load->model('Dimension_model');
             $this->load->model('Cargo_model');
             $this->load->model('Tipo_aseguradora__model');
+            $this->load->model('Empleadotipoaseguradora_model');
+            
+            if (!empty($this->input->post('emp_id'))) {
+                $this->load->model('Empleado_model');
+                $this->data['empleado'] = $this->Empleado_model->consultaempleadoxid($this->input->post('emp_id'));
+                $this->data["aserguradorasxempleado"]= $this->Empleadotipoaseguradora_model->consult_empleado($this->input->post('emp_id'));
+            }
+
             $this->data['cargo'] = $this->Cargo_model->detail();
             $this->data['tipocontrato'] = $this->Tipocontrato_model->detail();
             $this->data['sexo'] = $this->Sexo_model->detail();
@@ -115,7 +119,7 @@ class Administrativo extends My_Controller {
                 'Emp_FechaAfiliacionArl' => $this->input->post('fechaafiliacionarl'),
                 'Dim_id' => $this->input->post('dimension1'),
                 'Dim_IdDos' => $this->input->post('dimension2'),
-                'Est_id' => $this->input->post('estado'),
+                'Est_id' => 1,
                 'Car_id' => $this->input->post('cargo'),
                 'emp_fondo' => $this->input->post('fondo')
             );

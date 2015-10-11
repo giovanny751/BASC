@@ -219,6 +219,7 @@
                         <div class="row" style="text-align:center">
                             <button type="button" id="agregaraseguradora" class="btn btn-success">Agregar</button>
                         </div>
+                        <?php if(empty($aserguradorasxempleado)): ?>
                         <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                 <label>Tipo Aseguradora:</label>
@@ -247,6 +248,46 @@
                                 <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
                             </div>
                         </div>
+                        <?php endif;
+                        foreach($aserguradorasxempleado as $as): ?>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label>Tipo Aseguradora:</label>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <select  name="tipoaseguradora[]" class="form-control tipoaseguradora">
+                                    <option value="">::Seleccionar::</option>
+                                    <?php 
+                                    $option = "";
+                                    foreach($tipoaseguradora as $ta):
+                                        $selected = (($as->tipAse_id == $ta->TipAse_Id) ?  "selected":"");
+                                        $option .= "<option value='".$ta->TipAse_Id."' ".$selected." >".$ta->TipAse_Nombre."</option>"; 
+                                     endforeach;
+                                    echo $option;
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label>Nombre Aseguradora:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <select name="nombreaseguradora[]" class="form-control nombreaseguradora">
+                                    <?php 
+                                    $option = "";
+                                    foreach($aseguradoras as $ase):
+                                        if($as->ase_id == $ase->ase_id){
+                                            $option .= "<option value='".$ase->ase_id."' selected >".$ase->ase_nombre."</option>"; 
+                                        }
+                                     endforeach;
+                                    echo $option;
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
@@ -431,6 +472,12 @@
             </div>
         </div>
 </div>
+<?php
+$option = "";
+foreach($tipoaseguradora as $ta):
+    $option .= "<option value='".$ta->TipAse_Id."'>".$ta->TipAse_Nombre."</option>"; 
+endforeach;
+?>
 <script>
 
     $('body').delegate(".eliminaraseguradora", "click", function () {

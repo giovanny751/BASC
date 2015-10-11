@@ -101,18 +101,18 @@
     <input type="hidden" value="" name="emp_id" id="emp_id">
 </form>
 <script>
-    $('#cedula').autocomplete({
-    source: "<?php echo base_url("index.php/administrativo/autocompletarcedula") ?>",
-    minLength: 3
-  });
-    $('#nombre').autocomplete({
-    source: "<?php echo base_url("index.php/administrativo/autocompletarnombre") ?>",
-    minLength: 3
-  });
-    $('#apellido').autocomplete({
-    source: "<?php echo base_url("index.php/administrativo/autocompletarapellido") ?>",
-    minLength: 3
-  });
+//    $('#cedula').autocomplete({
+//    source: "<?php echo base_url("index.php/administrativo/autocompletarcedula") ?>",
+//    minLength: 3
+//  });
+//    $('#nombre').autocomplete({
+//    source: "<?php echo base_url("index.php/administrativo/autocompletarnombre") ?>",
+//    minLength: 3
+//  });
+//    $('#apellido').autocomplete({
+//    source: "<?php echo base_url("index.php/administrativo/autocompletarapellido") ?>",
+//    minLength: 3
+//  });
     $('body').delegate(".contratos","click",function(){
         $.post(
                 "<?php echo base_url('index.php/administrativo/consultacontratosvencidos') ?>",
