@@ -208,6 +208,52 @@
                 </select>
             </div>    
         </div>
+        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">ASEGURADORAS</h4>
+                    </div>
+                    <div class="modal-body" id="incluiraseguradoras">
+                        <div class="row" style="text-align:center">
+                            <button type="button" id="agregaraseguradora" class="btn btn-success">Agregar</button>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label>Tipo Aseguradora:</label>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <select  name="tipoaseguradora[]" class="form-control tipoaseguradora">
+                                    <option value="">::Seleccionar::</option>
+                                    <?php 
+                                    $option = "";
+                                    foreach($tipoaseguradora as $ta):
+                                        $option .= "<option value='".$ta->TipAse_Id."'>".$ta->TipAse_Nombre."</option>"; 
+                                     endforeach;
+                                    echo $option;
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label>Nombre Aseguradora:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <select name="nombreaseguradora[]" class="form-control nombreaseguradora">
+                                    <option value="">::Seleccionar::</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <input type="hidden" id="emp_id" name="emp_id"  value="<?php echo (!empty($empleado[0]->Emp_Id)) ? $empleado[0]->Emp_Id : ""; ?>" />
     </form>
     <div class="row" style="text-align:center">
@@ -294,7 +340,9 @@
                 </div>
             </div>
         </div>
-        <!-- Modal -->
+        
+    <?php } ?>
+    <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -330,53 +378,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">ASEGURADORAS</h4>
-                    </div>
-                    <div class="modal-body" id="incluiraseguradoras">
-                        <div class="row" style="text-align:center">
-                            <button type="button" id="agregaraseguradora" class="btn btn-success">Agregar</button>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="tipoaseguradora">Tipo Aseguradora:</label>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                <select id="tipoaseguradora" name="tipoaseguradora[]" class="form-control">
-                                    <option value="">::Seleccionar::</option>
-                                    <?php 
-                                    $option = "";
-                                    foreach($tipoaseguradora as $ta):
-                                        $option .= "<option value='".$ta->TipAse_Id."'>".$ta->TipAse_Nombre."</option>"; 
-                                     endforeach;
-                                    echo $option;
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label for="nombreaseguradora">Nombre Aseguradora:</label>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <select id="nombreaseguradora" name="nombreaseguradora" class="form-control">
-                                    <option value="">::Seleccionar::</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="guardarcarpeta">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -428,7 +430,6 @@
                 </div>
             </div>
         </div>
-    <?php } ?>
 </div>
 <script>
 
@@ -442,18 +443,18 @@
     
     var filaaseguradora = '<div class="row">\n\
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">\n\
-                            <label for="tipoaseguradora">Tipo Aseguradora:</label>\n\
+                            <label>Tipo Aseguradora:</label>\n\
                             </div>\n\
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">\n\
-                            <select id="tipoaseguradora" name="tipoaseguradora[]" class="form-control">\n\
+                            <select name="tipoaseguradora[]" class="form-control tipoaseguradora">\n\
                             <option value="">::Seleccionar::</option>'+option+'\n\
                             </select>\n\
                             </div>\n\
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">\n\
-                            <label for="nombreaseguradora">Nombre Aseguradora:</label>\n\
+                            <label>Nombre Aseguradora:</label>\n\
                             </div>\n\
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">\n\
-                            <select id="nombreaseguradora" name="nombreaseguradora" class="form-control">\n\
+                            <select name="nombreaseguradora[]" class="form-control nombreaseguradora">\n\
                             <option value="">::Seleccionar::</option>\n\
                             </select>\n\
                             </div>\n\
@@ -549,21 +550,25 @@
 
     });
 
-
-    $('#nombreaseguradora').change(function () {
+    $("body").on("change",".tipoaseguradora",function(){
+        var filaSeleccioanda = $(this).parents(".row");
         var id = $(this).val();
-        $.post("<?php echo base_url("index.php/administrativo/consultatipoaseguradoras") ?>",
+        $.post("<?php echo base_url("index.php/administrativo/consultaaseguradoras") ?>",
                 {id: id})
                 .done(function (msg) {
-                    $('#tipoaseguradora *').remove();
-                    var aseguradora = "";
+                    filaSeleccioanda.find(".nombreaseguradora").find("option").remove()
+                    var aseguradora = "<option value=''>::Seleccionar::</option>";
+                    var i = 0 ;
                     $.each(msg, function (key, val) {
-                        aseguradora += "<option value='" + val.TipAse_Id + "'>" + val.TipAse_Nombre + "</option>"
+                        aseguradora += "<option value='" + val.ase_id + "'>" + val.ase_nombre + "</option>"
+                        i++
                     });
-                    $('#tipoaseguradora').append(aseguradora);
+                    if(i==0)
+                        aseguradora += "<option value=''>Sin Datos</option>";
+                    filaSeleccioanda.find(".nombreaseguradora").append(aseguradora);
                 })
                 .fail(function (msg) {
-
+                    alert("Error en la operación");
                 });
 
     });

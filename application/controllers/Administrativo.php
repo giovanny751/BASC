@@ -66,7 +66,7 @@ class Administrativo extends My_Controller {
 
             if (isset($_FILES['archivo']['name']))
                 if (!empty($_FILES['archivo']['name']))
-                    $post['empReg_archivo']=basename($_FILES['archivo']['name']);
+                    $post['empReg_archivo'] = basename($_FILES['archivo']['name']);
             $this->Empleado_model->empleado_registro($post);
 
 
@@ -81,6 +81,7 @@ class Administrativo extends My_Controller {
 
             $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
+                
             }
         } catch (exception $e) {
             
@@ -88,43 +89,64 @@ class Administrativo extends My_Controller {
     }
 
     function guardarempleado() {
-        $this->load->model('Empleado_model');
+        try{
+            $this->load->model('Empleado_model');
 
-        $data = array(
-            'Emp_codigo' => $this->input->post('codigo'),
-            'Emp_Cedula' => $this->input->post('cedula'),
-            'TipDoc_id' => $this->input->post('tipodocumento'),
-            'Emp_Nombre' => $this->input->post('nombre'),
-            'Emp_Apellidos' => $this->input->post('apellidos'),
-            'sex_Id' => $this->input->post('sexo'),
-            'Emp_FechaNacimiento' => $this->input->post('fechadenacimiento'),
-            'Emp_Estatura' => $this->input->post('estatura'),
-            'Emp_Peso' => $this->input->post('peso'),
-            'Emp_Telefono' => $this->input->post('telefono'),
-            'Emp_Direccion' => $this->input->post('direccion'),
-            'Emp_Contacto' => $this->input->post('contacto'),
-            'Emp_TelefonoContacto' => $this->input->post('telefonocontacto'),
-            'Emp_Email' => $this->input->post('email'),
-            'EstCiv_id' => $this->input->post('estadocivil'),
-            'TipCon_Id' => $this->input->post('tipocontrato'),
-            'Emp_FechaInicioContrato' => $this->input->post('fechainiciocontrato'),
-            'Emp_FechaFinContrato' => $this->input->post('fechafincontrato'),
-            'Emp_PlanObligatorioSalud' => $this->input->post('planobligatoriodesalud'),
-            'Emp_FechaAfiliacionArl' => $this->input->post('fechaafiliacionarl'),
-            'TipAse_Id' => $this->input->post('tipoaseguradora'),
-            'Ase_Id' => $this->input->post('nombreaseguradora'),
-            'Dim_id' => $this->input->post('dimension1'),
-            'Dim_IdDos' => $this->input->post('dimension2'),
-            'Est_id' => $this->input->post('estado'),
-            'Car_id' => $this->input->post('cargo'),
-            'emp_fondo' => $this->input->post('fondo')
-        );
+            $data = array(
+                'Emp_codigo' => $this->input->post('codigo'),
+                'Emp_Cedula' => $this->input->post('cedula'),
+                'TipDoc_id' => $this->input->post('tipodocumento'),
+                'Emp_Nombre' => $this->input->post('nombre'),
+                'Emp_Apellidos' => $this->input->post('apellidos'),
+                'sex_Id' => $this->input->post('sexo'),
+                'Emp_FechaNacimiento' => $this->input->post('fechadenacimiento'),
+                'Emp_Estatura' => $this->input->post('estatura'),
+                'Emp_Peso' => $this->input->post('peso'),
+                'Emp_Telefono' => $this->input->post('telefono'),
+                'Emp_Direccion' => $this->input->post('direccion'),
+                'Emp_Contacto' => $this->input->post('contacto'),
+                'Emp_TelefonoContacto' => $this->input->post('telefonocontacto'),
+                'Emp_Email' => $this->input->post('email'),
+                'EstCiv_id' => $this->input->post('estadocivil'),
+                'TipCon_Id' => $this->input->post('tipocontrato'),
+                'Emp_FechaInicioContrato' => $this->input->post('fechainiciocontrato'),
+                'Emp_FechaFinContrato' => $this->input->post('fechafincontrato'),
+                'Emp_PlanObligatorioSalud' => $this->input->post('planobligatoriodesalud'),
+                'Emp_FechaAfiliacionArl' => $this->input->post('fechaafiliacionarl'),
+                'Dim_id' => $this->input->post('dimension1'),
+                'Dim_IdDos' => $this->input->post('dimension2'),
+                'Est_id' => $this->input->post('estado'),
+                'Car_id' => $this->input->post('cargo'),
+                'emp_fondo' => $this->input->post('fondo')
+            );
 
-        $this->Empleado_model->create($data);
+            $id = $this->Empleado_model->create($data);
+            
+            $this->load->model('Empleadotipoaseguradora_model');
+            $tipoaseguradora = $this->input->post("tipoaseguradora");
+            $data = array();
+            if (!empty($tipoaseguradora)):
+                $nombreaseguradora = $this->input->post("nombreaseguradora");
+                for ($i = 0; $i < count($tipoaseguradora); $i++) {
+                    if($nombreaseguradora[$i] != ""):
+                        $data[$i] = array(
+                            "emp_id" => $id,
+                            "ase_id" => $nombreaseguradora[$i],
+                            "tipAse_id" => $tipoaseguradora[$i]
+                        );
+                        
+                    endif;
+                }
+                $this->Empleadotipoaseguradora_model->create($data);
+            endif;
+        } catch (exception $e) {
+            
+        }
     }
 
     function guardaractualizacion() {
         $this->load->model('Empleado_model');
+        die("Hola");
 
         $data = array(
             'Emp_codigo' => $this->input->post('codigo'),
@@ -158,9 +180,9 @@ class Administrativo extends My_Controller {
         $this->Empleado_model->update($data, $this->input->post('emp_id'));
     }
 
-    function consultatipoaseguradoras() {
-        $this->load->model('Tipoaseguradora_model');
-        $data = $this->Tipoaseguradora_model->consultatipoaseguradora($this->input->post("id"));
+    function consultaaseguradoras() {
+        $this->load->model('Aseguradora_model');
+        $data = $this->Aseguradora_model->consulta_aseguradora($this->input->post("id"));
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
@@ -570,46 +592,49 @@ class Administrativo extends My_Controller {
     function guardarempresa() {
 
 
-        $this->load->model("Empresa_model");
-        if (isset($_FILES['userfile']['name']))
-            if (!empty($_FILES['userfile']['name']))
-                $this->db->set("emp_logo", basename($_FILES['userfile']['name']));
-        $data[] = array(
-            "emp_razonSocial" => $this->input->post("razonsocial"),
-            "emp_nit" => $this->input->post("nit"),
-            "emp_direccion" => $this->input->post("direccion"),
-            "ciu_id" => $this->input->post("ciudad"),
-            "tam_id" => $this->input->post("tamano"),
-            "numEmp_id" => $this->input->post("empleados"),
-            "actEco_id" => $this->input->post("actividadeconomica"),
-            "Dim_id" => $this->input->post("dimension1"),
-            "Dimdos_id" => $this->input->post("dimension2"),
-            "emp_representante" => $this->input->post("representante"),
-//            "emp_logo"=>$this->input->post("")
-        );
+        try {
+            $this->load->model("Empresa_model");
+            if (isset($_FILES['userfile']['name']))
+                if (!empty($_FILES['userfile']['name']))
+                    $this->db->set("emp_logo", basename($_FILES['userfile']['name']));
+            $data[] = array(
+                "emp_razonSocial" => $this->input->post("razonsocial"),
+                "emp_nit" => $this->input->post("nit"),
+                "emp_direccion" => $this->input->post("direccion"),
+                "ciu_id" => $this->input->post("ciudad"),
+                "tam_id" => $this->input->post("tamano"),
+                "numEmp_id" => $this->input->post("empleados"),
+                "actEco_id" => $this->input->post("actividadeconomica"),
+                "Dim_id" => $this->input->post("dimension1"),
+                "Dimdos_id" => $this->input->post("dimension2"),
+                "emp_representante" => $this->input->post("representante"),
+                    //            "emp_logo"=>$this->input->post("")
+            );
 
-        $datos = $this->Empresa_model->detail();
-        if (count($datos) == 0)
-            $dd = $this->Empresa_model->create($data);
-        else
-            $dd = $this->Empresa_model->update($data[0]);
+            $datos = $this->Empresa_model->detail();
+            if (count($datos) == 0)
+                $dd = $this->Empresa_model->create($data);
+            else
+                $dd = $this->Empresa_model->update($data[0]);
 
-        $targetPath = "./uploads/empresa";
-        if (!file_exists($targetPath)) {
-            mkdir($targetPath, 0777, true);
+            $targetPath = "./uploads/empresa";
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+            $targetPath = "./uploads/empresa/" . $dd[0]->emp_id;
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+
+            $target_path = $targetPath . '/' . basename($_FILES['userfile']['name']);
+            if (move_uploaded_file($_FILES['userfile']['tmp_name'], $target_path)) {
+                
+            }
+
+            redirect('index.php/administrativo/empresa', 'location');
+        } catch (exception $e) {
+            redirect('index.php/administrativo/empresa', 'location');
         }
-        $targetPath = "./uploads/empresa/" . $dd[0]->emp_id;
-        if (!file_exists($targetPath)) {
-            mkdir($targetPath, 0777, true);
-        }
-
-        $target_path = $targetPath . '/' . basename($_FILES['userfile']['name']);
-        if (move_uploaded_file($_FILES['userfile']['tmp_name'], $target_path)) {
-            
-        }
-
-
-        redirect('index.php/administrativo/empresa', 'location');
     }
 
     function autocompletar() {

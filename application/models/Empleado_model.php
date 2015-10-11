@@ -9,6 +9,7 @@ class Empleado_model extends CI_Model {
     function create($data) {
 
         $this->db->insert("empleado", $data);
+        return $this->db->insert_id();
     }
 
     function update($data, $id) {
@@ -16,6 +17,11 @@ class Empleado_model extends CI_Model {
         $this->db->update("empleado", $data);
 
 //        echo $this->db->last_query();die;
+    }
+    function valormaxid(){
+        $this->db->select("max(emp_id) as maximo",false);
+        $maxId = $this->db->get("empleado");
+        return $maxId->result();
     }
 
     function detail() {

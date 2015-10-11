@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50536
 File Encoding         : 65001
 
-Date: 2015-10-08 22:17:52
+Date: 2015-10-10 23:39:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,14 +22,17 @@ DROP TABLE IF EXISTS `actividad_padre`;
 CREATE TABLE `actividad_padre` (
   `actPad_id` int(11) NOT NULL AUTO_INCREMENT,
   `actPad_nombre` varchar(255) DEFAULT NULL,
-  `activo` varchar(1) DEFAULT 'S',
+  `actPad_codigo` varchar(255) DEFAULT 'S',
+  `pla_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`actPad_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of actividad_padre
 -- ----------------------------
-INSERT INTO `actividad_padre` VALUES ('1', 'prueba', 'S');
+INSERT INTO `actividad_padre` VALUES ('1', 'prueba', 'S', '6');
+INSERT INTO `actividad_padre` VALUES ('2', 'sfdsafdsdfadf', '23ssdf', '6');
+INSERT INTO `actividad_padre` VALUES ('3', 'prueba gerson', '23ssdf', '7');
 
 -- ----------------------------
 -- Table structure for `adminformularios`
@@ -79,7 +82,7 @@ CREATE TABLE `avance_notificacion` (
   `not_id` int(11) DEFAULT NULL,
   `avaTar_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`avaNot_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of avance_notificacion
@@ -97,6 +100,12 @@ INSERT INTO `avance_notificacion` VALUES ('10', '1', '6');
 INSERT INTO `avance_notificacion` VALUES ('11', '2', '6');
 INSERT INTO `avance_notificacion` VALUES ('12', '1', '10');
 INSERT INTO `avance_notificacion` VALUES ('13', '2', '10');
+INSERT INTO `avance_notificacion` VALUES ('14', '1', '11');
+INSERT INTO `avance_notificacion` VALUES ('15', '1', '13');
+INSERT INTO `avance_notificacion` VALUES ('16', '2', '13');
+INSERT INTO `avance_notificacion` VALUES ('17', '1', '15');
+INSERT INTO `avance_notificacion` VALUES ('18', '1', '16');
+INSERT INTO `avance_notificacion` VALUES ('19', '1', '17');
 
 -- ----------------------------
 -- Table structure for `avance_tarea`
@@ -111,22 +120,30 @@ CREATE TABLE `avance_tarea` (
   `avaTar_costo` varchar(255) DEFAULT NULL,
   `avaTar_comentarios` text,
   `avaTar_fechaCreacion` datetime DEFAULT NULL,
+  `usu_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`avaTar_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of avance_tarea
 -- ----------------------------
-INSERT INTO `avance_tarea` VALUES ('1', null, '2015-10-01', '0', '0000-00-00', '123', 'sdfsdfsafd', null);
-INSERT INTO `avance_tarea` VALUES ('2', null, '2015-10-02', '0', '0000-00-00', '234234', 'fdsdf', null);
-INSERT INTO `avance_tarea` VALUES ('3', null, '2015-10-02', '3', '12', '234234', 'fdsdf', null);
-INSERT INTO `avance_tarea` VALUES ('4', '1', '2015-10-01', '3', '12', '1222', 'sdfsdf', null);
-INSERT INTO `avance_tarea` VALUES ('5', '4', '2015-10-29', '7', '56', '12345', 'xyz', null);
-INSERT INTO `avance_tarea` VALUES ('6', '4', '2015-10-02', '2', '23', '122312', '1231', null);
-INSERT INTO `avance_tarea` VALUES ('7', '4', '2015-10-02', '5', '12', '12', 'sfsfsdfsdfsdfsdf', null);
-INSERT INTO `avance_tarea` VALUES ('8', '4', '2015-10-10', '27', '12', '12', 'sdfsdfsdfsdfsdfsdfsdfasdf', null);
-INSERT INTO `avance_tarea` VALUES ('9', '4', '2015-10-10', '12', '12', '76543', 'fgsdfsdfasdfsa', '2015-10-07 04:00:45');
-INSERT INTO `avance_tarea` VALUES ('10', '3', '2015-10-01', '55', '44', '23', 'dsfasdfasdfa', '2015-10-07 04:08:13');
+INSERT INTO `avance_tarea` VALUES ('1', '1', '2015-10-01', '3', '12', '123', 'sdfsdfsafd', '2015-10-07 04:00:45', '1');
+INSERT INTO `avance_tarea` VALUES ('2', '1', '2015-10-02', '34', '12', '234234', 'fdsdf', '2015-10-07 04:00:45', '3');
+INSERT INTO `avance_tarea` VALUES ('3', '1', '2015-10-02', '3', '12', '234234', 'fdsdf', '2015-10-07 04:00:45', '1');
+INSERT INTO `avance_tarea` VALUES ('4', '1', '2015-10-01', '3', '12', '1222', 'sdfsdf', '2015-10-07 04:00:45', '3');
+INSERT INTO `avance_tarea` VALUES ('5', '1', '2015-10-29', '7', '56', '12345', 'xyz', '2015-10-07 04:00:45', '1');
+INSERT INTO `avance_tarea` VALUES ('6', '1', '2015-10-02', '2', '23', '122312', '1231', '2015-10-07 04:00:45', '3');
+INSERT INTO `avance_tarea` VALUES ('7', '1', '2015-10-02', '5', '12', '12', 'sfsfsdfsdfsdfsdf', '2015-10-07 04:00:45', '1');
+INSERT INTO `avance_tarea` VALUES ('8', '1', '2015-10-10', '27', '12', '12', 'sdfsdfsdfsdfsdfsdfsdfasdf', '2015-10-07 04:00:45', '3');
+INSERT INTO `avance_tarea` VALUES ('9', '1', '2015-10-10', '12', '12', '76543', 'fgsdfsdfasdfsa', '2015-10-07 04:00:45', '1');
+INSERT INTO `avance_tarea` VALUES ('10', '1', '2015-10-01', '55', '44', '23', 'dsfasdfasdfa', '2015-10-07 04:08:13', '3');
+INSERT INTO `avance_tarea` VALUES ('11', '1', '2015-10-29', '3', '2', 'asdfasf', 'sdfasdfasd', '2015-10-09 07:29:39', '1');
+INSERT INTO `avance_tarea` VALUES ('12', '1', '2015-10-02', '5', '1', '1', 'prueba gerson javier', '2015-10-09 07:30:04', '3');
+INSERT INTO `avance_tarea` VALUES ('13', '1', '2015-10-01', '3', '12', '200000', 'sfasdfsa', '2015-10-10 18:15:35', '1');
+INSERT INTO `avance_tarea` VALUES ('14', '1', '2015-10-01', '3', '12', '200000', 'prueba gerson javier', '2015-10-10 18:15:35', '1');
+INSERT INTO `avance_tarea` VALUES ('15', '1', '0000-00-00', '4', '12', '32', '2332', '2015-10-11 06:09:14', '1');
+INSERT INTO `avance_tarea` VALUES ('16', '1', '0000-00-00', '5', '342', '2342', 'adfadsf', '2015-10-11 06:14:11', '1');
+INSERT INTO `avance_tarea` VALUES ('17', '1', '0000-00-00', '6', '23', '23324', 'dfadsfas', '2015-10-11 06:19:26', '1');
 
 -- ----------------------------
 -- Table structure for `campo`
@@ -1230,7 +1247,7 @@ CREATE TABLE `ingreso` (
   `usu_id` int(11) NOT NULL,
   `ing_fechaIngreso` datetime NOT NULL,
   PRIMARY KEY (`ing_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of ingreso
@@ -1306,6 +1323,9 @@ INSERT INTO `ingreso` VALUES ('68', '1', '2015-10-08 06:43:32');
 INSERT INTO `ingreso` VALUES ('69', '1', '2015-10-08 06:43:44');
 INSERT INTO `ingreso` VALUES ('70', '1', '2015-10-08 06:47:36');
 INSERT INTO `ingreso` VALUES ('71', '1', '2015-10-08 19:41:35');
+INSERT INTO `ingreso` VALUES ('72', '1', '2015-10-09 05:47:21');
+INSERT INTO `ingreso` VALUES ('73', '1', '2015-10-10 17:46:21');
+INSERT INTO `ingreso` VALUES ('74', '1', '2015-10-11 05:27:57');
 
 -- ----------------------------
 -- Table structure for `inicio`
@@ -1338,29 +1358,6 @@ CREATE TABLE `login_attempts` (
 -- ----------------------------
 -- Records of login_attempts
 -- ----------------------------
-
--- ----------------------------
--- Table structure for `medicos`
--- ----------------------------
-DROP TABLE IF EXISTS `medicos`;
-CREATE TABLE `medicos` (
-  `medico_codigo` int(11) NOT NULL AUTO_INCREMENT,
-  `medico_nombre` varchar(255) DEFAULT NULL,
-  `medico_fecha_creacion` timestamp NULL DEFAULT NULL,
-  `medico_matricula_prof` varchar(255) DEFAULT NULL,
-  `medico_direccion` varchar(255) DEFAULT NULL,
-  `medico_telefono_fijo` varchar(255) DEFAULT NULL,
-  `medico_celular` varchar(255) DEFAULT NULL,
-  `medico_email` varchar(255) DEFAULT NULL,
-  `medico_borrado` varchar(255) DEFAULT NULL,
-  `activo` varchar(1) DEFAULT 'S',
-  PRIMARY KEY (`medico_codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of medicos
--- ----------------------------
-INSERT INTO `medicos` VALUES ('1', 'NELSON', null, '123', '123', '123', '123', '123@cc.com', null, 'S');
 
 -- ----------------------------
 -- Table structure for `modulo`
@@ -1556,7 +1553,7 @@ CREATE TABLE `permisos_rol` (
   `menu_id` int(11) DEFAULT NULL,
   `rol_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`perRol_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1202 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1214 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of permisos_rol
@@ -1630,6 +1627,7 @@ INSERT INTO `permisos_rol` VALUES ('1198', '137', '58');
 INSERT INTO `permisos_rol` VALUES ('1199', '95', '59');
 INSERT INTO `permisos_rol` VALUES ('1200', '95', '60');
 INSERT INTO `permisos_rol` VALUES ('1201', '102', '60');
+INSERT INTO `permisos_rol` VALUES ('1202', '95', '0');
 
 -- ----------------------------
 -- Table structure for `planes`
@@ -1806,7 +1804,7 @@ CREATE TABLE `roles` (
   `rol_fechaModificacion` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `rol_fechaCreacion` date NOT NULL,
   PRIMARY KEY (`rol_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of roles
@@ -1878,8 +1876,8 @@ CREATE TABLE `tarea` (
   `est_id` int(11) DEFAULT NULL,
   `tar_fechaInicio` date DEFAULT NULL,
   `tar_fechaCreacion` datetime DEFAULT NULL,
-  `tar_fechaFinalizacion` timestamp NULL DEFAULT NULL,
-  `tar_fechaUltimaMod` date DEFAULT NULL,
+  `tar_fechaFinalizacion` date DEFAULT NULL,
+  `tar_fechaUltimaMod` timestamp NULL DEFAULT NULL,
   `tar_nombre` varchar(255) DEFAULT NULL,
   `emp_id` int(11) DEFAULT NULL,
   `tar_peso` varchar(255) DEFAULT NULL,
@@ -1892,17 +1890,17 @@ CREATE TABLE `tarea` (
 -- ----------------------------
 -- Records of tarea
 -- ----------------------------
-INSERT INTO `tarea` VALUES ('1', '0', '40', '0', '213', '', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17 00:00:00', '0000-00-00', 'xyz', '2', '1', '6', '1', '0');
-INSERT INTO `tarea` VALUES ('2', '0', '40', '0', '213', '', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17 00:00:00', '2015-09-30', 'xyz', '2', '1', '7', '1', '0');
-INSERT INTO `tarea` VALUES ('3', '0', '40', '0', '213', '', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17 00:00:00', '2015-09-01', 'xyz', '2', '1', '8', '1', '0');
-INSERT INTO `tarea` VALUES ('4', '0', '40', '0', '213', 'esto es una prueba', '9', '14', '1', '2015-10-01', '2015-10-07 03:07:21', '2015-10-17 00:00:00', '2015-10-23', 'gerson javier barbosa', '3', '1', '9', '1', '0');
-INSERT INTO `tarea` VALUES ('5', '0', '40', '0', '213', '', '0', '0', '2', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17 00:00:00', '2015-10-23', 'xyz', '2', '1', '10', '1', '0');
-INSERT INTO `tarea` VALUES ('6', '0', '40', '0', '213', '', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17 00:00:00', '2015-10-23', 'xyz', '2', '1', '6', '1', '0');
-INSERT INTO `tarea` VALUES ('7', '0', '40', '0', '213', '', '0', '0', '2', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17 00:00:00', null, 'xyz', '2', '1', '7', '1', '0');
-INSERT INTO `tarea` VALUES ('8', '0', '40', '0', '213', '', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17 00:00:00', null, 'xyz', '2', '1', '8', '1', '0');
-INSERT INTO `tarea` VALUES ('9', '0', '40', '0', '213', '', '0', '0', '2', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17 00:00:00', null, 'xyz', '2', '1', '9', '1', '0');
-INSERT INTO `tarea` VALUES ('10', '0', '40', '0', '213', '', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17 00:00:00', null, 'xyz', '2', '1', '10', '1', '0');
-INSERT INTO `tarea` VALUES ('11', '0', '40', '0', '213', '', '0', '0', '2', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17 00:00:00', null, 'xyz', '2', '1', '6', '1', '0');
+INSERT INTO `tarea` VALUES ('1', '0', '40', '0', '213', 'asdf', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17', '2015-10-10 18:05:29', 'xyz', '0', '1', '6', '1', '0');
+INSERT INTO `tarea` VALUES ('2', '0', '40', '0', '213', 'esto es una prueba', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17', '2015-09-30 00:00:00', 'xyz', '2', '1', '7', '1', '0');
+INSERT INTO `tarea` VALUES ('3', '0', '40', '0', '213', 'esto es una prueba', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17', '2015-09-01 00:00:00', 'xyz', '2', '1', '8', '1', '0');
+INSERT INTO `tarea` VALUES ('4', '0', '40', '0', '213', 'esto es una prueba', '9', '14', '1', '2015-10-01', '2015-10-07 03:07:21', '2015-10-17', '2015-10-23 00:00:00', 'gerson javier barbosa', '3', '1', '9', '1', '0');
+INSERT INTO `tarea` VALUES ('5', '0', '40', '0', '213', 'esto es una prueba', '0', '0', '2', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17', '2015-10-23 00:00:00', 'xyz', '2', '1', '10', '1', '0');
+INSERT INTO `tarea` VALUES ('6', '0', '40', '0', '213', 'esto es una prueba', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17', '2015-10-23 00:00:00', 'xyz', '2', '1', '6', '1', '0');
+INSERT INTO `tarea` VALUES ('7', '0', '40', '0', '213', 'esto es una prueba', '0', '0', '2', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17', null, 'xyz', '2', '1', '7', '1', '0');
+INSERT INTO `tarea` VALUES ('8', '0', '40', '0', '213', 'esto es una prueba', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17', null, 'xyz', '2', '1', '8', '1', '0');
+INSERT INTO `tarea` VALUES ('9', '0', '40', '0', '213', 'esto es una prueba', '0', '0', '2', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17', null, 'xyz', '2', '1', '9', '1', '0');
+INSERT INTO `tarea` VALUES ('10', '0', '40', '0', '213', 'esto es una prueba', '0', '0', '1', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17', null, 'xyz', '2', '1', '10', '1', '0');
+INSERT INTO `tarea` VALUES ('11', '0', '40', '0', '213', 'esto es una prueba', '0', '0', '2', '2015-10-01', '2015-10-07 02:59:51', '2015-10-17', null, 'xyz', '2', '1', '6', '1', '0');
 
 -- ----------------------------
 -- Table structure for `tipo`
@@ -2065,7 +2063,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '12345', '1', '1', '12345', 'gersonjbr12', 'apellidoprueba', 'admin', 'javierbr12@hotmail.com', '1', '40', '0', '2015-10-07 23:49:32', '2015-08-27 03:01:02', null, '', '58');
+INSERT INTO `user` VALUES ('1', '12345', '1', '1', '12345', 'gersonjbr12', 'apellidoprueba', 'admin', 'javierbr12@hotmail.com', '1', '40', '0', '2015-10-08 22:53:40', '2015-08-27 03:01:02', null, '', '58');
 INSERT INTO `user` VALUES ('3', 'sdf', '2', '0', '6789', 'geryon', 'sdf', 'sdf', 'zsd', '1', '40', '4', '2015-09-16 23:53:32', '2015-09-13 15:43:26', null, '', null);
 
 -- ----------------------------
@@ -2083,23 +2081,3 @@ CREATE TABLE `usermodule` (
 INSERT INTO `usermodule` VALUES ('1', '24');
 INSERT INTO `usermodule` VALUES ('1', '54');
 INSERT INTO `usermodule` VALUES ('1', '1');
-
--- ----------------------------
--- Table structure for `variables`
--- ----------------------------
-DROP TABLE IF EXISTS `variables`;
-CREATE TABLE `variables` (
-  `variable_cod` int(11) NOT NULL AUTO_INCREMENT,
-  `variable_descrip` text,
-  `variable_fecha_creacion` timestamp NULL DEFAULT NULL,
-  `examen_cod` int(11) DEFAULT NULL,
-  `variable_borrado` varchar(255) DEFAULT NULL,
-  `activo` varchar(1) DEFAULT 'S',
-  PRIMARY KEY (`variable_cod`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
--- ----------------------------
--- Records of variables
--- ----------------------------
-INSERT INTO `variables` VALUES ('1', 'rffff', null, '5', null, null);
-INSERT INTO `variables` VALUES ('2', 'ddd', null, '4', null, 'S');

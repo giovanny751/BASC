@@ -226,7 +226,6 @@ class Presentacion extends My_Controller {
     }
 
     function guardarroles() {
-
         $nombre = $this->input->post('nombre');
 
         if (!empty($nombre)) {
@@ -237,7 +236,10 @@ class Presentacion extends My_Controller {
                 $insert[] = array('rol_id' => $id, 'menu_id' => $permisorol[$i]);
             }
 //            var_dump($insert);die;
-            $this->Roles_model->insertapermisos($insert);
+            print_r($insert);
+            if(!empty($insert)){
+                $this->Roles_model->insertapermisos($insert);
+            }
             $roles = $this->Roles_model->rolesall();
 //            var_dump($roles);die;
             $this->output->set_content_type('application/json')->set_output(json_encode($roles));

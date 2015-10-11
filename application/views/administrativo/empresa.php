@@ -97,8 +97,8 @@
     </div>
     <div class="row" style="text-align: center">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Empresa</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" >Empleados</button>
-        <button type="button" class="btn btn-primary" >Tipos de Contrato</button>
+        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" >Empleados</button>
+        <button type="button" class="btn btn-primary" >Tipos de Contrato</button> -->
         <a href="<?php echo base_url("index.php/administrativo/dimension") ?>"><button type="" class="btn btn-info">Dimensión 1</button></a>
         <a href="<?php echo base_url("index.php/administrativo/dimension") ?>"><button type="" class="btn btn-info">Dimensión 2</button></a>
     </div>
