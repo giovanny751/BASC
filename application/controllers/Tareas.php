@@ -259,11 +259,16 @@ class Tareas extends My_Controller {
     }
 
     function registro() {
-        if ($this->consultaacceso($this->data["usu_id"])):
+//        if ($this->consultaacceso($this->data["usu_id"])):
             $this->layout->view("tareas/registro");
-        else:
-            $this->layout->view("permisos");
-        endif;
+//        else:
+//            $this->layout->view("permisos");
+//        endif;
+    }
+    function consultaregistro(){
+        
+//        $this
+        
     }
 
     function agregarregistro() {
@@ -423,6 +428,55 @@ class Tareas extends My_Controller {
             $this->layout->view("permisos");
         endif;
     }
+    
+    function guardarcarpeta(){
+        
+        $this->load->model("Registrocarpeta_model");
+        $this->Registrocarpeta_model->create(
+                $this->input->post("nombrecarpeta"),
+                $this->input->post("descripcioncarpeta")
+                );
+    }
+    function guardarregistro() {
+        try {
+            $post = $this->input->post();
+            $this->load->model('Registro_model');
+
+            if (isset($_FILES['archivo']['name']))
+                if (!empty($_FILES['archivo']['name']))
+                    $post['empReg_archivo'] = basename($_FILES['archivo']['name']);
+                
+            $targetPath = "./uploads/empleado";
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+            $targetPath = "./uploads/empleado/xyz" ;
+            
+            $data = array(
+                "pla_id"=>$this->input->post("plan"),
+                "tar_id"=>$this->input->post("tarea"),
+                "regCar_id"=>$this->input->post("carpeta"),
+                "reg_version"=>$this->input->post("version"),
+                "reg_descripcion"=>$this->input->post("descripcion"),
+                "reg_fechaCreacion"=>date('Y-m-d H:i:s'),
+                "reg_ruta"=>$targetPath
+            );    
+                
+            $this->Registro_model->create($data);
+            
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+
+            $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
+                
+            }
+            redirect('index.php/tareas/registro', 'location');
+        } catch (exception $e) {
+            
+        }
+    }
 
     function configuracionsistema() {
         if ($this->consultaacceso($this->data["usu_id"])):
@@ -434,6 +488,14 @@ class Tareas extends My_Controller {
 
     function autocompletar() {
         $info = auto("planes", "pla_id", "pla_nombre", $this->input->get('term'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($info));
+    }
+    function autocompleteactividadhijo() {
+        $info = auto("actividad_hijo", "actHij_id", "actHij_nombre", $this->input->get('term'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($info));
+    }
+    function autocompletetareas() {
+        $info = auto("tarea", "tar_id", "tar_nombre", $this->input->get('term'));
         $this->output->set_content_type('application/json')->set_output(json_encode($info));
     }
 
