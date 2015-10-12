@@ -1,6 +1,9 @@
 <div class="widgetTitle" >
+    <a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>">
+                <button type="button" class="btn btn-default">Nuevo empleado</button>
+            </a> 
     <h5>
-        <i class="glyphicon glyphicon-ok"></i>LISTADO EMPLEADOS
+        &nbsp;&nbsp;&nbsp;&nbsp;LISTADO EMPLEADOS
     </h5>
 </div>
 <div class='well'>

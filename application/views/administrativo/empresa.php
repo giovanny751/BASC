@@ -168,7 +168,7 @@
         if ($('#direccionar').val() == 2)
             window.location.href = '<?php echo base_url("index.php/administrativo/organigrama") ?>';
         if ($('#direccionar').val() == 3)
-            window.location.href = '<?php echo base_url("index.php/administrativo/creacionempleados") ?>';
+            window.location.href = '<?php echo base_url("index.php/administrativo/listadoempleados") ?>';
 
     });
 

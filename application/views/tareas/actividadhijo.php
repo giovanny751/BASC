@@ -5,6 +5,7 @@
 </div>
 <div class='well'>
     <form method="post" id="f6">
+        <input type="hidden" value="<?php echo $plan; ?>" name="pla_id">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <center>
@@ -126,6 +127,7 @@
                 "<?php echo base_url("index.php/tareas/guardaractividadhijo") ?>",
                 $('#f6').serialize()
                 ).done(function (msg) {
+                    $('input[type="text"],select,textarea').val("");
             alerta("verde", "Datos guardados correctamente");
         }).fail(function (msg) {
             alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");

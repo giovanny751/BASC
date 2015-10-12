@@ -50,8 +50,8 @@ class Tareas extends My_Controller {
         $cantidad = $this->input->post("length");
         $orden = $this->input->post("order[0][column]");
         $inicia = intval($_REQUEST['start']);
-        $tabla = $this->AvanceTarea_model->detailxid(1,$cantidad,$orden,$inicia);
-        $alldatacount = $this->AvanceTarea_model->detailxidcount(1,$cantidad,$orden,$inicia);
+        $tabla = $this->AvanceTarea_model->detailxid(1, $cantidad, $orden, $inicia);
+        $alldatacount = $this->AvanceTarea_model->detailxidcount(1, $cantidad, $orden, $inicia);
         $data = array();
         $data['data'] = arregloconsulta($tabla);
         $data["draw"] = intval($_REQUEST['draw']);
@@ -59,6 +59,7 @@ class Tareas extends My_Controller {
         $data['recordsFiltered'] = $alldatacount;
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
+
     function listadotareasxplanfiltro() {
 
         $this->load->model('Planes_model');
@@ -66,8 +67,8 @@ class Tareas extends My_Controller {
         $orden = $this->input->post("order[0][column]");
         $inicia = intval($_REQUEST['start']);
 //        $this->data['tareaxplan'] = $this->Planes_model->tareaxplan(1,$cantidad,$orden,$inicia);
-        $tabla = $this->Planes_model->tareaxplan(6,$cantidad,$orden,$inicia);
-        $alldatacount = $this->Planes_model->tareaxplancount(6,$cantidad,$orden,$inicia);
+        $tabla = $this->Planes_model->tareaxplan(6, $cantidad, $orden, $inicia);
+        $alldatacount = $this->Planes_model->tareaxplancount(6, $cantidad, $orden, $inicia);
         $data = array();
         $data['data'] = arregloconsulta($tabla);
         $data["draw"] = intval($_REQUEST['draw']);
@@ -75,6 +76,24 @@ class Tareas extends My_Controller {
         $data['recordsFiltered'] = $alldatacount;
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
+    function listadotareasxactividadhijo(){
+        
+        $this->load->model('Planes_model');
+        $cantidad = $this->input->post("length");
+        $orden = $this->input->post("order[0][column]");
+        $inicia = intval($_REQUEST['start']);
+//        $this->data['tareaxplan'] = $this->Planes_model->tareaxplan(1,$cantidad,$orden,$inicia);
+        $tabla = $this->Planes_model->actividadhijoxplan(7, $cantidad, $orden, $inicia);
+        $alldatacount = $this->Planes_model->actividadhijoxplancount(7, $cantidad, $orden, $inicia);
+        $data = array();
+        $data['data'] = arregloconsulta($tabla);
+        $data["draw"] = intval($_REQUEST['draw']);
+        $data['recordsTotal'] = $alldatacount;
+        $data['recordsFiltered'] = $alldatacount;
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+        
+    }
+
     function listadotareasinactivasxplanfiltro() {
 
         $this->load->model('Planes_model');
@@ -82,8 +101,8 @@ class Tareas extends My_Controller {
         $orden = $this->input->post("order[0][column]");
         $inicia = intval($_REQUEST['start']);
 //$this->data['tareaxplaninactivas'] = $this->Planes_model->tareaxplaninactivas($this->input->post('pla_id'));
-        $tabla = $this->Planes_model->tareaxplaninactivas(6,$cantidad,$orden,$inicia);
-        $alldatacount = $this->Planes_model->tareaxplaninactivascount(6,$cantidad,$orden,$inicia);
+        $tabla = $this->Planes_model->tareaxplaninactivas(6, $cantidad, $orden, $inicia);
+        $alldatacount = $this->Planes_model->tareaxplaninactivascount(6, $cantidad, $orden, $inicia);
         $data = array();
         $data['data'] = arregloconsulta($tabla);
         $data["draw"] = intval($_REQUEST['draw']);
@@ -217,13 +236,17 @@ class Tareas extends My_Controller {
     }
 
     function actividadhijo() {
-        if ($this->consultaacceso($this->data["usu_id"])):
-            $this->load->model('Tipo_model');
-            $this->data['tipo'] = $this->Tipo_model->detail();
-            $this->layout->view("tareas/actividadhijo", $this->data);
-        else:
-            $this->layout->view("permisos");
-        endif;
+//        if ($this->consultaacceso($this->data["usu_id"])):
+            if (!empty($this->input->post("pla_id"))) {
+                $this->data['plan'] = $this->input->post("pla_id");
+                $this->load->model('Tipo_model');
+                $this->data['tipo'] = $this->Tipo_model->detail();
+                $this->layout->view("tareas/actividadhijo", $this->data);
+            } else
+                redirect('index.php', 'location');
+//        else:
+//            $this->layout->view("permisos");
+//        endif;
     }
 
     function listadoactividades() {
@@ -255,17 +278,19 @@ class Tareas extends My_Controller {
         try {
             $this->load->model('Actividad_model');
             $data[] = array(
-                "pad_id" => $this->input->post("idpadre"),
-                "act_nombre" => $this->input->post("nombre"),
-                "act_fechaInicio" => $this->input->post("fechainicio"),
-                "act_fechaFinalizacion" => $this->input->post("fechafinalizacion"),
-                "act_peso" => $this->input->post("peso"),
-                "act_riesgoSancion" => $this->input->post("riesgosancion"),
+                "actHij_padreid" => $this->input->post("idpadre"),
+                "actHij_nombre" => $this->input->post("nombre"),
+                "actHij_fechaInicio" => $this->input->post("fechainicio"),
+                "actHij_fechaFinalizacion" => $this->input->post("fechafinalizacion"),
+                "actHij_peso" => $this->input->post("peso"),
+                "actHij_riesgoSancion" => $this->input->post("riesgosancion"),
                 "tip_id" => $this->input->post("tipo"),
-                "act_presupuestoTotal" => $this->input->post("presupuestototal"),
-                "act_costoReal" => $this->input->post("costoreal"),
-                "act_descripcion" => $this->input->post("descripcion"),
-                "act_modoVerificacion" => $this->input->post("modoverificacion"),
+                "actHij_presupuestoTotal" => $this->input->post("presupuestototal"),
+                "actHij_costoReal" => $this->input->post("costoreal"),
+                "actHij_descripcion" => $this->input->post("descripcion"),
+                "actHij_modoVerificacion" => $this->input->post("modoverificacion"),
+                "pla_id" => $this->input->post("pla_id"),
+                "actHij_fechaCreacion" => date("Y-m-d H:i:s")
             );
             $this->Actividad_model->create($data);
         } catch (exception $e) {
@@ -283,8 +308,8 @@ class Tareas extends My_Controller {
             $this->data['plan'] = array();
             if (!empty($this->input->post('pla_id'))) {
                 $this->data['plan'] = $this->Planes_model->planxid($this->input->post('pla_id'));
-                
-                
+
+
 //                var_dump($this->data['tareaxplan']);die;
             }
             $this->data['norma'] = $this->Norma_model->detail();

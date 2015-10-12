@@ -14,7 +14,7 @@ class Actividad_model extends CI_Model {
     }
     function create($data){
         
-        $this->db->insert_batch("actividad",$data);
+        $this->db->insert_batch("actividad_hijo",$data);
     }
 
 

@@ -58,6 +58,51 @@ class Planes_model extends CI_Model {
         
     }
     
+    function actividadhijoxplan($id, $cantidad = null, $orden,$inicia = null){
+        
+        if (!empty($orden)):
+            $data = array(
+                "actHij_padreid",
+                "actHij_fechaInicio",
+                "actHij_fechaFinalizacion",
+                "actHij_presupuestoTotal",
+                "actHij_descripcion"
+            );
+            $this->db->order_by($data[$orden], "asc");
+        endif;
+        if($cantidad == -1)$cantidad = "";
+        
+        $this->db->select("actividad_hijo.actHij_padreid");
+        $this->db->select("actividad_hijo.actHij_fechaInicio");
+        $this->db->select("actividad_hijo.actHij_fechaFinalizacion");
+        $this->db->select("actividad_hijo.actHij_presupuestoTotal");
+        $this->db->select("actividad_hijo.actHij_descripcion");
+        $this->db->where("planes.pla_id",$id);
+        $this->db->join("actividad_hijo","actividad_hijo.pla_id = planes.pla_id");
+        if(!empty($inicia))
+        $planes = $this->db->get("planes",$inicia ,$cantidad);
+        else
+            $planes = $this->db->get("planes",$cantidad);
+        
+//        echo $this->db->last_query();die;
+        
+        return $planes->result(); 
+        
+    }
+    function actividadhijoxplancount($id, $cantidad = null, $orden,$inicia = null){
+        
+        
+        $this->db->select("actividad_hijo.actHij_padreid");
+        $this->db->select("actividad_hijo.actHij_fechaInicio");
+        $this->db->select("actividad_hijo.actHij_fechaFinalizacion");
+        $this->db->select("actividad_hijo.actHij_presupuestoTotal");
+        $this->db->select("actividad_hijo.actHij_descripcion");
+        $this->db->where("planes.pla_id",$id);
+        $this->db->join("actividad_hijo","actividad_hijo.pla_id = planes.pla_id");
+        $planes = $this->db->get("planes");
+        return $planes->result(); 
+        
+    }
     function tareaxplan($id, $cantidad = null, $orden,$inicia = null){
         
         if (!empty($orden)):

@@ -24,7 +24,7 @@
                 <a href="<?php echo base_url("index.php/tareas/nuevatarea") ?>">
                     <button type="button" class="btn ">Nueva tarea</button>
                 </a>
-                <a href="<?php echo base_url("index.php/tareas/nuevatarea") ?>">
+                <a href="<?php echo base_url("index.php/tareas/planes") ?>">
                     <button type="button" class="btn ">Nuevo registro</button>
                 </a>
             </div>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="form-group">
                     <label for="costoreal">Costo Real</label>
-                    <input type="text" name="costoreal" id="costoreal" class="form-control obligatorio" readonly="readonly" value="<?php echo (!empty($plan[0]->pla_costoReal) ) ? $plan[0]->pla_costoReal : ""; ?>"/>
+                    <input type="text" name="costoreal" id="costoreal" class="form-control" readonly="readonly" value="<?php echo (!empty($plan[0]->pla_costoReal) ) ? $plan[0]->pla_costoReal : ""; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="norma"><span class="campoobligatorio">*</span>Norma</label>
@@ -136,21 +136,6 @@
                 <p> Basic exemple. Resize the window to see how the tabs are moved into the dropdown </p>
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
-                        <li class="dropdown pull-right tabdrop">
-                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-angle-down"></i>
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a data-toggle="tab" href="#tab5">Gráfica de Grantt</a>
-                                </li>
-                                <li>
-                                    <a data-toggle="tab" href="#tab6">Registros</a>
-                                </li>
-                            </ul>
-                        </li>
                         <li class="active">
                             <a data-toggle="tab" href="#tab1">Tareas</a>
                         </li>
@@ -162,6 +147,12 @@
                         </li>
                         <li>
                             <a data-toggle="tab" href="#tab4">Actividades</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#tab5">Gráfica de Grantt</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#tab6">Registros</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -220,19 +211,38 @@
                         <div id="tab4" class="tab-pane">
                             <div style="text-align: right">
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">CREAR ACTIVIDAD PADRE</button>
+                                <button type="button" class="btn btn-success" id="actividadhijo">CREAR ACTIVIDAD HIJO</button>
                             </div>
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax3">
                                 <thead>
+                                <th>Id padre</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha fin</th>
                                 <th>Presupuesto</th>
-                                <th>Dirección</th>
-                                <th>Acción</th>
+                                <th>Descripción</th>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="5"></td>
-                                    </tr>
+                                <tbody >
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tab5" class="tab-pane">
+                            
+                        </div>
+                        <div id="tab6" class="tab-pane">
+                            <div style="text-align: right">
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal4">NUEVA CARPETA</button>
+                                <button type="button" class="btn btn-success" id="nuevoregistro">NUEVO REGISTRO</button>
+                            </div>
+                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax3">
+                                <thead>
+                                <th>Nombre de archivo</th>
+                                <th>Descripción</th>
+                                <th>Versión</th>
+                                <th>Responsable</th>
+                                <th>Tamaño</th>
+                                <th>Fecha</th>
+                                </thead>
+                                <tbody >
                                 </tbody>
                             </table>
                         </div>
@@ -280,10 +290,55 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">AGREGAR CARPETA</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="formactividadpadre">
+                            <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="nombrecarpeta">Nombre</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <input type="text" id="nombrecarpeta" name="nombrecarpeta" class="form-control acobligatorio">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="descripcioncarpeta">Descripción:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <input type="text" id="descripcioncarpeta" name="descripcioncarpeta" class="form-control acobligatorio">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="guardaractividadpadre">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     <?php endif; ?>
 
 </div>
+<form method="post" id="frmactividadhijo">
+    <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id">
+</form>
 <script>
+    
+    $('#actividadhijo').click(function(){
+        
+        $('#frmactividadhijo').attr("action","<?php echo base_url("index.php/tareas/actividadhijo") ?>");
+        $('#frmactividadhijo').submit();
+        
+    });
     
     jQuery(document).ready(function () {
         TableAjax.init();
@@ -314,7 +369,7 @@
                 onDataLoad: function (grid) {
                     // execute some code on ajax data load
                 },
-                loadingMessage: 'Loading...',
+                loadingMessage: 'Cargando...',
                 dataTable: {
                     "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
                     "lengthMenu": [
@@ -341,7 +396,7 @@
                 onDataLoad: function (grid) {
                     // execute some code on ajax data load
                 },
-                loadingMessage: 'Loading...',
+                loadingMessage: 'Cargando...',
                 dataTable: {
                     "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
                     "lengthMenu": [
@@ -351,6 +406,33 @@
                     "pageLength": 10, // default record count per page
                     "ajax": {
                         "url": "<?php echo base_url("index.php/tareas/listadotareasxplanfiltro") ?>", // ajax source
+                    },
+                    "order": [
+                        [1, "asc"]
+                    ]// set first column as a default sort by asc
+                }
+            });
+            grid.init({
+                src: $("#datatable_ajax3"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+                    // execute some code on network or other general error  
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Cargando...',
+                dataTable: {
+                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                    "lengthMenu": [
+                        [10, 20, 50, 100, 150, -1],
+                        [10, 20, 50, 100, 150, "All"] // change per page values here
+                    ],
+                    "pageLength": 10, // default record count per page
+                    "ajax": {
+                        "url": "<?php echo base_url("index.php/tareas/listadotareasxactividadhijo") ?>", // ajax source
                     },
                     "order": [
                         [1, "asc"]
