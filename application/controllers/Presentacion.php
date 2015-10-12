@@ -206,7 +206,7 @@ class Presentacion extends My_Controller {
             foreach ($nombrepapa as $nombrepapa => $menuidpadre)
                 foreach ($menuidpadre as $modulos => $menu)
                     foreach ($menu as $submenus):
-                        $html .=  "<input type='checkbox' class='seleccionados" . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' valor='" . $padre . "'><li>" . strtoupper($nombrepapa) . "";
+                        $html .=  "<input type='checkbox' class='seleccionados" . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' valor='" . $padre . "' ><li>" . strtoupper($nombrepapa) . "";
                         if (!empty($submenus[0]))
                             $html .=$this->permisoroles($submenus[0], ' ', str_replace(' ', '', strtoupper($nombrepapa)));
                         $html .= "</li>";
