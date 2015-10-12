@@ -61,7 +61,7 @@
 <script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/moment.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') ?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') ?>"></script> 
 
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
