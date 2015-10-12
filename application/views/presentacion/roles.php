@@ -139,7 +139,7 @@ $('.seleccionados').click(function() {
         $.post("<?php echo base_url('index.php/presentacion/rolesasignados'); ?>", {id: $(this).attr('rol')}, function(data) {
         data = jQuery.parseJSON(data);
         $.each(data, function(key, val) {
-                $('.seleccionados[value="' + val.menu_id + '"]').attr('checked',true);
+                $('.seleccionados[valor="' + val.menu_id + '"]').attr('checked',true);
             });
         });
     });
