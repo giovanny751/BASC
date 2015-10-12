@@ -37,7 +37,7 @@
                 <label for="fecha">Nombre</label><input type="text" name="nombre" id="nombre" class="form-control">
             </div>    
             <div class="col-lg-2 col-sx-2">
-                <label for="fecha">Fecha</label><input type="text" name="fecha" id="fecha" class="form-control">
+                <label for="fecha">Fecha</label><input type="text" name="fecha" id="fecha" class="form-control fecha">
             </div>  
             <div class="col-lg-1 col-sx-1">
                 <div style="margin-top: 27px">

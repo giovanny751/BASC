@@ -363,7 +363,7 @@ $('.portlet').find('label,h4').css('color','black');
 
 
     $('.fecha').datepicker({
-        dateFormat: "yy-mm-dd"
+        format: "yyyy-mm-dd"
     });
 
     $(function () {
