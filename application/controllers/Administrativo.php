@@ -150,7 +150,6 @@ class Administrativo extends My_Controller {
 
     function guardaractualizacion() {
         $this->load->model('Empleado_model');
-        die("Hola");
 
         $data = array(
             'Emp_codigo' => $this->input->post('codigo'),
@@ -173,15 +172,31 @@ class Administrativo extends My_Controller {
             'Emp_FechaFinContrato' => $this->input->post('fechafincontrato'),
             'Emp_PlanObligatorioSalud' => $this->input->post('planobligatoriodesalud'),
             'Emp_FechaAfiliacionArl' => $this->input->post('fechaafiliacionarl'),
-            'TipAse_Id' => $this->input->post('tipoaseguradora'),
-            'Ase_Id' => $this->input->post('nombreaseguradora'),
             'Dim_id' => $this->input->post('dimension1'),
             'Dim_IdDos' => $this->input->post('dimension2'),
             'Car_id' => $this->input->post('cargo'),
             'emp_fondo' => $this->input->post('fondo')
         );
-
         $this->Empleado_model->update($data, $this->input->post('emp_id'));
+        
+        //--------------------- Actualiza tipo aseguradoras ----------------------------
+        $id = $this->input->post('emp_id');
+        $this->load->model('Empleadotipoaseguradora_model');
+        $tipoaseguradora = $this->input->post("tipoaseguradora");
+        $data = array();
+        if (!empty($tipoaseguradora)):
+            $nombreaseguradora = $this->input->post("nombreaseguradora");
+            for ($i = 0; $i < count($tipoaseguradora); $i++) {
+                if($nombreaseguradora[$i] != ""):
+                    $data[$i] = array(
+                        "emp_id" => $id,
+                        "ase_id" => $nombreaseguradora[$i],
+                        "tipAse_id" => $tipoaseguradora[$i]
+                    );
+                endif;
+            }
+        $this->Empleadotipoaseguradora_model->actualizatipo($id,$data);
+        endif;
     }
 
     function consultaaseguradoras() {
@@ -415,6 +430,9 @@ class Administrativo extends My_Controller {
         $idUsuarioCreado = $this->input->post("idUsuarioCreado");
         $metodo = $this->input->post("metodo");
         $campos = $this->User_model->consultausuariosflechas($idUsuarioCreado, $metodo);
+        
+        
+        
         if (!empty($campos)) {
             $this->output->set_content_type('application/json')->set_output(json_encode($campos[0]));
         }
@@ -427,6 +445,16 @@ class Administrativo extends My_Controller {
         $campos = $this->Empleado_model->consultaempleadoflechas($idEmpleadoCreado, $metodo);
         if (!empty($campos)) {
             $this->output->set_content_type('application/json')->set_output(json_encode($campos[0]));
+        }
+    }
+    function consultaempleadoflechasaseguradora() {
+        $this->load->model("Empleadotipoaseguradora_model");
+        $idEmpleadoCreado = $this->input->post("idEmpleadoCreado");
+        $campos = $this->Empleadotipoaseguradora_model->consult_empleado($idEmpleadoCreado);
+        if (!empty($campos)) {
+            $this->output->set_content_type('application/json')->set_output(json_encode($campos));
+        }else{
+            die("null");
         }
     }
 

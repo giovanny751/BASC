@@ -219,75 +219,84 @@
                         <div class="row" style="text-align:center">
                             <button type="button" id="agregaraseguradora" class="btn btn-success">Agregar</button>
                         </div>
-                        <?php if(empty($aserguradorasxempleado)): ?>
-                        <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label>Tipo Aseguradora:</label>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                <select  name="tipoaseguradora[]" class="form-control tipoaseguradora">
-                                    <option value="">::Seleccionar::</option>
-                                    <?php 
-                                    $option = "";
-                                    foreach($tipoaseguradora as $ta):
-                                        $option .= "<option value='".$ta->TipAse_Id."'>".$ta->TipAse_Nombre."</option>"; 
-                                     endforeach;
-                                    echo $option;
+                        <div id="agregarClones">
+                            <?php
+                            if (empty($aserguradorasxempleado)) {
+                                ?>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label>Tipo Aseguradora:</label>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        <select  name="tipoaseguradora[]" class="form-control tipoaseguradora">
+                                            <option value="">::Seleccionar::</option>
+                                            <?php
+                                            $option = "";
+                                            foreach ($tipoaseguradora as $ta):
+                                                $option .= "<option value='" . $ta->TipAse_Id . "'>" . $ta->TipAse_Nombre . "</option>";
+                                            endforeach;
+                                            echo $option;
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label>Nombre Aseguradora:</label>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <select name="nombreaseguradora[]" class="form-control nombreaseguradora">
+                                            <option value="">::Seleccionar::</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                        <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            else {
+                                foreach ($aserguradorasxempleado as $as):
                                     ?>
-                                </select>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label>Nombre Aseguradora:</label>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <select name="nombreaseguradora[]" class="form-control nombreaseguradora">
-                                    <option value="">::Seleccionar::</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
-                            </div>
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                            <label>Tipo Aseguradora:</label>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                            <select  name="tipoaseguradora[]" class="form-control tipoaseguradora">
+                                                <option value="">::Seleccionar::</option>
+                                                <?php
+                                                $option = "";
+                                                foreach ($tipoaseguradora as $ta):
+                                                    $selected = (($as->tipAse_id == $ta->TipAse_Id) ? "selected" : "");
+                                                    $option .= "<option value='" . $ta->TipAse_Id . "' " . $selected . " >" . $ta->TipAse_Nombre . "</option>";
+                                                endforeach;
+                                                echo $option;
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                            <label>Nombre Aseguradora:</label>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <select name="nombreaseguradora[]" class="form-control nombreaseguradora">
+                                                <?php
+                                                $option = "";
+                                                foreach ($aseguradoras as $ase):
+                                                    if ($as->ase_id == $ase->ase_id) {
+                                                        $option .= "<option value='" . $ase->ase_id . "' selected >" . $ase->ase_nombre . "</option>";
+                                                    }
+                                                endforeach;
+                                                echo $option;
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                                            <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
+                                        </div>
+                                    </div>
+                                <?php endforeach;
+                            }
+                            ?>
                         </div>
-                        <?php endif;
-                        foreach($aserguradorasxempleado as $as): ?>
-                        <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label>Tipo Aseguradora:</label>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                <select  name="tipoaseguradora[]" class="form-control tipoaseguradora">
-                                    <option value="">::Seleccionar::</option>
-                                    <?php 
-                                    $option = "";
-                                    foreach($tipoaseguradora as $ta):
-                                        $selected = (($as->tipAse_id == $ta->TipAse_Id) ?  "selected":"");
-                                        $option .= "<option value='".$ta->TipAse_Id."' ".$selected." >".$ta->TipAse_Nombre."</option>"; 
-                                     endforeach;
-                                    echo $option;
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                <label>Nombre Aseguradora:</label>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                <select name="nombreaseguradora[]" class="form-control nombreaseguradora">
-                                    <?php 
-                                    $option = "";
-                                    foreach($aseguradoras as $ase):
-                                        if($as->ase_id == $ase->ase_id){
-                                            $option .= "<option value='".$ase->ase_id."' selected >".$ase->ase_nombre."</option>"; 
-                                        }
-                                     endforeach;
-                                    echo $option;
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-                                <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
@@ -302,7 +311,7 @@
         <!--<button type="button" id="btnRegistro" class="btn btn-info registro">Registro exámenes</button>-->
         <button type="button" id="guardar" class="btn btn-success">Guardar</button>
     </div>
-    <?php if (!empty($empleado[0]->Emp_Id)) { ?>
+<?php if (!empty($empleado[0]->Emp_Id)) { ?>
         <div class="portlet box blue" style="margin-top: 30px;">
             <div class="portlet-title">
                 <div class="caption">
@@ -381,101 +390,101 @@
                 </div>
             </div>
         </div>
-        
-    <?php } ?>
+
+<?php } ?>
     <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">AGREGAR CARPETA</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" id="formcarpeta">
-                            <input type="hidden" id="emp_id" name="emp_id"  value="<?php echo (!empty($empleado[0]->Emp_Id)) ? $empleado[0]->Emp_Id : ""; ?>" />
-                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="nombrecarpeta">Nombre:</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="nombre" id="nombrecarpeta" name="nombrecarpeta" class="form-control">
-                                </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">AGREGAR CARPETA</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="formcarpeta">
+                        <input type="hidden" id="emp_id" name="emp_id"  value="<?php echo (!empty($empleado[0]->Emp_Id)) ? $empleado[0]->Emp_Id : ""; ?>" />
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="nombrecarpeta">Nombre:</label>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="descripcioncarpeta">Descripción:</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <textarea  id="descripcioncarpeta" name="descripcioncarpeta" class="form-control"></textarea>
-                                </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <input type="nombre" id="nombrecarpeta" name="nombrecarpeta" class="form-control">
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="guardarcarpeta">Guardar</button>
-                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="descripcioncarpeta">Descripción:</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <textarea  id="descripcioncarpeta" name="descripcioncarpeta" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="guardarcarpeta">Guardar</button>
                 </div>
             </div>
         </div>
-        
-        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">AGREGAR REGISTRO</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" id="formregistro" enctype="multipart/form-data" action="<?php echo base_url("index.php/administrativo/guardarregistroempleado") ?>">
-                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="empReg_carpeta">Carpeta:</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="text" id="empReg_carpeta" name="empReg_carpeta" class="form-control">
-                                </div>
+    </div>
+
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">AGREGAR REGISTRO</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="formregistro" enctype="multipart/form-data" action="<?php echo base_url("index.php/administrativo/guardarregistroempleado") ?>">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="empReg_carpeta">Carpeta:</label>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="empReg_version">Versión:</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="text" id="empReg_version" name="empReg_version" class="form-control">
-                                </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <input type="text" id="empReg_carpeta" name="empReg_carpeta" class="form-control">
                             </div>
-                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="empReg_descripcion">Descripción:</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <textarea  id="empReg_descripcion" name="empReg_descripcion" class="form-control"></textarea>
-                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="empReg_version">Versión:</label>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="archivocarpeta">Adjuntar archivo:</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="file" id="archivocarpeta" name="archivo" class="form-control">
-                                </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <input type="text" id="empReg_version" name="empReg_version" class="form-control">
                             </div>
-                            <input type="hidden" value="<?php echo $empleado[0]->Emp_Id ?>" name="Emp_Id" />
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="guardarRegistro">Guardar</button>
-                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="empReg_descripcion">Descripción:</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <textarea  id="empReg_descripcion" name="empReg_descripcion" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <label for="archivocarpeta">Adjuntar archivo:</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                <input type="file" id="archivocarpeta" name="archivo" class="form-control">
+                            </div>
+                        </div>
+                        <input type="hidden" value="<?php echo $empleado[0]->Emp_Id ?>" name="Emp_Id" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="guardarRegistro">Guardar</button>
                 </div>
             </div>
         </div>
+    </div>
 </div>
 <?php
 $option = "";
-foreach($tipoaseguradora as $ta):
-    $option .= "<option value='".$ta->TipAse_Id."'>".$ta->TipAse_Nombre."</option>"; 
+foreach ($tipoaseguradora as $ta):
+    $option .= "<option value='" . $ta->TipAse_Id . "'>" . $ta->TipAse_Nombre . "</option>";
 endforeach;
 ?>
 <script>
@@ -483,35 +492,46 @@ endforeach;
     $('body').delegate(".eliminaraseguradora", "click", function () {
 //        console.log($(this).parent().parent().lenght);
 //        if ($(this).parent().parent().lenght > 2) {
-            $(this).parents('.row').remove();
+        $(this).parents('.row').remove();
 //        }
     });
-    var option = "<?php echo (!empty($option))?$option:""; ?>";
+    var option = "<?php echo (!empty($option)) ? $option : ""; ?>";
     
-    var filaaseguradora = '<div class="row">\n\
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">\n\
-                            <label>Tipo Aseguradora:</label>\n\
-                            </div>\n\
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">\n\
-                            <select name="tipoaseguradora[]" class="form-control tipoaseguradora">\n\
-                            <option value="">::Seleccionar::</option>'+option+'\n\
-                            </select>\n\
-                            </div>\n\
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">\n\
-                            <label>Nombre Aseguradora:</label>\n\
-                            </div>\n\
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">\n\
-                            <select name="nombreaseguradora[]" class="form-control nombreaseguradora">\n\
-                            <option value="">::Seleccionar::</option>\n\
-                            </select>\n\
-                            </div>\n\
-                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">\n\
-                            <button type="button" class="btn btn-danger eliminaraseguradora">X</button>\n\
-                            </div>\n\
-                            </div>';
+    function agregarClonAseguradora(){
+        var cuerpo = "";
+        cuerpo += '<div class="row">';
+        //Campo Label
+        cuerpo += '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">';
+        cuerpo += '<label>Tipo Aseguradora:</label>';
+        cuerpo += '</div>';
+        //campo select
+        cuerpo += '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">';
+        cuerpo += '<select name="tipoaseguradora[]" class="form-control tipoaseguradora">';
+        cuerpo += '<option value="">::Seleccionar::</option>' + option;
+        cuerpo += '</select>'
+        cuerpo += '</div>';
+        //campo Label
+        cuerpo += '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">';
+        cuerpo += '<label>Nombre Aseguradora:</label>';
+        cuerpo += '</div>';
+        //campo select
+        cuerpo += '<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">';
+        cuerpo += '<select name="nombreaseguradora[]" class="form-control nombreaseguradora">';
+        cuerpo += '<option value="">::Seleccionar::</option>';
+        cuerpo += '</select>'
+        cuerpo += '</div>';
+        //campo eliminar
+        cuerpo += '<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">';
+        cuerpo += '<button type="button" class="btn btn-danger eliminaraseguradora">X</button>'
+        cuerpo += '</div>';
+        
+        cuerpo += '</div>';
+        return cuerpo;
+    }
+    
     $('body').delegate("#agregaraseguradora", "click", function () {
 
-        $('#incluiraseguradoras').append(filaaseguradora);
+        $('#incluiraseguradoras').find("#agregarClones").append(agregarClonAseguradora());
 
     });
 
@@ -550,7 +570,6 @@ endforeach;
         if (metodo != "documento") {
             $.post(url, {idEmpleadoCreado: idEmpleadoCreado, metodo: metodo})
                     .done(function (msg) {
-                        console.log(msg);
                         $("input[type='text'], select").val();
                         $("#emp_id").val(msg.Emp_Id);
                         $("#cedula").val(msg.Emp_Cedula);
@@ -572,8 +591,6 @@ endforeach;
                         $("#planobligatoriodesalud").val(msg.Emp_PlanObligatorioSalud);
                         $("#fechaafiliacionarl").val(msg.Emp_FechaAfiliacionArl);
                         $("#fondo").val(msg.emp_fondo);
-                        $("#nombreaseguradora").val(msg.Ase_Id);
-                        $("#tipoaseguradora").val(msg.TipAse_Id);
                         $("#dimension1").val(msg.Dim_id);
                         $("#dimension2").val(msg.Dim_IdDos);
                         $("#cargo").val(msg.Car_id);
@@ -582,22 +599,42 @@ endforeach;
                             $("#btnRegistro").show();
                             $("#guardar").show();
                         }
-
+                        
+                        //Empleado Aseguradora
+                        
+                        $('#incluiraseguradoras').find("#agregarClones").html("");
+                        var url2 = "<?php echo base_url("index.php/administrativo/consultaempleadoflechasaseguradora") ?>";
+                        $.post(url2, {idEmpleadoCreado: msg.Emp_Id})
+                                .done(function(msg){
+                                    if(msg != " null"){
+                                        $.each(msg, function(key, val) {
+                                            $('#incluiraseguradoras').find("#agregarClones").append(agregarClonAseguradora());
+                                            $('#incluiraseguradoras').find("#agregarClones").find(".tipoaseguradora:last").val(val.tipAse_id);
+                                            $('#incluiraseguradoras').find("#agregarClones").find(".nombreaseguradora:last").html("<option value='"+val.ase_id+"'>"+val.ase_nombre+"</option>")
+                                        });
+                                    }else{
+                                        $('#incluiraseguradoras').find("#agregarClones").append(agregarClonAseguradora());
+                                    }
+                                })
+                                .fail(function(){
+                                    alert("Error al traer empleado");
+                                })
                     })
                     .fail(function (msg) {
                         alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-                        $("input[type='text'], select").val();
+                        //$("input[type='text'], select").val();
                         $("#actualizar").hide();
                         $("#btnRegistro").show();
                         $("#guardar").show();
                     })
+                
         } else {
             window.location = "<?php echo base_url("index.php/administrativo/listadoempleados"); ?>";
         }
 
     });
 
-    $("body").on("change",".tipoaseguradora",function(){
+    $("body").on("change", ".tipoaseguradora", function () {
         var filaSeleccioanda = $(this).parents(".row");
         var id = $(this).val();
         $.post("<?php echo base_url("index.php/administrativo/consultaaseguradoras") ?>",
@@ -605,12 +642,12 @@ endforeach;
                 .done(function (msg) {
                     filaSeleccioanda.find(".nombreaseguradora").find("option").remove()
                     var aseguradora = "<option value=''>::Seleccionar::</option>";
-                    var i = 0 ;
+                    var i = 0;
                     $.each(msg, function (key, val) {
                         aseguradora += "<option value='" + val.ase_id + "'>" + val.ase_nombre + "</option>"
                         i++
                     });
-                    if(i==0)
+                    if (i == 0)
                         aseguradora += "<option value=''>Sin Datos</option>";
                     filaSeleccioanda.find(".nombreaseguradora").append(aseguradora);
                 })
@@ -655,12 +692,12 @@ endforeach;
             });
         }
     });
-    
+
     //--------------------------------------------------------------------------
     //                              GUARDAR REGISTR0
     //--------------------------------------------------------------------------
-    $("body").on("click","#guardarRegistro",function(){
+    $("body").on("click", "#guardarRegistro", function () {
         $("#formregistro").submit();
     });
-    
+
 </script>    
