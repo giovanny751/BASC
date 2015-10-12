@@ -23,14 +23,17 @@ class Roles_model extends CI_Model {
         return $consulta->result_array();
     }
     function rolesall(){
-        
+        $this->db->select("rol_id");
+        $this->db->select("rol_nombre");
+        $this->db->select("rol_fechaModificacion");
+        $this->db->select("rol_fechaCreacion");
         $consulta = $this->db->get('roles');
         return $consulta->result();
     }
     
     function guardarrol($nombre){
         $this->db->set('rol_nombre',$nombre);
-        $this->db->set('rol_fechaModificacion',date("Y-m-d"));
+        $this->db->set('rol_fechaCreacion',date("Y-m-d"));
         $this->db->insert('roles');
         return $this->db->insert_id();
     } 

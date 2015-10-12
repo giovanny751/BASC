@@ -94,7 +94,6 @@ $('.seleccionados').click(function() {
         $(this).parents('tr').remove();
         $.post("<?php echo base_url('index.php/presentacion/eliminarrol'); ?>", {id: $(this).attr('rol')})
                 .done(function(msg){
-                    
                     alerta("verde", "Eliminado con exito");
                 }).fail(function(msg){
                     alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
@@ -108,15 +107,16 @@ $('.seleccionados').click(function() {
         $.post("<?php echo base_url('index.php/presentacion/guardarroles'); ?>", $('#nuevorol').serialize(), function(data) {
             $('#myModal').modal('hide');
                 var filas = "";
-//                console.log(jQuery.parseJSON(data));
-//                $.each(data, function(key, val) {
-//                    filas += "<tr>";
-//                    filas += "<td>" + val.rol_nombre + "</td>";
-//                    filas += "<td>" + val.rol_estado + "</td>";
-//                    filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-danger eliminar'>Eliminar</button></td>";
-//                    filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-info opciones'>Opciones</button></td>";
-//                    filas += "</tr>";
-//                });
+                data = jQuery.parseJSON(data);
+                $.each(data, function(key, val) {
+                    filas += "<tr>";
+                    filas += "<td>" + val.rol_nombre + "</td>";
+                    filas += "<td>" + val.rol_fechaCreacion + "</td>";
+                    filas += "<td>" + val.rol_fechaModificacion + "</td>";
+                    filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-info opciones'>Opciones</button></td>";
+                    filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-danger eliminar'>Eliminar</button></td>";
+                    filas += "</tr>";
+                });
                 $('#cuerporol *').remove();
                 $('#cuerporol').append(filas);
                 $('#nombre').val('');
@@ -137,7 +137,7 @@ $('.seleccionados').click(function() {
         $('input[type="checkbox"]').prop('checked', false);
         $('.agregarrol *').remove();
         $.post("<?php echo base_url('index.php/presentacion/rolesasignados'); ?>", {id: $(this).attr('rol')}, function(data) {
-        
+        data = jQuery.parseJSON(data);
         $.each(data, function(key, val) {
                 $('.seleccionados[value="' + val.menu_id + '"]').attr('checked',true);
             });

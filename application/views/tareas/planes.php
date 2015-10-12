@@ -84,7 +84,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <div class="form-group">
-                    <label for="estado"><span class="campoobligatorio">*</span>estado</label>
+                    <label for="estado"><span class="campoobligatorio">*</span>Estado</label>
                     <select name="estado" id="estado" class="form-control obligatorio">
                         <option value="">::Seleccionar::</option>
                         <?php foreach ($estado as $e) { ?>

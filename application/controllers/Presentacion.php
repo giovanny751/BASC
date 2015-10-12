@@ -206,10 +206,10 @@ class Presentacion extends My_Controller {
             foreach ($nombrepapa as $nombrepapa => $menuidpadre)
                 foreach ($menuidpadre as $modulos => $menu)
                     foreach ($menu as $submenus):
-                        $html .= "<tr><td>" . ($s == null ? '' : '&nbsp;&nbsp;&nbsp;') . "<input type='checkbox' class='seleccionados" . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' value='" . $padre . "'></td><td><li>" . strtoupper($nombrepapa) . "";
+                        $html .=  "<input type='checkbox' class='seleccionados" . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' value='" . $padre . "'><li>" . strtoupper($nombrepapa) . "";
                         if (!empty($submenus[0]))
                             $html .=$this->permisoroles($submenus[0], ' ', str_replace(' ', '', strtoupper($nombrepapa)));
-                        $html .= "</li></td></tr>";
+                        $html .= "</li>";
                     endforeach;
         $html.="</ul>";
         return $html;
@@ -235,14 +235,12 @@ class Presentacion extends My_Controller {
             for ($i = 0; $i < count($permisorol); $i++) {
                 $insert[] = array('rol_id' => $id, 'menu_id' => $permisorol[$i]);
             }
-//            var_dump($insert);die;
-            print_r($insert);
             if(!empty($insert)){
                 $this->Roles_model->insertapermisos($insert);
             }
             $roles = $this->Roles_model->rolesall();
-//            var_dump($roles);die;
-            $this->output->set_content_type('application/json')->set_output(json_encode($roles));
+            echo json_encode($roles);
+//            $this->output->set_content_type('application/json')->set_output(json_encode($roles));
             die;
         } else {
             $id = $this->input->post('rol');
@@ -327,7 +325,7 @@ class Presentacion extends My_Controller {
 
     function rolesasignados() {
         $roles = $this->Ingreso_model->rolesasignados($this->input->post('id'));
-        $this->output->set_content_type('application/json')->set_output(json_encode($roles));
+        echo json_encode($roles);
     }
 
     function recordarcontrasena() {
