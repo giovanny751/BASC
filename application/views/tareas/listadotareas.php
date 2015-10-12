@@ -1,6 +1,9 @@
 <div class="widgetTitle" >
+   <a href="<?php echo base_url("index.php/tareas/nuevatarea") ?>">
+                <button type="button" class="btn btn-default">Nueva tarea</button>
+            </a>
     <h5>
-        <i class="glyphicon glyphicon-ok"></i>LISTADO TAREAS
+         - LISTADO TAREAS
     </h5>
 </div>
 <div class='well'>

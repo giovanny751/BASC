@@ -1,6 +1,6 @@
 <div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>LISTADO USUARIOS
+    <a href="<?php echo base_url("index.php/administrativo/creacionusuarios") ?>"><button type="button" class="btn btn-default">Crear usuario</button></a><h5>
+        - LISTADO USUARIOS
     </h5>
 </div>
 <div class='well'>

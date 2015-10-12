@@ -69,8 +69,8 @@
                     <input type="text" name="presupuesto" id="presupuesto" class="form-control"  value="<?php echo (!empty($plan[0]->pla_presupuesto) ) ? $plan[0]->pla_presupuesto : ""; ?>"/>
                 </div>
                 <div class="form-group">
-                    <label for="costoreal"><span class="campoobligatorio">*</span>Costo Real</label>
-                    <input type="text" name="costoreal" id="costoreal" class="form-control obligatorio"  value="<?php echo (!empty($plan[0]->pla_costoReal) ) ? $plan[0]->pla_costoReal : ""; ?>"/>
+                    <label for="costoreal">Costo Real</label>
+                    <input type="text" name="costoreal" id="costoreal" class="form-control obligatorio" readonly="readonly" value="<?php echo (!empty($plan[0]->pla_costoReal) ) ? $plan[0]->pla_costoReal : ""; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="norma"><span class="campoobligatorio">*</span>Norma</label>

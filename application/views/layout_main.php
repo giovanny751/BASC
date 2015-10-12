@@ -8,6 +8,8 @@
 <meta content="" name="description"/>
 <meta content="" name="author"/>
 <script src="<?= base_url('js/jquery-1.10.2.js') ?>" type="text/javascript"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
   
 <!-- BEGIN GLOBAL MANDATORY STYLES --> 
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>

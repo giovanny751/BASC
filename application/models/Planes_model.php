@@ -45,6 +45,8 @@ class Planes_model extends CI_Model {
         $this->db->select("empleado.Emp_Nombre");
         $this->db->select("empleado.Emp_Apellidos");
         $this->db->distinct("empleado.Emp_Id");
+        $this->db->distinct("empleado.Emp_Nombre");
+        $this->db->distinct("empleado.Emp_Apellidos");
         $this->db->join("empleado","empleado.Emp_Id = planes.emp_id");
         $planes = $this->db->get("planes");
         return $planes->result(); 

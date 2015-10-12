@@ -30,6 +30,7 @@ class Cargo_model extends CI_Model {
         return $cargo->result();
     }
     function allcargos(){
+        $this->db->where("est_id",1);
         $cargo = $this->db->get("cargo");
         return $cargo->result();
     }

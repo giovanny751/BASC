@@ -1,10 +1,15 @@
 <div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>LISTADO PLANES
+    <a href="<?php echo base_url("index.php/tareas/planes") ?>">
+                <button type="button" class="btn btn-default">Nuevo Plan</button>
+            </a> 
+    <h5><center>LISTADO PLANES</center>
     </h5>
 </div>
 <div class='well'>
     <form method="post" id="f9">
+        <div class="row">
+               
+        </div>
         <div class="row">
             <div class="col-lg-3 col-sx-3">
                 <label for="responsable">
@@ -17,7 +22,7 @@
                     <?php }?>
                 </select> 
             </div>
-            <div class="col-lg-3 col-sx-3">
+            <div class="col-lg-2 col-sx-2">
                 <label for="estado">
                     Estado
                 </label>
@@ -29,18 +34,19 @@
                 </select>    
             </div>
             <div class="col-lg-3 col-sx-3">
+                <label for="fecha">Nombre</label><input type="text" name="nombre" id="nombre" class="form-control">
+            </div>    
+            <div class="col-lg-2 col-sx-2">
+                <label for="fecha">Fecha</label><input type="text" name="fecha" id="fecha" class="form-control">
+            </div>  
+            <div class="col-lg-1 col-sx-1">
                 <div style="margin-top: 27px">
                     <button type="button" id="consultar" class="btn btn-success">Consultar</button>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-sx-3">
-                <label for="fecha">Nombre</label><input type="text" name="nombre" id="nombre" class="form-control">
-            </div>    
-            <div class="col-lg-3 col-sx-3">
-                <label for="fecha">Fecha</label><input type="text" name="fecha" id="fecha" class="form-control">
-            </div>  
+            
         </div>    
     </form>
     <hr>
@@ -79,21 +85,21 @@
         $('select,input').val("");
     });
 
-//    $('#responsable').autocomplete({
-//        source: "<?php echo base_url("index.php/tareas/autocompletar") ?>",
-//        minLength: 3
-//    });
-//    $('#fecha').autocomplete({
-//        source: "<?php echo base_url("index.php/tareas/autocompletarfechainicio") ?>",
-//        minLength: 3
-//    });
-//    $('#nombre').autocomplete({
-//        source: "<?php echo base_url("index.php/tareas/autocompletarresponsable") ?>",
-//        minLength: 3
-//    });
-//    $('.limpiar').click(function () {
-//        $('select,input').val('');
-//    });
+    $('#responsable').autocomplete({
+        source: "<?php echo base_url("index.php/tareas/autocompletar") ?>",
+        minLength: 3
+    });
+    $('#fecha').autocomplete({
+        source: "<?php echo base_url("index.php/tareas/autocompletarfechainicio") ?>",
+        minLength: 3
+    });
+    $('#nombre').autocomplete({
+        source: "<?php echo base_url("index.php/tareas/autocompletarresponsable") ?>",
+        minLength: 3
+    });
+    $('.limpiar').click(function () {
+        $('select,input').val('');
+    });
     $('#consultar').click(function () {
         $.post("<?php echo base_url("index.php/tareas/consultaplanes") ?>",
                 $('#f9').serialize()
