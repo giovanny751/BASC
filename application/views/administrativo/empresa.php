@@ -56,7 +56,18 @@
                 <div class="row">
                     <label for="actividadeconomica">
                         <span class="campoobligatorio">*</span>Actividad Economica</label>
-                    <input type="text" id="actividadeconomica" name="actividadeconomica" class="form-control obligatorio"  value="<?php echo $informacion[0]->actEco_id ?>"/>
+                    <select id="actividadeconomica" name="actividadeconomica" class="form-control obligatorio"  value="<?php echo $informacion[0]->actEco_id ?>">
+                        <option value="">::Seleccionar::</option>
+                        <?php foreach( $actividadeconomica as $ae){ 
+                            $selected = "";
+                            if($informacion[0]->actEco_id == $ae->actEco_id){
+                                $selected = "selected";
+                            }
+                            ?>
+                            
+                            <option value="<?php echo $ae->actEco_id ?>" <?php echo $selected ?> ><?php echo $ae->actEco_Detalle ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
             <div class="col-md-6">
