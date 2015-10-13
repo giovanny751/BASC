@@ -30,6 +30,11 @@ class Tarea_model extends CI_Model {
         $tarea = $this->db->get("tarea");
         return $tarea->result();
     }
+    function detailxidplan($id){
+        $this->db->where("pla_id",$id);
+        $tarea = $this->db->get("tarea");
+        return $tarea->result();
+    }
     
     function responsables(){
         

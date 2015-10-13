@@ -5,6 +5,12 @@ class Registrocarpeta_model extends CI_Model {
     function __construct() {
         parent::__construct();
     }
+    
+    function detail(){
+        
+        $carpeta = $this->db->get("registro_carpeta");
+        return $carpeta->result();
+    }
 
     function create($nombre,$descripcion) {
         $data = array(

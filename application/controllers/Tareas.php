@@ -260,14 +260,21 @@ class Tareas extends My_Controller {
 
     function registro() {
 //        if ($this->consultaacceso($this->data["usu_id"])):
-            $this->layout->view("tareas/registro");
-//        else:
-//            $this->layout->view("permisos");
-//        endif;
+        $this->load->model('Registrocarpeta_model');
+        $this->load->model('Planes_model');
+        $this->data['carpeta'] = $this->Registrocarpeta_model->detail();
+        $this->data['plan'] = $this->Planes_model->detail();
+        $this->layout->view("tareas/registro",$this->data);
     }
-    function consultaregistro(){
+    function tareaxidplan(){
         
-//        $this
+        try{
+            $this->load->model('Tarea_model');
+            $this->data['tarea'] = $this->Tarea_model->detailxidplan($this->input->post('pla_id'));
+            $this->output->set_content_type('application/json')->set_output(json_encode($this->data['tarea']));
+        }catch(exception $e){
+            
+        }
         
     }
 
@@ -313,9 +320,6 @@ class Tareas extends My_Controller {
             $this->data['plan'] = array();
             if (!empty($this->input->post('pla_id'))) {
                 $this->data['plan'] = $this->Planes_model->planxid($this->input->post('pla_id'));
-
-
-//                var_dump($this->data['tareaxplan']);die;
             }
             $this->data['norma'] = $this->Norma_model->detail();
             $this->data['estado'] = $this->Estados_model->detail();
@@ -463,21 +467,7 @@ class Tareas extends My_Controller {
                 "reg_ruta"=>$targetPath
             );    
                 
-            function listadoavance() {
-
-                $this->load->model('Registro_model');
-                $cantidad = $this->input->post("length");
-                $orden = $this->input->post("order[0][column]");
-                $inicia = intval($_REQUEST['start']);
-                $tabla = $this->Registro_model->detailxid(1, $cantidad, $orden, $inicia);
-                $alldatacount = $this->Registro_model->detailxidcount(1, $cantidad, $orden, $inicia);
-                $data = array();
-                $data['data'] = arregloconsulta($tabla);
-                $data["draw"] = intval($_REQUEST['draw']);
-                $data['recordsTotal'] = $alldatacount;
-                $data['recordsFiltered'] = $alldatacount;
-                $this->output->set_content_type('application/json')->set_output(json_encode($data));
-            }
+            
             
             $this->Registro_model->create($data);
             
@@ -494,6 +484,22 @@ class Tareas extends My_Controller {
             
         }
     }
+    
+    function listadoregistrotable() {
+
+                $this->load->model('Registro_model');
+                $cantidad = $this->input->post("length");
+                $orden = $this->input->post("order[0][column]");
+                $inicia = intval($_REQUEST['start']);
+                $tabla = $this->Registro_model->detailxid(1, $cantidad, $orden, $inicia);
+                $alldatacount = $this->Registro_model->detailxidcount(1, $cantidad, $orden, $inicia);
+                $data = array();
+                $data['data'] = arregloconsulta($tabla);
+                $data["draw"] = intval($_REQUEST['draw']);
+                $data['recordsTotal'] = $alldatacount;
+                $data['recordsFiltered'] = $alldatacount;
+                $this->output->set_content_type('application/json')->set_output(json_encode($data));
+            }
 
     function configuracionsistema() {
         if ($this->consultaacceso($this->data["usu_id"])):
