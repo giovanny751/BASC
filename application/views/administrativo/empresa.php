@@ -1,6 +1,7 @@
-<div class="widgetTitle" >
+<div class="widgetTitle"  >
+    <button type="button" id="guardar" class="btn btn-success">Guardar</button>
     <h5>
-        <i class="glyphicon glyphicon-ok"></i>EMPRESA
+        EMPRESA
     </h5>
 </div>
 <div class='well'>
@@ -101,9 +102,7 @@
             <div class="row">
 
             </div>
-            <div class="row" style="text-align:center">
-                <input type="submit" id="guardar" class="btn btn-success" value="Guardar">
-            </div>
+
         </form>
     </div>
     <div class="row" style="text-align: center">
@@ -111,7 +110,7 @@
         <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" >Empleados</button>
         <button type="button" class="btn btn-primary" >Tipos de Contrato</button> -->
         <a href="<?php echo base_url("index.php/administrativo/dimension") ?>"><button type="" class="btn btn-info">Dimensión 1</button></a>
-        <a href="<?php echo base_url("index.php/administrativo/dimension") ?>"><button type="" class="btn btn-info">Dimensión 2</button></a>
+        <a href="<?php echo base_url("index.php/administrativo/dimension2") ?>"><button type="" class="btn btn-info">Dimensión 2</button></a>
     </div>
 </div>
 <!-- Modal -->
@@ -131,7 +130,7 @@
                         <select class="form-control" id="direccionar">
                             <option value="1">Ver cargos</option>
                             <option value="2">Ver organigrama</option>
-                            <option value="3">Ver empleados</option>
+                            <!-- <option value="3">Ver empleados</option> -->
                         </select>
                     </div>
                 </div>
@@ -184,7 +183,9 @@
     });
 
     $('#guardar').click(function() {
-        return obligatorio('obligatorio') == true
+        if(obligatorio('obligatorio') == true){
+            $("#f5").submit();
+        }
     });
 
 </script>

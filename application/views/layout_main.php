@@ -52,6 +52,8 @@
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.css') ?>"/>
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link href="<?= base_url('assets/admin/pages/css/error.css') ?>" rel="stylesheet" type="text/css"/>
+<!-- Autocompletable -->
+<link rel="stylesheet" href="<?= base_url('css/jquery-ui.css') ?>">
 
 
 
@@ -223,6 +225,10 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
 <script src="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.js') ?>"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('assets/admin/pages/scripts/ui-notific8.js') ?>"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script src="<?= base_url('js/organigrama/jquery.jOrgChart.js') ?>"></script>
+<script src="<?= base_url('js/organigrama/prettify.js') ?>"></script>
+
 
 <style>
     tbody{
@@ -343,6 +349,11 @@ $('.portlet').find('label,h4').css('color','black');
         if (tecla.charCode > 0 && tecla.charCode < 48 || tecla.charCode > 57)
             return false;
     });
+    $('body').delegate('.float', 'keypress', function(tecla) {
+        if(tecla.charCode == 46) return true;
+        if ((tecla.charCode > 0 && tecla.charCode < 48) || (tecla.charCode > 57)  )
+            return false;
+    });
     function obligatorio(clase) {
         var i = 0;
         $('.' + clase).each(function (key, val) {
@@ -360,6 +371,24 @@ $('.portlet').find('label,h4').css('color','black');
             return false;
             }
     }
+    
+    function email(classemail){
+        var regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+        //Se utiliza la funcion test() nativa de JavaScript
+        if (regex.test($('.'+classemail).val().trim())) {
+            $("."+classemail).removeClass('obligado');
+            return true;
+        }
+        else {
+            $("."+classemail).addClass('obligado');
+            alerta("amarillo","Correo no valido")
+            return false;
+        }
+    }
+    
+    $(".email").change(function(){
+        email("email");
+    });
 
 
     $('.fecha').datepicker({
@@ -367,8 +396,8 @@ $('.portlet').find('label,h4').css('color','black');
     });
 
     $(function () {
-    //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
-    $.blockUI.defaults.message = 'Procesando...';
-    $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
-});
+        //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+        $.blockUI.defaults.message = 'Procesando...';
+        $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+    });
 </script>

@@ -94,9 +94,6 @@
             </tbody>
         </table>
     </div> 
-    <div class="row" style="text-align:right">
-        <a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>"><button type="button" class="btn btn-info">Nuevo Empleado</button></a>
-    </div>
 </div> 
 
 
@@ -104,18 +101,18 @@
     <input type="hidden" value="" name="emp_id" id="emp_id">
 </form>
 <script>
-//    $('#cedula').autocomplete({
-//    source: "<?php echo base_url("index.php/administrativo/autocompletarcedula") ?>",
-//    minLength: 3
-//  });
-//    $('#nombre').autocomplete({
-//    source: "<?php echo base_url("index.php/administrativo/autocompletarnombre") ?>",
-//    minLength: 3
-//  });
-//    $('#apellido').autocomplete({
-//    source: "<?php echo base_url("index.php/administrativo/autocompletarapellido") ?>",
-//    minLength: 3
-//  });
+    $('#cedula').autocomplete({
+    source: "<?php echo base_url("index.php/administrativo/autocompletarcedula") ?>",
+    minLength: 3
+  });
+    $('#nombre').autocomplete({
+    source: "<?php echo base_url("index.php/administrativo/autocompletarnombre") ?>",
+    minLength: 3
+  });
+    $('#apellido').autocomplete({
+    source: "<?php echo base_url("index.php/administrativo/autocompletarapellido") ?>",
+    minLength: 3
+  });
     $('body').delegate(".contratos","click",function(){
         $.post(
                 "<?php echo base_url('index.php/administrativo/consultacontratosvencidos') ?>",
@@ -184,14 +181,17 @@
         });
     });
     $('body').delegate('.eliminar', 'click', function () {
-        $.post("<?php echo base_url("index.php/administrativo/eliminarempleado") ?>"
-                , {id: $(this).attr('emp_id')}
-        ).done(function (msg) {
-            $(this).parents('tr').remove();
-            alerta("verde", "Eliminado Correctamente");
-        }).fail(function (msg) {
-            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-        })
+        var boton = $(this);
+        if(confirm("Esta seguro de eliminar el empleado?")){
+            $.post("<?php echo base_url("index.php/administrativo/eliminarempleado") ?>"
+                    , {id: $(this).attr('emp_id')}
+            ).done(function (msg) {
+                boton.parents('tr').remove();
+                alerta("verde", "Eliminado Correctamente");
+            }).fail(function (msg) {
+                alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+            })
+        }
 
     })
 </script>    

@@ -4,33 +4,33 @@
     </h5>
 </div>
 <div class='well'>
-<div class="row">
-    <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-info opciones">Nuevo Rol</button>
-</div>
-<div class="row">
-    <div class="table-responsive ">
-        <table class="table table-responsive table-striped table-bordered">
-            <thead>
-            <th>Nombre</th>
-            <th>Fecha de creación</th>
-            <th>Fecha de modificación</th>
-            <th>Opciones</th>
-            <th>Eliminar</th>
-            </thead>
-            <tbody id="cuerporol">
-                <?php foreach ($roles as $datos) { ?>
-                    <tr>
-                        <td><?php echo $datos['rol_nombre']; ?></td>
-                        <td><?php echo $datos['rol_fechaCreacion']; ?></td>
-                        <td><?php echo $datos['rol_fechaModificacion']; ?></td>
-                        <td align="center"><button type="button" rol="<?php echo $datos['rol_id']; ?>"  data-toggle="modal" data-target="#myModal"  class="btn btn-info modificar">Opciones</button></td>
-                        <td align="center"><button type="button" rol="<?php echo $datos['rol_id']; ?>" class="btn btn-danger eliminar">Eliminar</button></td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>    
-</div>
+    <div class="row">
+        <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-info opciones">Nuevo Rol</button>
+    </div>
+    <div class="row">
+        <div class="table-responsive ">
+            <table class="table table-responsive table-striped table-bordered">
+                <thead>
+                <th>Nombre</th>
+                <th>Fecha de creación</th>
+                <th>Fecha de modificación</th>
+                <th>Opciones</th>
+                <th>Eliminar</th>
+                </thead>
+                <tbody id="cuerporol">
+                    <?php foreach ($roles as $datos) { ?>
+                        <tr>
+                            <td><?php echo $datos['rol_nombre']; ?></td>
+                            <td><?php echo $datos['rol_fechaCreacion']; ?></td>
+                            <td><?php echo $datos['rol_fechaModificacion']; ?></td>
+                            <td align="center"><button type="button" rol="<?php echo $datos['rol_id']; ?>"  data-toggle="modal" data-target="#myModal"  class="btn btn-info modificar">Opciones</button></td>
+                            <td align="center"><button type="button" rol="<?php echo $datos['rol_id']; ?>" class="btn btn-danger eliminar">Eliminar</button></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>    
+    </div>
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -75,14 +75,16 @@
     </div>
 </div>    
 <script>
-$('.seleccionados').click(function() {
+    
+    
+    $('.seleccionados').click(function () {
         var atr = $(this).attr('atr')
         var marcado = $(this).is(":checked");
-        if(marcado==true)
-            var r=true;
+        if (marcado == true)
+            var r = true;
         else
-            var r=false;
-        $("."+atr).each(function() {
+            var r = false;
+        $("." + atr).each(function () {
             $(this).prop('checked', r);
         });
     })
@@ -90,25 +92,25 @@ $('.seleccionados').click(function() {
 //------------------------------------------------------------------------------
 //                      ELIMINAR ROL    
 //------------------------------------------------------------------------------ 
-    $('body').delegate('.eliminar', 'click', function() {
+    $('body').delegate('.eliminar', 'click', function () {
         $(this).parents('tr').remove();
         $.post("<?php echo base_url('index.php/presentacion/eliminarrol'); ?>", {id: $(this).attr('rol')})
-                .done(function(msg){
+                .done(function (msg) {
                     alerta("verde", "Eliminado con exito");
-                }).fail(function(msg){
-                    alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
-                });
+                }).fail(function (msg) {
+            alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
+        });
     });
 //------------------------------------------------------------------------------
 //                      NUEVO ROL    
 //------------------------------------------------------------------------------    
-    $('body').delegate('.guardar', 'click', function() {
-
-        $.post("<?php echo base_url('index.php/presentacion/guardarroles'); ?>", $('#nuevorol').serialize(), function(data) {
-            $('#myModal').modal('hide');
+    $('body').delegate('.guardar', 'click', function () {
+        if (obligatorio("obligatorio")) {
+            $.post("<?php echo base_url('index.php/presentacion/guardarroles'); ?>", $('#nuevorol').serialize(), function (data) {
+                $('#myModal').modal('hide');
                 var filas = "";
                 data = jQuery.parseJSON(data);
-                $.each(data, function(key, val) {
+                $.each(data, function (key, val) {
                     filas += "<tr>";
                     filas += "<td>" + val.rol_nombre + "</td>";
                     filas += "<td>" + val.rol_fechaCreacion + "</td>";
@@ -120,26 +122,29 @@ $('.seleccionados').click(function() {
                 $('#cuerporol *').remove();
                 $('#cuerporol').append(filas);
                 $('#nombre').val('');
-        });
-
+            });
+        }
     });
 
-    $('.opciones').click(function() {
+    $('.opciones').click(function () {
         $(".nombres").remove()
         $('input[type="checkbox"]').prop('checked', false);
-        $('.agregarrol').append('<label class="nombres">Nombre</label><input type="text" id="nombre" name="nombre" class="form-control nombres">');
+        $('.agregarrol').append('<label class="nombres">Nombre</label><input type="text" id="nombre" name="nombre" class="form-control nombres obligatorio">');
         $('#nombre').val('');
         $('.seleccionados').prop('checked', false);
     });
 
-    $('.modificar').click(function() {
+    $("body").on("click", ".moidificar", function () {
+
         $('#rol').val($(this).attr('rol'));
+        $('input[type="checkbox"]').parent("span").removeClass("checked");
         $('input[type="checkbox"]').prop('checked', false);
         $('.agregarrol *').remove();
-        $.post("<?php echo base_url('index.php/presentacion/rolesasignados'); ?>", {id: $(this).attr('rol')}, function(data) {
-        data = jQuery.parseJSON(data);
-        $.each(data, function(key, val) {
-                $('.seleccionados[valor="' + val.menu_id + '"]').attr('checked',true);
+        $.post("<?php echo base_url('index.php/presentacion/rolesasignados'); ?>", {id: $(this).attr('rol')}, function (data) {
+            data = jQuery.parseJSON(data);
+            $.each(data, function (key, val) {
+                $('.seleccionados[value="' + val.menu_id + '"]').parent("span").addClass("checked");
+                $('.seleccionados[value="' + val.menu_id + '"]').attr('checked', true);
             });
         });
     });

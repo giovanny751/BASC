@@ -6,7 +6,12 @@
 <div class='well'>
     <form method="post" id="f1">
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <button type="button" id="actualizar"  class="btn btn-success">Actualizar</button>   
+                <!--<button type="button" id="btnRegistro" class="btn btn-info registro">Registro exámenes</button>-->
+                <button type="button" id="guardar" class="btn btn-success">Guardar</button>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                 <center>
                     <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
                     <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
@@ -102,7 +107,7 @@
                 <label for="estatura"><span class="campoobligatorio">*</span>Estatura</label>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <input type="text" id="estatura" name="estatura" class="form-control obligatorio"  value="<?php echo (!empty($empleado[0]->Emp_Estatura)) ? $empleado[0]->Emp_Estatura : ""; ?>"/>
+                <input type="text" id="estatura" name="estatura" class="form-control obligatorio float"  value="<?php echo (!empty($empleado[0]->Emp_Estatura)) ? $empleado[0]->Emp_Estatura : ""; ?>"/>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                 <label for="fondo">Fondo de Pensiones</label>
@@ -116,7 +121,7 @@
                 <label for="peso">Peso</label>
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
-                <input type="text" id="peso" name="peso" class="form-control"  value="<?php echo (!empty($empleado[0]->Emp_Peso)) ? $empleado[0]->Emp_Peso : ""; ?>" />
+                <input type="text" id="peso" name="peso" class="form-control float"  value="<?php echo (!empty($empleado[0]->Emp_Peso)) ? $empleado[0]->Emp_Peso : ""; ?>" />
             </div> 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <center><button type="button" id="aseguradora" class="btn btn-success" data-toggle="modal" data-target="#myModal3">Registrar seguradoras del empleado</button></center>
@@ -154,7 +159,7 @@
                 <input type="text" id="telefonocontacto" name="telefonocontacto" class="form-control number"  value="<?php echo (!empty($empleado[0]->Emp_TelefonoContacto)) ? $empleado[0]->Emp_TelefonoContacto : ""; ?>" />
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <label for="dimension1">Dimensión1</label>
+                <label for="dimension1"><?php echo $empresa[0]->Dim_id ?></label>
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                 <select id="dimension1" name="dimension1" class="form-control">
@@ -170,10 +175,10 @@
                 <label for="email"><span class="campoobligatorio">*</span>Email</label>
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
-                <input type="text" id="email" name="email" class="form-control obligatorio"  value="<?php echo (!empty($empleado[0]->Emp_Email)) ? $empleado[0]->Emp_Email : ""; ?>" />
+                <input type="text" id="email" name="email" class="form-control obligatorio email"  value="<?php echo (!empty($empleado[0]->Emp_Email)) ? $empleado[0]->Emp_Email : ""; ?>" />
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <label for="dimension2">Dimensión2</label>
+                <label for="dimension2"><?php echo $empresa[0]->Dimdos_id ?></label>
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                 <select id="dimension2" name="dimension2" class="form-control">
@@ -306,11 +311,7 @@
         </div>
         <input type="hidden" id="emp_id" name="emp_id"  value="<?php echo (!empty($empleado[0]->Emp_Id)) ? $empleado[0]->Emp_Id : ""; ?>" />
     </form>
-    <div class="row" style="text-align:center">
-        <button type="button" id="actualizar"  class="btn btn-success">Actualizar</button>   
-        <!--<button type="button" id="btnRegistro" class="btn btn-info registro">Registro exámenes</button>-->
-        <button type="button" id="guardar" class="btn btn-success">Guardar</button>
-    </div>
+
 <?php if (!empty($empleado[0]->Emp_Id)) { ?>
         <div class="portlet box blue" style="margin-top: 30px;">
             <div class="portlet-title">
@@ -659,7 +660,7 @@ endforeach;
 
     $('#guardar').click(function () {
 
-        if (obligatorio('obligatorio') == true)
+        if ((obligatorio('obligatorio') == true) && (email("email") == true))
         {
             $.post("<?php echo base_url('index.php/administrativo/guardarempleado') ?>",
                     $('#f1').serialize()
@@ -670,11 +671,12 @@ endforeach;
                             $('select,input').val('');
                             $('input[type="checkbox"]').attr("checked", false)
                             $('#tipoaseguradora *').remove();
+                            $("#agregarClones").html(agregarClonAseguradora());
                         } else {
                             window.location.href = '<?php echo base_url("index.php/administrativo/listadoempleados") ?>';
                         }
                     }).fail(function (msg) {
-                alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+                alerta("rojo", "Error en el sistema por favor comunicarse con el administrador");
             });
         }
     });

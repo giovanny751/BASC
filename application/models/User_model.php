@@ -62,14 +62,16 @@ class User_model extends CI_Model {
         
         $this->db->select("user.*");
         $this->db->select("ingreso.ing_fechaIngreso");
+        $this->db->where("user.est_id != ",3);
         $this->db->join("ingreso","ingreso.usu_id = user.usu_id and ingreso.ing_fechaIngreso = (select max(ing_fechaIngreso) from ingreso )","LEFT");
         $user = $this->db->get('user');
-//        echo $this->db->last_query();die;
+       // echo $this->db->last_query();die;
         return $user->result();
     }
     function consultageneral(){
         
         $this->db->select("user.usu_id as id,user.*,ingreso.Ing_fechaIngreso as ingreso");
+        $this->db->where("user.est_id != ",3);
         $this->db->join("ingreso","ingreso.usu_id = user.usu_id and ingreso.ing_fechaIngreso = (select max(ing_fechaIngreso) from ingreso ) ","LEFT");
         $user = $this->db->get('user');
 //        echo $this->db->last_query();die;
@@ -79,6 +81,7 @@ class User_model extends CI_Model {
     function consultausuarioxid($id){
         
         $this->db->where("usu_id",$id);
+        $this->db->where("user.est_id != ",3);
         $user = $this->db->get("user");
         return $user->result();
     }
@@ -90,6 +93,7 @@ class User_model extends CI_Model {
     function consultausuarioxcedula($cedula){
         
          $this->db->where("usu_cedula",$cedula);
+         $this->db->where("user.est_id != ",3);
         $user = $this->db->get("user");
         return $user->result();
         
@@ -121,8 +125,16 @@ class User_model extends CI_Model {
                 die;
                 break;
         }
+        $this->db->select("user.*");
+        $this->db->select("concat(empleado.emp_nombre,' ',empleado.emp_apellidos) as nombre",false);
+        $this->db->where("user.est_id != ",3);
+        $this->db->join("empleado","empleado.emp_id = user.emp_id","left");
         $usuario = $this->db->get("user",1);
         return $usuario->result();
     }
-    
+    function eliminarusuario($id){
+        $this->db->where("usu_id",$id);
+        $this->db->set("est_id","3");
+        $this->db->update("user");
+    }
 }

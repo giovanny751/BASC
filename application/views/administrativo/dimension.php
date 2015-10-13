@@ -1,6 +1,6 @@
 <div class="widgetTitle" >
     <h5>
-        <i class="glyphicon glyphicon-ok"></i>DIMENSIÓN UNO
+        <i class="glyphicon glyphicon-ok"></i><?php echo $empresa[0]->Dim_id ?>
     </h5>
 </div>
 <div class='well'>
@@ -18,14 +18,14 @@
         <table class="table table-bordered table-hover">
             <thead>
             <th>Descripción</th>
-            <th>Riesgos</th>
+            <!--<th>Riesgos</th>-->
             <th>Opciones</th>
             </thead>
             <tbody id="bodydimension">
                 <?php foreach ($dimension as $d) { ?>
                     <tr>
                         <td><?php echo $d->dim_descripcion ?></td>
-                        <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
+                        <!--<td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>-->
                         <td>
                             <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" ></i>
                             <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#myModal"></i>
@@ -70,14 +70,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                            <th>RIESGOS</th>
-                            </thead>
-                            <tbody id="riesgodimension">
-                                
-                            </tbody>
-                        </table>
+                        <div class="col-md-offset-2 col-sx-offset-2 col-md-8 col-sx-8">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <th>RIESGOS</th>
+                                </thead>
+                                <tbody id="riesgodimension">
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -165,7 +167,7 @@ $('body').delegate(".riesgo","click",function(){
                         $.each(msg, function (key, val) {
                             bodydimension += "<tr>";
                             bodydimension += "<td>" + val.dim_descripcion + "</td>";
-                            bodydimension += "<td></td>";
+                          //  bodydimension += "<td></td>";
                             bodydimension += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="' + val.dim_id + '" ></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  dim_id="' + val.dim_id + '" data-toggle="modal" data-target="#myModal"></i></td>';
                             bodydimension += "</tr>";
                         });

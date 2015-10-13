@@ -6,10 +6,12 @@
 <div class='well'>
     <form id="f3" method="post">
         <div class="row">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <button type="button" class="btn btn-success" id="guardar"><?php echo (!empty($usuario[0]->usu_id)) ? "Actualizar" : "Guardar"; ?></button>
+                <a href="<?php echo base_url('index.php/presentacion/roles')?>"><button type="button" class="btn btn-default">Crear Rol</button></a>
+                <a href="<?php echo base_url('index.php/administrativo/creacionusuarios')?>"><button type="button" class="btn btn-default">Nuevo</button></a>
             </div>
-            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <center>
                     <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
                     <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
@@ -50,7 +52,7 @@
                 <select name="rol" id="rol" class="form-control obligatorio">
                     <option value="">::Seleccionar::</option>
                     <?php foreach($roles as $ro){?>
-                    <option value="<?php echo $ro['rol_id'] ?>"><?php echo $ro['rol_nombre'] ?></option>
+                    <option <?php echo (!empty($usuario[0]->rol_id) && $usuario[0]->rol_id == $ro['rol_id']) ? "selected" : ""; ?> value="<?php echo $ro['rol_id'] ?>"><?php echo $ro['rol_nombre'] ?></option>
                     <?php } ?>
                 </select>
             </div> 
@@ -93,7 +95,7 @@
                 <label for="email">Email</label>
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
-                <input type="email" id="email" name="email" class="form-control" value="<?php echo (!empty($usuario[0]->usu_email)) ? $usuario[0]->usu_email : ""; ?>" />
+                <input type="email" id="email" name="email" class="form-control email" value="<?php echo (!empty($usuario[0]->usu_email)) ? $usuario[0]->usu_email : ""; ?>" />
             </div>    
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                 <label for="cargo"><span class="campoobligatorio">*</span>Cargo</label>
@@ -125,15 +127,15 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                 <select id="empleado" name="empleado" class="form-control obligatorio">
                     <option value="">::Seleccionar::</option>
+                    <?php foreach($empleado as $mp): ?>
+                       <option <?php echo (!empty($usuario[0]->emp_id) && $usuario[0]->emp_id == $mp->Emp_Id) ? "selected" : ""; ?> value="<?php echo $mp->Emp_Id ?>"><?php echo $mp->Emp_Nombre." ".$mp->Emp_Apellidos ?></option> 
+                    <?php endforeach; ?>
                 </select>
             </div>    
         </div>
         <input type="hidden" name="usuid" id="usuid" value="<?php echo (!empty($usuario[0]->usu_id)) ? $usuario[0]->usu_id: "" ; ?>">
     </form>
-    <div class="row" style="text-align:center">
-        <a href="<?php echo base_url('index.php/presentacion/roles')?>"><button type="button" class="btn btn-success">Crear Rol</button></a>
-        
-    </div>    
+ 
 </div>    
 <script>
     $(".flecha").click(function(){
@@ -150,11 +152,22 @@
                         $("#apellidos").val(msg.usu_apellido);
                         $("#usuario").val(msg.usu_usuario);
                         $("#contrasena").val(msg.usu_contrasena);
+                        $("#rol").val(msg.rol_id);
+                        if(msg.usu_cambiocontrasena == "1"){
+                            $("#cambiocontrasena").parent().addClass("checked")
+                            document.getElementById("cambiocontrasena").checked = true;
+                        }else{
+                            $("#cambiocontrasena").parent().removeClass("checked")
+                            document.getElementById("cambiocontrasena").checked = false;                   
+                        }
                         $("#email").val(msg.usu_email);
                         $("#genero").val(msg.sex_id);
                         $("#estado").val(msg.est_id);//estado
                         $("#cargo").val(msg.car_id);//cargo
-                        $("#empleado").val(msg.emp_id);//empleado
+                        var option = "<option value='"+msg.emp_id+"'>"+msg.nombre+"</option>"
+                        $("#empleado").html(option);
+                        
+                        
                         if(msg.cambiocontrasena == "1"){
                             $("#cambiocontrasena").is(":checked");
                         }
@@ -195,7 +208,7 @@
         }else{
             var url = "<?php echo base_url('index.php/administrativo/actualizarusuario'); ?>";
         }
-        if (obligatorio('obligatorio') == true) {
+        if ((obligatorio('obligatorio') == true) && (email("email") == true)){
             $.post(url,$('#f3').serialize()).
                 done(function (msg) {
                     alerta("verde", "Datos guardados correctamente");

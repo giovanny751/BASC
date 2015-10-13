@@ -165,14 +165,17 @@
         var id = $(this).attr('usuarioid');
         $('#usuarioid').val(id);
         $('.insertarrol').attr('usuarioid', id);
-
+        
+        $('input[type="checkbox"]').parent("span").removeClass('checked');
+        $('input[type="checkbox"]').attr('checked', false);
+        
         $.post("<?= base_url('index.php/presentacion/consultarolxrolidusuario') ?>",
                 {id: id})
                 .done(function (msg) {
 //                            $('input[type="checkbox"]').attr('checked',false)
                     $.each(msg, function (key, val) {
-//                                alert(val.rol_id);
-                        console.log($('input[rol="' + val.rol_id + '"]').attr('checked', true));
+                        $('input[rol="' + val.rol_id + '"]').parent("span").addClass('checked');
+                        $('input[rol="' + val.rol_id + '"]').attr('checked', true);
                     });
                 }).fail(function () {
 
@@ -223,7 +226,7 @@
                 body += "<td>" + activo + "</td>";
                 body += "<td>" + val.usu_fechaActualizacion + "</td>";
                 body += "<td>" + val.usu_fechaCreacion + "</td>";
-                body += "<td>" + val.Ing_id + "</td>";
+                body += "<td>" + val.ing_fechaIngreso + "</td>";
                 body += '<td><button type="button"  data-toggle="modal" data-target="#myModal3"   class="btn btn-info permiso" usuarioid="' + val.usu_id + '">Roles</button></td>';
                 body += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" usu_id="'+val.usu_id+'"></i>\n\
                             <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" usu_id="'+ val.usu_id+'"  data-toggle="modal" data-target="#myModal"></i></td>';
@@ -238,13 +241,16 @@
     $('body').delegate('.eliminar','click',function(){
         var asignacion = $(this);
         var usu_id = $(this).attr('usu_id');
-        $.post("<?php echo base_url("index.php/presentacion/eliminarusuario") ?>",{usu_id:usu_id})
+        if(confirm("Esta seguro que desea eliminar el usuario?")){
+        $.post("<?php echo base_url("index.php/administrativo/eliminarusuario") ?>",{usu_id:usu_id})
                     .done(function(msg){
                         asignacion.parents('tr').remove();
+                        alerta("verde","Usuario eliminado con exito");
                     })
                     .fail(function(msg){
-                        
+                        alerta("rojo","Error, por favor comunicase con el administrador del sistema")
                     });
+                }
         
     });
 </script>
