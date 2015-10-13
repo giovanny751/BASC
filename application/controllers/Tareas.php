@@ -450,7 +450,7 @@ class Tareas extends My_Controller {
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
-            $targetPath = "./uploads/empleado/xyz" ;
+            $targetPath = "./uploads/registro/" ;
             
             $data = array(
                 "pla_id"=>$this->input->post("plan"),
@@ -459,9 +459,26 @@ class Tareas extends My_Controller {
                 "reg_version"=>$this->input->post("version"),
                 "reg_descripcion"=>$this->input->post("descripcion"),
                 "reg_fechaCreacion"=>date('Y-m-d H:i:s'),
+                "userCreator"=>$this->data["usu_id"],
                 "reg_ruta"=>$targetPath
             );    
                 
+            function listadoavance() {
+
+                $this->load->model('Registro_model');
+                $cantidad = $this->input->post("length");
+                $orden = $this->input->post("order[0][column]");
+                $inicia = intval($_REQUEST['start']);
+                $tabla = $this->Registro_model->detailxid(1, $cantidad, $orden, $inicia);
+                $alldatacount = $this->Registro_model->detailxidcount(1, $cantidad, $orden, $inicia);
+                $data = array();
+                $data['data'] = arregloconsulta($tabla);
+                $data["draw"] = intval($_REQUEST['draw']);
+                $data['recordsTotal'] = $alldatacount;
+                $data['recordsFiltered'] = $alldatacount;
+                $this->output->set_content_type('application/json')->set_output(json_encode($data));
+            }
+            
             $this->Registro_model->create($data);
             
             if (!file_exists($targetPath)) {
