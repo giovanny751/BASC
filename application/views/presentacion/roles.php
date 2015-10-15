@@ -1,14 +1,22 @@
-<div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>ADMINISTRACIÓN DE ROLES
-    </h5>
-</div>
-<div class='well'>
-    <div class="row">
-        <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-info opciones">Nuevo Rol</button>
-    </div>
-    <div class="row">
-        <div class="table-responsive ">
+<div class="col-md-12">
+    <div class="portlet green-meadow box">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>ADMINISTRACIÓN DE ROLES
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse" data-original-title="" title="">
+                </a>
+<!--                <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title="">
+                </a>
+                <a href="javascript:;" class="reload" data-original-title="" title="">
+                </a>-->
+                <a href="javascript:;" class="remove" data-original-title="" title="">
+                </a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-info opciones">Nuevo Rol</button>
             <table class="table table-responsive table-striped table-bordered">
                 <thead>
                 <th>Nombre</th>
@@ -28,8 +36,8 @@
                         </tr>
                     <?php } ?>
                 </tbody>
-            </table>
-        </div>    
+            </table>	
+        </div>
     </div>
 </div>
 
@@ -75,8 +83,8 @@
     </div>
 </div>    
 <script>
-    
-    
+
+
     $('.seleccionados').click(function () {
         var atr = $(this).attr('atr')
         var marcado = $(this).is(":checked");

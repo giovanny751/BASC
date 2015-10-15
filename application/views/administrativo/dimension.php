@@ -162,6 +162,7 @@ $('body').delegate(".riesgo","click",function(){
                         descripcion: $('#descripcion').val()
                     })
                     .done(function (msg) {
+                        if(msg != 1){
                         $('#bodydimension *').remove();
                         var bodydimension = "";
                         $.each(msg, function (key, val) {
@@ -173,6 +174,9 @@ $('body').delegate(".riesgo","click",function(){
                         });
                         $('#bodydimension').append(bodydimension);
                         alerta("verde", "Guardado Correctamente");
+                        }else{
+                        alerta("amarillo", "datos ya existentes en el sistema");
+                        }
                     })
                     .fail(function (msg) {
                         alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");

@@ -20,7 +20,7 @@ class Administrativo extends My_Controller {
 
         if ($this->consultaacceso($this->data["usu_id"])) :
             $this->data['empleado'] = "";
-            
+
             $this->load->model('Tipocontrato_model');
             $this->load->model('Sexo_model');
             $this->load->model('Estadocivil_model');
@@ -34,10 +34,10 @@ class Administrativo extends My_Controller {
             if (!empty($this->input->post('emp_id'))) {
                 $this->load->model('Empleado_model');
                 $this->data['empleado'] = $this->Empleado_model->consultaempleadoxid($this->input->post('emp_id'));
-                $this->data["aserguradorasxempleado"]= $this->Empleadotipoaseguradora_model->consult_empleado($this->input->post('emp_id'));
+                $this->data["aserguradorasxempleado"] = $this->Empleadotipoaseguradora_model->consult_empleado($this->input->post('emp_id'));
             }
             $this->data['empresa'] = $this->Empresa_model->detail();
-            if((!empty($this->data['empresa'][0]->Dim_id))&&(!empty($this->data['empresa'][0]->Dimdos_id))){
+            if ((!empty($this->data['empresa'][0]->Dim_id)) && (!empty($this->data['empresa'][0]->Dimdos_id))) {
                 $this->data['cargo'] = $this->Cargo_model->detail();
                 $this->data['tipocontrato'] = $this->Tipocontrato_model->detail();
                 $this->data['sexo'] = $this->Sexo_model->detail();
@@ -47,7 +47,7 @@ class Administrativo extends My_Controller {
                 $this->data['dimension'] = $this->Dimension_model->detail();
                 $this->data['dimension2'] = $this->Dimension2_model->detail();
                 $this->layout->view("administrativo/creacionempleados", $this->data);
-            }else{
+            } else {
                 redirect('index.php/administrativo/empresa', 'location');
             }
         else:
@@ -96,7 +96,7 @@ class Administrativo extends My_Controller {
     }
 
     function guardarempleado() {
-        try{
+        try {
             $this->load->model('Empleado_model');
 
             $data = array(
@@ -128,20 +128,20 @@ class Administrativo extends My_Controller {
             );
 
             $id = $this->Empleado_model->create($data);
-            
+
             $this->load->model('Empleadotipoaseguradora_model');
             $tipoaseguradora = $this->input->post("tipoaseguradora");
             $data = array();
             if (!empty($tipoaseguradora)):
                 $nombreaseguradora = $this->input->post("nombreaseguradora");
                 for ($i = 0; $i < count($tipoaseguradora); $i++) {
-                    if($nombreaseguradora[$i] != ""):
+                    if ($nombreaseguradora[$i] != ""):
                         $data[$i] = array(
                             "emp_id" => $id,
                             "ase_id" => $nombreaseguradora[$i],
                             "tipAse_id" => $tipoaseguradora[$i]
                         );
-                        
+
                     endif;
                 }
                 $this->Empleadotipoaseguradora_model->create($data);
@@ -181,7 +181,7 @@ class Administrativo extends My_Controller {
             'emp_fondo' => $this->input->post('fondo')
         );
         $this->Empleado_model->update($data, $this->input->post('emp_id'));
-        
+
         //--------------------- Actualiza tipo aseguradoras ----------------------------
         $id = $this->input->post('emp_id');
         $this->load->model('Empleadotipoaseguradora_model');
@@ -190,7 +190,7 @@ class Administrativo extends My_Controller {
         if (!empty($tipoaseguradora)):
             $nombreaseguradora = $this->input->post("nombreaseguradora");
             for ($i = 0; $i < count($tipoaseguradora); $i++) {
-                if($nombreaseguradora[$i] != ""):
+                if ($nombreaseguradora[$i] != ""):
                     $data[$i] = array(
                         "emp_id" => $id,
                         "ase_id" => $nombreaseguradora[$i],
@@ -198,7 +198,7 @@ class Administrativo extends My_Controller {
                     );
                 endif;
             }
-        $this->Empleadotipoaseguradora_model->actualizatipo($id,$data);
+            $this->Empleadotipoaseguradora_model->actualizatipo($id, $data);
         endif;
     }
 
@@ -380,8 +380,8 @@ class Administrativo extends My_Controller {
     function organigrama() {
         $this->layout->view("administrativo/organigrama");
     }
-    
-    function loadorganigrama(){
+
+    function loadorganigrama() {
         $this->data["organigrama"] = $this->consultaorganigrama();
         $this->load->view("administrativo/organigrama_load", $this->data);
     }
@@ -434,7 +434,7 @@ class Administrativo extends My_Controller {
     }
 
     function consultausuariosflechas() {
-        $this->load->model("User_model"); 
+        $this->load->model("User_model");
         $idUsuarioCreado = $this->input->post("idUsuarioCreado");
         $metodo = $this->input->post("metodo");
         $campos = $this->User_model->consultausuariosflechas($idUsuarioCreado, $metodo);
@@ -453,13 +453,14 @@ class Administrativo extends My_Controller {
             $this->output->set_content_type('application/json')->set_output(json_encode($campos[0]));
         }
     }
+
     function consultaempleadoflechasaseguradora() {
         $this->load->model("Empleadotipoaseguradora_model");
         $idEmpleadoCreado = $this->input->post("idEmpleadoCreado");
         $campos = $this->Empleadotipoaseguradora_model->consult_empleado($idEmpleadoCreado);
         if (!empty($campos)) {
             $this->output->set_content_type('application/json')->set_output(json_encode($campos));
-        }else{
+        } else {
             die("null");
         }
     }
@@ -509,11 +510,12 @@ class Administrativo extends My_Controller {
             $this->output->set_content_type('application/json')->set_output(json_encode($this->data["cargo"]));
         }
     }
+
     function eliminarusuario() {
-        try{
-        $this->load->model("User_model");
-        $this->User_model->eliminarusuario($this->input->post("usu_id"));
-        }catch(Exception $e){
+        try {
+            $this->load->model("User_model");
+            $this->User_model->eliminarusuario($this->input->post("usu_id"));
+        } catch (Exception $e) {
             
         }
     }
@@ -538,10 +540,10 @@ class Administrativo extends My_Controller {
             $this->load->model('Dimension2_model');
             $this->load->model('Empresa_model');
             $this->data['empresa'] = $this->Empresa_model->detail();
-            if(!empty($this->data['empresa'][0]->Dimdos_id)){
-            $this->data['dimension'] = $this->Dimension2_model->detail();
-            $this->layout->view("administrativo/dimension2", $this->data);
-            }else{
+            if (!empty($this->data['empresa'][0]->Dimdos_id)) {
+                $this->data['dimension'] = $this->Dimension2_model->detail();
+                $this->layout->view("administrativo/dimension2", $this->data);
+            } else {
                 redirect('index.php/administrativo/empresa', 'location');
             }
         }
@@ -570,9 +572,12 @@ class Administrativo extends My_Controller {
         $data[0] = array(
             "dim_descripcion" => $this->input->post('descripcion')
         );
-        $this->Dimension2_model->create($data);
-        $dimension = $this->Dimension2_model->detail();
-        $this->output->set_content_type('application/json')->set_output(json_encode($dimension));
+        if (empty($this->Dimension2_model->consultxname($this->input->post('descripcion')))) {
+            $this->Dimension2_model->create($data);
+            $dimension = $this->Dimension2_model->detail();
+            $this->output->set_content_type('application/json')->set_output(json_encode($dimension));
+        }
+        else echo 1;
     }
 
     function eliminardimension2() {
@@ -589,10 +594,10 @@ class Administrativo extends My_Controller {
             $this->load->model('Dimension_model');
             $this->load->model('Empresa_model');
             $this->data['empresa'] = $this->Empresa_model->detail();
-            if(!empty($this->data['empresa'][0]->Dim_id)){
+            if (!empty($this->data['empresa'][0]->Dim_id)) {
                 $this->data['dimension'] = $this->Dimension_model->detail();
                 $this->layout->view("administrativo/dimension", $this->data);
-            }else{
+            } else {
                 redirect('index.php/administrativo/empresa', 'location');
             }
         }
@@ -618,9 +623,12 @@ class Administrativo extends My_Controller {
         $data[0] = array(
             "dim_descripcion" => $this->input->post('descripcion')
         );
+        if (empty($this->Dimension_model->consultxname($this->input->post('descripcion')))) {
         $this->Dimension_model->create($data);
         $dimension = $this->Dimension_model->detail();
         $this->output->set_content_type('application/json')->set_output(json_encode($dimension));
+        }
+        else echo 1;
     }
 
     function eliminardimension() {

@@ -59,13 +59,14 @@
                         <span class="campoobligatorio">*</span>Actividad Economica</label>
                     <select id="actividadeconomica" name="actividadeconomica" class="form-control obligatorio"  value="<?php echo $informacion[0]->actEco_id ?>">
                         <option value="">::Seleccionar::</option>
-                        <?php foreach( $actividadeconomica as $ae){ 
+                        <?php
+                        foreach ($actividadeconomica as $ae) {
                             $selected = "";
-                            if($informacion[0]->actEco_id == $ae->actEco_id){
+                            if ($informacion[0]->actEco_id == $ae->actEco_id) {
                                 $selected = "selected";
                             }
                             ?>
-                            
+
                             <option value="<?php echo $ae->actEco_id ?>" <?php echo $selected ?> ><?php echo $ae->actEco_Detalle ?></option>
                         <?php } ?>
                     </select>
@@ -77,8 +78,8 @@
                     if (isset($informacion[0]->emp_logo))
                         if (!empty($informacion[0]->emp_logo)) {
                             ?>
-                    <center><img  style="width: 350;height: 250px;border:2px solid #000;border-radius: 15px" src="<?php echo base_url('uploads') . '/empresa/' . $informacion[0]->emp_id . "/" . $informacion[0]->emp_logo; ?>"></center>
-                    <?php } ?>
+                            <center><img  style="width: 350;height: 250px;border:2px solid #000;border-radius: 15px" src="<?php echo base_url('uploads') . '/empresa/' . $informacion[0]->emp_id . "/" . $informacion[0]->emp_logo; ?>"></center>
+                        <?php } ?>
                 </div>
             </div>
             <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-lg-5 col-md-5 col-sm-5 col-xs-5">  
@@ -106,84 +107,60 @@
         </form>
     </div>
     <div class="row" style="text-align: center">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Empresa</button>
-        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" >Empleados</button>
-        <button type="button" class="btn btn-primary" >Tipos de Contrato</button> -->
+        <div class="btn-group dropup">
+            <button class="btn green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                Empresa <i class="fa fa-angle-up"></i>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li>
+                    <a href="<?php echo base_url("index.php/administrativo/cargos") ?>">
+                        Ver cargos </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url("index.php/administrativo/organigrama") ?>">
+                        Ver organigrama </a>
+                </li>
+                <!--<li>
+                        <a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>">
+                        Ver Empleados </a>
+                </li>--> 
+            </ul>
+        </div>
+<!--        <div class="btn-group dropup">
+            <button class="btn green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                Empleados <i class="fa fa-angle-up"></i>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li>
+                    <a href="<?php echo base_url("index.php/administrativo/listadoempleados") ?>">
+                        Ver Empleados </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url("index.php/administrativo/organigrama") ?>">
+                        Importar empleados </a>
+                </li>
+            </ul>
+        </div>-->
+        <!--<button type="button" class="btn btn-primary" >Tipos de Contrato</button>--> 
         <a href="<?php echo base_url("index.php/administrativo/dimension") ?>"><button type="" class="btn btn-info">Dimensión 1</button></a>
         <a href="<?php echo base_url("index.php/administrativo/dimension2") ?>"><button type="" class="btn btn-info">Dimensión 2</button></a>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Empresa</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                        <label>Dirigir a:</label>
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                        <select class="form-control" id="direccionar">
-                            <option value="1">Ver cargos</option>
-                            <option value="2">Ver organigrama</option>
-                            <!-- <option value="3">Ver empleados</option> -->
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary dirigir">Dirigir</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Empleados:</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                        <label>Dirigir a:</label>
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                        <select class="form-control" id="direccionar">
-                            <option value="1">Ver Empleados</option>
-                            <option value="2">Importar empleados</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary dirigir">Dirigir</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script>
 
-    $('.dirigir').click(function() {
+    $('.dirigir').click(function () {
 
         if ($('#direccionar').val() == 1)
             window.location.href = '<?php echo base_url("index.php/administrativo/cargos") ?>';
         if ($('#direccionar').val() == 2)
             window.location.href = '<?php echo base_url("index.php/administrativo/organigrama") ?>';
         if ($('#direccionar').val() == 3)
-            window.location.href = '<?php echo base_url("index.php/administrativo/listadoempleados") ?>';
+            window.location.href = '';
 
     });
 
-    $('#guardar').click(function() {
-        if(obligatorio('obligatorio') == true){
+    $('#guardar').click(function () {
+        if (obligatorio('obligatorio') == true) {
             $("#f5").submit();
         }
     });
