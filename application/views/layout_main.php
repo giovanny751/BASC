@@ -187,6 +187,46 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
     </div>
     <div class="page-content-wrapper">
         <div class="page-content">
+            <div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						
+						<a href="<?php echo base_url("index.php/tareas/listadoplanes") ?>" class="more">
+						PLANES <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						
+						<a href="<?php echo base_url("index.php/tareas/listadotareas") ?>" class="more">
+						TAREAS <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<a href="<?php echo base_url("index.php") ?>" class="more">
+						INDICADORES <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+					<div class="dashboard-stat green-haze">
+						<a href="<?php echo base_url("index.php") ?>" class="more">
+						RIESGO <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+					<div class="dashboard-stat green-haze">
+						
+						<a href="<?php echo base_url("index.php") ?>" class="more">
+						 DOCUMENTOS<i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+			</div>
             <?php echo $content_for_layout ?>
         </div>
     </div>
