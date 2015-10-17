@@ -4,31 +4,36 @@
     </h5>
 </div>
 <div class='well'>
-    <form method="post" id="f7">
-        <div class="row">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <button type="button" id="guardarplan" class="guardar btn btn-success">
-                    <?php echo (!empty($plan[0]->pla_id)) ? "Actualizar" : "Guardar"; ?>
-                </button>
-            </div>
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                <center>
-                    <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
-                    <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
-                    <div class="flecha flechaDerecha" metodo="flechaDerecha"></div>
-                    <div class="flecha flechaDerechaDoble" metodo="flechaDerechaDoble"></div>
-                    <div class="flecha documento" metodo="documento"></div>
-                </center>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <a href="<?php echo base_url("index.php/tareas/nuevatarea") ?>">
-                    <button type="button" class="btn ">Nueva tarea</button>
-                </a>
-                <a href="<?php echo base_url("index.php/tareas/planes") ?>">
-                    <button type="button" class="btn ">Nuevo registro</button>
-                </a>
-            </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <button type="button" id="guardarplan" class="guardar btn btn-success">
+                <?php echo (!empty($plan[0]->pla_id)) ? "Actualizar" : "Guardar"; ?>
+            </button>
         </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <center>
+                <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
+                <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
+                <div class="flecha flechaDerecha" metodo="flechaDerecha"></div>
+                <div class="flecha flechaDerechaDoble" metodo="flechaDerechaDoble"></div>
+                <div class="flecha documento" metodo="documento"></div>
+            </center>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <?php if (!empty($plan[0]->pla_id)) { ?>
+
+                <form method="post" action="<?php echo base_url("index.php/tareas/nuevatarea") ?>">
+                    <input type="hidden" value="<?php echo $plan[0]->pla_id ?>" name="pla_id">
+                    <input type="submit" type="button" class="btn " value="Nueva tarea">
+                </form>
+            <?php } ?>
+            <a href="<?php echo base_url("index.php/tareas/planes") ?>">
+                <button type="button" class="btn ">Nuevo registro</button>
+            </a>
+        </div>
+    </div>
+    <form method="post" id="f7">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <div class="form-group">
@@ -133,7 +138,6 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <p> Basic exemple. Resize the window to see how the tabs are moved into the dropdown </p>
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
                         <li class="active">
@@ -169,7 +173,7 @@
                                 <th>Responsables</th>
                                 </thead>
                                 <tbody>
-                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -211,7 +215,7 @@
                         <div id="tab4" class="tab-pane">
                             <div style="text-align: right">
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">CREAR ACTIVIDAD PADRE</button>
-                                <button type="button" class="btn btn-success" id="actividadhijo">CREAR ACTIVIDAD HIJO</button>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal8">CREAR ACTIVIDAD HIJO</button>
                             </div>
                             <table class="table table-striped table-bordered table-hover" id="datatable_ajax3">
                                 <thead>
@@ -226,7 +230,7 @@
                             </table>
                         </div>
                         <div id="tab5" class="tab-pane">
-                            
+
                         </div>
                         <div id="tab6" class="tab-pane">
                             <div style="text-align: right">
@@ -325,25 +329,267 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="myModal0" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">AGREGAR AVANCE</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="guardaravance">
+                                <input type="hidden" value="" name="idtarea" id="internotarea">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                                <label for="fecha">Fecha</label>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                <input type="text" style="text-align:center" name="fecha" id="fecha" class="form-control fecha avance">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                                <label for="progreso">Progreso</label>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                <select name="progreso" id="progreso" class="form-control avance" style="text-align: center">
+                                                    <option value="">::Seleccionar::</option>
+                                                    <?php for ($i = 1; $i < 101; $i++) { ?>
+                                                        <option value="<?php echo $i; ?>"><?php echo $i . " " . "%"; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                                <label for="horastrabajadas">Horas Trabajadas</label>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                <input style="text-align:center" type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance number">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                                <label for="costo">Costo</label>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                <input type="text" style="text-align:center" name="costo" id="costo" class="form-control avance">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sx-12 col-sm-12">
+                                                <label for="comentarios">Comentarios</label>
+                                                <textarea name="comentarios" id="comentarios" class="form-control avance"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <center><h4>Notificar a:</h4></center>
+                                        </div>
+                                        <?php foreach ($notificacion as $n): ?>
+                                            <div class="row">
+                                                <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                    <label for="creotarea"><?php echo $n->not_notificacion ?></label>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                                    <input type="checkbox" name="notificar[]" value="<?php echo $n->not_id ?>" id="creotarea" class="form-control avance">
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+
+                                </div>
+                            </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-success" id="gavance">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">ACTIVIDAD HIJO</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <form method="post" id="f6">
+                                <input type="hidden" value="<?php echo $plan[0]->pla_id; ?>" name="pla_id">
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><label for="idpadre">Id Padre</label></div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><input type="text" id="idpadre" name="idpadre" class="form-control"></div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><label for="nombre">Nombre</label></div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><input type="text" id="nombre" name="nombre" class="form-control"></div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="fechainicio">Fecha Inicio</label>
+                                            <input type="text" class="form-control fecha" id="fechainicio" name="fechainicio" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="fechafinalizacion">Fecha Finalización</label>
+                                            <input type="text" class="form-control fecha" id="fechafinalizacion" name="fechafinalizacion" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="peso">Peso</label>
+                                            <input type="text" class="form-control" id="peso" name="peso" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="riesgosancion">Riesgo Sanción</label>
+                                            <input type="text" class="form-control" id="riesgosancion" name="riesgosancion" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="tipo">Tipo</label>
+                                            <select class="form-control" id="tipo" name="tipo" >
+                                                <option value="">::Seleccionar::</option>
+                                                <?php foreach ($tipo as $t) { ?>
+                                                    <option value="<?php echo $t->tip_id; ?>"><?php echo $t->tip_tipo; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="presupuestototal">Presupuesto Total</label>
+                                            <input type="text" class="form-control number" id="presupuestototal" name="presupuestototal" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="costoreal">Costo Real</label>
+                                            <input type="text" class="form-control number" id="costoreal" name="costoreal" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <div class="form-group">
+                                        <label for="descripcion">Descripción</label>
+                                        <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="modoverificacion">Modo Verificación</label>
+                                        <textarea class="form-control" id="modoverificacion" name="modoverificacion"></textarea>
+                                    </div>
+                                </div>
+                        </div>
+                        </form>  
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="guardar">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     <?php endif; ?>
 
 </div>
-<form method="post" id="frmactividadhijo">
-    <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id">
-</form>
+
 <script>
     
-    $('#actividadhijo').click(function(){
+    $('body').delegate(".editarhistorial","click",function(){
         
-        $('#frmactividadhijo').attr("action","<?php echo base_url("index.php/tareas/actividadhijo") ?>");
-        $('#frmactividadhijo').submit();
+        $('#internotarea').val($(this).attr('tar_id'));
         
     });
-    
-    jQuery(document).ready(function () {
+        jQuery(document).ready(function () {
         TableAjax.init();
 
     });
+    
+    $('#guardar').click(function () {
+        $.post(
+                "<?php echo base_url("index.php/tareas/guardaractividadhijo") ?>",
+                $('#f6').serialize()
+                ).done(function (msg) {
+            $('#myModal8').find('input[type="text"],select,textarea').val("");
+            
+
+//            $('#datatable_ajax3').DataTable.ajax.url( "<?php echo base_url("index.php/tareas/listadotareasxactividadhijo") ?>" ).load();
+
+            
+
+//            grid.init({
+//                src: $("#datatable_ajax3"),
+//                onSuccess: function (grid) {
+//                    // execute some code after table records loaded
+//                },
+//                onError: function (grid) {
+//                    // execute some code on network or other general error  
+//                },
+//                onDataLoad: function (grid) {
+//                    // execute some code on ajax data load
+//                },
+//                loadingMessage: 'Cargando...',
+//                dataTable: {
+//                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+//                    "lengthMenu": [
+//                        [10, 20, 50, 100, 150, -1],
+//                        [10, 20, 50, 100, 150, "All"] // change per page values here
+//                    ],
+//                    "pageLength": 10, // default record count per page
+//                    "ajax": {
+//                        "url": "<?php echo base_url("index.php/tareas/listadotareasxactividadhijo") ?>", // ajax source
+//                    },
+//                    "order": [
+//                        [1, "asc"]
+//                    ]// set first column as a default sort by asc
+//                }
+//            });
+//
+//            // handle group actionsubmit button click
+//            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
+//                e.preventDefault();
+//                grid.setAjaxParam("xyz", "1");
+//                var action = $(".table-group-action-input", grid.getTableWrapper());
+//                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
+//                    grid.setAjaxParam("xyz", "group_action");
+//                    grid.setAjaxParam("avaTar_fecha", action.val());
+//                    grid.setAjaxParam("usu_id", grid.getSelectedRows());
+//                    grid.getDataTable().ajax.reload();
+//                    grid.clearAjaxParams();
+//                } else if (action.val() == "") {
+//                    Metronic.alert({
+//                        type: 'danger',
+//                        icon: 'warning',
+//                        message: 'Please select an action',
+//                        container: grid.getTableWrapper(),
+//                        place: 'prepend'
+//                    });
+//                } else if (grid.getSelectedRowsCount() === 0) {
+//                    Metronic.alert({
+//                        type: 'danger',
+//                        icon: 'warning',
+//                        message: 'No record selected',
+//                        container: grid.getTableWrapper(),
+//                        place: 'prepend'
+//                    });
+//                }
+//            });
+        
+            
+            alerta("verde", "Datos guardados correctamente");
+        }).fail(function (msg) {
+            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+        });
+    });
+
+
+    
     var TableAjax = function () {
 
         var initPickers = function () {
@@ -482,25 +728,40 @@
 
     }();
     
-    $('#guardaractividadpadre').click(function(){
-        
-        if(obligatorio('acobligatorio')){
-            
+    $('#gavance').click(function () {
+
+        $.post(
+                "<?php echo base_url("index.php/tareas/guardaravance") ?>",
+                $('#guardaravance').serialize()
+                ).done(function () {
+            $('.avance').val("");
+            $('.avance').prop("checked", false);
+            alerta("verde", "Avance guardado correctamente");
+        }).fail(function () {
+            alerta("Error", "Error por favor comunicarse con el administrador");
+        });
+
+    });
+
+    $('#guardaractividadpadre').click(function () {
+
+        if (obligatorio('acobligatorio')) {
+
             $.post("<?php echo base_url("index.php/tareas/guardaractividadpadre") ?>",
                     $('#formactividadpadre').serialize()
                     )
-                    .done(function(){
+                    .done(function () {
                         $('.acobligatorio').val('')
-                        alerta("verde","Actividad padre guardada con exito");
+                        alerta("verde", "Actividad padre guardada con exito");
                     })
-                    .fail(function(){
-                        alerta("error","Error por favor comunicarse con el administrador del sistema");
+                    .fail(function () {
+                        alerta("error", "Error por favor comunicarse con el administrador del sistema");
                     })
-            
+
         }
-        
+
     });
-    
+
     $(".flecha").click(function () {
         var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
         var idUsuarioCreado = $("#usuid").val();

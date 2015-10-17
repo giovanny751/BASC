@@ -18,12 +18,14 @@
             <th>Tipo</th>
             <th>Acción</th>
             </thead>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+            <tbody id="datoscategoria">
+                <?php foreach ($categoria as $c): ?>
+                    <tr>
+                        <td><?php echo $c->rieCla_categoria ?></td>
+                        <td><?php echo $c->rieClaTip_tipo ?></td>
+                        <td></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
@@ -40,20 +42,27 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-offset-2 col-sm-8">
-                            <div class="form-group">
-                                <label for="ct">Categoría</label>
-                                <input type="text" name="categoria" id="ct" class="form-control">
+                        <form method="post" id="frmtipocategoria">
+                            <div class="col-sm-offset-2 col-sm-8">
+                                <div class="form-group">
+                                    <label for="ct">Categoría</label>
+                                    <select name="categoria" id="ct" class="form-control">
+                                        <option value="">::Seleccionar::</option>
+                                        <?php foreach ($categoria2 as $cc): ?>
+                                            <option value="<?php echo $cc->rieCla_id ?>"><?php echo $cc->rieCla_categoria ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tipo">Tipo</label>
+                                    <input type="text" name="tipo" id="tipo" class="form-control">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="tipo">Tipo</label>
-                                <input type="text" name="tipo" id="tipo" class="form-control">
-                            </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary guardarmodificacion">Guardar</button>
+                        <button type="button" class="btn btn-primary " id="guardartipo">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -61,14 +70,58 @@
     </div>
 </div>
 <script>
-    $('#categoria').click(function () {
 
-        var categoria = $('#categoria').val();
+    $('#guardartipo').click(function () {
 
-        $.post("<?php echo base_url("index.php/administrativo/guardarcategoria") ?>",
+        $.post(
+                "<?php echo base_url("index.php/riesgo/guardartipocategoria") ?>",
+                $("#frmtipocategoria").serialize()
+                )
+                .done(function (msg) {
+                    if (msg != 1) {
+                        $('#datoscategoria *').remove();
+                        var body = "";
+                        $.each(msg, function (key, val) {
+                            body += "<tr>";
+                            body += "<td>" + val.rieCla_categoria + "</td>";
+                            body += "<td>" + val.rieClaTip_tipo + "</td>";
+                            body += "<td></td>";
+                            body += "</tr>";
+                        });
+                        $('#datoscategoria').append(body);
+                        alerta("verde", "Categoria guardada con exito");
+                    } else {
+                        alerta("amarillo", "Datos ya existentes en el sistema");
+                    }
+                })
+                .fail(function (msg) {
+                    alerta("rojo", "Error al guardar el tipo por favor comunicarse con el administrador");
+                });
+
+    });
+
+    $('.categoria').click(function () {
+
+        var categoria = $('#cat').val();
+
+        $.post("<?php echo base_url("index.php/riesgo/guardarclasificacionriesgo") ?>",
                 {categoria: categoria}
         ).done(function (msg) {
-
+            if (msg != 1) {
+                $('#datoscategoria *').remove();
+                var body = "";
+                $.each(msg, function (key, val) {
+                    body += "<tr>";
+                    body += "<td>" + val.rieCla_categoria + "</td>";
+                    body += "<td>" + val.rieClaTip_tipo + "</td>";
+                    body += "<td></td>";
+                    body += "</tr>";
+                });
+                $('#datoscategoria').append(body);
+                alerta("verde", "Categoria guardada con exito");
+            } else {
+                alerta("amarillo", "Datos ya existentes en el sistema");
+            }
         })
                 .fail(function (msg) {
 

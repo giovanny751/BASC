@@ -14,12 +14,14 @@ class Planes_model extends CI_Model {
     function create($data) {
          $this->db->insert_batch("planes",$data);
     }
-    function filtrobusqueda($codigo,$nombre,$fecha,$estado,$responsable){
-        $this->db->where('planes.est_id !=',3);
-        if(!empty($nombre))$this->db->where('pla_nombre',$nombre);
-        if(!empty($fecha))$this->db->where('pla_fechaInicio',$fecha);
-        if(!empty($estado))$this->db->where('est_id',$estado);
-        if(!empty($responsable))$this->db->where('pla_responsable',$responsable);
+//    function filtrobusqueda($codigo,$nombre,$fecha,$estado,$responsable){
+    function filtrobusqueda($responsable,$estado){
+//        $this->db->where('planes.est_id !=',3);
+//        if(!empty($nombre))$this->db->where('pla_nombre',$nombre);
+//        if(!empty($fecha))$this->db->where('pla_fechaInicio',$fecha);
+//        if(!empty($estado))$this->db->where('est_id',$estado);
+        if(!empty($responsable))$this->db->where('planes.emp_id',$responsable);
+        if(!empty($estado))$this->db->where("planes.est_id",$estado);
         $this->db->select("planes.*");
         $this->db->select("empleado.Emp_Nombre");
         $this->db->select("empleado.Emp_Apellidos");
@@ -120,9 +122,8 @@ class Planes_model extends CI_Model {
         endif;
         if($cantidad == -1)$cantidad = "";
         
-        $this->db->select("tarea.tar_id");
+        $this->db->select("CONCAT('<button type=".'"button"'."  class=".'"btn btn-success editarhistorial"'." tar_id='".",tarea.tar_id,"."' data-toggle=".'"modal"'." data-target=".'"#myModal0"'." >Nuevo avance</button>')");
         $this->db->select("tarea.car_id");
-        
         $this->db->select("tipo.tip_tipo");
         $this->db->select("tar_nombre");
         $this->db->select("tarea.tar_fechaInicio");
@@ -136,7 +137,7 @@ class Planes_model extends CI_Model {
         if(!empty($inicia))
         $planes = $this->db->get("planes",$inicia ,$cantidad);
         else
-            $planes = $this->db->get("planes",$cantidad);
+            $planes = $this->db->get("planes",$cantidad);   
         return $planes->result(); 
         
     }

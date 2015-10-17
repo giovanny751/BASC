@@ -31,10 +31,14 @@ class Administrativo extends My_Controller {
             $this->load->model('Tipo_aseguradora__model');
             $this->load->model('Empleadotipoaseguradora_model');
             $this->load->model('Empresa_model');
+            $this->load->model('Empleadoregistro_model');
             if (!empty($this->input->post('emp_id'))) {
+                $this->load->model('Empleadocarpeta_model');
                 $this->load->model('Empleado_model');
                 $this->data['empleado'] = $this->Empleado_model->consultaempleadoxid($this->input->post('emp_id'));
                 $this->data["aserguradorasxempleado"] = $this->Empleadotipoaseguradora_model->consult_empleado($this->input->post('emp_id'));
+                $this->data["carpeta"] = $this->Empleadocarpeta_model->detail();
+                $this->data["registro"] = $this->Empleadoregistro_model->detail();
             }
             $this->data['empresa'] = $this->Empresa_model->detail();
             if ((!empty($this->data['empresa'][0]->Dim_id)) && (!empty($this->data['empresa'][0]->Dimdos_id))) {
@@ -74,14 +78,14 @@ class Administrativo extends My_Controller {
             if (isset($_FILES['archivo']['name']))
                 if (!empty($_FILES['archivo']['name']))
                     $post['empReg_archivo'] = basename($_FILES['archivo']['name']);
-            $this->Empleado_model->empleado_registro($post);
+            $emp_id = $this->Empleado_model->empleado_registro($post);
+            if(empty($emp_id))$emp_id = $post['Emp_Id'];
 
-
-            $targetPath = "./uploads/empleado";
+            $targetPath = "./uploads/empleado/".$emp_id;
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
-            $targetPath = "./uploads/empleado/" . $post['Emp_Id'];
+            $targetPath = "./uploads/empleado/".$emp_id."/" . $post['Emp_Id'];
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
@@ -90,6 +94,7 @@ class Administrativo extends My_Controller {
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
+            redirect('index.php/administrativo/creacionempleados', 'location');
         } catch (exception $e) {
             
         }

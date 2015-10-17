@@ -27,10 +27,16 @@ class Tareas extends My_Controller {
             $this->load->model('Dimension_model');
             $this->load->model('Tipo_model');
             $this->load->model('Notificacion_model');
+            $this->load->model("Riesgoclasificacion_model");
             if (!empty($this->input->post("tar_id"))):
                 $this->data['tarea'] = $this->Tarea_model->detailxid($this->input->post("tar_id"))[0];
 //                $this->data['tarea'] = $this->data['tarea'];
             endif;
+            $this->data['pla_id'] = "";
+            if(!empty($this->input->post("pla_id"))){
+                $this->data['pla_id'] = $this->input->post("pla_id");
+            }
+            $this->data['categoria'] = $this->Riesgoclasificacion_model->detail();
             $this->data['notificacion'] = $this->Notificacion_model->detail();
             $this->data['estados'] = $this->Estados_model->detail();
             $this->data['tipo'] = $this->Tipo_model->detail();
@@ -46,12 +52,12 @@ class Tareas extends My_Controller {
 
     function listadoavance() {
 
-        $this->load->model('AvanceTarea_model');
+        $this->load->model('Avancetarea_model');
         $cantidad = $this->input->post("length");
         $orden = $this->input->post("order[0][column]");
         $inicia = intval($_REQUEST['start']);
-        $tabla = $this->AvanceTarea_model->detailxid(1, $cantidad, $orden, $inicia);
-        $alldatacount = $this->AvanceTarea_model->detailxidcount(1, $cantidad, $orden, $inicia);
+        $tabla = $this->Avancetarea_model->detailxid(1, $cantidad, $orden, $inicia);
+        $alldatacount = $this->Avancetarea_model->detailxidcount(1, $cantidad, $orden, $inicia);
         $data = array();
         $data['data'] = arregloconsulta($tabla);
         $data["draw"] = intval($_REQUEST['draw']);
@@ -114,8 +120,8 @@ class Tareas extends My_Controller {
     function guardaravance() {
 
         try {
-            $this->load->model('AvanceTarea_model');
-            $this->load->model('AvanceNotificacion_model');
+            $this->load->model('Avancetarea_model');
+            $this->load->model('Avancenotificacion_model');
             $data[] = array(
                 "tar_id" => $this->input->post('idtarea'),
                 "avaTar_fecha" => $this->input->post("fecha"),
@@ -126,7 +132,7 @@ class Tareas extends My_Controller {
                 "avaTar_fechaCreacion" => date("Y-m-d H:i:s"),
                 "usu_id" => $this->data["usu_id"]
             );
-            $id = $this->AvanceTarea_model->create($data);
+            $id = $this->Avancetarea_model->create($data);
             $notificar = array();
             if (!empty($this->input->post("notificar"))):
                 $notificacion = $this->input->post("notificar");
@@ -136,7 +142,7 @@ class Tareas extends My_Controller {
                         "avaTar_id" => $id
                     );
                 }
-                $this->AvanceNotificacion_model->create($notificar);
+                $this->Avancenotificacion_model->create($notificar);
             endif;
         } catch (exception $e) {
             
@@ -235,20 +241,6 @@ class Tareas extends My_Controller {
         }
     }
 
-    function actividadhijo() {
-//        if ($this->consultaacceso($this->data["usu_id"])):
-            if (!empty($this->input->post("pla_id"))) {
-                $this->data['plan'] = $this->input->post("pla_id");
-                $this->load->model('Tipo_model');
-                $this->data['tipo'] = $this->Tipo_model->detail();
-                $this->layout->view("tareas/actividadhijo", $this->data);
-            } else
-                redirect('index.php', 'location');
-//        else:
-//            $this->layout->view("permisos");
-//        endif;
-    }
-
     function listadoactividades() {
         if ($this->consultaacceso($this->data["usu_id"])):
             $this->load->model('Estados_model');
@@ -317,10 +309,12 @@ class Tareas extends My_Controller {
             $this->load->model("Cargo_model");
             $this->load->model("Planes_model");
             $this->load->model("Norma_model");
+            $this->load->model("Notificacion_model");
             $this->data['plan'] = array();
             if (!empty($this->input->post('pla_id'))) {
                 $this->data['plan'] = $this->Planes_model->planxid($this->input->post('pla_id'));
             }
+            $this->data['notificacion'] = $this->Notificacion_model->detail();
             $this->data['norma'] = $this->Norma_model->detail();
             $this->data['estado'] = $this->Estados_model->detail();
             $this->data['cargo'] = $this->Cargo_model->allcargos();
@@ -411,8 +405,12 @@ class Tareas extends My_Controller {
 
     function consultaplanes() {
         $this->load->model("Planes_model");
+//        $planes = $this->Planes_model->filtrobusqueda(
+//                $this->input->post("codigo"), $this->input->post("nombre"), $this->input->post("fecha"), $this->input->post("estado"), $this->input->post("responsable"));
         $planes = $this->Planes_model->filtrobusqueda(
-                $this->input->post("codigo"), $this->input->post("nombre"), $this->input->post("fecha"), $this->input->post("estado"), $this->input->post("responsable"));
+                 $this->input->post("responsable"),
+                 $this->input->post("estado")
+                );
         $this->output->set_content_type('application/json')->set_output(json_encode($planes));
     }
 

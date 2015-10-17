@@ -1,52 +1,68 @@
 <div class="widgetTitle" >
     <a href="<?php echo base_url("index.php/tareas/planes") ?>">
-                <button type="button" class="btn btn-default">Nuevo Plan</button>
-            </a> 
+        <button type="button" class="btn btn-default">Nuevo Plan</button>
+    </a> 
     <h5><center>LISTADO PLANES</center>
     </h5>
 </div>
 <div class='well'>
     <form method="post" id="f9">
         <div class="row">
-               
+
         </div>
         <div class="row">
-            <div class="col-lg-3 col-sx-3">
-                <label for="responsable">
-                    Responsable
-                </label>
-                <select id="responsable" name="estado" class="form-control">
-                    <option value="">::Seleccionar::</option>
-                    <?php foreach($responsable as $re){?>
-                    <option value="<?php echo $re->Emp_Id ?>"><?php echo $re->Emp_Nombre." ".$re->Emp_Apellidos ?></option>
-                    <?php }?>
-                </select> 
-            </div>
-            <div class="col-lg-2 col-sx-2">
-                <label for="estado">
-                    Estado
-                </label>
-                <select id="estado" name="estado" class="form-control">
-                    <option value="">::Seleccionar::</option>
-                    <?php foreach ($estados as $e) { ?>
-                        <option value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
-                    <?php } ?>
-                </select>    
-            </div>
-            <div class="col-lg-3 col-sx-3">
-                <label for="fecha">Nombre</label><input type="text" name="nombre" id="nombre" class="form-control">
-            </div>    
-            <div class="col-lg-2 col-sx-2">
-                <label for="fecha">Fecha</label><input type="text" name="fecha" id="fecha" class="form-control fecha">
-            </div>  
-            <div class="col-lg-1 col-sx-1">
-                <div style="margin-top: 27px">
-                    <button type="button" id="consultar" class="btn btn-success">Consultar</button>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Estado</label>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <div class="input-icon">
+                            <select id="estado" name="estado" class="form-control">
+                                <option value="">::Seleccionar::</option>
+                                <option value="1">Activos</option>
+                                <option value="2">Inactivos</option>
+                                <option value="3">Finalizados</option>
+                            </select> 
+                        </div>
+                    </div>
+                </div>
+                <label class="col-md-2 control-label">Responsable</label>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <div class="input-icon">
+                            <select id="responsable" name="responsable" class="form-control">
+                                <option value="">::Seleccionar::</option>
+                                <?php foreach ($responsable as $re) { ?>
+                                    <option value="<?php echo $re->Emp_Id ?>"><?php echo $re->Emp_Nombre . " " . $re->Emp_Apellidos ?></option>
+                                <?php } ?>
+                            </select> 
+                        </div>
+                        <span class="input-group-btn">
+                            <button id="consultar" class="btn btn-success" type="button"><i class="fa fa-arrow-left fa-fw"></i> Consultar</button>
+                        </span>
+                    </div>
                 </div>
             </div>
+
+            <!--            <div class="col-lg-2 col-sx-2">
+                            <label for="estado">
+                                Estado
+                            </label>
+                            <select id="estado" name="estado" class="form-control">
+                                <option value="">::Seleccionar::</option>
+            <?php foreach ($estados as $e) { ?>
+                                        <option value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
+            <?php } ?>
+                            </select>    
+                        </div>
+                        <div class="col-lg-3 col-sx-3">
+                            <label for="fecha">Nombre</label><input type="text" name="nombre" id="nombre" class="form-control">
+                        </div>    
+                        <div class="col-lg-2 col-sx-2">
+                            <label for="fecha">Fecha</label><input type="text" name="fecha" id="fecha" class="form-control fecha">
+                        </div>  -->
         </div>
         <div class="row">
-            
+
         </div>    
     </form>
     <hr>
@@ -85,21 +101,21 @@
         $('select,input').val("");
     });
 
-    $('#responsable').autocomplete({
-        source: "<?php echo base_url("index.php/tareas/autocompletar") ?>",
-        minLength: 3
-    });
-    $('#fecha').autocomplete({
-        source: "<?php echo base_url("index.php/tareas/autocompletarfechainicio") ?>",
-        minLength: 3
-    });
-    $('#nombre').autocomplete({
-        source: "<?php echo base_url("index.php/tareas/autocompletarresponsable") ?>",
-        minLength: 3
-    });
-    $('.limpiar').click(function () {
-        $('select,input').val('');
-    });
+//    $('#responsable').autocomplete({
+//        source: "<?php echo base_url("index.php/tareas/autocompletar") ?>",
+//        minLength: 3
+//    });
+//    $('#fecha').autocomplete({
+//        source: "<?php echo base_url("index.php/tareas/autocompletarfechainicio") ?>",
+//        minLength: 3
+//    });
+//    $('#nombre').autocomplete({
+//        source: "<?php echo base_url("index.php/tareas/autocompletarresponsable") ?>",
+//        minLength: 3
+//    });
+//    $('.limpiar').click(function () {
+//        $('select,input').val('');
+//    });
     $('#consultar').click(function () {
         $.post("<?php echo base_url("index.php/tareas/consultaplanes") ?>",
                 $('#f9').serialize()
@@ -111,8 +127,8 @@
                 body += "<td>" + val.pla_nombre + "</td>";
                 body += "<td>" + val.pla_fechaInicio + "</td>";
                 body += "<td>" + val.pla_fechaFin + "</td>";
-                body += "<td>" + val.Emp_Nombre + " "+val.Emp_Apellidos + "</td>";
-                body += "<td>" + val.pla_presupuesto +"</td>";
+                body += "<td>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</td>";
+                body += "<td>" + val.pla_presupuesto + "</td>";
                 body += "<td></td>";
                 body += "<td>" + val.pla_descripcion + "</td>";
                 body += "<td></td>";
@@ -124,7 +140,7 @@
             alerta("verde", "Consulta exitosa");
         })
                 .fail(function (msg) {
-                    alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+                    alerta("rojo", "Error po favor comunicarse con el administrador");
                 })
     });
     $('body').delegate('.eliminar', 'click', function () {

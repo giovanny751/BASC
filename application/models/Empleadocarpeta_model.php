@@ -14,6 +14,12 @@ class Empleadocarpeta_model extends CI_Model {
         );
         $this->db->insert("empleado_carpeta",$data);
     }
+    function detail(){
+        
+        $carpeta = $this->db->get("empleado_carpeta");
+        return $carpeta->result();
+        
+    }
 
 
 }

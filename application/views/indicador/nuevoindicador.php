@@ -10,7 +10,12 @@
 </div>
 <div class='well'>
     <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <button type="button" class="btn btn-success" id="guardar">
+                <?php echo (!empty($ind_id))?"Actualizar":"Guardar";?>
+            </button>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <center>
                 <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
                 <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
@@ -159,9 +164,7 @@
             </div>
         </form>
     </div>
-    <div class="row" style="text-align:center">
-        <button type="button" class="btn btn-success" id="guardar">Guardar</button>
-    </div>
+    <?php if(!empty($ind_id)): ?>
     <div class="portlet box blue">
         <div class="portlet-title">
             <div class="caption">
@@ -316,6 +319,7 @@
             </div>
         </div>
     </div>
+    <?php endif; ?>
 </div>
 <script>
     $(".flecha").click(function () {

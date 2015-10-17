@@ -316,7 +316,7 @@
         <div class="portlet box blue" style="margin-top: 30px;">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>
+                    <i class="fa fa-gift"></i>Registro
                 </div>
                 <div class="tools">
                     <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
@@ -327,41 +327,10 @@
             </div>
             <div class="portlet-body">
                 <div class="tabbable tabbable-tabdrop">
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a data-toggle="tab" href="#tab1">Accidentes Reportados</a>
-                        </li>
-                        <li>
-                            <a data-toggle="tab" href="#tab2">Registro</a>
-                        </li>
-                    </ul>
+                    
                     <div class="tab-content">
-                        <div id="tab1" class="tab-pane active">
-                            <div style="text-align: right"><label for="anoactual"><input type="checkbox" name="anoactual" id="anoactual">Año Actual</label></div>
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                <th>Tipo de Lesión</th>
-                                <th>Días de Incapacidad</th>
-                                <th>Fecha</th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td></b>Resumen</b></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <div id="tab2" class="tab-pane">
-                            <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#myModal">Carpeta</button>
+                        
+                        <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#myModal">Carpeta</button>
                             <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#myModal2">Registro</button>
                             <table class="table table-hover table-bordered">
                                 <thead>
@@ -374,15 +343,23 @@
                                 <th>Acción</th>
                                 </thead>
                                 <tbody>
+                                    <?php foreach($registro as $re): ?>
                                     <tr>
+                                        <td><?php echo $re->empReg_archivo  ?></td>
+                                        <td><?php echo $re->empReg_descripcion  ?></td>
+                                        <td><?php echo $re->empReg_version  ?></td>
+                                        <td><?php echo $re->Emp_Nombre." ".$re->Emp_Apellidos ?></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
+                                        <td>
+                                            <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" empReg_id="<?php echo $re->empReg_id  ?>"></i>
+                                            <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  emp_id="<?php echo $re->empReg_id  ?>" ></i>
+                                        </td>
                                     </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
-
-                        </div>
+                        
                     </div>
                 </div>
                 <p>   </p>
@@ -444,7 +421,12 @@
                                 <label for="empReg_carpeta">Carpeta:</label>
                             </div>
                             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                <input type="text" id="empReg_carpeta" name="empReg_carpeta" class="form-control">
+                                <select id="empReg_carpeta" name="empReg_carpeta" class="form-control">
+                                    <option value="">::Seleccionar::</option>
+                                    <?php foreach($carpeta as $car):?>
+                                    <option value="<?php echo $car->empCar_id ?>"><?php echo $car->empCar_nombre ?></option>
+                                    <?php endforeach;?>
+                                </select>
                             </div>
                         </div>
                         <div class="row">

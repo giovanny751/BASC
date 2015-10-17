@@ -19,8 +19,21 @@ class Estadoaceptacion_model extends CI_Model {
         $aceptacion =$this->db->get("estado_aceptacion");
         return $aceptacion->result();
     }
-
-
+    function detailandcolor(){
+        $this->db->select("estado_aceptacion.estAce_id");
+        $this->db->select("estado_aceptacion.estAce_estado");
+        $this->db->select("color.col_color");
+        $this->db->join("color","color.estAce_id = estado_aceptacion.estAce_id","LEFT");
+        $aceptacion = $this->db->get("estado_aceptacion");
+        return $aceptacion->result();
+    }
+    function consultxname($name){
+        
+        $this->db->where("estAce_estado",$name);
+        $data = $this->db->get("estado_aceptacion");
+        return $data->result();
+        
+    }
 }
 
 ?>

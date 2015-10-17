@@ -17,7 +17,7 @@
                 </button>
                 <button type="button" id="guardartarea" class="btn btn-danger">Eliminar</button>
             </div>   
-            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 
                 <center>
                     <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
@@ -46,7 +46,7 @@
                         <select name="plan" id="plan" class="form-control obligatorio" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($planes as $p) { ?>
-                                <option  <?php echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : ""; ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
+                            <option  <?php echo (!empty($pla_id) && $pla_id == $p->pla_id )?"selected":"";  echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : ""; ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -231,6 +231,9 @@
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name='clasificacionriesgo' id='clasificacionriesgo' class="form-control">
                             <option value=''>::Seleccionar::</option>
+                            <?php foreach ($categoria as $ca) { ?>
+                                <option value="<?php echo $ca->rieCla_id ?>"><?php echo $ca->rieCla_categoria ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -550,6 +553,7 @@
                 </div>
             </div>
         </div>
+        
     <?php endif; ?>
     <input type="hidden" id="tareid" name="tareid" />
 
@@ -563,6 +567,26 @@
         TableAjax.init();
 
     });
+
+    $('#clasificacionriesgo').change(function(){
+        
+        $.post(
+                "<?php echo base_url("index.php/riesgo/consultatiporiesgoxclasificacion") ?>",
+                {categoria : $(this).val()}
+                )
+                .done(function(msg){
+                    $('#tiposriesgos *').remove();
+                    var option = "<option value=''>::Seleccionar::</option>";
+                    $.each(msg,function(key,val){
+                        option += "<option value='"+val.rieClaTip_id+"'>"+val.rieClaTip_tipo+"</option>";
+                    });
+                    $('#tiposriesgos').append(option);
+                }).fail(function(msg){
+                    alerta("rojo","fallo al traer los tipos de riesgo");
+                });
+        
+    });
+
     var TableAjax = function () {
 
         var initPickers = function () {

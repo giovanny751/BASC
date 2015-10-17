@@ -1,6 +1,6 @@
 <script type="text/javascript">
-        $(".menRIESGOS").addClass("active open");
-        $(".subMenESTADOS_DE_ACEPTACIÓN").addClass("active");
+    $(".menRIESGOS").addClass("active open");
+    $(".subMenESTADOS_DE_ACEPTACIÓN").addClass("active");
 </script>
 <div class="widgetTitle">
     <h5>
@@ -24,13 +24,13 @@
             <th>Color</th>
             <th>Acción</th>
             </thead>
-            <tbody>
-                <?php foreach($estadoaceptacion as $ea):?>
-                <tr>
-                    <td><?php echo $ea->estAce_estado?></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+            <tbody id="bodyestado">
+                <?php foreach ($estadoaceptacion as $ea): ?>
+                    <tr>
+                        <td><?php echo $ea->estAce_estado ?></td>
+                        <td><?php echo $ea->col_color ?></td>
+                        <td></td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
@@ -48,20 +48,27 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <form method="post" id="frmestadocolor">
                         <div class="col-sm-offset-2 col-sm-8">
                             <div class="form-group">
                                 <label for="estados">Estados</label>
-                                <input type="text" name="estados" id="estados" class="form-control">
+                                <select name="estados" id="estados" class="form-control">
+                                    <option value="">::Seleccionar::</option>
+                                    <?php foreach ($estadoaceptacionxcolor as $ec): ?>
+                                        <option value="<?php echo $ec->estAce_id ?>"><?php echo $ec->estAce_estado ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="color">Color</label>
                                 <input type="text" name="color" id="color" class="form-control">
                             </div>
                         </div>
+                            </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary guardarmodificacion">Guardar</button>
+                        <button type="button" class="btn btn-primary " id="guardarmodificacion">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -69,9 +76,32 @@
     </div>
 </div>
 <script>
-    $('#estadoaceptacion').autocomplete({
-        source: "<?php echo base_url("index.php/riesgo/autocompletarestadoaceptacion") ?>",
-        minLength: 1
+//    $('#estadoaceptacion').autocomplete({
+//        source: "<?php echo base_url("index.php/riesgo/autocompletarestadoaceptacion") ?>",
+//        minLength: 1
+//    });
+    $('#guardarmodificacion').click(function(){
+        
+        $.post(
+                "<?php echo base_url("index.php/riesgo/guardarcolorxestado") ?>",
+                $('#frmestadocolor').serialize()    
+                )
+                .done(function(msg){
+                    
+                    $('#bodyestado *').remove();
+                    var fila = "";
+                    $.each(msg,function(key,val){
+                        fila += "<tr>";
+                        fila += "<td>"+val.estAce_estado+"</td>";
+                        fila += "<td>"+val.col_color+"</td>";
+                        fila += "<td></td>";
+                        fila += "</tr>";
+                    })
+                    $('#bodyestado').append(fila);
+                }).fail(function(msg){
+                    alerta("rojo","error en el sistema por favor comunicarse con el administrador");
+                });
+        
     });
     
     $('.estado').click(function () {
@@ -81,10 +111,24 @@
         $.post("<?php echo base_url("index.php/riesgo/guardaestadoaceptacion") ?>",
                 {estadoaceptacion: estadoaceptacion}
         ).done(function (msg) {
-
+            if (msg != 1) {
+                $('#bodyestado *').remove();
+                var body = "";
+                $.each(msg, function (key, val) {
+                    body += "<tr>";
+                    body += "<td>" + val.estAce_estado + "</td>";
+                    body += "<td></td>";
+                    body += "<td></td>";
+                    body += "</tr>";
+                });
+                $('#bodyestado').append(body);
+                alerta("verde", "Estado guardado con exito")
+            } else {
+                alerta("amarillo","Estado ya existe en el sistema")
+            }
         })
                 .fail(function (msg) {
-
+alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
                 })
                 ;
     });

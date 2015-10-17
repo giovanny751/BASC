@@ -37,6 +37,12 @@
                 </select>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <label for="responsable">Tipo Riesgo</label>
+                <select name="responsable" id="responsable" class="form-control">
+                    <option value="">::Seleccionar::</option>
+                </select>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                 <div style="margin-top: 28px"><button type="button" class="btn btn-success" id="consultar">Consultar</button></div>
             </div>
         </form>
