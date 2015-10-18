@@ -73,7 +73,7 @@ class Presentacion extends My_Controller {
     }
 
     public function creacionmenu() {
-        if ($this->consultaacceso($this->data["usu_id"])):
+//        if ($this->consultaacceso($this->data["usu_id"])):
             $this->data['hijo'] = $this->input->post('menu');
             $this->data['nombrepadre'] = $this->input->post('nombrepadre');
             $this->data['idgeneral'] = $this->input->post('idgeneral');
@@ -84,9 +84,9 @@ class Presentacion extends My_Controller {
                 $this->data['menu'] = $this->Ingreso_model->hijos($this->data['idgeneral']);
             }
             $this->layout->view('presentacion/creacionmenu', $this->data);
-            else:
-            $this->layout->view("permisos");
-        endif;
+//            else:
+//            $this->layout->view("permisos");
+//        endif;
     }
 
     function guardarmodulo() {
@@ -251,6 +251,8 @@ class Presentacion extends My_Controller {
         for ($i = 0; $i < count($permisorol); $i++)
             $insert[] = array('rol_id' => $id, 'menu_id' => $permisorol[$i]);
         $this->Roles_model->insertapermisos($insert);
+        $roles = $this->Roles_model->rolesall();
+            echo json_encode($roles);
     }
 
     function eliminarrol() {

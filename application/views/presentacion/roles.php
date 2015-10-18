@@ -55,7 +55,7 @@
                     </div>
                     <div class="well" >
                         <form id="nuevorol" method="post">
-                            <input type="hidden" id="rol" name="rol">
+                            <input type="hidden" id="rolesuser" name="rol">
                             <div class="form-group agregarrol">
 
                             </div>
@@ -142,9 +142,10 @@
         $('.seleccionados').prop('checked', false);
     });
 
-    $("body").on("click", ".moidificar", function () {
-
-        $('#rol').val($(this).attr('rol'));
+    $("body").delegate(".modificar","click",  function () {
+        
+//        alert("444");
+        $('#rolesuser').val($(this).attr('rol'));
         $('input[type="checkbox"]').parent("span").removeClass("checked");
         $('input[type="checkbox"]').prop('checked', false);
         $('.agregarrol *').remove();

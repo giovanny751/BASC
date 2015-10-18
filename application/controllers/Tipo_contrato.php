@@ -24,14 +24,14 @@ class Tipo_contrato extends My_Controller {
         endif;
     }
     function consult_tipo_contrato(){
-        if ($this->consultaacceso($this->data["usu_id"])):
+//        if ($this->consultaacceso($this->data["usu_id"])):
         $post=$this->input->post();
         $this->data['post']=$this->input->post();
         $this->data['datos']=$this->Tipo_contrato__model->consult_tipo_contrato($post);
         $this->layout->view('tipo_contrato/consult_tipo_contrato', $this->data);
-        else:
-            $this->layout->view("permisos");
-        endif;
+//        else:
+//            $this->layout->view("permisos");
+//        endif;
     }
     function save_tipo_contrato(){
         $post=$this->input->post();
