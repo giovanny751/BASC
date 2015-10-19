@@ -26,14 +26,14 @@ class Tipo_documento extends My_Controller {
     }
 
     function consult_tipo_documento() {
-        if ($this->consultaacceso($this->data["usu_id"])):
+//        if ($this->consultaacceso($this->data["usu_id"])):
             $post = $this->input->post();
             $this->data['post'] = $this->input->post();
             $this->data['datos'] = $this->Tipo_documento__model->consult_tipo_documento($post);
             $this->layout->view('tipo_documento/consult_tipo_documento', $this->data);
-        else:
-            $this->layout->view("permisos");
-        endif;
+//        else:
+//            $this->layout->view("permisos");
+//        endif;
     }
 
     function save_tipo_documento() {

@@ -195,23 +195,23 @@ class Presentacion extends My_Controller {
         $guardarpermisos = $this->Ingreso_model->permisosmodulo($datos);
     }
 
-    function permisoroles($datosmodulos, $html = null, $s = null) {
+    function permisoroles($datosmodulos, $html = null, $s = null,$numero = 1) {
         $menu = $this->Ingreso_model->permisoroles($datosmodulos);
         $i = array();
         foreach ($menu as $modulo)
             $i[$modulo['menu_id']][$modulo['menu_nombrepadre']][$modulo['menu_idpadre']] [] = array($modulo['menu_idhijo'], $modulo['menu_controlador'], $modulo['menu_accion']);
-
         $html .="<ul>";
         foreach ($i as $padre => $nombrepapa)
             foreach ($nombrepapa as $nombrepapa => $menuidpadre)
                 foreach ($menuidpadre as $modulos => $menu)
                     foreach ($menu as $submenus):
-                        $html .=  "<input type='checkbox' class='seleccionados " . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' value='" . $padre . "' ><li>" . strtoupper($nombrepapa) . "";
+                        $html .=  "<li>".strtoupper($nombrepapa)."<input type='checkbox' class='seleccionados " . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' value='" . $padre . "' >" ;
                         if (!empty($submenus[0]))
-                            $html .=$this->permisoroles($submenus[0], ' ', str_replace(' ', '', strtoupper($nombrepapa)));
+                            $html .=$this->permisoroles($submenus[0], ' ', str_replace(' ', '', strtoupper($nombrepapa)),2);
                         $html .= "</li>";
                     endforeach;
         $html.="</ul>";
+        if($numero = 1) $html .="</div>";
         return $html;
     }
 

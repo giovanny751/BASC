@@ -18,14 +18,14 @@
         <table class="table table-bordered table-hover">
             <thead>
             <th>Descripción</th>
-            <!--<th>Riesgos</th>-->
+            <th>Riesgos</th>
             <th>Opciones</th>
             </thead>
             <tbody id="bodydimension">
                 <?php foreach ($dimension as $d) { ?>
                     <tr>
                         <td><?php echo $d->dim_descripcion ?></td>
-                        <!--<td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>-->
+                        <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
                         <td>
                             <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" ></i>
                             <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#myModal"></i>
@@ -168,7 +168,7 @@ $('body').delegate(".riesgo","click",function(){
                         $.each(msg, function (key, val) {
                             bodydimension += "<tr>";
                             bodydimension += "<td>" + val.dim_descripcion + "</td>";
-                          //  bodydimension += "<td></td>";
+                            bodydimension += "<td style='text-align: center'><i class='fa fa-child fa-2x riesgo btn btn-default' title='Eliminar' dim_id='"+ val.dim_id +"' data-toggle='modal' data-target='#riesgo'></i></td>";
                             bodydimension += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="' + val.dim_id + '" ></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  dim_id="' + val.dim_id + '" data-toggle="modal" data-target="#myModal"></i></td>';
                             bodydimension += "</tr>";
                         });

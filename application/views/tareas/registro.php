@@ -1,52 +1,75 @@
-<div class="widgetTitle" >
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal3">Nueva carpeta</button>
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Nuevo registro</button>
-    <h5>
-        REGISTRO
-    </h5>
-</div>
-<div class='well'>
-    <div class="row">
-        <form method="post" id="frmregistro">
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <label for="plan">Plan</label>
-                <input type="text" class="form-control" name="plan" id="plan"/>
+<div class="col-md-12">
+    <div class="portlet green-meadow box">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>REGISTRO
             </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <label for="actividad">Actividad</label>
-                <input type="text" class="form-control" name="actividad" id="actividad"/>
+            <div class="tools">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal3">Nueva carpeta</button>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Nuevo registro</button>
+                <!--                <a href="javascript:;" class="collapse" data-original-title="" title="">
+                                </a>-->
+                <!--                <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title="">
+                                </a>
+                                <a href="javascript:;" class="reload" data-original-title="" title="">
+                                </a>-->
+                <!--                <a href="javascript:;" class="remove" data-original-title="" title="">
+                                </a>-->
             </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <label for="tarea">Tarea</label>
-                <input type="text" class="form-control" name="tarea" id="tarea"/>
-            </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <button type="button" class="btn btn-danger">Limpiar</button>
-                <button type="button" class="btn btn-success" id="consultar">Consultar</button>
-            </div>
-        </form>
-    </div>    
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <form method="post" id="frmregistro">
+                    <label for="plan" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Plan</label>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 
-    <hr>
-    <table class="table table-bordered table-hover" id="datatable_ajax">
-        <thead>
-        <th>Nombre archivo</th>
-        <th>Descripciòn</th>
-        <th>Versiòn</th>
-        <th>Categorìa</th>
-        <th>Tarea</th>
-        <th>Responsable</th>
-        <th>Tamaño</th>
-        <th>Fecha</th>
-        <th>Ver Versiones</th>
-        <th>Opciones</th>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="10"></td>
-            </tr>
-        </tbody>
-    </table>
+                        <input type="text" class="form-control" name="plan" id="plan"/>
+                    </div>
+                    <label for="actividad" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Actividad</label>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
+                        <input type="text" class="form-control" name="actividad" id="actividad"/>
+                    </div>
+                    <label for="tarea" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Tarea</label>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <input type="text" class="form-control" name="tarea" id="tarea"/>
+                    </div>
+
+                </form>
+
+            </div>    
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: right">
+                    <button type="button" class="btn btn-danger">Limpiar</button>
+                    <button type="button" class="btn btn-success" id="consultar">Consultar</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table table-bordered table-hover" id="datatable_ajax">
+                        <thead>
+                        <th>Nombre archivo</th>
+                        <th>Descripciòn</th>
+                        <th>Versiòn</th>
+                        <th>Categorìa</th>
+                        <th>Tarea</th>
+                        <th>Responsable</th>
+                        <th>Tamaño</th>
+                        <th>Fecha</th>
+                        <th>Ver Versiones</th>
+                        <th>Opciones</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="10"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -117,14 +140,14 @@
                     <div class="row">
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                             <label for="carpeta">Carpeta:</label>
-                            
+
                         </div>
                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                             <select id="carpeta" name="carpeta" class="form-control">
                                 <option value="">::Seleccionar::</option>
-                            <?php foreach ($carpeta as $c): ?>
-                                <option value="<?php echo $c->regCar_id ?>"><?php echo $c->regCar_nombre ?></option>
-                            <?php endforeach; ?>
+                                <?php foreach ($carpeta as $c): ?>
+                                    <option value="<?php echo $c->regCar_id ?>"><?php echo $c->regCar_nombre ?></option>
+                                <?php endforeach; ?>
                             </select>    
                         </div>
                     </div>
@@ -166,23 +189,23 @@
         TableAjax.init();
 
     });
-    
-    $('#planregistro').change(function(){
-        
+
+    $('#planregistro').change(function () {
+
         $.post(
                 "<?php echo base_url("index.php/tareas/tareaxidplan") ?>",
-                { pla_id : $(this).val() }
-                ).done(function(msg){
-                    $('#tarearegistro *').remove();
-                    var option = "<option value=''>::Seleccionar::</option>";
-                    $.each(msg,function(key,val){
-                        option += "<option value='"+val.tar_id+"'>"+val.tar_nombre+"</option>";
-                    });
-                    $('#tarearegistro').append(option);
-                }).fail(function(msg){
-                    
-                });
-        
+                {pla_id: $(this).val()}
+        ).done(function (msg) {
+            $('#tarearegistro *').remove();
+            var option = "<option value=''>::Seleccionar::</option>";
+            $.each(msg, function (key, val) {
+                option += "<option value='" + val.tar_id + "'>" + val.tar_nombre + "</option>";
+            });
+            $('#tarearegistro').append(option);
+        }).fail(function (msg) {
+
+        });
+
     });
 
     var TableAjax = function () {
