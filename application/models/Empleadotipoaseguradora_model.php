@@ -13,12 +13,11 @@ class Empleadotipoaseguradora_model extends CI_Model {
     function consult_empleado($idEmpleado){
         $this->db->select("eta.*");
         $this->db->select("ta.tipAse_nombre");
-        $this->db->select("a.ase_nombre");
+        $this->db->select("eta.ase_id");
         $this->db->join("tipo_aseguradora as ta","ta.tipAse_id = eta.tipAse_id");
-        $this->db->join("aseguradoras as a","a.ase_id = eta.ase_id");
         $this->db->where("eta.emp_id = '".$idEmpleado."'");
         $resultado = $this->db->get("empleado_tipo_aseguradora as eta");
-        //echo $this->db->last_query();
+//        echo $this->db->last_query();
         return $resultado->result();
     }
     

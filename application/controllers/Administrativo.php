@@ -37,6 +37,7 @@ class Administrativo extends My_Controller {
                 $this->load->model('Empleado_model');
                 $this->data['empleado'] = $this->Empleado_model->consultaempleadoxid($this->input->post('emp_id'));
                 $this->data["aserguradorasxempleado"] = $this->Empleadotipoaseguradora_model->consult_empleado($this->input->post('emp_id'));
+//                var_dump($this->data["aserguradorasxempleado"]);die;
                 $this->data["carpeta"] = $this->Empleadocarpeta_model->detail();
                 $this->data["registro"] = $this->Empleadoregistro_model->detail();
             }
@@ -137,7 +138,8 @@ class Administrativo extends My_Controller {
             $this->load->model('Empleadotipoaseguradora_model');
             $tipoaseguradora = $this->input->post("tipoaseguradora");
             $data = array();
-            if (!empty($tipoaseguradora)):
+            if (!empty($tipoaseguradora[0])):
+                
                 $nombreaseguradora = $this->input->post("nombreaseguradora");
                 for ($i = 0; $i < count($tipoaseguradora); $i++) {
                     if ($nombreaseguradora[$i] != ""):
@@ -153,6 +155,16 @@ class Administrativo extends My_Controller {
             endif;
         } catch (exception $e) {
             
+        }
+    }
+    
+    function validarcedula(){
+        $this->load->model('Empleado_model');
+        $cedula = $this->Empleado_model->validacedula($this->input->post("cedula"));
+        if(!empty($cedula)){
+            echo 1;
+        }else{
+            echo 2;
         }
     }
 
@@ -238,8 +250,9 @@ class Administrativo extends My_Controller {
         $codigo = $this->input->post('codigo');
         $cargo = $this->input->post('cargo');
         $estado = $this->input->post('estado');
+        $tipocontrato = $this->input->post('tipocontrato');
         $contratosvencidos = $this->input->post('contratosvencidos');
-        $this->data['listado'] = $this->Empleado_model->filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos);
+        $this->data['listado'] = $this->Empleado_model->filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos,$tipocontrato);
         $this->output->set_content_type('application/json')->set_output(json_encode($this->data['listado']));
     }
 
@@ -652,6 +665,14 @@ class Administrativo extends My_Controller {
             $this->load->model('Numero_empleados_model');
             $this->load->model('Ingreso_model');
             $this->load->model('Actividadeconomica_model');
+            $this->data['mensaje'] = "";
+            if($this->session->guardadoexito == "guardado con exito"){
+//                echo "esta aca";die;
+                $this->data['mensaje'] =  "guardado con exito";
+                $this->session->guardadoexito = "xyz";
+                
+            }
+            
             $this->data['ciudad'] = $this->Ingreso_model->ciudades();
             $this->data['tamano'] = $this->Tamano_empresa_model->detail();
             $this->data['numero'] = $this->Numero_empleados_model->detail();
@@ -702,7 +723,9 @@ class Administrativo extends My_Controller {
             if (move_uploaded_file($_FILES['userfile']['tmp_name'], $target_path)) {
                 
             }
-
+            
+            $this->session->guardadoexito = "guardado con exito";
+            
             redirect('index.php/administrativo/empresa', 'location');
         } catch (exception $e) {
             redirect('index.php/administrativo/empresa', 'location');
@@ -710,17 +733,17 @@ class Administrativo extends My_Controller {
     }
 
     function autocompletar() {
-        $info = auto("User", "usu_id", "usu_nombre", $this->input->get('term'));
+        $info = auto("user", "usu_id", "usu_nombre", $this->input->get('term'));
         $this->output->set_content_type('application/json')->set_output(json_encode($info));
     }
 
     function autocompletaruapellido() {
-        $info = auto("User", "usu_id", "usu_apellido", $this->input->get('term'));
+        $info = auto("user", "usu_id", "usu_apellido", $this->input->get('term'));
         $this->output->set_content_type('application/json')->set_output(json_encode($info));
     }
 
     function autocompletaruacedula() {
-        $info = auto("User", "usu_id", "usu_cedula", $this->input->get('term'));
+        $info = auto("user", "usu_id", "usu_cedula", $this->input->get('term'));
         $this->output->set_content_type('application/json')->set_output(json_encode($info));
     }
 

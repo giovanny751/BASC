@@ -123,7 +123,7 @@
                     filas += "<td>" + val.rol_nombre + "</td>";
                     filas += "<td>" + val.rol_fechaCreacion + "</td>";
                     filas += "<td>" + val.rol_fechaModificacion + "</td>";
-                    filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-info opciones'>Opciones</button></td>";
+                    filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-info modificar' data-toggle='modal' data-target='#myModal'>Opciones</button></td>";
                     filas += "<td><button type='button' rol='" + val.rol_id + "' class='btn btn-danger eliminar'>Eliminar</button></td>";
                     filas += "</tr>";
                 });

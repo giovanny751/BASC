@@ -1,15 +1,15 @@
 <div class="widgetTitle" >
     <h5>
-        <i class="glyphicon glyphicon-ok"></i> TIPO ASEGURADORA    </h5>
+        <i class="glyphicon glyphicon-ok"></i> CREAR TIPO DE ASEGURADORA    </h5>
 </div>
 <div class='well'>
 <form action="<?php echo base_url('index.php/').'/Tipo_aseguradora/consult_tipo_aseguradora'; ?>" method="post" >
     <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                     <label for="TipAse_Nombre">
                     Tipo aseguradora                        </label>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     
                                         <script>
                         $('document').ready(function() {
@@ -23,24 +23,6 @@
                                             <br>
                 </div>
 
-                            <div class="col-md-3">
-                    <label for="ase_id">
-                    Aseguradora                        </label>
-                </div>
-                <div class="col-md-3">
-                    
-                                        <script>
-                        $('document').ready(function() {
-                            $('#ase_id').autocomplete({
-                                source: "<?php echo base_url("index.php//Tipo_aseguradora/autocomplete_ase_id") ?>",
-                                minLength: 3
-                            });
-                        });
-                    </script>
-                                            <input type="text" value="<?php echo (isset($post['ase_id'])?$post['ase_id']:'' ) ?>" class="form-control obligatorio  " id="ase_id" name="ase_id">
-                                            <br>
-                </div>
-
                 </div>
     <button class="btn btn-success">Consultar</button>
 </form>
@@ -50,7 +32,6 @@
         <table class="table table-bordered">
             <thead>
                                     <th>Tipo aseguradora</th>
-                                    <th>Aseguradora</th>
                             <th>Acción</th>
             </thead>
             <tbody>

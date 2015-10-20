@@ -8,7 +8,7 @@ class Tipoaseguradora_model extends CI_Model {
 
 
     function detail() {
-
+        $this->db->where("activo","S");
         $tipoaseguradora = $this->db->get("tipo_aseguradora");
         return $tipoaseguradora->result();
     }

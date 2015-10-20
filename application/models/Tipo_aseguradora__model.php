@@ -34,25 +34,25 @@ class Tipo_aseguradora__model extends CI_Model {
                     if(isset($post['TipAse_Nombre']))
         if($post['TipAse_Nombre']!="")
         $this->db->like('TipAse_Nombre',$post['TipAse_Nombre']);
-                    if(isset($post['ase_id']))
-        if($post['ase_id']!="")
-        $this->db->like('ase_id',$post['ase_id']);
                     if(isset($post['activo']))
         if($post['activo']!="")
         $this->db->like('activo',$post['activo']);
-//        $this->db->select('tipo_aseguradora.ase_id');
-        $this->db->where('tipo_aseguradora.ACTIVO','S');
-        $this->db->select("tipo_aseguradora.TipAse_Nombre");                
-        $this->db->select("aseguradoras.ase_nombre");                
-        $this->db->join("aseguradoras","aseguradoras.ase_id = tipo_aseguradora.ase_id");                
+                                    $this->db->select('TipAse_Nombre');
+                        $this->db->where('ACTIVO','S');
         $datos=$this->db->get('tipo_aseguradora');
         $datos=$datos->result();
         return $datos;
     }
-    function aseguradoras(){
+    function validatipoaseguradora($nombre){
         
-        $data = $this->db->get("aseguradoras");
+        $this->db->where("TipAse_Nombre",$nombre);
+        $data = $this->db->get("tipo_aseguradora");
         return $data->result();
+    }
+    function aseguradoras(){
+        $this->db->where("activo","S");
+        $aseguradora = $this->db->get("aseguradoras");
+        return $aseguradora->result();
     }
 }
 ?>

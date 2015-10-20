@@ -35,8 +35,10 @@ class Empleado_model extends CI_Model {
         $this->db->delete("empleado");
     }
 
-    function filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos) {
+    function filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos,$tipocontrato) {
 
+        if (!empty($tipocontrato))
+            $this->db->where('tipo_contrato.TipCon_Id', $tipocontrato);
         if (!empty($cedula))
             $this->db->where('Emp_Cedula', $cedula);
         if (!empty($nombre))
@@ -110,6 +112,13 @@ class Empleado_model extends CI_Model {
         }
         $usuario = $this->db->get("empleado", 1);
         return $usuario->result();
+    }
+    
+    function validacedula($cedula){
+        
+        $this->db->where("Emp_Cedula",$cedula);
+        $empleado = $this->db->get("empleado");
+        return $empleado->result();
     }
 
     function empleado_registro($post) {

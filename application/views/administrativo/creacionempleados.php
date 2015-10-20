@@ -1,6 +1,6 @@
 <div class="widgetTitle" >
     <h5>
-        <i class="glyphicon glyphicon-ok"></i>CREACIÓN EMPLEADO
+        <a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>" class="btn btn-default">NUEVO</a>CREACIÓN EMPLEADO
     </h5>
 </div>
 <div class='well'>
@@ -248,9 +248,7 @@
                                         <label>Nombre Aseguradora:</label>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                        <select name="nombreaseguradora[]" class="form-control nombreaseguradora">
-                                            <option value="">::Seleccionar::</option>
-                                        </select>
+                                        <input type="text" name="nombreaseguradora[]" class="form-control nombreaseguradora">
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                                         <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
@@ -282,17 +280,7 @@
                                             <label>Nombre Aseguradora:</label>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                            <select name="nombreaseguradora[]" class="form-control nombreaseguradora">
-                                                <?php
-                                                $option = "";
-                                                foreach ($aseguradoras as $ase):
-                                                    if ($as->ase_id == $ase->ase_id) {
-                                                        $option .= "<option value='" . $ase->ase_id . "' selected >" . $ase->ase_nombre . "</option>";
-                                                    }
-                                                endforeach;
-                                                echo $option;
-                                                ?>
-                                            </select>
+                                            <input type="text" name="nombreaseguradora[]" class="form-control nombreaseguradora" value="<?php echo $as->ase_id ?>">
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
                                             <button type="button" class="btn btn-danger eliminaraseguradora" >X</button>
@@ -472,6 +460,24 @@ endforeach;
 ?>
 <script>
 
+$('#cedula').change(function(){
+    var data = $(this);
+    $.post(
+            "<?php echo base_url("index.php/administrativo/validarcedula") ?>",
+            {cedula : $(this).val()}
+            ).done(function(msg){
+                if(msg == 1 ){
+                    data.val("");
+                    data.focus();
+                    alerta("amarillo","Empleado ya existe en el sistema")
+                }
+            })
+            .fail(function(msg){
+                
+            });
+    
+});
+
     $('body').delegate(".eliminaraseguradora", "click", function () {
 //        console.log($(this).parent().parent().lenght);
 //        if ($(this).parent().parent().lenght > 2) {
@@ -499,9 +505,7 @@ endforeach;
         cuerpo += '</div>';
         //campo select
         cuerpo += '<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">';
-        cuerpo += '<select name="nombreaseguradora[]" class="form-control nombreaseguradora">';
-        cuerpo += '<option value="">::Seleccionar::</option>';
-        cuerpo += '</select>'
+        cuerpo += '<input type="text" name="nombreaseguradora[]" class="form-control nombreaseguradora">';
         cuerpo += '</div>';
         //campo eliminar
         cuerpo += '<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">';
@@ -617,28 +621,28 @@ endforeach;
 
     });
 
-    $("body").on("change", ".tipoaseguradora", function () {
-        var filaSeleccioanda = $(this).parents(".row");
-        var id = $(this).val();
-        $.post("<?php echo base_url("index.php/administrativo/consultaaseguradoras") ?>",
-                {id: id})
-                .done(function (msg) {
-                    filaSeleccioanda.find(".nombreaseguradora").find("option").remove()
-                    var aseguradora = "<option value=''>::Seleccionar::</option>";
-                    var i = 0;
-                    $.each(msg, function (key, val) {
-                        aseguradora += "<option value='" + val.ase_id + "'>" + val.ase_nombre + "</option>"
-                        i++
-                    });
-                    if (i == 0)
-                        aseguradora += "<option value=''>Sin Datos</option>";
-                    filaSeleccioanda.find(".nombreaseguradora").append(aseguradora);
-                })
-                .fail(function (msg) {
-                    alert("Error en la operación");
-                });
-
-    });
+//    $("body").on("change", ".tipoaseguradora", function () {
+//        var filaSeleccioanda = $(this).parents(".row");
+//        var id = $(this).val();
+//        $.post("<?php echo base_url("index.php/administrativo/consultaaseguradoras") ?>",
+//                {id: id})
+//                .done(function (msg) {
+//                    filaSeleccioanda.find(".nombreaseguradora").find("option").remove()
+//                    var aseguradora = "<option value=''>::Seleccionar::</option>";
+//                    var i = 0;
+//                    $.each(msg, function (key, val) {
+//                        aseguradora += "<option value='" + val.ase_id + "'>" + val.ase_nombre + "</option>"
+//                        i++
+//                    });
+//                    if (i == 0)
+//                        aseguradora += "<option value=''>Sin Datos</option>";
+//                    filaSeleccioanda.find(".nombreaseguradora").append(aseguradora);
+//                })
+//                .fail(function (msg) {
+//                    alert("Error en la operación");
+//                });
+//
+//    });
 
     $('#guardar').click(function () {
 

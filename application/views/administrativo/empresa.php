@@ -5,13 +5,17 @@
                 <i class="fa fa-cogs"></i>EMPRESA
             </div>
             <div class="tools">
-                <a href="javascript:;" class="collapse" data-original-title="" title="">
+<!--                <a href="javascript:;" class="collapse" data-original-title="" title="">
                 </a>
                 <a href="javascript:;" class="remove" data-original-title="" title="">
-                </a>
+                </a>-->
+<button type="button" id="guardar" class="btn btn-default">Guardar</button>
             </div>
         </div>
         <div class="portlet-body">
+            <?php if(!empty($mensaje)){?>
+                            <p class="alert alert-info"  style='margin-top:10px;font-weight: bold;text-align: center;'><?php echo $mensaje ?></p>
+            <?php } ?>
             <!--<div class="row">-->
             <form method="post" id="f5" enctype="multipart/form-data" action="<?php echo base_url("index.php/administrativo/guardarempresa") ?>" >
                 <div class="row">
@@ -153,10 +157,6 @@
                             <a href="<?php echo base_url("index.php/administrativo/organigrama") ?>">
                                 Ver organigrama </a>
                         </li>
-                        <li>
-                            <a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>">
-                                Ver Empleados </a>
-                        </li> 
                     </ul>
                 </div>
                 <div class="btn-group dropup">
@@ -181,7 +181,7 @@
         </div>
     </div>
 </div>
-<script>
+<script>    
 
     $('.dirigir').click(function () {
 

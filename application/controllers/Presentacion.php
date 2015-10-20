@@ -343,13 +343,13 @@ class Presentacion extends My_Controller {
     }
 
     function rol() {
-        if ($this->consultaacceso($this->data["usu_id"])):
+//        if ($this->consultaacceso($this->data["usu_id"])):
             $this->data['roles'] = $this->Roles_model->rolxusuario($this->session->userdata('usu_id'));
             $this->layout->view("presentacion/rol", $this->data);
-            else:
-            $this->layout->view("permisos");
-            
-        endif;
+//            else:
+//            $this->layout->view("permisos");
+//            
+//        endif;
     }
 
     function guardarroldefecto() {
