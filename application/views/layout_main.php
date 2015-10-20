@@ -206,14 +206,14 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
 					<div class="dashboard-stat blue-madison">
-						<a href="<?php echo base_url("index.php") ?>" class="more">
+						<a href="<?php echo base_url("index.php/indicador/verindicadores") ?>" class="more">
 						INDICADORES <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
 					<div class="dashboard-stat green-haze">
-						<a href="<?php echo base_url("index.php") ?>" class="more">
+						<a href="<?php echo base_url("index.php/riesgo/listadoriesgo") ?>" class="more">
 						RIESGO <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>
@@ -221,7 +221,7 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
 				<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
 					<div class="dashboard-stat green-haze">
 						
-						<a href="<?php echo base_url("index.php") ?>" class="more">
+						<a href="<?php echo base_url("index.php/documento/documento") ?>" class="more">
 						 DOCUMENTOS<i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>

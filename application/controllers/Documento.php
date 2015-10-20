@@ -18,7 +18,7 @@ class Documento extends My_Controller {
 
     function documento(){
         
-        
+        $this->layout->view("documento/documento");
         
     }
 
