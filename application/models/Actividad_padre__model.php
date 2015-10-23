@@ -50,5 +50,6 @@ class Actividad_padre__model extends CI_Model {
         return $datos->result();
         
     }
+    
 }
 ?>

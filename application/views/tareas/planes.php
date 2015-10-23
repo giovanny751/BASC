@@ -217,9 +217,8 @@
                                 foreach ($actividades as $id => $nom):
                                     foreach ($nom as $nombre => $num):
                                         ?>
-                                        <div class="panel panel-default">
+                                        <div class="panel panel-default" id="<?php echo $id ?>">
                                             <div class="panel-heading">
-
                                                 <h4 class="panel-title">
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $i; ?>" aria-expanded="false"> 
                                                         <?php echo $nombre ?>
@@ -230,6 +229,7 @@
                                                 <div class="panel-body">
                                                     <table class="table table-hover table-bordered">
                                                         <thead>
+                                                        <th>Nombre</th>
                                                         <th>Fecha inicio</th>
                                                         <th>Fecha fin</th>
                                                         <th>Presupuesto</th>
@@ -238,6 +238,7 @@
                                                         <tbody>
                                                             <?php foreach ($num as $numero => $campo): ?>
                                                                 <tr>
+                                                                    <td><?php echo $campo[4] ?></td>
                                                                     <td><?php echo $campo[0] ?></td>
                                                                     <td><?php echo $campo[1] ?></td>
                                                                     <td><?php echo $campo[2] ?></td>
@@ -273,8 +274,8 @@
                                         <i class="fa fa-gift"></i>Registro
                                     </div>
                                     <div class="tools">
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal4">NUEVA CARPETA</button>
-                                        <button type="button" class="btn btn-success" id="nuevoregistro" data-toggle="modal" data-target="#myModal15">NUEVO REGISTRO</button>
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal4">NUEVA CARPETA</button>
+                                        <button type="button" class="btn btn-default" id="nuevoregistro" data-toggle="modal" data-target="#myModal15">NUEVO REGISTRO</button>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -434,7 +435,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary" id="guardaractividadpadre">Guardar</button>
+                            <button type="button" class="btn btn-primary" id="btnguardarregistro">Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -651,6 +652,9 @@
 
     </div>
 
+
+    
+
     <script>
 
         $('#guardarcarpeta').click(function () {
@@ -658,7 +662,12 @@
                 $.post("<?php echo base_url("index.php/tareas/guardarcarpetaregistro") ?>",
                         $('#frmcarpetaregistro').serialize()
                         ).done(function (msg) {
-
+                    $('#carpeta *').remove();
+                    var option = "<option value=''>::Seleccionar::</option>";
+                    $.each(msg, function (key, val) {
+                        option += "<option value='" + val.regCar_id + "'>" + val.regCar_nombre + "</option>"
+                    });
+                    $('#carpeta').append(option);
                 }).fail(function (msg) {
 
                 });
@@ -687,72 +696,22 @@
                     "<?php echo base_url("index.php/tareas/guardaractividadhijo") ?>",
                     $('#f6').serialize()
                     ).done(function (msg) {
+                var body = "";
+                var id = "";
+                $.each(msg, function (key, val) {
+                    id = val.actHij_padreid;
+                    body += "<tr>";
+                    body += "<td>" + val.actHij_nombre + "</td>";
+                    body += "<td>" + val.actHij_fechaInicio + "</td>";
+                    body += "<td>" + val.actHij_fechaFinalizacion + "</td>";
+                    body += "<td>" + val.actHij_presupuestoTotal + "</td>";
+                    body += "<td>" + val.actHij_descripcion + "</td>";
+                    body += "</tr>";
+                });
+                $('#' + id).find('table tbody *').remove();
+                $('#' + id).find('table tbody').append(body);
+                $('#myModal8').hide();
                 $('#myModal8').find('input[type="text"],select,textarea').val("");
-
-
-                //            $('#datatable_ajax3').DataTable.ajax.url( "<?php echo base_url("index.php/tareas/listadotareasxactividadhijo") ?>" ).load();
-
-
-
-                //            grid.init({
-                //                src: $("#datatable_ajax3"),
-                //                onSuccess: function (grid) {
-                //                    // execute some code after table records loaded
-                //                },
-                //                onError: function (grid) {
-                //                    // execute some code on network or other general error  
-                //                },
-                //                onDataLoad: function (grid) {
-                //                    // execute some code on ajax data load
-                //                },
-                //                loadingMessage: 'Cargando...',
-                //                dataTable: {
-                //                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-                //                    "lengthMenu": [
-                //                        [10, 20, 50, 100, 150, -1],
-                //                        [10, 20, 50, 100, 150, "All"] // change per page values here
-                //                    ],
-                //                    "pageLength": 10, // default record count per page
-                //                    "ajax": {
-                //                        "url": "<?php echo base_url("index.php/tareas/listadotareasxactividadhijo") ?>", // ajax source
-                //                    },
-                //                    "order": [
-                //                        [1, "asc"]
-                //                    ]// set first column as a default sort by asc
-                //                }
-                //            });
-                //
-                //            // handle group actionsubmit button click
-                //            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
-                //                e.preventDefault();
-                //                grid.setAjaxParam("xyz", "1");
-                //                var action = $(".table-group-action-input", grid.getTableWrapper());
-                //                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
-                //                    grid.setAjaxParam("xyz", "group_action");
-                //                    grid.setAjaxParam("avaTar_fecha", action.val());
-                //                    grid.setAjaxParam("usu_id", grid.getSelectedRows());
-                //                    grid.getDataTable().ajax.reload();
-                //                    grid.clearAjaxParams();
-                //                } else if (action.val() == "") {
-                //                    Metronic.alert({
-                //                        type: 'danger',
-                //                        icon: 'warning',
-                //                        message: 'Please select an action',
-                //                        container: grid.getTableWrapper(),
-                //                        place: 'prepend'
-                //                    });
-                //                } else if (grid.getSelectedRowsCount() === 0) {
-                //                    Metronic.alert({
-                //                        type: 'danger',
-                //                        icon: 'warning',
-                //                        message: 'No record selected',
-                //                        container: grid.getTableWrapper(),
-                //                        place: 'prepend'
-                //                    });
-                //                }
-                //            });
-
-
                 alerta("verde", "Datos guardados correctamente");
             }).fail(function (msg) {
                 alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
@@ -890,20 +849,54 @@
         });
 
         $('#guardaractividadpadre').click(function () {
-
+            numero = $('#accordion1').last('div').attr("id");
             if (obligatorio('acobligatorio')) {
 
                 $.post("<?php echo base_url("index.php/tareas/guardaractividadpadre") ?>",
                         $('#formactividadpadre').serialize()
                         )
-                        .done(function () {
-                            $('.acobligatorio').val('')
+                        .done(function (msg) {
+                            $('.acobligatorio').val('');
+
+                                option = "<option value='" + msg.actPad_id + "'>" + msg.actPad_nombre + "</option>"
+                                $('#idpadre').append(option);
+                                
+                            var acordeon = '<div class="panel panel-default" id="'+msg.actPad_id+'">\n\
+                                                <div class="panel-heading">\n\
+                                                    <h4 class="panel-title">\n\
+                                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_'+msg.actPad_id+'" aria-expanded="false">\n\
+                                                            '+msg.actPad_nombre+'\n\
+                                                        </a>\n\
+                                                    </h4>\n\
+                                                </div>\n\
+                                                <div id="collapse_'+msg.actPad_id+'" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
+                                                    <div class="panel-body">\n\
+                                                        <table class="table table-hover table-bordered">\n\
+                                                            <thead>\n\
+                                                                <th>Nombre</th>\n\
+                                                                <th>Fecha inicio</th>\n\
+                                                                <th>Fecha fin</th>\n\
+                                                                <th>Presupuesto</th>\n\
+                                                                <th>Descripción</th>\n\
+                                                            </thead> \n\
+                                                            <tbody>\n\
+                                                                <tr>\n\
+                                                                    <td colspan="5">\n\
+                                                                        <center><b>Agregar Actividad Hijo</b></center>\n\
+                                                                    </td>\n\
+                                                                </tr>\n\
+                                                            </tbody>\n\
+                                                        </table>\n\
+                                                    </div>\n\
+                                                </div>\n\
+                                        </div>';    
+                            $('#accordion1').append(acordeon);
+                            
                             alerta("verde", "Actividad padre guardada con exito");
                         })
                         .fail(function () {
                             alerta("error", "Error por favor comunicarse con el administrador del sistema");
                         })
-
             }
 
         });
@@ -963,8 +956,8 @@
             if (obligatorio('obligatorio') == true) {
                 $.post(
                         "<?php
-        echo (empty($plan[0]->pla_id)) ? base_url('index.php/tareas/guardarplan') : base_url('index.php/tareas/actualizarplan');
-        ?>",
+                        echo (empty($plan[0]->pla_id)) ? base_url('index.php/tareas/guardarplan') : base_url('index.php/tareas/actualizarplan');
+                        ?>",
                         $('#f7').serialize()
                         ).done(function (msg) {
                     if ($(this).text() == "Actualizar") {

@@ -297,6 +297,8 @@ class Tareas extends My_Controller {
                 "actHij_fechaCreacion" => date("Y-m-d H:i:s")
             );
             $this->Actividad_model->create($data);
+            $data = $this->Actividad_model->search($this->input->post("idpadre"));
+            $this->output->set_content_type('application/json')->set_output(json_encode($data));
         } catch (exception $e) {
             
         }
@@ -330,7 +332,8 @@ class Tareas extends My_Controller {
                        $ac->actHij_fechaInicio ,
                        $ac->actHij_fechaFinalizacion ,
                        $ac->actHij_presupuestoTotal ,
-                       $ac->actHij_descripcion 
+                       $ac->actHij_descripcion,
+                       $ac->actHij_nombre 
                     );
                 }
                 $this->data["actividades"] = $i;
@@ -389,6 +392,15 @@ class Tareas extends My_Controller {
             $this->Actividadpadre_model->create(
                     $this->input->post("idactividad"), $this->input->post("nombreactividad"), $this->input->post("pla_id")
             );
+            $actividades = $this->Actividadpadre_model->searchregister(
+                    $this->input->post("idactividad"), 
+                    $this->input->post("nombreactividad"), 
+                    $this->input->post("pla_id")
+                    );
+            
+//            var_dump($actividades);die;
+            
+            $this->output->set_content_type('application/json')->set_output(json_encode($actividades[0]));
         } catch (exception $e) {
             
         }

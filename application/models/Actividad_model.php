@@ -16,6 +16,11 @@ class Actividad_model extends CI_Model {
         
         $this->db->insert_batch("actividad_hijo",$data);
     }
+    function search($idpadre){
+        $this->db->where("actHij_padreid",$idpadre);
+        $actividad = $this->db->get("actividad_hijo");
+        return $actividad->result();  
+    }
 
 
 }

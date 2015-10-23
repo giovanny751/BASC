@@ -12,8 +12,18 @@ class Registrocarpeta_model extends CI_Model {
         return $carpeta->result();
     }
     function detailxplan($pla_id){
+        
         $this->db->where("pla_id",$pla_id);
         $carpeta = $this->db->get("registro_carpeta");
+        return $carpeta->result();
+    }
+    function detailxplannombre($pla_id,$nombre,$descripcion){
+        
+        $this->db->where("regCar_nombre",$nombre);
+        $this->db->where("regCar_descripcion",$descripcion);
+        $this->db->where("pla_id",$pla_id);
+        $carpeta = $this->db->get("registro_carpeta");
+        echo $this->db->last_query();die;
         return $carpeta->result();
     }
 
