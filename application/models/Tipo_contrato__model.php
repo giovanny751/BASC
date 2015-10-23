@@ -43,5 +43,10 @@ class Tipo_contrato__model extends CI_Model {
         $datos=$datos->result();
         return $datos;
     }
+    function exist($name){
+        $this->db->where("TipCon_Descripcion",$name);
+        $tipo = $this->db->get("tipo_contrato");
+        return $tipo->result();
+    }
 }
 ?>

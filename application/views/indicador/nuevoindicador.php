@@ -38,14 +38,14 @@
                 </div>
             </div>
             <div class="row">
-                <form method="post" id="frmIndicador">
+                <form method="post" id="indicador">
                     <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6 ">
                         <div class="row">
                             <label for="indicador" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
                                 <span class="campoobligatorio">*</span>Indicador
                             </label>
                             <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">    
-                                <input type="text" name="indicador" id="indicador" class="form-control obligatorio">
+                                <input type="text" name="indicador" id="indicador" class="form-control">
                             </div>
                         </div>
                         <div class="row">
@@ -53,7 +53,7 @@
                                 Tipo
                             </label>
                             <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">       
-                                <select name="tipo" id="tipo" class="form-control" >
+                                <select name="tipo" id="tipo" class="form-control obligatorio" >
                                     <option value="">::Seleccionar::</option>
                                     <?php foreach ($tipo as $t) { ?>
                                         <option value="<?php echo $t->tip_id ?>"><?php echo $t->tip_tipo ?></option>
@@ -66,7 +66,7 @@
                                 <span class="campoobligatorio">*</span>Que Mide
                             </label>   
                             <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                                <textarea name="mide" id="mide" class="form-control obligatorio"></textarea>
+                                <textarea name="mide" id="mide" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row">
@@ -100,7 +100,7 @@
                                 <span class="campoobligatorio">*</span>Frecuencia
                             </label>   
                             <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                                <input type="text" name="frecuencia" id="frecuencia" class="form-control obligatorio">
+                                <input type="text" name="frecuencia" id="frecuencia" class="form-control">
                             </div>
                         </div>
                         <div class="row">    
@@ -149,7 +149,7 @@
                                 <span class="campoobligatorio">*</span>Estado
                             </label> 
                             <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                                <select name="estado" id="estado" class="form-control obligatorio" >
+                                <select name="estado" id="estado" class="form-control" >
                                     <option value="">::Seleccionar::</option>
                                     <?php foreach ($estados as $e) { ?>
                                         <option value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
@@ -162,7 +162,7 @@
                                 <span class="campoobligatorio">*</span>Objetivo
                             </label>
                             <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                                <textarea id="objetivo" name="objetivo" class="form-control obligatorio"></textarea>
+                                <textarea id="objetivo" name="objetivo" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="row">
@@ -369,16 +369,16 @@
 
     });
     $("#guardar").click(function () {
-        if(obligatorio('obligatorio')){
+
         $.post("<?php echo base_url("index.php/indicador/guardarindicador") ?>"
-                , $("#frmIndicador").serialize()
+                , $("#riesgos").serialize()
                 ).done(function (msg) {
 
         })
                 .fail(function (msg) {
 
                 });
-        }
+
     });
     $('#cargo').change(function () {
 

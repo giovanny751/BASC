@@ -37,31 +37,6 @@ class Indicador extends My_Controller {
             redirect('index.php/administrativo/empresa', 'location');
         }
     }
-    
-    function guardarindicador(){
-        try{
-        $this->load->model('Indicador_model');
-        $data = array(
-            "car_id" => $this->input->post("cargo"),
-            "dimdos_id" => $this->input->post("dimensiondos"),
-            "dim_id" => $this->input->post("dimensionuno"),
-            "est_id" => $this->input->post("estado"),
-            "ind_frecuencia" => $this->input->post("frecuencia"),
-            "ind_indicador" => $this->input->post("indicador"),
-            "ind_maximo" => $this->input->post("maximo"),
-            "ind_mide" => $this->input->post("mide"),
-            "ind_minimo" => $this->input->post("minimo"),
-            "emp_id" => $this->input->post("nombreempleado"),
-            "ind_objetivo" => $this->input->post("objetivo"),
-            "ind_observaciones" => $this->input->post("observaciones"),
-            "tip_id" => $this->input->post("tipo")
-        );
-        $this->Indicador_model->create($data);
-        }  catch (exception $e){
-            
-        }
-        
-    }
 
     function verindicadores() {
         $this->load->model('Tipo_model');
@@ -71,14 +46,6 @@ class Indicador extends My_Controller {
         $this->data['dimension2'] = $this->Dimension2_model->detail();
         $this->data['tipo'] = $this->Tipo_model->detail();
         $this->layout->view("indicador/verindicadores", $this->data);
-    }
-    function listaindicadores(){
-
-        $this->load->model('Indicador_model');
-        $data = $this->Indicador_model->search($this->input->post("tipo"),
-        $this->input->post("dimension"),
-        $this->input->post("dimensiondos"));
-        $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
 }

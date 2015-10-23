@@ -39,7 +39,14 @@ class Administrativo extends My_Controller {
                 $this->data["aserguradorasxempleado"] = $this->Empleadotipoaseguradora_model->consult_empleado($this->input->post('emp_id'));
 //                var_dump($this->data["aserguradorasxempleado"]);die;
                 $this->data["carpeta"] = $this->Empleadocarpeta_model->detail();
-                $this->data["registro"] = $this->Empleadoregistro_model->detail();
+                $registro = $this->Empleadoregistro_model->detail();
+                
+                $i = array();
+                foreach($registro as $campo){
+                    $i[$campo->empCar_id][$campo->empCar_nombre][] = array($campo->nombreempleado,$campo->empReg_archivo,$campo->empReg_descripcion,$campo->empReg_version,$campo->empReg_id);
+                }
+                $this->data['registro'] = $i;
+                
             }
             $this->data['empresa'] = $this->Empresa_model->detail();
             if ((!empty($this->data['empresa'][0]->Dim_id)) && (!empty($this->data['empresa'][0]->Dimdos_id))) {

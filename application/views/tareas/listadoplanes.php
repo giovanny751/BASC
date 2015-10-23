@@ -11,36 +11,33 @@
 
         </div>
         <div class="row">
-            <div class="form-group">
-                <label class="col-md-2 control-label">Estado</label>
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <div class="input-icon">
-                            <select id="estado" name="estado" class="form-control">
-                                <option value="">::Seleccionar::</option>
-                                <option value="1">Activos</option>
-                                <option value="2">Inactivos</option>
-                                <option value="3">Finalizados</option>
-                            </select> 
-                        </div>
-                    </div>
-                </div>
-                <label class="col-md-2 control-label">Responsable</label>
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <div class="input-icon">
-                            <select id="responsable" name="responsable" class="form-control">
-                                <option value="">::Seleccionar::</option>
-                                <?php foreach ($responsable as $re) { ?>
-                                    <option value="<?php echo $re->Emp_Id ?>"><?php echo $re->Emp_Nombre . " " . $re->Emp_Apellidos ?></option>
-                                <?php } ?>
-                            </select> 
-                        </div>
-                        <span class="input-group-btn">
-                            <button id="consultar" class="btn btn-success" type="button"><i class="fa fa-arrow-left fa-fw"></i> Consultar</button>
-                        </span>
-                    </div>
-                </div>
+            <div class="col-md-3">
+                <label class="control-label">Nombre</label>
+                <input type="text" id="nombre" name="nombre" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">Estado</label>
+                <select id="estado" name="estado" class="form-control">
+                    <option value="">::Seleccionar::</option>
+                    <option value="1">Activos</option>
+                    <option value="2">Inactivos</option>
+                    <option value="3">Finalizados</option>
+                </select> 
+            </div>
+
+            <div class="col-md-3">
+                <label class="control-label">Responsable</label>
+                <select id="responsable" name="responsable" class="form-control">
+                    <option value="">::Seleccionar::</option>
+                    <?php foreach ($responsable as $re) { ?>
+                        <option value="<?php echo $re->Emp_Id ?>"><?php echo $re->Emp_Nombre . " " . $re->Emp_Apellidos ?></option>
+                    <?php } ?>
+                </select> 
+
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">&nbsp;.</label>
+                <button id="consultar" class="btn btn-success" type="button"><i class="fa fa-arrow-left fa-fw"></i> Consultar</button>
             </div>
 
             <!--            <div class="col-lg-2 col-sx-2">
@@ -50,7 +47,7 @@
                             <select id="estado" name="estado" class="form-control">
                                 <option value="">::Seleccionar::</option>
             <?php foreach ($estados as $e) { ?>
-                                        <option value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
+                                                            <option value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
             <?php } ?>
                             </select>    
                         </div>
@@ -109,10 +106,10 @@
 //        source: "<?php echo base_url("index.php/tareas/autocompletarfechainicio") ?>",
 //        minLength: 3
 //    });
-//    $('#nombre').autocomplete({
-//        source: "<?php echo base_url("index.php/tareas/autocompletarresponsable") ?>",
-//        minLength: 3
-//    });
+    $('#nombre').autocomplete({
+        source: "<?php echo base_url("index.php/tareas/autocompletarresponsable") ?>",
+        minLength: 3
+    });
 //    $('.limpiar').click(function () {
 //        $('select,input').val('');
 //    });
@@ -127,9 +124,9 @@
                 body += "<td>" + val.pla_nombre + "</td>";
                 body += "<td>" + val.pla_fechaInicio + "</td>";
                 body += "<td>" + val.pla_fechaFin + "</td>";
+                body += "<td></td>";
                 body += "<td>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</td>";
                 body += "<td>" + val.pla_presupuesto + "</td>";
-                body += "<td></td>";
                 body += "<td>" + val.pla_descripcion + "</td>";
                 body += "<td></td>";
                 body += '<td><i class="fa fa-times eliminar btn btn-danger" title="Eliminar" pla_id="' + val.pla_id + '"></i>\n\

@@ -8,8 +8,8 @@
             <select id="tabla" class="form-control" name="tabla">
                 <option value="">::Seleccionar::</option>
                 <?php foreach ($tablas as $value) { ?>
-                    <option value="<?php echo $value->Tables_in_basc  ?>">
-                        <?php echo $value->Tables_in_basc ?>
+                    <option value="<?php echo $value->Tables_in_gyy  ?>">
+                        <?php echo $value->Tables_in_gyy ?>
                     </option>
                 <?php } ?>
             </select>

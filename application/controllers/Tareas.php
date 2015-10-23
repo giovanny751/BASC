@@ -73,8 +73,8 @@ class Tareas extends My_Controller {
         $orden = $this->input->post("order[0][column]");
         $inicia = intval($_REQUEST['start']);
 //        $this->data['tareaxplan'] = $this->Planes_model->tareaxplan(1,$cantidad,$orden,$inicia);
-        $tabla = $this->Planes_model->tareaxplan(6, $cantidad, $orden, $inicia);
-        $alldatacount = $this->Planes_model->tareaxplancount(6, $cantidad, $orden, $inicia);
+        $tabla = $this->Planes_model->tareaxplan(7, $cantidad, $orden, $inicia);
+        $alldatacount = $this->Planes_model->tareaxplancount(7, $cantidad, $orden, $inicia);
         $data = array();
         $data['data'] = arregloconsulta($tabla);
         $data["draw"] = intval($_REQUEST['draw']);
@@ -310,9 +310,33 @@ class Tareas extends My_Controller {
             $this->load->model("Planes_model");
             $this->load->model("Norma_model");
             $this->load->model("Notificacion_model");
+            $this->load->model("Actividad_padre__model");
+            $this->load->model("Registrocarpeta_model");
             $this->data['plan'] = array();
             if (!empty($this->input->post('pla_id'))) {
+                $carpeta = $this->Registrocarpeta_model->detailxplan($this->input->post('pla_id'));
+                $this->data['carpetas'] = $carpeta;
+                $d = array();
+                foreach($carpeta as $c){
+                    $d[$c->regCar_id][$c->regCar_nombre][] = array(1,1,1,1,5,5);
+                }
+                $this->data['carpeta'] = $d;
+                $this->data["actividadpadre"] = $this->Actividad_padre__model->detail($this->input->post('pla_id'));
                 $this->data['plan'] = $this->Planes_model->planxid($this->input->post('pla_id'));
+                $actividades = $this->Planes_model->actividadhijoxplan($this->input->post('pla_id'));
+                $i = array();
+                foreach($actividades as $ac){
+                    $i[$ac->actPad_id][$ac->actPad_nombre][] = array(
+                       $ac->actHij_fechaInicio ,
+                       $ac->actHij_fechaFinalizacion ,
+                       $ac->actHij_presupuestoTotal ,
+                       $ac->actHij_descripcion 
+                    );
+                }
+                $this->data["actividades"] = $i;
+                
+//                echo "<pre>";
+//                var_dump($this->data["actividades"]);die;
             }
             $this->data['notificacion'] = $this->Notificacion_model->detail();
             $this->data['norma'] = $this->Norma_model->detail();
@@ -322,6 +346,16 @@ class Tareas extends My_Controller {
         else:
             $this->layout->view("permisos");
         endif;
+    }
+    function guardarcarpetaregistro(){
+        $this->load->model("Registrocarpeta_model");
+        $this->Registrocarpeta_model->create($this->input->post("nombrecarpeta"),
+        $this->input->post("descripcioncarpeta"),
+        $this->input->post("pla_id")
+               );
+        $data = $this->Registrocarpeta_model->detailxplan($this->input->post("pla_id"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+        
     }
 
     function actualizarplan() {
@@ -408,6 +442,7 @@ class Tareas extends My_Controller {
 //        $planes = $this->Planes_model->filtrobusqueda(
 //                $this->input->post("codigo"), $this->input->post("nombre"), $this->input->post("fecha"), $this->input->post("estado"), $this->input->post("responsable"));
         $planes = $this->Planes_model->filtrobusqueda(
+                 $this->input->post("nombre"),
                  $this->input->post("responsable"),
                  $this->input->post("estado")
                 );

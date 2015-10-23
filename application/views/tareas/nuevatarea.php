@@ -1,7 +1,7 @@
-<!--<script type="text/javascript">
+<script type="text/javascript">
         $(".menNUEVA_TAREA").addClass("active open");
         $(".subMenCREACIÓN_TAREAS").addClass("active");
-</script>-->
+</script>
 <div class="widgetTitle" >
     <h5>
         <i class="glyphicon glyphicon-ok"></i>NUEVA TAREA
@@ -46,8 +46,9 @@
                         <select name="plan" id="plan" class="form-control obligatorio" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($planes as $p) { ?>
-                            <option  <?php echo (!empty($pla_id) && $pla_id == $p->pla_id )?"selected":"";  echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : ""; ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
-                            <?php } ?>
+                                <option  <?php echo (!empty($pla_id) && $pla_id == $p->pla_id ) ? "selected" : "";
+                            echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : ""; ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -70,7 +71,7 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($dimension as $d1) { ?>
                                 <option  <?php echo (!empty($tarea->dim_id) && $tarea->dim_id == $d1->dim_id) ? "selected" : ""; ?> value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
-                            <?php } ?>
+<?php } ?>
                         </select> 
                     </div>
                 </div>
@@ -83,7 +84,7 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($dimension2 as $d2) { ?>
                                 <option  <?php echo (!empty($tarea->dim2_id) && $tarea->dim2_id == $d2->dim_id) ? "selected" : ""; ?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
-                            <?php } ?>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -96,7 +97,7 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($tipo as $t) { ?>
                                 <option  <?php echo (!empty($tarea->tip_id) && $tarea->tip_id == $t->tip_id) ? "selected" : ""; ?> value="<?php echo $t->tip_id ?>"><?php echo $t->tip_tipo ?></option>
-                            <?php } ?>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -105,7 +106,7 @@
                         <label for="norma">Artículos Norma</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <?php echo listaMultiple2("articulosnorma[]", "norma", "form-control", "norma", "nor_id", "nor_norma", null, null, null) ?>
+<?php echo listaMultiple2("articulosnorma[]", "norma", "form-control", "norma", "nor_id", "nor_norma", null, null, null) ?>
                     </div>
                 </div>
                 <div class="row">
@@ -150,7 +151,7 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($cargo as $c) { ?>
                                 <option  <?php echo (!empty($tarea->car_id) && $tarea->car_id == $c->car_id) ? "selected" : ""; ?> value="<?php echo $c->car_id ?>"><?php echo $c->car_nombre ?></option> 
-                            <?php } ?>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -187,7 +188,7 @@
                                     <option value="">::Seleccionar::</option>
                                     <?php foreach ($estados as $e) { ?>
                                         <option <?php echo (!empty($tarea->est_id) && $tarea->est_id == $e->est_id) ? "selected" : ""; ?>  value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
-                                    <?php } ?>
+<?php } ?>
                                 </select>
                             </div>
                         </div>
@@ -233,7 +234,7 @@
                             <option value=''>::Seleccionar::</option>
                             <?php foreach ($categoria as $ca) { ?>
                                 <option value="<?php echo $ca->rieCla_id ?>"><?php echo $ca->rieCla_categoria ?></option>
-                            <?php } ?>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -251,17 +252,17 @@
         </div>
 
     </form>
-    <?php if (!empty($tarea->tar_id)): ?>
+<?php if (!empty($tarea->tar_id)): ?>
         <div class="portlet box blue">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-gift"></i>AVANCES
                 </div>
                 <div class="tools">
-                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
+<!--                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
                     <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
                     <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
-                    <a class="remove" href="javascript:;" data-original-title="" title=""> </a>
+                    <a class="remove" href="javascript:;" data-original-title="" title=""> </a>-->
                 </div>
             </div>
             <div class="portlet-body">
@@ -281,20 +282,13 @@
                         <div id="tab1" class="tab-pane active">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <!-- <div class="note note-danger">
-                                        <p>
-                                    <!-- NOTE: The below datatable is not connected to a real database so the filter and sorting is just simulated for demo purposes only.
-                                </p>
-                            </div>
-                                    -->
-                                    <!-- Begin: life time stats -->
                                     <div class="portlet">
-
                                         <div class="portlet-body">
                                             <div class="table-container">
                                                 <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                                                     <thead>
                                                         <tr role="row" class="heading">
+                                                            <th>Editar</th>
                                                             <th>Fecha</th>
                                                             <th>Resumen</th>
                                                             <th>Usuario</th>
@@ -309,56 +303,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                        <!--                                    <td>
-                                                                <input type="text" class="form-control form-filter input-sm" name="order_id">
-                                                            </td>
-                                                            <td>
-                                                                <div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
-                                                                    <input type="text" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
-                                                                    <input type="text" class="form-control form-filter input-sm" readonly name="order_date_to" placeholder="To">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control form-filter input-sm" name="order_customer_name">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control form-filter input-sm" name="order_ship_to">
-                                                            </td>
-                                                            <td>
-                                                                <div class="margin-bottom-5">
-                                                                    <input type="text" class="form-control form-filter input-sm" name="order_price_from" placeholder="From"/>
-                                                                </div>
-                                                                <input type="text" class="form-control form-filter input-sm" name="order_price_to" placeholder="To"/>
-                                                            </td>
-                                                            <td>
-                                                                <div class="margin-bottom-5">
-                                                                    <input type="text" class="form-control form-filter input-sm margin-bottom-5 clearfix" name="order_quantity_from" placeholder="From"/>
-                                                                </div>
-                                                                <input type="text" class="form-control form-filter input-sm" name="order_quantity_to" placeholder="To"/>
-                                                            </td>
-                                                            <td>
-                                                                <select name="order_status" class="form-control form-filter input-sm">
-                                                                    <option value="">Select...</option>
-                                                                    <option value="pending">Pending</option>
-                                                                    <option value="closed">Closed</option>
-                                                                    <option value="hold">On Hold</option>
-                                                                    <option value="fraud">Fraud</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <div class="margin-bottom-5">
-                                                                    <button class="btn btn-sm yellow filter-submit margin-bottom"><i class="fa fa-search"></i> Search</button>
-                                                                </div>
-                                                                <button class="btn btn-sm red filter-cancel"><i class="fa fa-times"></i> Reset</button>
-                                                            </td>-->
+                                                            <td></td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -393,7 +338,7 @@
                                                     <option value="">::Seleccionar::</option>
                                                     <?php for ($i = 1; $i < 101; $i++) { ?>
                                                         <option value="<?php echo $i; ?>"><?php echo $i . " " . "%"; ?></option>
-                                                    <?php } ?>
+    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -424,7 +369,7 @@
                                         <div class="row">
                                             <center><h4>Notificar a:</h4></center>
                                         </div>
-                                        <?php foreach ($notificacion as $n): ?>
+    <?php foreach ($notificacion as $n): ?>
                                             <div class="row">
                                                 <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
                                                     <label for="creotarea"><?php echo $n->not_notificacion ?></label>
@@ -433,7 +378,7 @@
                                                     <input type="checkbox" name="notificar[]" value="<?php echo $n->not_id ?>" id="creotarea" class="form-control avance">
                                                 </div>
                                             </div>
-                                        <?php endforeach; ?>
+    <?php endforeach; ?>
                                     </div>
 
                                 </div>
@@ -491,7 +436,7 @@
                                         <option value="">::Seleccionar::</option>
                                         <?php foreach ($planes as $p) { ?>
                                             <option  <?php echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : ""; ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
-                                        <?php } ?>
+    <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -553,38 +498,39 @@
                 </div>
             </div>
         </div>
-        
-    <?php endif; ?>
+
+<?php endif; ?>
     <input type="hidden" id="tareid" name="tareid" />
 
 
 
-</div>
-
-
+</div> 
+<form method="post" id="frmplan" action="<?php echo base_url("index.php/tareas/planes") ?>">
+            <input type="hidden" name="pla_id" id="planantiguo" value="<?php echo (!empty($pla_id)) ? $pla_id : ""; ?>">
+</form>
 <script>
     jQuery(document).ready(function () {
         TableAjax.init();
 
     });
 
-    $('#clasificacionriesgo').change(function(){
-        
+    $('#clasificacionriesgo').change(function () {
+
         $.post(
                 "<?php echo base_url("index.php/riesgo/consultatiporiesgoxclasificacion") ?>",
-                {categoria : $(this).val()}
-                )
-                .done(function(msg){
+                {categoria: $(this).val()}
+        )
+                .done(function (msg) {
                     $('#tiposriesgos *').remove();
                     var option = "<option value=''>::Seleccionar::</option>";
-                    $.each(msg,function(key,val){
-                        option += "<option value='"+val.rieClaTip_id+"'>"+val.rieClaTip_tipo+"</option>";
+                    $.each(msg, function (key, val) {
+                        option += "<option value='" + val.rieClaTip_id + "'>" + val.rieClaTip_tipo + "</option>";
                     });
                     $('#tiposriesgos').append(option);
-                }).fail(function(msg){
-                    alerta("rojo","fallo al traer los tipos de riesgo");
-                });
-        
+                }).fail(function (msg) {
+            alerta("rojo", "fallo al traer los tipos de riesgo");
+        });
+
     });
 
     var TableAjax = function () {
@@ -722,25 +668,31 @@
             window.location = "<?php echo base_url("index.php/tareas/listadotareas"); ?>";
         }
     });
-    $('#guardartarea').click(function () {
+    $('document').ready(function(){
+        $('#guardartarea').click(function () {
 
-        if (obligatorio("obligatorio")) {
-            $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
-                    $('#f8').serialize()
-                    ).done(function (msg) {
-                $("#fechacreacion").val(msg.tar_fechaCreacion)
-                $("#fechamodificacion").val(msg.tar_fechaUltimaMod)
-                alerta("verde", "Datos guardados correctamente");
-                if ($("#interno").val() == "") {
-                    $('input,select,textarea').val("");
-                }
-
-            }).fail(function (msg) {
-                alerta("rojo", "Error por favor comunicarse con el administrador");
-            });
-        }
-
+            if (obligatorio("obligatorio")) {
+                $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
+                        $('#f8').serialize()
+                        ).done(function (msg) {
+                    $("#fechacreacion").val(msg.tar_fechaCreacion)
+                    $("#fechamodificacion").val(msg.tar_fechaUltimaMod)
+                    alerta("verde", "Datos guardados correctamente");
+                    if ($('#planantiguo').val() != "") {
+                        $('#frmplan').submit();
+                    }else if ($("#interno").val() == "") {
+                        $('input,select,textarea').val("");
+                    }
+                    alert("paso por aca"+$('#planantiguo').val());
+                    
+                }).fail(function (msg) {
+                    alerta("rojo", "Error por favor comunicarse con el administrador");
+                });
+            }
+        });
+    
     });
+    
     $('#cargo').change(function () {
 
         $.post(
@@ -749,7 +701,7 @@
                     cargo: $(this).val()
                 }
         ).done(function (msg) {
-            var data = "";
+            var data = "<option value=''>::Seleccionar::</option>";
             $('#nombreempleado *').remove();
             $.each(msg, function (key, val) {
                 data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"

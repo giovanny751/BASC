@@ -15,17 +15,17 @@ class Planes_model extends CI_Model {
          $this->db->insert_batch("planes",$data);
     }
 //    function filtrobusqueda($codigo,$nombre,$fecha,$estado,$responsable){
-    function filtrobusqueda($responsable,$estado){
+    function filtrobusqueda($nombre,$responsable,$estado){
 //        $this->db->where('planes.est_id !=',3);
 //        if(!empty($nombre))$this->db->where('pla_nombre',$nombre);
 //        if(!empty($fecha))$this->db->where('pla_fechaInicio',$fecha);
-//        if(!empty($estado))$this->db->where('est_id',$estado);
+        if(!empty($nombre))$this->db->where('pla_nombre',$nombre);
         if(!empty($responsable))$this->db->where('planes.emp_id',$responsable);
         if(!empty($estado))$this->db->where("planes.est_id",$estado);
         $this->db->select("planes.*");
         $this->db->select("empleado.Emp_Nombre");
         $this->db->select("empleado.Emp_Apellidos");
-        $this->db->join("empleado","empleado.Emp_id = planes.emp_id"); 
+        $this->db->join("empleado","empleado.Emp_id = planes.emp_id","LEFT"); 
         $planes = $this->db->get("planes");
         return $planes->result();
     }
@@ -60,32 +60,20 @@ class Planes_model extends CI_Model {
         
     }
     
-    function actividadhijoxplan($id, $cantidad = null, $orden,$inicia = null){
+    function actividadhijoxplan($id){
         
-        if (!empty($orden)):
-            $data = array(
-                "actHij_padreid",
-                "actHij_fechaInicio",
-                "actHij_fechaFinalizacion",
-                "actHij_presupuestoTotal",
-                "actHij_descripcion"
-            );
-            $this->db->order_by($data[$orden], "asc");
-        endif;
-        if($cantidad == -1)$cantidad = "";
         
+        $this->db->select("actividad_padre.actPad_id");
+        $this->db->select("actividad_padre.actPad_nombre");
         $this->db->select("actividad_hijo.actHij_padreid");
         $this->db->select("actividad_hijo.actHij_fechaInicio");
         $this->db->select("actividad_hijo.actHij_fechaFinalizacion");
         $this->db->select("actividad_hijo.actHij_presupuestoTotal");
         $this->db->select("actividad_hijo.actHij_descripcion");
-        $this->db->where("planes.pla_id",$id);
-        $this->db->join("actividad_hijo","actividad_hijo.pla_id = planes.pla_id");
-        if(!empty($inicia))
-        $planes = $this->db->get("planes",$inicia ,$cantidad);
-        else
-            $planes = $this->db->get("planes",$cantidad);
-        
+        $this->db->where("actividad_padre.pla_id",$id);
+//        $this->db->join("planes","actividad_padre.pla_id = planes.pla_id","LEFT"); 
+        $this->db->join("actividad_hijo","actividad_hijo.actHij_padreid = actividad_padre.actPad_id","LEFT");
+        $planes = $this->db->get("actividad_padre");
 //        echo $this->db->last_query();die;
         
         return $planes->result(); 

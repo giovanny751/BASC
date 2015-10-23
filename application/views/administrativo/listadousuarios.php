@@ -142,9 +142,9 @@
         $.post("<?= base_url('index.php/presentacion/guardarpermisos') ?>",
                 $('#f15').serialize()
                 ).done(function () {
-
+                   $('#myModal3').hide(); 
         }).fail(function () {
-
+            alerta("rojo","Error, por favor comunicarse con el administrador del sistema");
         })
 
 
@@ -177,8 +177,10 @@
                         $('input[rol="' + val.rol_id + '"]').parent("span").addClass('checked');
                         $('input[rol="' + val.rol_id + '"]').attr('checked', true);
                     });
-                }).fail(function () {
-
+                    
+//                    $('#myModal3').show(); 
+                }).fail(function (msg) {
+                    alerta("rojo","Error, por favor comunicarse con el administrador del sistema");
         })
 
     });

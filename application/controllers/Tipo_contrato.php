@@ -38,6 +38,11 @@ class Tipo_contrato extends My_Controller {
                 $id=$this->Tipo_contrato__model->save_tipo_contrato($post);
         redirect('index.php/Tipo_contrato/consult_tipo_contrato', 'location');
     }
+    function exist(){
+        if(!empty($this->Tipo_contrato__model->exist($this->input->post("tipo")))){
+            echo 1;
+        }
+    }
     function delete_tipo_contrato(){
         $post=$this->input->post();
         $this->Tipo_contrato__model->delete_tipo_contrato($post);

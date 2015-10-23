@@ -23,14 +23,16 @@
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <?php if (!empty($plan[0]->pla_id)) { ?>
 
-                <form method="post" action="<?php echo base_url("index.php/tareas/nuevatarea") ?>">
+                <form method="post" id="frmdireccionar">
                     <input type="hidden" value="<?php echo $plan[0]->pla_id ?>" name="pla_id">
-                    <input type="submit" type="button" class="btn " value="Nueva tarea">
                 </form>
+                <button type="button" class="btn btn-default direccionar" num="1">
+                    Nueva tarea
+                </button>
+                <button  type="button" class="btn btn-default direccionar" num="2">
+                    Nuevo registro
+                </button>
             <?php } ?>
-            <a href="<?php echo base_url("index.php/tareas/planes") ?>">
-                <button type="button" class="btn ">Nuevo registro</button>
-            </a>
         </div>
     </div>
     <form method="post" id="f7">
@@ -108,15 +110,6 @@
                 <div class="form-group">
                     <label for="avancereal">Avance real</label>
                     <input type="text" name="avancereal" id="avancereal" class="form-control"  value="<?php echo (!empty($plan[0]->pla_avanceReal) ) ? $plan[0]->pla_avanceReal : ""; ?>"/>
-                </div>
-                <div class="form-group">
-                    <label for="eficiencia">%Eficiencia</label>
-                    <select name="eficiencia" id="eficiencia" class="form-control" style="text-align:center"  value="<?php echo (!empty($plan[0]->pla_eficiencia) ) ? $plan[0]->pla_eficiencia : ""; ?>">
-                        <option value="">::Seleccionar::</option>
-                        <?php for ($i = 0; $i < 101; $i++) { ?>
-                            <option value="<?php echo $i ?>"><?php echo $i . " " . "%" ?></option>
-                        <?php } ?>
-                    </select>
                 </div>
             </div>
         </div>
@@ -217,127 +210,279 @@
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">CREAR ACTIVIDAD PADRE</button>
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal8">CREAR ACTIVIDAD HIJO</button>
                             </div>
-                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax3">
-                                <thead>
-                                <th>Id padre</th>
-                                <th>Fecha inicio</th>
-                                <th>Fecha fin</th>
-                                <th>Presupuesto</th>
-                                <th>Descripción</th>
-                                </thead>
-                                <tbody >
-                                </tbody>
-                            </table>
-                        </div>
+
+                            <div class="panel-group accordion" id="accordion1">
+                                <?php
+                                $i = 1;
+                                foreach ($actividades as $id => $nom):
+                                    foreach ($nom as $nombre => $num):
+                                        ?>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+
+                                                <h4 class="panel-title">
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $i; ?>" aria-expanded="false"> 
+                                                        <?php echo $nombre ?>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse_<?php echo $i; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                <div class="panel-body">
+                                                    <table class="table table-hover table-bordered">
+                                                        <thead>
+                                                        <th>Fecha inicio</th>
+                                                        <th>Fecha fin</th>
+                                                        <th>Presupuesto</th>
+                                                        <th>Descripción</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php foreach ($num as $numero => $campo): ?>
+                                                                <tr>
+                                                                    <td><?php echo $campo[0] ?></td>
+                                                                    <td><?php echo $campo[1] ?></td>
+                                                                    <td><?php echo $campo[2] ?></td>
+                                                                    <td><?php echo $campo[3] ?></td>
+                                                                </tr>   
+                                                            <?php endforeach; ?>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <?php
+                                                    foreach ($num as $numero => $campo):
+                                                        ?>
+
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $i++;
+                                    endforeach;
+                                endforeach;
+                                ?>
+                            </div> 
+                        </div> 
+
                         <div id="tab5" class="tab-pane">
 
                         </div>
                         <div id="tab6" class="tab-pane">
-                            <div style="text-align: right">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal4">NUEVA CARPETA</button>
-                                <button type="button" class="btn btn-success" id="nuevoregistro">NUEVO REGISTRO</button>
+                            <div class="portlet box blue" style="margin-top: 30px;">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-gift"></i>Registro
+                                    </div>
+                                    <div class="tools">
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal4">NUEVA CARPETA</button>
+                                        <button type="button" class="btn btn-success" id="nuevoregistro" data-toggle="modal" data-target="#myModal15">NUEVO REGISTRO</button>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="tabbable tabbable-tabdrop">
+                                        <div class="tab-content">
+                                            <br>
+                                            <div class="panel-group accordion" id="accordion1">
+                                                <?php
+                                                $o = 1;
+                                                foreach ($carpeta as $idcar => $nomcar):
+                                                    foreach ($nomcar as $nombrecar => $numcar):
+                                                        ?>
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                <h4 class="panel-title">
+                                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $o; ?>" aria-expanded="false"> 
+                                                                        <?php echo $nombrecar ?>
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="collapse_<?php echo $i; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                                <div class="panel-body">
+                                                                    <table class="table table-hover table-bordered">
+                                                                        <thead>
+                                                                        <th>Nombre de archivo</th>
+                                                                        <th>Descripción</th>
+                                                                        <th>Versión</th>
+                                                                        <th>Responsable</th>
+                                                                        <th>Tamaño</th>
+                                                                        <th>Fecha</th>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <?php foreach ($numcar as $numerocar => $campocar): ?>
+                                                                                <tr>
+                                                                                    <td><?php echo $campocar[0] ?></td>
+                                                                                    <td><?php echo $campocar[1] ?></td>
+                                                                                    <td><?php echo $campocar[2] ?></td>
+                                                                                    <td><?php echo $campocar[3] ?></td>
+                                                                                    <td><?php echo $campocar[4] ?></td>
+                                                                                    <td><?php echo $campocar[5] ?></td>
+                                                                                </tr>   
+                                                                            <?php endforeach; ?>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                    <?php
+                                                                    foreach ($num as $numero => $campo):
+                                                                        ?>
+
+                                                                    <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <?php
+                                                        $o++;
+                                                    endforeach;
+                                                endforeach;
+                                                ?>
+                                            </div> 
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax3">
-                                <thead>
-                                <th>Nombre de archivo</th>
-                                <th>Descripción</th>
-                                <th>Versión</th>
-                                <th>Responsable</th>
-                                <th>Tamaño</th>
-                                <th>Fecha</th>
-                                </thead>
-                                <tbody >
-                                </tbody>
-                            </table>
+                        </div>
+                    </div>
+                    <p>   </p>
+                    <p>   </p>
+                    <div class="tabbable tabbable-tabdrop">
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">ACTIVIDAD</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="formactividadpadre">
+                                <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="idactividad">Id:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <input type="text" id="idactividad" name="idactividad" class="form-control acobligatorio">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="nombreactividad">Nombre:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <input type="text" id="nombreactividad" name="nombreactividad" class="form-control acobligatorio">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" id="guardaractividadpadre">Guardar</button>
                         </div>
                     </div>
                 </div>
-                <p>   </p>
-                <p>   </p>
-                <div class="tabbable tabbable-tabdrop">
-                </div>
             </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">ACTIVIDAD</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" id="formactividadpadre">
-                            <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
-                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="idactividad">Id:</label>
+            <div class="modal fade" id="myModal15" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">AGREGAR REGISTRO</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="frmagregarregistro">
+                                <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="idactividad">Carpeta:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <select id="carpeta" name="carpeta" class="form-control ">
+                                            <option value="">::Seleccionar::</option>
+                                            <?php foreach ($carpetas as $carp): ?>
+                                                <option value="<?php echo $carp->regCar_id ?>"><?php echo $carp->regCar_descripcion ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="text" id="idactividad" name="idactividad" class="form-control acobligatorio">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="nombreactividad">Versión:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <input type="text" id="version" name="version" class="form-control ">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="nombreactividad">Nombre:</label>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="nombreactividad">Descripción:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <textarea id="nombreactividad" name="descripcion" class="form-control "></textarea>
+                                    </div>
                                 </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="text" id="nombreactividad" name="nombreactividad" class="form-control acobligatorio">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="nombreactividad">Adjuntar archivo:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <input type="file" id="archivo" name="archivo" class="form-control ">
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="guardaractividadpadre">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">AGREGAR CARPETA</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" id="formactividadpadre">
-                            <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
-                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="nombrecarpeta">Nombre</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="text" id="nombrecarpeta" name="nombrecarpeta" class="form-control acobligatorio">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="descripcioncarpeta">Descripción:</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="text" id="descripcioncarpeta" name="descripcioncarpeta" class="form-control acobligatorio">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="guardaractividadpadre">Guardar</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" id="guardaractividadpadre">Guardar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade" id="myModal0" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">AGREGAR AVANCE</h4>
+            <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">AGREGAR CARPETA</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="frmcarpetaregistro">
+                                <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="nombrecarpeta">Nombre</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <input type="text" id="nombrecarpeta" name="nombrecarpeta" class="form-control carbligatorio">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="descripcioncarpeta">Descripción:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <input type="text" id="descripcioncarpeta" name="descripcioncarpeta" class="form-control carbligatorio">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" id="guardarcarpeta">Guardar</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <form method="post" id="guardaravance">
+                </div>
+            </div>
+            <div class="modal fade" id="myModal0" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">AGREGAR AVANCE</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="guardaravance">
                                 <input type="hidden" value="" name="idtarea" id="internotarea">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
@@ -346,7 +491,7 @@
                                                 <label for="fecha">Fecha</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" style="text-align:center" name="fecha" id="fecha" class="form-control fecha avance">
+                                                <input type="text" style="text-align:center" name="fecha" id="fecha" class="form-control fecha avance" value="<?php echo date("Y-m-d") ?>">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -403,433 +548,434 @@
 
                                 </div>
                             </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-success" id="gavance">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="myModal8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content ">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">ACTIVIDAD HIJO</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <form method="post" id="f6">
-                                <input type="hidden" value="<?php echo $plan[0]->pla_id; ?>" name="pla_id">
-                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><label for="idpadre">Id Padre</label></div>
-                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><input type="text" id="idpadre" name="idpadre" class="form-control"></div>
-                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><label for="nombre">Nombre</label></div>
-                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><input type="text" id="nombre" name="nombre" class="form-control"></div>
-                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label for="fechainicio">Fecha Inicio</label>
-                                            <input type="text" class="form-control fecha" id="fechainicio" name="fechainicio" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label for="fechafinalizacion">Fecha Finalización</label>
-                                            <input type="text" class="form-control fecha" id="fechafinalizacion" name="fechafinalizacion" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label for="peso">Peso</label>
-                                            <input type="text" class="form-control" id="peso" name="peso" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label for="riesgosancion">Riesgo Sanción</label>
-                                            <input type="text" class="form-control" id="riesgosancion" name="riesgosancion" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label for="tipo">Tipo</label>
-                                            <select class="form-control" id="tipo" name="tipo" >
-                                                <option value="">::Seleccionar::</option>
-                                                <?php foreach ($tipo as $t) { ?>
-                                                    <option value="<?php echo $t->tip_id; ?>"><?php echo $t->tip_tipo; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label for="presupuestototal">Presupuesto Total</label>
-                                            <input type="text" class="form-control number" id="presupuestototal" name="presupuestototal" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <label for="costoreal">Costo Real</label>
-                                            <input type="text" class="form-control number" id="costoreal" name="costoreal" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                                    <div class="form-group">
-                                        <label for="descripcion">Descripción</label>
-                                        <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="modoverificacion">Modo Verificación</label>
-                                        <textarea class="form-control" id="modoverificacion" name="modoverificacion"></textarea>
-                                    </div>
-                                </div>
                         </div>
-                        </form>  
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="guardar">Guardar</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-success" id="gavance">Guardar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    <?php endif; ?>
+            <div class="modal fade" id="myModal8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content ">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">ACTIVIDAD HIJO</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <form method="post" id="f6">
+                                    <input type="hidden" value="<?php echo $plan[0]->pla_id; ?>" name="pla_id">
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><label for="idpadre">Id Padre</label></div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <select id="idpadre" name="idpadre" class="form-control">
+                                            <option value="">::Seleccionar::</option>
+                                            <?php foreach ($actividadpadre as $ap): ?>
+                                                <option value="<?php echo $ap->actPad_id ?>  "><?php echo $ap->actPad_nombre ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><label for="nombre">Nombre</label></div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><input type="text" id="nombre" name="nombre" class="form-control"></div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="fechainicio">Fecha Inicio</label>
+                                                <input type="text" class="form-control fecha" id="fechainicio" name="fechainicio" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="fechafinalizacion">Fecha Finalización</label>
+                                                <input type="text" class="form-control fecha" id="fechafinalizacion" name="fechafinalizacion" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="peso">Peso</label>
+                                                <input type="text" class="form-control" id="peso" name="peso" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="riesgosancion">Riesgo Sanción</label>
+                                                <input type="text" class="form-control" id="riesgosancion" name="riesgosancion" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="tipo">Tipo</label>
+                                                <select class="form-control" id="tipo" name="tipo" >
+                                                    <option value="">::Seleccionar::</option>
+                                                    <?php foreach ($tipo as $t) { ?>
+                                                        <option value="<?php echo $t->tip_id; ?>"><?php echo $t->tip_tipo; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="presupuestototal">Presupuesto Total</label>
+                                                <input type="text" class="form-control number" id="presupuestototal" name="presupuestototal" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="costoreal">Costo Real</label>
+                                                <input type="text" class="form-control number" id="costoreal" name="costoreal" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                        <div class="form-group">
+                                            <label for="descripcion">Descripción</label>
+                                            <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="modoverificacion">Modo Verificación</label>
+                                            <textarea class="form-control" id="modoverificacion" name="modoverificacion"></textarea>
+                                        </div>
+                                    </div>
+                            </div>
+                            </form>  
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" id="guardar">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
 
-</div>
+    </div>
 
-<script>
-    
-    $('body').delegate(".editarhistorial","click",function(){
-        
-        $('#internotarea').val($(this).attr('tar_id'));
-        
-    });
-        jQuery(document).ready(function () {
-        TableAjax.init();
+    <script>
 
-    });
-    
-    $('#guardar').click(function () {
-        $.post(
-                "<?php echo base_url("index.php/tareas/guardaractividadhijo") ?>",
-                $('#f6').serialize()
-                ).done(function (msg) {
-            $('#myModal8').find('input[type="text"],select,textarea').val("");
-            
+        $('#guardarcarpeta').click(function () {
+            if (obligatorio("carbligatorio")) {
+                $.post("<?php echo base_url("index.php/tareas/guardarcarpetaregistro") ?>",
+                        $('#frmcarpetaregistro').serialize()
+                        ).done(function (msg) {
 
-//            $('#datatable_ajax3').DataTable.ajax.url( "<?php echo base_url("index.php/tareas/listadotareasxactividadhijo") ?>" ).load();
+                }).fail(function (msg) {
 
-            
-
-//            grid.init({
-//                src: $("#datatable_ajax3"),
-//                onSuccess: function (grid) {
-//                    // execute some code after table records loaded
-//                },
-//                onError: function (grid) {
-//                    // execute some code on network or other general error  
-//                },
-//                onDataLoad: function (grid) {
-//                    // execute some code on ajax data load
-//                },
-//                loadingMessage: 'Cargando...',
-//                dataTable: {
-//                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-//                    "lengthMenu": [
-//                        [10, 20, 50, 100, 150, -1],
-//                        [10, 20, 50, 100, 150, "All"] // change per page values here
-//                    ],
-//                    "pageLength": 10, // default record count per page
-//                    "ajax": {
-//                        "url": "<?php echo base_url("index.php/tareas/listadotareasxactividadhijo") ?>", // ajax source
-//                    },
-//                    "order": [
-//                        [1, "asc"]
-//                    ]// set first column as a default sort by asc
-//                }
-//            });
-//
-//            // handle group actionsubmit button click
-//            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
-//                e.preventDefault();
-//                grid.setAjaxParam("xyz", "1");
-//                var action = $(".table-group-action-input", grid.getTableWrapper());
-//                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
-//                    grid.setAjaxParam("xyz", "group_action");
-//                    grid.setAjaxParam("avaTar_fecha", action.val());
-//                    grid.setAjaxParam("usu_id", grid.getSelectedRows());
-//                    grid.getDataTable().ajax.reload();
-//                    grid.clearAjaxParams();
-//                } else if (action.val() == "") {
-//                    Metronic.alert({
-//                        type: 'danger',
-//                        icon: 'warning',
-//                        message: 'Please select an action',
-//                        container: grid.getTableWrapper(),
-//                        place: 'prepend'
-//                    });
-//                } else if (grid.getSelectedRowsCount() === 0) {
-//                    Metronic.alert({
-//                        type: 'danger',
-//                        icon: 'warning',
-//                        message: 'No record selected',
-//                        container: grid.getTableWrapper(),
-//                        place: 'prepend'
-//                    });
-//                }
-//            });
-        
-            
-            alerta("verde", "Datos guardados correctamente");
-        }).fail(function (msg) {
-            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-        });
-    });
-
-
-    
-    var TableAjax = function () {
-
-        var initPickers = function () {
-            //init date pickers
-            $('.date-picker').datepicker({
-                rtl: Metronic.isRTL(),
-                autoclose: true
-            });
-        }
-
-        var handleRecords = function () {
-
-            var grid = new Datatable();
-
-            grid.init({
-                src: $("#datatable_ajax2"),
-                onSuccess: function (grid) {
-                    // execute some code after table records loaded
-                },
-                onError: function (grid) {
-                    // execute some code on network or other general error  
-                },
-                onDataLoad: function (grid) {
-                    // execute some code on ajax data load
-                },
-                loadingMessage: 'Cargando...',
-                dataTable: {
-                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-                    "lengthMenu": [
-                        [10, 20, 50, 100, 150, -1],
-                        [10, 20, 50, 100, 150, "All"] // change per page values here
-                    ],
-                    "pageLength": 10, // default record count per page
-                    "ajax": {
-                        "url": "<?php echo base_url("index.php/tareas/listadotareasinactivasxplanfiltro") ?>", // ajax source
-                    },
-                    "order": [
-                        [1, "asc"]
-                    ]// set first column as a default sort by asc
-                }
-            });
-            grid.init({
-                src: $("#datatable_ajax"),
-                onSuccess: function (grid) {
-                    // execute some code after table records loaded
-                },
-                onError: function (grid) {
-                    // execute some code on network or other general error  
-                },
-                onDataLoad: function (grid) {
-                    // execute some code on ajax data load
-                },
-                loadingMessage: 'Cargando...',
-                dataTable: {
-                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-                    "lengthMenu": [
-                        [10, 20, 50, 100, 150, -1],
-                        [10, 20, 50, 100, 150, "All"] // change per page values here
-                    ],
-                    "pageLength": 10, // default record count per page
-                    "ajax": {
-                        "url": "<?php echo base_url("index.php/tareas/listadotareasxplanfiltro") ?>", // ajax source
-                    },
-                    "order": [
-                        [1, "asc"]
-                    ]// set first column as a default sort by asc
-                }
-            });
-            grid.init({
-                src: $("#datatable_ajax3"),
-                onSuccess: function (grid) {
-                    // execute some code after table records loaded
-                },
-                onError: function (grid) {
-                    // execute some code on network or other general error  
-                },
-                onDataLoad: function (grid) {
-                    // execute some code on ajax data load
-                },
-                loadingMessage: 'Cargando...',
-                dataTable: {
-                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-                    "lengthMenu": [
-                        [10, 20, 50, 100, 150, -1],
-                        [10, 20, 50, 100, 150, "All"] // change per page values here
-                    ],
-                    "pageLength": 10, // default record count per page
-                    "ajax": {
-                        "url": "<?php echo base_url("index.php/tareas/listadotareasxactividadhijo") ?>", // ajax source
-                    },
-                    "order": [
-                        [1, "asc"]
-                    ]// set first column as a default sort by asc
-                }
-            });
-
-            // handle group actionsubmit button click
-            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
-                e.preventDefault();
-                grid.setAjaxParam("xyz", "1");
-                var action = $(".table-group-action-input", grid.getTableWrapper());
-                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
-                    grid.setAjaxParam("xyz", "group_action");
-                    grid.setAjaxParam("avaTar_fecha", action.val());
-                    grid.setAjaxParam("usu_id", grid.getSelectedRows());
-                    grid.getDataTable().ajax.reload();
-                    grid.clearAjaxParams();
-                } else if (action.val() == "") {
-                    Metronic.alert({
-                        type: 'danger',
-                        icon: 'warning',
-                        message: 'Please select an action',
-                        container: grid.getTableWrapper(),
-                        place: 'prepend'
-                    });
-                } else if (grid.getSelectedRowsCount() === 0) {
-                    Metronic.alert({
-                        type: 'danger',
-                        icon: 'warning',
-                        message: 'No record selected',
-                        container: grid.getTableWrapper(),
-                        place: 'prepend'
-                    });
-                }
-            });
-        }
-        return {
-            //main function to initiate the module
-            init: function () {
-
-                initPickers();
-                handleRecords();
+                });
             }
 
-        };
-
-    }();
-    
-    $('#gavance').click(function () {
-
-        $.post(
-                "<?php echo base_url("index.php/tareas/guardaravance") ?>",
-                $('#guardaravance').serialize()
-                ).done(function () {
-            $('.avance').val("");
-            $('.avance').prop("checked", false);
-            alerta("verde", "Avance guardado correctamente");
-        }).fail(function () {
-            alerta("Error", "Error por favor comunicarse con el administrador");
         });
 
-    });
+        $('.direccionar').click(function () {
 
-    $('#guardaractividadpadre').click(function () {
-
-        if (obligatorio('acobligatorio')) {
-
-            $.post("<?php echo base_url("index.php/tareas/guardaractividadpadre") ?>",
-                    $('#formactividadpadre').serialize()
-                    )
-                    .done(function () {
-                        $('.acobligatorio').val('')
-                        alerta("verde", "Actividad padre guardada con exito");
-                    })
-                    .fail(function () {
-                        alerta("error", "Error por favor comunicarse con el administrador del sistema");
-                    })
-
-        }
-
-    });
-
-    $(".flecha").click(function () {
-        var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
-        var idUsuarioCreado = $("#usuid").val();
-        var metodo = $(this).attr("metodo");
-        if (metodo != "documento") {
-            $.post(url, {idUsuarioCreado: idUsuarioCreado, metodo: metodo})
-                    .done(function (msg) {
-                        $("input[type='text'],select").val("");
-                        $("#usuid").val(msg.usu_id);
-                        $("#cedula").val(msg.usu_cedula);
-                        $("#nombres").val(msg.usu_nombre);
-                        $("#apellidos").val(msg.usu_apellido);
-                        $("#usuario").val(msg.usu_usuario);
-                        $("#contrasena").val(msg.usu_contrasena);
-                        $("#email").val(msg.usu_email);
-                        $("#genero").val(msg.sex_id);
-                        $("#estado").val(msg.est_id);//estado
-                        $("#cargo").val(msg.car_id);//cargo
-                        $("#empleado").val(msg.emp_id);//empleado
-                        if (msg.cambiocontrasena == "1") {
-                            $("#cambiocontrasena").is(":checked");
-                        }
-                    })
-                    .fail(function (msg) {
-                        alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-                        $("input[type='text'], select").val();
-                    })
-        } else {
-            window.location = "<?php echo base_url("index.php/tareas/listadoplanes"); ?>";
-        }
-
-    });
-
-    $('#cargo').change(function () {
-
-        $.post(
-                "<?php echo base_url("index.php/administrativo/consultausuarioscargo") ?>",
-                {
-                    cargo: $(this).val()
-                }
-        ).done(function (msg) {
-            var data = "";
-            $('#empleado *').remove();
-            $.each(msg, function (key, val) {
-                data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
-            });
-            $('#empleado').append(data);
-        }).fail(function (msg) {
+            if ($(this).attr('num') == 1)
+                $('#frmdireccionar').attr("action", "<?php echo base_url("index.php/tareas/nuevatarea") ?>");
+            if ($(this).attr('num') == 2)
+                $('#frmdireccionar').attr("action", "<?php echo base_url("index.php/tareas/registro") ?>");
+            $('#frmdireccionar').submit();
+        });
+        $('body').delegate(".editarhistorial", "click", function () {
+            $('#internotarea').val($(this).attr('tar_id'));
+        });
+        jQuery(document).ready(function () {
+            TableAjax.init();
 
         });
-    });
-    $('#guardarplan').click(function () {
-        if (obligatorio('obligatorio') == true) {
+
+        $('#guardar').click(function () {
             $.post(
-                    "<?php
-    echo (empty($plan[0]->pla_id)) ? base_url('index.php/tareas/guardarplan') : base_url('index.php/tareas/actualizarplan');
-    ?>",
-                    $('#f7').serialize()
+                    "<?php echo base_url("index.php/tareas/guardaractividadhijo") ?>",
+                    $('#f6').serialize()
                     ).done(function (msg) {
-                if ($(this).text() == "Actualizar") {
+                $('#myModal8').find('input[type="text"],select,textarea').val("");
 
-                } else {
-                    $('input,select,textarea').val("");
-                }
+
+                //            $('#datatable_ajax3').DataTable.ajax.url( "<?php echo base_url("index.php/tareas/listadotareasxactividadhijo") ?>" ).load();
+
+
+
+                //            grid.init({
+                //                src: $("#datatable_ajax3"),
+                //                onSuccess: function (grid) {
+                //                    // execute some code after table records loaded
+                //                },
+                //                onError: function (grid) {
+                //                    // execute some code on network or other general error  
+                //                },
+                //                onDataLoad: function (grid) {
+                //                    // execute some code on ajax data load
+                //                },
+                //                loadingMessage: 'Cargando...',
+                //                dataTable: {
+                //                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                //                    "lengthMenu": [
+                //                        [10, 20, 50, 100, 150, -1],
+                //                        [10, 20, 50, 100, 150, "All"] // change per page values here
+                //                    ],
+                //                    "pageLength": 10, // default record count per page
+                //                    "ajax": {
+                //                        "url": "<?php echo base_url("index.php/tareas/listadotareasxactividadhijo") ?>", // ajax source
+                //                    },
+                //                    "order": [
+                //                        [1, "asc"]
+                //                    ]// set first column as a default sort by asc
+                //                }
+                //            });
+                //
+                //            // handle group actionsubmit button click
+                //            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
+                //                e.preventDefault();
+                //                grid.setAjaxParam("xyz", "1");
+                //                var action = $(".table-group-action-input", grid.getTableWrapper());
+                //                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
+                //                    grid.setAjaxParam("xyz", "group_action");
+                //                    grid.setAjaxParam("avaTar_fecha", action.val());
+                //                    grid.setAjaxParam("usu_id", grid.getSelectedRows());
+                //                    grid.getDataTable().ajax.reload();
+                //                    grid.clearAjaxParams();
+                //                } else if (action.val() == "") {
+                //                    Metronic.alert({
+                //                        type: 'danger',
+                //                        icon: 'warning',
+                //                        message: 'Please select an action',
+                //                        container: grid.getTableWrapper(),
+                //                        place: 'prepend'
+                //                    });
+                //                } else if (grid.getSelectedRowsCount() === 0) {
+                //                    Metronic.alert({
+                //                        type: 'danger',
+                //                        icon: 'warning',
+                //                        message: 'No record selected',
+                //                        container: grid.getTableWrapper(),
+                //                        place: 'prepend'
+                //                    });
+                //                }
+                //            });
+
+
                 alerta("verde", "Datos guardados correctamente");
             }).fail(function (msg) {
                 alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
             });
-        }
-    });
-</script>
+        });
+
+
+
+        var TableAjax = function () {
+
+            var initPickers = function () {
+                //init date pickers
+                $('.date-picker').datepicker({
+                    rtl: Metronic.isRTL(),
+                    autoclose: true
+                });
+            }
+
+            var handleRecords = function () {
+
+                var grid = new Datatable();
+
+                grid.init({
+                    src: $("#datatable_ajax2"),
+                    onSuccess: function (grid) {
+                        // execute some code after table records loaded
+                    },
+                    onError: function (grid) {
+                        // execute some code on network or other general error  
+                    },
+                    onDataLoad: function (grid) {
+                        // execute some code on ajax data load
+                    },
+                    loadingMessage: 'Cargando...',
+                    dataTable: {
+                        "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                        "lengthMenu": [
+                            [10, 20, 50, 100, 150, -1],
+                            [10, 20, 50, 100, 150, "All"] // change per page values here
+                        ],
+                        "pageLength": 10, // default record count per page
+                        "ajax": {
+                            "url": "<?php echo base_url("index.php/tareas/listadotareasinactivasxplanfiltro") ?>", // ajax source
+                        },
+                        "order": [
+                            [1, "asc"]
+                        ]// set first column as a default sort by asc
+                    }
+                });
+                grid.init({
+                    src: $("#datatable_ajax"),
+                    onSuccess: function (grid) {
+                        // execute some code after table records loaded
+                    },
+                    onError: function (grid) {
+                        // execute some code on network or other general error  
+                    },
+                    onDataLoad: function (grid) {
+                        // execute some code on ajax data load
+                    },
+                    loadingMessage: 'Cargando...',
+                    dataTable: {
+                        "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                        "lengthMenu": [
+                            [10, 20, 50, 100, 150, -1],
+                            [10, 20, 50, 100, 150, "All"] // change per page values here
+                        ],
+                        "pageLength": 10, // default record count per page
+                        "ajax": {
+                            "url": "<?php echo base_url("index.php/tareas/listadotareasxplanfiltro") ?>", // ajax source
+                        },
+                        "order": [
+                            [1, "asc"]
+                        ]// set first column as a default sort by asc
+                    }
+                });
+
+                // handle group actionsubmit button click
+                grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
+                    e.preventDefault();
+                    grid.setAjaxParam("xyz", "1");
+                    var action = $(".table-group-action-input", grid.getTableWrapper());
+                    if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
+                        grid.setAjaxParam("xyz", "group_action");
+                        grid.setAjaxParam("avaTar_fecha", action.val());
+                        grid.setAjaxParam("usu_id", grid.getSelectedRows());
+                        grid.getDataTable().ajax.reload();
+                        grid.clearAjaxParams();
+                    } else if (action.val() == "") {
+                        Metronic.alert({
+                            type: 'danger',
+                            icon: 'warning',
+                            message: 'Please select an action',
+                            container: grid.getTableWrapper(),
+                            place: 'prepend'
+                        });
+                    } else if (grid.getSelectedRowsCount() === 0) {
+                        Metronic.alert({
+                            type: 'danger',
+                            icon: 'warning',
+                            message: 'No record selected',
+                            container: grid.getTableWrapper(),
+                            place: 'prepend'
+                        });
+                    }
+                });
+            }
+            return {
+                //main function to initiate the module
+                init: function () {
+
+                    initPickers();
+                    handleRecords();
+                }
+
+            };
+
+        }();
+
+        $('#gavance').click(function () {
+
+            $.post(
+                    "<?php echo base_url("index.php/tareas/guardaravance") ?>",
+                    $('#guardaravance').serialize()
+                    ).done(function () {
+                $('.avance').val("");
+                $('.avance').prop("checked", false);
+                $('#myModal0').modal('hide');
+                $('#fecha').val("<?php echo date("Y-m-d") ?>");
+                alerta("verde", "Avance guardado correctamente");
+            }).fail(function () {
+                alerta("Error", "Error por favor comunicarse con el administrador");
+            });
+
+        });
+
+        $('#guardaractividadpadre').click(function () {
+
+            if (obligatorio('acobligatorio')) {
+
+                $.post("<?php echo base_url("index.php/tareas/guardaractividadpadre") ?>",
+                        $('#formactividadpadre').serialize()
+                        )
+                        .done(function () {
+                            $('.acobligatorio').val('')
+                            alerta("verde", "Actividad padre guardada con exito");
+                        })
+                        .fail(function () {
+                            alerta("error", "Error por favor comunicarse con el administrador del sistema");
+                        })
+
+            }
+
+        });
+
+        $(".flecha").click(function () {
+            var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
+            var idUsuarioCreado = $("#usuid").val();
+            var metodo = $(this).attr("metodo");
+            if (metodo != "documento") {
+                $.post(url, {idUsuarioCreado: idUsuarioCreado, metodo: metodo})
+                        .done(function (msg) {
+                            $("input[type='text'],select").val("");
+                            $("#usuid").val(msg.usu_id);
+                            $("#cedula").val(msg.usu_cedula);
+                            $("#nombres").val(msg.usu_nombre);
+                            $("#apellidos").val(msg.usu_apellido);
+                            $("#usuario").val(msg.usu_usuario);
+                            $("#contrasena").val(msg.usu_contrasena);
+                            $("#email").val(msg.usu_email);
+                            $("#genero").val(msg.sex_id);
+                            $("#estado").val(msg.est_id);//estado
+                            $("#cargo").val(msg.car_id);//cargo
+                            $("#empleado").val(msg.emp_id);//empleado
+                            if (msg.cambiocontrasena == "1") {
+                                $("#cambiocontrasena").is(":checked");
+                            }
+                        })
+                        .fail(function (msg) {
+                            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+                            $("input[type='text'], select").val();
+                        })
+            } else {
+                window.location = "<?php echo base_url("index.php/tareas/listadoplanes"); ?>";
+            }
+
+        });
+
+        $('#cargo').change(function () {
+
+            $.post(
+                    "<?php echo base_url("index.php/administrativo/consultausuarioscargo") ?>",
+                    {
+                        cargo: $(this).val()
+                    }
+            ).done(function (msg) {
+                var data = "";
+                $('#empleado *').remove();
+                $.each(msg, function (key, val) {
+                    data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
+                });
+                $('#empleado').append(data);
+            }).fail(function (msg) {
+
+            });
+        });
+        $('#guardarplan').click(function () {
+            if (obligatorio('obligatorio') == true) {
+                $.post(
+                        "<?php
+        echo (empty($plan[0]->pla_id)) ? base_url('index.php/tareas/guardarplan') : base_url('index.php/tareas/actualizarplan');
+        ?>",
+                        $('#f7').serialize()
+                        ).done(function (msg) {
+                    if ($(this).text() == "Actualizar") {
+
+                    } else {
+                        $('input,select,textarea').val("");
+                    }
+                    alerta("verde", "Datos guardados correctamente");
+                }).fail(function (msg) {
+                    alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+                });
+            }
+        });
+    </script>
