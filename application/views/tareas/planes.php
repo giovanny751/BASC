@@ -236,61 +236,69 @@
 
                         </div>
                         <div id="tab4" class="tab-pane">
-                            <div style="text-align: right">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">CREAR ACTIVIDAD PADRE</button>
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal8">CREAR ACTIVIDAD HIJO</button>
-                            </div>
-
-                            <div class="panel-group accordion" id="accordion1">
-                                <?php
-                                $i = 1;
-                                foreach ($actividades as $id => $nom):
-                                    foreach ($nom as $nombre => $num):
-                                        ?>
-                                        <div class="panel panel-default" id="<?php echo $id ?>">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $i; ?>" aria-expanded="false"> 
-                                                        <?php echo $nombre ?>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapse_<?php echo $i; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                <div class="panel-body">
-                                                    <table class="table table-hover table-bordered">
-                                                        <thead>
-                                                        <th>Nombre</th>
-                                                        <th>Fecha inicio</th>
-                                                        <th>Fecha fin</th>
-                                                        <th>Presupuesto</th>
-                                                        <th>Descripción</th>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php foreach ($num as $numero => $campo): ?>
-                                                                <tr>
-                                                                    <td><?php echo $campo[4] ?></td>
-                                                                    <td><?php echo $campo[0] ?></td>
-                                                                    <td><?php echo $campo[1] ?></td>
-                                                                    <td><?php echo $campo[2] ?></td>
-                                                                    <td><?php echo $campo[3] ?></td>
-                                                                </tr>   
-                                                            <?php endforeach; ?>
-                                                        </tbody>
-                                                    </table>
-
-                                                    <?php
-                                                    foreach ($num as $numero => $campo):
-                                                        ?>
-
-                                                    <?php endforeach; ?>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="portlet box blue" style="margin-top: 30px;">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-gift"></i>Actividades
+                                    </div>
+                                    <div class="tools">
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">CREAR ACTIVIDAD PADRE</button>
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal8">CREAR ACTIVIDAD HIJO</button>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="panel-group accordion" id="accordion1">
                                         <?php
-                                        $i++;
-                                    endforeach;
-                                endforeach;
-                                ?>
+                                        $i = 1;
+                                        foreach ($actividades as $id => $nom):
+                                            foreach ($nom as $nombre => $num):
+                                                ?>
+                                                <div class="panel panel-default" id="<?php echo $id ?>">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id . 'c'; ?>" aria-expanded="false"> 
+                                                                <?php echo $nombre ?>
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapse_<?php echo $id . 'c'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                        <div class="panel-body">
+                                                            <table class="table table-hover table-bordered">
+                                                                <thead>
+                                                                <th>Nombre</th>
+                                                                <th>Fecha inicio</th>
+                                                                <th>Fecha fin</th>
+                                                                <th>Presupuesto</th>
+                                                                <th>Descripción</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php foreach ($num as $numero => $campo): ?>
+                                                                        <tr>
+                                                                            <td><?php echo $campo[4] ?></td>
+                                                                            <td><?php echo $campo[0] ?></td>
+                                                                            <td><?php echo $campo[1] ?></td>
+                                                                            <td><?php echo $campo[2] ?></td>
+                                                                            <td><?php echo $campo[3] ?></td>
+                                                                        </tr>   
+                                                                    <?php endforeach; ?>
+                                                                </tbody>
+                                                            </table>
+
+                                                            <?php
+                                                            foreach ($num as $numero => $campo):
+                                                                ?>
+
+                                                            <?php endforeach; ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                                $i++;
+                                            endforeach;
+                                        endforeach;
+                                        ?>
+                                    </div> 
+                                </div> 
                             </div> 
                         </div> 
 
@@ -321,12 +329,12 @@
                                                         <div class="panel panel-default">
                                                             <div class="panel-heading">
                                                                 <h4 class="panel-title">
-                                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $o; ?>" aria-expanded="false"> 
+                                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false"> 
                                                                         <?php echo $nombrecar ?>
                                                                     </a>
                                                                 </h4>
                                                             </div>
-                                                            <div id="collapse_<?php echo $i; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                            <div id="collapse_<?php echo $idcar . 'r'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                                                 <div class="panel-body">
                                                                     <table class="table table-hover table-bordered">
                                                                         <thead>
@@ -683,13 +691,31 @@
                     $('#frmcarpetaregistro').serialize()
                     ).done(function (msg) {
                 var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>"
+                var contenido = "<table class='table table-hover table-bordered'>\n\
+                                        <thead>\n\
+                                            <th>Nombre de archivo</th>\n\
+                                            <th>Descripción</th>\n\
+                                            <th>Versión</th>\n\
+                                            <th>Responsable</th>\n\
+                                            <th>Tamaño</th>\n\
+                                            <th>Fecha</th>\n\
+                                        </thead>\n\
+                                        <tbody>\n\
+                                            <tr>\n\
+                                            <td colspan='6'>\n\
+                                            <center><b>No hay registros asociados</b></center>\n\
+                                            </td>\n\
+                                            </tr>\n\
+                                        </tbody>\n\
+                                </table>";
+
                 $('#carpeta').append(option);
-                agregarregistro('accordion5',msg);
+                agregarregistro('accordion5', msg, contenido, 'r');
                 $('.carbligatorio').val("");
                 $('#myModal4').hide();
-                alerta("verde","Carpeta agregada con exito")
+                alerta("verde", "Carpeta agregada con exito")
             }).fail(function (msg) {
-
+                alerta("rojo", "ha ocurrido un error por favor cumunicarse con el administrador del sistema")
             });
         }
 
@@ -852,29 +878,7 @@
                         $('.acobligatorio').val('');
                         var option = "<option value='" + msg.actPad_id + "'>" + msg.actPad_nombre + "</option>"
                         $('#idpadre').append(option);
-                        agregarregistro('accordion1',msg);
-                        $('#myModal').hide();
-                        alerta("verde", "Actividad padre guardada con exito");
-                    })
-                    .fail(function () {
-                        alerta("error", "Error por favor comunicarse con el administrador del sistema");
-                    })
-        }
-
-    });
-
-    function agregarregistro(tabla,msg) {
-        var acordeon = '<div class="panel panel-default" id="' + msg.uno + '">\n\
-                                            <div class="panel-heading">\n\
-                                                <h4 class="panel-title">\n\
-                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.dos + '" aria-expanded="false">\n\
-                                                        ' + msg.dos + '\n\
-                                                    </a>\n\
-                                                </h4>\n\
-                                            </div>\n\
-                                            <div id="collapse_' + msg.uno + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
-                                                <div class="panel-body">\n\
-                                                    <table class="table table-hover table-bordered">\n\
+                        var contenido = '<table class="table table-hover table-bordered">\n\
                                                         <thead>\n\
                                                             <th>Nombre</th>\n\
                                                             <th>Fecha inicio</th>\n\
@@ -889,11 +893,34 @@
                                                                 </td>\n\
                                                             </tr>\n\
                                                         </tbody>\n\
-                                                    </table>\n\
+                                                    </table>';
+                        agregarregistro('accordion1', msg, contenido, 'c');
+                        $('#myModal').hide();
+                        alerta("verde", "Actividad padre guardada con exito");
+                    })
+                    .fail(function () {
+                        alerta("error", "Error por favor comunicarse con el administrador del sistema");
+                    })
+        }
+
+    });
+
+    function agregarregistro(tabla, msg, contenido, destino) {
+        var acordeon = '<div class="panel panel-default" id="' + msg.uno + '">\n\
+                                            <div class="panel-heading">\n\
+                                                <h4 class="panel-title">\n\
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.dos + destino + '" aria-expanded="false">\n\
+                                                        ' + msg.dos + '\n\
+                                                    </a>\n\
+                                                </h4>\n\
+                                            </div>\n\
+                                            <div id="collapse_' + msg.dos + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
+                                                <div class="panel-body">\n\
+                                                    ' + contenido + '\n\
                                                 </div>\n\
                                             </div>\n\
                                     </div>';
-        $('#'+tabla).append(acordeon);
+        $('#' + tabla).append(acordeon);
 
     }
 

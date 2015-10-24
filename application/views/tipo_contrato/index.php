@@ -3,7 +3,7 @@
         <i class="glyphicon glyphicon-ok"></i> TIPO DE CONTRATO    </h5>
 </div>
 <div class='well'>
-    <form action="<?php echo base_url('index.php/') . "/Tipo_contrato/save_tipo_contrato"; ?>" method="post" onsubmit="return campos()"  enctype="multipart/form-data">
+    <form action="<?php echo base_url('index.php/') . "/Tipo_contrato/save_tipo_contrato"; ?>" method="post" onsubmit="return campos()"  enctype="multipart/form-data" id="frmcontrato">
         <div class="row">
             <div class="col-md-12">
                 <label for="TipCon_Descripcion">
@@ -19,39 +19,42 @@
             <input type="hidden" name="<?php echo $post['campo'] ?>" value="<?php echo $post[$post['campo']] ?>">
             <input type="hidden" name="campo" value="<?php echo $post['campo'] ?>">
         <?php } ?>
-        <div class="row">
-            <span id="boton_guardar">
-                <button class="btn btn-success" >Guardar</button> 
-                <input class="btn btn-success" type="reset" value="Limpiar">
-                <a href="<?php echo base_url('index.php') . "/Tipo_contrato/consult_tipo_contrato" ?>" class="btn btn-success">Listado </a>
-            </span>
-            <span id="boton_cargar" style="display: none">
-                <h2>Cargando ...</h2>
-            </span>
-        </div>
-        <div class="row"><div style="float: right"><b>Los campos en * son obligatorios</b></div></div>
     </form>
+    <div class="row">
+        <span id="boton_guardar">
+            <button class="btn btn-success"  id="btnguardar"  >Guardar</button> 
+            <input class="btn btn-success" type="reset" value="Limpiar">
+            <a href="<?php echo base_url('index.php') . "/Tipo_contrato/consult_tipo_contrato" ?>" class="btn btn-success">Listado </a>
+        </span>
+        <span id="boton_cargar" style="display: none">
+            <h2>Cargando ...</h2>
+        </span>
+    </div>
+    <div class="row"><div style="float: right"><b>Los campos en * son obligatorios</b></div></div>
+
 </div>
 <script>
-    
-    $('#TipCon_Descripcion').change(function(){
-        var data = $(this);
-        $.post("<?php echo base_url("index.php/tipo_contrato/exist")  ?>"
-                ,{ tipo : $(this).val() } 
-            )
-            .done(function(msg){
-                if(msg == 1){
-                    data.val("");
-                    data.focus();
-                    alerta("amarillo","Tipo de contrato ya existe en el sistema")
-                }
-            })
-            .fail(function(msg){
-                
-            });
-        
+
+    $('#btnguardar').click(function () {
+        var data = $('#TipCon_Descripcion').val();
+        $.post("<?php echo base_url("index.php/tipo_contrato/exist") ?>"
+                , {tipo: $(this).val()}
+        )
+                .done(function (msg) {
+                    if (msg == 1) {
+                        data.val("");
+                        data.focus();
+                        alerta("amarillo", "Tipo de contrato ya existe en el sistema")
+                    } else {
+                        $('#frmcontrato').submit();
+                    }
+                })
+                .fail(function (msg) {
+                    return false
+                });
+
     });
-    
+
     function campos() {
         $('input[type="file"]').each(function (key, val) {
             var img = $(this).val();
