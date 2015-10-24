@@ -124,9 +124,9 @@ class Administrativo extends My_Controller {
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
-            echo $emp_id;
-//            $this->session->guardadoExitoIdEmpleado = $post['Emp_Id'];
-//            redirect('index.php/administrativo/creacionempleados', 'location');
+            
+            
+            
         } catch (exception $e) {
             
         }
