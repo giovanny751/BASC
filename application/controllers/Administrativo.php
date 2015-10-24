@@ -107,14 +107,15 @@ class Administrativo extends My_Controller {
                     $post['empReg_archivo'] = basename($_FILES['archivo']['name']);
             $emp_id = $this->Empleado_model->empleado_registro($post);
             
-            if(empty($emp_id))$emp_id = $post['Emp_Id'];
-            $targetPath = "./uploads/empleado/".$emp_id;
+            if(empty($emp_id))
+                $emp_id = $post['Emp_Id'];
+            $targetPath = "./uploads/empleado/".$post['Emp_Id'];
             
             //De la carpeta idRegistro, creamos carpeta con el id del empleado
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
-            $targetPath = "./uploads/empleado/".$emp_id."/" . $post['Emp_Id'];
+            $targetPath = "./uploads/empleado/". $post['Emp_Id'].'/'.$emp_id;
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
@@ -123,8 +124,9 @@ class Administrativo extends My_Controller {
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
-            $this->session->guardadoExitoIdEmpleado = $post['Emp_Id'];
-            redirect('index.php/administrativo/creacionempleados', 'location');
+            echo $emp_id;
+//            $this->session->guardadoExitoIdEmpleado = $post['Emp_Id'];
+//            redirect('index.php/administrativo/creacionempleados', 'location');
         } catch (exception $e) {
             
         }
