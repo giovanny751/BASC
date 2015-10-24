@@ -116,6 +116,9 @@
         <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id">
     </form>    
     <hr>
+
+
+
     <?php if (!empty($plan[0]->pla_id)): ?>
         <div class="portlet box blue">
             <div class="portlet-title">
@@ -648,327 +651,323 @@
                     </div>
                 </div>
             </div>
-        <?php endif; ?>
+        </div>
+    <?php endif; ?>
+</div>
+<script>
 
-    </div>
-
-
-    
-
-    <script>
-
-        $('#guardarcarpeta').click(function () {
-            if (obligatorio("carbligatorio")) {
-                $.post("<?php echo base_url("index.php/tareas/guardarcarpetaregistro") ?>",
-                        $('#frmcarpetaregistro').serialize()
-                        ).done(function (msg) {
-                    $('#carpeta *').remove();
-                    var option = "<option value=''>::Seleccionar::</option>";
-                    $.each(msg, function (key, val) {
-                        option += "<option value='" + val.regCar_id + "'>" + val.regCar_nombre + "</option>"
-                    });
-                    $('#carpeta').append(option);
-                }).fail(function (msg) {
-
+    $('#guardarcarpeta').click(function () {
+        if (obligatorio("carbligatorio")) {
+            $.post("<?php echo base_url("index.php/tareas/guardarcarpetaregistro") ?>",
+                    $('#frmcarpetaregistro').serialize()
+                    ).done(function (msg) {
+                $('#carpeta *').remove();
+                var option = "<option value=''>::Seleccionar::</option>";
+                $.each(msg, function (key, val) {
+                    option += "<option value='" + val.regCar_id + "'>" + val.regCar_nombre + "</option>"
                 });
+                $('#carpeta').append(option);
+            }).fail(function (msg) {
+
+            });
+        }
+
+    });
+
+    $('.direccionar').click(function () {
+
+        if ($(this).attr('num') == 1)
+            $('#frmdireccionar').attr("action", "<?php echo base_url("index.php/tareas/nuevatarea") ?>");
+        if ($(this).attr('num') == 2)
+            $('#frmdireccionar').attr("action", "<?php echo base_url("index.php/tareas/registro") ?>");
+        $('#frmdireccionar').submit();
+    });
+    $('body').delegate(".editarhistorial", "click", function () {
+        $('#internotarea').val($(this).attr('tar_id'));
+    });
+    jQuery(document).ready(function () {
+        TableAjax.init();
+
+    });
+
+    $('#guardar').click(function () {
+        $.post(
+                "<?php echo base_url("index.php/tareas/guardaractividadhijo") ?>",
+                $('#f6').serialize()
+                ).done(function (msg) {
+            var body = "";
+            var id = "";
+            $.each(msg, function (key, val) {
+                id = val.actHij_padreid;
+                body += "<tr>";
+                body += "<td>" + val.actHij_nombre + "</td>";
+                body += "<td>" + val.actHij_fechaInicio + "</td>";
+                body += "<td>" + val.actHij_fechaFinalizacion + "</td>";
+                body += "<td>" + val.actHij_presupuestoTotal + "</td>";
+                body += "<td>" + val.actHij_descripcion + "</td>";
+                body += "</tr>";
+            });
+            $('#' + id).find('table tbody *').remove();
+            $('#' + id).find('table tbody').append(body);
+            $('#myModal8').hide();
+            $('#myModal8').find('input[type="text"],select,textarea').val("");
+            alerta("verde", "Datos guardados correctamente");
+        }).fail(function (msg) {
+            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+        });
+    });
+
+
+
+    var TableAjax = function () {
+
+        var initPickers = function () {
+            //init date pickers
+            $('.date-picker').datepicker({
+                rtl: Metronic.isRTL(),
+                autoclose: true
+            });
+        }
+
+        var handleRecords = function () {
+
+            var grid = new Datatable();
+
+            grid.init({
+                src: $("#datatable_ajax2"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+                    // execute some code on network or other general error  
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Cargando...',
+                dataTable: {
+                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                    "lengthMenu": [
+                        [10, 20, 50, 100, 150, -1],
+                        [10, 20, 50, 100, 150, "All"] // change per page values here
+                    ],
+                    "pageLength": 10, // default record count per page
+                    "ajax": {
+                        "url": "<?php echo base_url("index.php/tareas/listadotareasinactivasxplanfiltro") ?>", // ajax source
+                    },
+                    "order": [
+                        [1, "asc"]
+                    ]// set first column as a default sort by asc
+                }
+            });
+            grid.init({
+                src: $("#datatable_ajax"),
+                onSuccess: function (grid) {
+                    // execute some code after table records loaded
+                },
+                onError: function (grid) {
+                    // execute some code on network or other general error  
+                },
+                onDataLoad: function (grid) {
+                    // execute some code on ajax data load
+                },
+                loadingMessage: 'Cargando...',
+                dataTable: {
+                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                    "lengthMenu": [
+                        [10, 20, 50, 100, 150, -1],
+                        [10, 20, 50, 100, 150, "All"] // change per page values here
+                    ],
+                    "pageLength": 10, // default record count per page
+                    "ajax": {
+                        "url": "<?php echo base_url("index.php/tareas/listadotareasxplanfiltro") ?>", // ajax source
+                    },
+                    "order": [
+                        [1, "asc"]
+                    ]// set first column as a default sort by asc
+                }
+            });
+
+            // handle group actionsubmit button click
+            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
+                e.preventDefault();
+                grid.setAjaxParam("xyz", "1");
+                var action = $(".table-group-action-input", grid.getTableWrapper());
+                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
+                    grid.setAjaxParam("xyz", "group_action");
+                    grid.setAjaxParam("avaTar_fecha", action.val());
+                    grid.setAjaxParam("usu_id", grid.getSelectedRows());
+                    grid.getDataTable().ajax.reload();
+                    grid.clearAjaxParams();
+                } else if (action.val() == "") {
+                    Metronic.alert({
+                        type: 'danger',
+                        icon: 'warning',
+                        message: 'Please select an action',
+                        container: grid.getTableWrapper(),
+                        place: 'prepend'
+                    });
+                } else if (grid.getSelectedRowsCount() === 0) {
+                    Metronic.alert({
+                        type: 'danger',
+                        icon: 'warning',
+                        message: 'No record selected',
+                        container: grid.getTableWrapper(),
+                        place: 'prepend'
+                    });
+                }
+            });
+        }
+        return {
+            //main function to initiate the module
+            init: function () {
+
+                initPickers();
+                handleRecords();
             }
 
+        };
+
+    }();
+
+    $('#gavance').click(function () {
+
+        $.post(
+                "<?php echo base_url("index.php/tareas/guardaravance") ?>",
+                $('#guardaravance').serialize()
+                ).done(function () {
+            $('.avance').val("");
+            $('.avance').prop("checked", false);
+            $('#myModal0').modal('hide');
+            $('#fecha').val("<?php echo date("Y-m-d") ?>");
+            alerta("verde", "Avance guardado correctamente");
+        }).fail(function () {
+            alerta("Error", "Error por favor comunicarse con el administrador");
         });
 
-        $('.direccionar').click(function () {
+    });
 
-            if ($(this).attr('num') == 1)
-                $('#frmdireccionar').attr("action", "<?php echo base_url("index.php/tareas/nuevatarea") ?>");
-            if ($(this).attr('num') == 2)
-                $('#frmdireccionar').attr("action", "<?php echo base_url("index.php/tareas/registro") ?>");
-            $('#frmdireccionar').submit();
-        });
-        $('body').delegate(".editarhistorial", "click", function () {
-            $('#internotarea').val($(this).attr('tar_id'));
-        });
-        jQuery(document).ready(function () {
-            TableAjax.init();
+    $('#guardaractividadpadre').click(function () {
+        numero = $('#accordion1').last('div').attr("id");
+        if (obligatorio('acobligatorio')) {
+
+            $.post("<?php echo base_url("index.php/tareas/guardaractividadpadre") ?>",
+                    $('#formactividadpadre').serialize()
+                    )
+                    .done(function (msg) {
+                        $('.acobligatorio').val('');
+
+                        option = "<option value='" + msg.actPad_id + "'>" + msg.actPad_nombre + "</option>"
+                        $('#idpadre').append(option);
+
+                        var acordeon = '<div class="panel panel-default" id="' + msg.actPad_id + '">\n\
+                                            <div class="panel-heading">\n\
+                                                <h4 class="panel-title">\n\
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.actPad_id + '" aria-expanded="false">\n\
+                                                        ' + msg.actPad_nombre + '\n\
+                                                    </a>\n\
+                                                </h4>\n\
+                                            </div>\n\
+                                            <div id="collapse_' + msg.actPad_id + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
+                                                <div class="panel-body">\n\
+                                                    <table class="table table-hover table-bordered">\n\
+                                                        <thead>\n\
+                                                            <th>Nombre</th>\n\
+                                                            <th>Fecha inicio</th>\n\
+                                                            <th>Fecha fin</th>\n\
+                                                            <th>Presupuesto</th>\n\
+                                                            <th>Descripción</th>\n\
+                                                        </thead> \n\
+                                                        <tbody>\n\
+                                                            <tr>\n\
+                                                                <td colspan="5">\n\
+                                                                    <center><b>Agregar Actividad Hijo</b></center>\n\
+                                                                </td>\n\
+                                                            </tr>\n\
+                                                        </tbody>\n\
+                                                    </table>\n\
+                                                </div>\n\
+                                            </div>\n\
+                                    </div>';
+                        $('#accordion1').append(acordeon);
+
+                        alerta("verde", "Actividad padre guardada con exito");
+                    })
+                    .fail(function () {
+                        alerta("error", "Error por favor comunicarse con el administrador del sistema");
+                    })
+        }
+
+    });
+
+    $(".flecha").click(function () {
+        var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
+        var idUsuarioCreado = $("#usuid").val();
+        var metodo = $(this).attr("metodo");
+        if (metodo != "documento") {
+            $.post(url, {idUsuarioCreado: idUsuarioCreado, metodo: metodo})
+                    .done(function (msg) {
+                        $("input[type='text'],select").val("");
+                        $("#usuid").val(msg.usu_id);
+                        $("#cedula").val(msg.usu_cedula);
+                        $("#nombres").val(msg.usu_nombre);
+                        $("#apellidos").val(msg.usu_apellido);
+                        $("#usuario").val(msg.usu_usuario);
+                        $("#contrasena").val(msg.usu_contrasena);
+                        $("#email").val(msg.usu_email);
+                        $("#genero").val(msg.sex_id);
+                        $("#estado").val(msg.est_id);//estado
+                        $("#cargo").val(msg.car_id);//cargo
+                        $("#empleado").val(msg.emp_id);//empleado
+                        if (msg.cambiocontrasena == "1") {
+                            $("#cambiocontrasena").is(":checked");
+                        }
+                    })
+                    .fail(function (msg) {
+                        alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+                        $("input[type='text'], select").val();
+                    })
+        } else {
+            window.location = "<?php echo base_url("index.php/tareas/listadoplanes"); ?>";
+        }
+
+    });
+
+    $('#cargo').change(function () {
+
+        $.post(
+                "<?php echo base_url("index.php/administrativo/consultausuarioscargo") ?>",
+                {
+                    cargo: $(this).val()
+                }
+        ).done(function (msg) {
+            var data = "";
+            $('#empleado *').remove();
+            $.each(msg, function (key, val) {
+                data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
+            });
+            $('#empleado').append(data);
+        }).fail(function (msg) {
 
         });
-
-        $('#guardar').click(function () {
+    });
+    $('#guardarplan').click(function () {
+        if (obligatorio('obligatorio') == true) {
             $.post(
-                    "<?php echo base_url("index.php/tareas/guardaractividadhijo") ?>",
-                    $('#f6').serialize()
+                    "<?php
+    echo (empty($plan[0]->pla_id)) ? base_url('index.php/tareas/guardarplan') : base_url('index.php/tareas/actualizarplan');
+    ?>",
+                    $('#f7').serialize()
                     ).done(function (msg) {
-                var body = "";
-                var id = "";
-                $.each(msg, function (key, val) {
-                    id = val.actHij_padreid;
-                    body += "<tr>";
-                    body += "<td>" + val.actHij_nombre + "</td>";
-                    body += "<td>" + val.actHij_fechaInicio + "</td>";
-                    body += "<td>" + val.actHij_fechaFinalizacion + "</td>";
-                    body += "<td>" + val.actHij_presupuestoTotal + "</td>";
-                    body += "<td>" + val.actHij_descripcion + "</td>";
-                    body += "</tr>";
-                });
-                $('#' + id).find('table tbody *').remove();
-                $('#' + id).find('table tbody').append(body);
-                $('#myModal8').hide();
-                $('#myModal8').find('input[type="text"],select,textarea').val("");
+                if ($(this).text() == "Actualizar") {
+
+                } else {
+                    $('input,select,textarea').val("");
+                }
                 alerta("verde", "Datos guardados correctamente");
             }).fail(function (msg) {
                 alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
             });
-        });
-
-
-
-        var TableAjax = function () {
-
-            var initPickers = function () {
-                //init date pickers
-                $('.date-picker').datepicker({
-                    rtl: Metronic.isRTL(),
-                    autoclose: true
-                });
-            }
-
-            var handleRecords = function () {
-
-                var grid = new Datatable();
-
-                grid.init({
-                    src: $("#datatable_ajax2"),
-                    onSuccess: function (grid) {
-                        // execute some code after table records loaded
-                    },
-                    onError: function (grid) {
-                        // execute some code on network or other general error  
-                    },
-                    onDataLoad: function (grid) {
-                        // execute some code on ajax data load
-                    },
-                    loadingMessage: 'Cargando...',
-                    dataTable: {
-                        "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-                        "lengthMenu": [
-                            [10, 20, 50, 100, 150, -1],
-                            [10, 20, 50, 100, 150, "All"] // change per page values here
-                        ],
-                        "pageLength": 10, // default record count per page
-                        "ajax": {
-                            "url": "<?php echo base_url("index.php/tareas/listadotareasinactivasxplanfiltro") ?>", // ajax source
-                        },
-                        "order": [
-                            [1, "asc"]
-                        ]// set first column as a default sort by asc
-                    }
-                });
-                grid.init({
-                    src: $("#datatable_ajax"),
-                    onSuccess: function (grid) {
-                        // execute some code after table records loaded
-                    },
-                    onError: function (grid) {
-                        // execute some code on network or other general error  
-                    },
-                    onDataLoad: function (grid) {
-                        // execute some code on ajax data load
-                    },
-                    loadingMessage: 'Cargando...',
-                    dataTable: {
-                        "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-                        "lengthMenu": [
-                            [10, 20, 50, 100, 150, -1],
-                            [10, 20, 50, 100, 150, "All"] // change per page values here
-                        ],
-                        "pageLength": 10, // default record count per page
-                        "ajax": {
-                            "url": "<?php echo base_url("index.php/tareas/listadotareasxplanfiltro") ?>", // ajax source
-                        },
-                        "order": [
-                            [1, "asc"]
-                        ]// set first column as a default sort by asc
-                    }
-                });
-
-                // handle group actionsubmit button click
-                grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
-                    e.preventDefault();
-                    grid.setAjaxParam("xyz", "1");
-                    var action = $(".table-group-action-input", grid.getTableWrapper());
-                    if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
-                        grid.setAjaxParam("xyz", "group_action");
-                        grid.setAjaxParam("avaTar_fecha", action.val());
-                        grid.setAjaxParam("usu_id", grid.getSelectedRows());
-                        grid.getDataTable().ajax.reload();
-                        grid.clearAjaxParams();
-                    } else if (action.val() == "") {
-                        Metronic.alert({
-                            type: 'danger',
-                            icon: 'warning',
-                            message: 'Please select an action',
-                            container: grid.getTableWrapper(),
-                            place: 'prepend'
-                        });
-                    } else if (grid.getSelectedRowsCount() === 0) {
-                        Metronic.alert({
-                            type: 'danger',
-                            icon: 'warning',
-                            message: 'No record selected',
-                            container: grid.getTableWrapper(),
-                            place: 'prepend'
-                        });
-                    }
-                });
-            }
-            return {
-                //main function to initiate the module
-                init: function () {
-
-                    initPickers();
-                    handleRecords();
-                }
-
-            };
-
-        }();
-
-        $('#gavance').click(function () {
-
-            $.post(
-                    "<?php echo base_url("index.php/tareas/guardaravance") ?>",
-                    $('#guardaravance').serialize()
-                    ).done(function () {
-                $('.avance').val("");
-                $('.avance').prop("checked", false);
-                $('#myModal0').modal('hide');
-                $('#fecha').val("<?php echo date("Y-m-d") ?>");
-                alerta("verde", "Avance guardado correctamente");
-            }).fail(function () {
-                alerta("Error", "Error por favor comunicarse con el administrador");
-            });
-
-        });
-
-        $('#guardaractividadpadre').click(function () {
-            numero = $('#accordion1').last('div').attr("id");
-            if (obligatorio('acobligatorio')) {
-
-                $.post("<?php echo base_url("index.php/tareas/guardaractividadpadre") ?>",
-                        $('#formactividadpadre').serialize()
-                        )
-                        .done(function (msg) {
-                            $('.acobligatorio').val('');
-
-                                option = "<option value='" + msg.actPad_id + "'>" + msg.actPad_nombre + "</option>"
-                                $('#idpadre').append(option);
-                                
-                            var acordeon = '<div class="panel panel-default" id="'+msg.actPad_id+'">\n\
-                                                <div class="panel-heading">\n\
-                                                    <h4 class="panel-title">\n\
-                                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_'+msg.actPad_id+'" aria-expanded="false">\n\
-                                                            '+msg.actPad_nombre+'\n\
-                                                        </a>\n\
-                                                    </h4>\n\
-                                                </div>\n\
-                                                <div id="collapse_'+msg.actPad_id+'" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
-                                                    <div class="panel-body">\n\
-                                                        <table class="table table-hover table-bordered">\n\
-                                                            <thead>\n\
-                                                                <th>Nombre</th>\n\
-                                                                <th>Fecha inicio</th>\n\
-                                                                <th>Fecha fin</th>\n\
-                                                                <th>Presupuesto</th>\n\
-                                                                <th>Descripción</th>\n\
-                                                            </thead> \n\
-                                                            <tbody>\n\
-                                                                <tr>\n\
-                                                                    <td colspan="5">\n\
-                                                                        <center><b>Agregar Actividad Hijo</b></center>\n\
-                                                                    </td>\n\
-                                                                </tr>\n\
-                                                            </tbody>\n\
-                                                        </table>\n\
-                                                    </div>\n\
-                                                </div>\n\
-                                        </div>';    
-                            $('#accordion1').append(acordeon);
-                            
-                            alerta("verde", "Actividad padre guardada con exito");
-                        })
-                        .fail(function () {
-                            alerta("error", "Error por favor comunicarse con el administrador del sistema");
-                        })
-            }
-
-        });
-
-        $(".flecha").click(function () {
-            var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
-            var idUsuarioCreado = $("#usuid").val();
-            var metodo = $(this).attr("metodo");
-            if (metodo != "documento") {
-                $.post(url, {idUsuarioCreado: idUsuarioCreado, metodo: metodo})
-                        .done(function (msg) {
-                            $("input[type='text'],select").val("");
-                            $("#usuid").val(msg.usu_id);
-                            $("#cedula").val(msg.usu_cedula);
-                            $("#nombres").val(msg.usu_nombre);
-                            $("#apellidos").val(msg.usu_apellido);
-                            $("#usuario").val(msg.usu_usuario);
-                            $("#contrasena").val(msg.usu_contrasena);
-                            $("#email").val(msg.usu_email);
-                            $("#genero").val(msg.sex_id);
-                            $("#estado").val(msg.est_id);//estado
-                            $("#cargo").val(msg.car_id);//cargo
-                            $("#empleado").val(msg.emp_id);//empleado
-                            if (msg.cambiocontrasena == "1") {
-                                $("#cambiocontrasena").is(":checked");
-                            }
-                        })
-                        .fail(function (msg) {
-                            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-                            $("input[type='text'], select").val();
-                        })
-            } else {
-                window.location = "<?php echo base_url("index.php/tareas/listadoplanes"); ?>";
-            }
-
-        });
-
-        $('#cargo').change(function () {
-
-            $.post(
-                    "<?php echo base_url("index.php/administrativo/consultausuarioscargo") ?>",
-                    {
-                        cargo: $(this).val()
-                    }
-            ).done(function (msg) {
-                var data = "";
-                $('#empleado *').remove();
-                $.each(msg, function (key, val) {
-                    data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
-                });
-                $('#empleado').append(data);
-            }).fail(function (msg) {
-
-            });
-        });
-        $('#guardarplan').click(function () {
-            if (obligatorio('obligatorio') == true) {
-                $.post(
-                        "<?php
-                        echo (empty($plan[0]->pla_id)) ? base_url('index.php/tareas/guardarplan') : base_url('index.php/tareas/actualizarplan');
-                        ?>",
-                        $('#f7').serialize()
-                        ).done(function (msg) {
-                    if ($(this).text() == "Actualizar") {
-
-                    } else {
-                        $('input,select,textarea').val("");
-                    }
-                    alerta("verde", "Datos guardados correctamente");
-                }).fail(function (msg) {
-                    alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-                });
-            }
-        });
-    </script>
+        }
+    });
+</script>

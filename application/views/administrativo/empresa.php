@@ -5,16 +5,24 @@
                 <i class="fa fa-cogs"></i>EMPRESA
             </div>
             <div class="tools">
-<!--                <a href="javascript:;" class="collapse" data-original-title="" title="">
-                </a>
-                <a href="javascript:;" class="remove" data-original-title="" title="">
-                </a>-->
-<button type="button" id="guardar" class="btn btn-default">Guardar</button>
+                <!--                <a href="javascript:;" class="collapse" data-original-title="" title="">
+                                </a>
+                                <a href="javascript:;" class="remove" data-original-title="" title="">
+                                </a>-->
+
             </div>
         </div>
         <div class="portlet-body">
-            <?php if(!empty($mensaje)){?>
-                            <p class="alert alert-info"  style='margin-top:10px;font-weight: bold;text-align: center;'><?php echo $mensaje ?></p>
+            <div class="form-actions top">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="button" id="guardar" class="btn btn-success">Guardar</button>
+                    </div>
+                </div>
+                <div class="row"> </div>
+            </div>
+            <?php if (!empty($mensaje)) { ?>
+                <p class="alert alert-info"  style='margin-top:10px;font-weight: bold;text-align: center;'><?php echo $mensaje ?></p>
             <?php } ?>
             <!--<div class="row">-->
             <form method="post" id="f5" enctype="multipart/form-data" action="<?php echo base_url("index.php/administrativo/guardarempresa") ?>" >
@@ -181,7 +189,7 @@
         </div>
     </div>
 </div>
-<script>    
+<script>
 
     $('.dirigir').click(function () {
 
