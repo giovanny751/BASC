@@ -17,6 +17,12 @@ class Registrocarpeta_model extends CI_Model {
         $carpeta = $this->db->get("registro_carpeta");
         return $carpeta->result();
     }
+    function detailxid($regCar_id){
+        $this->db->select("regCar_id as uno, regCar_nombre as dos");
+        $this->db->where("regCar_id",$regCar_id);
+        $carpeta = $this->db->get("registro_carpeta");
+        return $carpeta->result();
+    }
     function detailxplannombre($pla_id,$nombre,$descripcion){
         
         $this->db->where("regCar_nombre",$nombre);

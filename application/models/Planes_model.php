@@ -94,24 +94,10 @@ class Planes_model extends CI_Model {
         return $planes->result(); 
         
     }
-    function tareaxplan($id, $cantidad = null, $orden,$inicia = null){
+    function tareaxplan($id){
+//    function tareaxplan($id, $cantidad = null, $orden,$inicia = null){
         
-        if (!empty($orden)):
-            $data = array(
-                "tar_id",
-                "car_id",
-                "tip_tipo",
-                "tar_nombre",
-                "tar_fechaInicio",
-                "tar_fechaFinalizacion",
-                "diferencia",
-                "Emp_Nombre"
-            );
-            $this->db->order_by($data[$orden], "asc");
-        endif;
-        if($cantidad == -1)$cantidad = "";
-        
-        $this->db->select("CONCAT('<button type=".'"button"'."  class=".'"btn btn-success editarhistorial"'." tar_id='".",tarea.tar_id,"."' data-toggle=".'"modal"'." data-target=".'"#myModal0"'." >Nuevo avance</button>')");
+       
         $this->db->select("tarea.car_id");
         $this->db->select("tipo.tip_tipo");
         $this->db->select("tar_nombre");
@@ -123,10 +109,7 @@ class Planes_model extends CI_Model {
         $this->db->join("tarea","tarea.pla_id = planes.pla_id");
         $this->db->join("empleado","empleado.emp_id = tarea.emp_id","LEFT");
         $this->db->join("tipo","tipo.tip_id = tarea.tip_id","LEFT");
-        if(!empty($inicia))
-        $planes = $this->db->get("planes",$inicia ,$cantidad);
-        else
-            $planes = $this->db->get("planes",$cantidad);   
+        $planes = $this->db->get("planes");   
         return $planes->result(); 
         
     }

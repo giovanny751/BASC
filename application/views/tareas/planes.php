@@ -169,7 +169,34 @@
                                 <th>Responsables</th>
                                 </thead>
                                 <tbody>
-
+                                    <?php if (empty($tareas)) { ?>
+                                        <tr>
+                                            <td colspan="8">
+                                    <center>
+                                        <b>
+                                            No hay tareas asociadas al plan
+                                        </b>
+                                    </center>
+                                    </td>
+                                    </tr>
+                                    <?php
+                                } else {
+                                    foreach ($tareas as $tar) {
+                                        ?>
+                                        <tr>
+                                            <td><button type="button"  class="btn btn-success editarhistorial" tar_id='tarea.tar_id' data-toggle="modal" data-target="#myModal0" >Nuevo avance</button></td>
+                                            <td></td>
+                                            <td><?php echo $tar->tip_tipo ?></td>
+                                            <td><?php echo $tar->tar_nombre ?></td>
+                                            <td><?php echo $tar->tar_fechaInicio ?></td>
+                                            <td><?php echo $tar->tar_fechaFinalizacion ?></td>
+                                            <td><?php echo $tar->diferencia ?></td>
+                                            <td><?php echo $tar->Emp_Nombre ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
                                 </tbody>
                             </table>
                         </div>
@@ -285,7 +312,7 @@
                                     <div class="tabbable tabbable-tabdrop">
                                         <div class="tab-content">
                                             <br>
-                                            <div class="panel-group accordion" id="accordion1">
+                                            <div class="panel-group accordion" id="accordion5">
                                                 <?php
                                                 $o = 1;
                                                 foreach ($carpeta as $idcar => $nomcar):
@@ -323,12 +350,6 @@
                                                                             <?php endforeach; ?>
                                                                         </tbody>
                                                                     </table>
-
-                                                                    <?php
-                                                                    foreach ($num as $numero => $campo):
-                                                                        ?>
-
-                                                                    <?php endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -661,12 +682,12 @@
             $.post("<?php echo base_url("index.php/tareas/guardarcarpetaregistro") ?>",
                     $('#frmcarpetaregistro').serialize()
                     ).done(function (msg) {
-                $('#carpeta *').remove();
-                var option = "<option value=''>::Seleccionar::</option>";
-                $.each(msg, function (key, val) {
-                    option += "<option value='" + val.regCar_id + "'>" + val.regCar_nombre + "</option>"
-                });
+                var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>"
                 $('#carpeta').append(option);
+                agregarregistro('accordion5',msg);
+                $('.carbligatorio').val("");
+                $('#myModal4').hide();
+                alerta("verde","Carpeta agregada con exito")
             }).fail(function (msg) {
 
             });
@@ -760,33 +781,6 @@
                     ]// set first column as a default sort by asc
                 }
             });
-            grid.init({
-                src: $("#datatable_ajax"),
-                onSuccess: function (grid) {
-                    // execute some code after table records loaded
-                },
-                onError: function (grid) {
-                    // execute some code on network or other general error  
-                },
-                onDataLoad: function (grid) {
-                    // execute some code on ajax data load
-                },
-                loadingMessage: 'Cargando...',
-                dataTable: {
-                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-                    "lengthMenu": [
-                        [10, 20, 50, 100, 150, -1],
-                        [10, 20, 50, 100, 150, "All"] // change per page values here
-                    ],
-                    "pageLength": 10, // default record count per page
-                    "ajax": {
-                        "url": "<?php echo base_url("index.php/tareas/listadotareasxplanfiltro") ?>", // ajax source
-                    },
-                    "order": [
-                        [1, "asc"]
-                    ]// set first column as a default sort by asc
-                }
-            });
 
             // handle group actionsubmit button click
             grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
@@ -856,19 +850,29 @@
                     )
                     .done(function (msg) {
                         $('.acobligatorio').val('');
-
-                        option = "<option value='" + msg.actPad_id + "'>" + msg.actPad_nombre + "</option>"
+                        var option = "<option value='" + msg.actPad_id + "'>" + msg.actPad_nombre + "</option>"
                         $('#idpadre').append(option);
+                        agregarregistro('accordion1',msg);
+                        $('#myModal').hide();
+                        alerta("verde", "Actividad padre guardada con exito");
+                    })
+                    .fail(function () {
+                        alerta("error", "Error por favor comunicarse con el administrador del sistema");
+                    })
+        }
 
-                        var acordeon = '<div class="panel panel-default" id="' + msg.actPad_id + '">\n\
+    });
+
+    function agregarregistro(tabla,msg) {
+        var acordeon = '<div class="panel panel-default" id="' + msg.uno + '">\n\
                                             <div class="panel-heading">\n\
                                                 <h4 class="panel-title">\n\
-                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.actPad_id + '" aria-expanded="false">\n\
-                                                        ' + msg.actPad_nombre + '\n\
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.dos + '" aria-expanded="false">\n\
+                                                        ' + msg.dos + '\n\
                                                     </a>\n\
                                                 </h4>\n\
                                             </div>\n\
-                                            <div id="collapse_' + msg.actPad_id + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
+                                            <div id="collapse_' + msg.uno + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
                                                 <div class="panel-body">\n\
                                                     <table class="table table-hover table-bordered">\n\
                                                         <thead>\n\
@@ -889,16 +893,9 @@
                                                 </div>\n\
                                             </div>\n\
                                     </div>';
-                        $('#accordion1').append(acordeon);
+        $('#'+tabla).append(acordeon);
 
-                        alerta("verde", "Actividad padre guardada con exito");
-                    })
-                    .fail(function () {
-                        alerta("error", "Error por favor comunicarse con el administrador del sistema");
-                    })
-        }
-
-    });
+    }
 
     $(".flecha").click(function () {
         var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
