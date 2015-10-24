@@ -326,12 +326,12 @@
                                         <div class="panel-heading">
                                             
                                             <h4 class="panel-title">
-                                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id; ?>" aria-expanded="false"> 
+                                                <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $i; ?>" aria-expanded="false"> 
                                                 <?php echo $nom ?>
                                             </a>
                                             </h4>
                                         </div>
-                                        <div id="collapse_<?php echo $id; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                        <div id="collapse_<?php echo $i; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                             <div class="panel-body">
                                                 <table class="table table-hover table-bordered">
                                                     <thead>
@@ -344,23 +344,21 @@
                                                     <th>Acción</th>
                                                     </thead>
                                                     <tbody>
-                                                        <?php 
-                                                        foreach ($num as $numero => $campos):
-                                                            
+                                                        <?php foreach ($num as $numero => $campos): 
                                                             if(!empty($campos[1])): ?>
                                                             <tr>
-                                                                <td> <a target="_blank" href="<?php echo base_url("/uploads/empleado/".$campos[4]."/".$empleado[0]->Emp_Id."/".$campos[1]) ?>" title="descargar" ><?php echo $campos[1] ?> </a></td>
+                                                                <td><?php echo $campos[1] ?></td>
                                                                 <td><?php echo $campos[2] ?></td>
                                                                 <td><?php echo $campos[3] ?></td>
                                                                 <td><?php echo $campos[0] ?></td>
-                                                                <td><?php echo $campos[5] ?></td>
-                                                                <td><?php echo $campos[6] ?></td>
+                                                                <td></td>
+                                                                <td></td>
                                                                 <td>
                                                                     <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" empReg_id="<?php echo $campos[4] ?>"></i>
                                                                     <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  emp_id="<?php echo $campos[4] ?>" ></i>
                                                                 </td>
                                                             </tr>
-                                                        <?php  
+                                                        <?php 
                                                         else:
                                                             ?>
                                                             <tr>
@@ -571,43 +569,6 @@
             $.post("<?php echo base_url("index.php/administrativo/guardarcarpeta") ?>",
                     $("#formcarpeta").serialize()
                     ).done(function (msg) {
-                        
-                        var acordeon = '<div class="panel panel-default" id="'+msg.empCar_id+'">\n\
-                                                <div class="panel-heading">\n\
-                                                    <h4 class="panel-title">\n\
-                                                        <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_'+msg.empCar_id+'" aria-expanded="false">\n\
-                                                            '+msg.empCar_nombre+'\n\
-                                                        </a>\n\
-                                                    </h4>\n\
-                                                </div>\n\
-                                                <div id="collapse_'+msg.empCar_id+'" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
-                                                    <div class="panel-body">\n\
-                                                        <table class="table table-hover table-bordered">\n\
-                                                            <thead>\n\
-                                                                <th>Nombre archivo</th>\n\
-                                                                <th>Descripción</th>\n\
-                                                                <th>Versión</th>\n\
-                                                                <th>Responsable</th>\n\
-                                                                <th>Tamaño</th>\n\
-                                                                <th>Fecha</th>\n\
-                                                                <th>Acción</th>\n\
-                                                            </thead> \n\
-                                                            <tbody>\n\
-                                                                <tr>\n\
-                                                                    <td colspan="7">\n\
-                                                                        <center><b>Agregar Actividad Hijo</b></center>\n\
-                                                                    </td>\n\
-                                                                </tr>\n\
-                                                            </tbody>\n\
-                                                        </table>\n\
-                                                    </div>\n\
-                                                </div>\n\
-                                        </div>';    
-                                                                            
-                                                                            
-                            $('#accordion1').append(acordeon);
-                        
-                        $("#myModal").modal("toggle");
                 alerta("verde", "Datos guardados correctamente")
             })
                     .fail(function (msg) {

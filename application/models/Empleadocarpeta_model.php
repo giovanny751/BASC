@@ -20,6 +20,14 @@ class Empleadocarpeta_model extends CI_Model {
         return $carpeta->result();
         
     }
+    function search($nombre,$descripcion,$empleado){
+        
+        $this->db->where("empCar_nombre",$nombre);
+        $this->db->where("empCar_descripcion",$descripcion);
+        $this->db->where("emp_id",$empleado);
+        $carpeta = $this->db->get("empleado_carpeta");
+        return $carpeta->result();
+    }
 
 
 }
