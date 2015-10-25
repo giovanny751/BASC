@@ -131,7 +131,7 @@ class Planes extends My_Controller {
         }
     }
 
-    function planes() {
+    function nuevoplan() {
         if ($this->consultaacceso($this->data["usu_id"])):
             $this->load->model('User_model');
             $this->load->model('Tipo_model');
@@ -175,7 +175,7 @@ class Planes extends My_Controller {
             $this->data['norma'] = $this->Norma_model->detail();
             $this->data['estado'] = $this->Estados_model->detail();
             $this->data['cargo'] = $this->Cargo_model->allcargos();
-            $this->layout->view("tareas/planes", $this->data);
+            $this->layout->view("planes/planes", $this->data);
         else:
             $this->layout->view("permisos");
         endif;
@@ -275,7 +275,7 @@ class Planes extends My_Controller {
             $this->load->model("Planes_model");
             $this->data['responsable'] = $this->Planes_model->responsables();
             $this->data['estados'] = $this->Estados_model->finalizados();
-            $this->layout->view("tareas/listadoplanes", $this->data);
+            $this->layout->view("planes/listadoplanes", $this->data);
         else:
             $this->layout->view("permisos");
         endif;
@@ -296,14 +296,6 @@ class Planes extends My_Controller {
         } catch (exception $e) {
             
         }
-    }
-
-    function listadoregistros() {
-        if ($this->consultaacceso($this->data["usu_id"])):
-            $this->layout->view("tareas/listadoregistros");
-        else:
-            $this->layout->view("permisos");
-        endif;
     }
 
     function guardarcarpeta() {
