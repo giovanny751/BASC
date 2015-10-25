@@ -22,7 +22,7 @@
     </form>
     <div class="row">
         <span id="boton_guardar">
-            <button class="btn btn-success"  id="btnguardar"  >Guardar</button> 
+            <button type="button" class="btn btn-success"  id="btnguardar"  >Guardar</button> 
             <input class="btn btn-success" type="reset" value="Limpiar">
             <a href="<?php echo base_url('index.php') . "/Tipo_contrato/consult_tipo_contrato" ?>" class="btn btn-success">Listado </a>
         </span>
@@ -36,14 +36,14 @@
 <script>
 
     $('#btnguardar').click(function () {
-        var data = $('#TipCon_Descripcion').val();
+        var tipo = $('#TipCon_Descripcion').val();
         $.post("<?php echo base_url("index.php/tipo_contrato/exist") ?>"
-                , {tipo: $(this).val()}
+                , {tipo: tipo}
         )
                 .done(function (msg) {
                     if (msg == 1) {
-                        data.val("");
-                        data.focus();
+                        $('#TipCon_Descripcion').val("");
+                        $('#TipCon_Descripcion').focus();
                         alerta("amarillo", "Tipo de contrato ya existe en el sistema")
                     } else {
                         $('#frmcontrato').submit();

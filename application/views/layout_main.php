@@ -258,7 +258,8 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
 <script src="<?= base_url('assets/admin/layout/scripts/demo.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/admin/pages/scripts/index.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/admin/pages/scripts/tasks.js') ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/global/scripts/datatable.js') ?>"></script>
+<!--<script src="<?= base_url('assets/global/scripts/datatable.js') ?>"></script>-->
+<script src="<?= base_url('assets/admin/pages/scripts/table-managed.js') ?>"></script>
 <!--<script src="<?= base_url('assets/admin/pages/scripts/table-ajax.js') ?>"></script>-->
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->

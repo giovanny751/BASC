@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <div class="portlet green-meadow box">
+    <div class="portlet blue box">
         <div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-cogs"></i>ADMINISTRACIÓN DE ROLES

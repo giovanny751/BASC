@@ -538,11 +538,11 @@
             }).fail(function (msg) {
                 alerta("rojo", "Error, por favor comunicarse con el administrador del sistema")
             });
-
-        })
+        });
 
         $("body").delegate('.eliminar', "click", function () {
             var apuntador = $(this);
+            if(confirm("Esta seguro de eliminar el registro"))
             $.post(
                     "<?php echo base_url("index.php/administrativo/eliminarregistro"); ?>"
                     , {empReg_id: $(this).attr('empreg_id')}
@@ -552,6 +552,7 @@
             }).fail(function (msg) {
                 alerta("rojo", "Error, por favor comunicarse con el administrador del sistema")
             })
+        }
         });
 
         $('#cedula').change(function () {

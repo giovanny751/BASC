@@ -35,8 +35,12 @@ class Empleado_model extends CI_Model {
         $this->db->delete("empleado");
     }
 
-    function filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos,$tipocontrato) {
+    function filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos,$tipocontrato,$dim1,$dim2) {
 
+        if (!empty($dim1))
+            $this->db->where('empleado.Dim_id', $dim1);
+        if (!empty($dim2))
+            $this->db->where('empleado.Dim_IdDos', $dim2);
         if (!empty($tipocontrato))
             $this->db->where('tipo_contrato.TipCon_Id', $tipocontrato);
         if (!empty($cedula))
