@@ -500,10 +500,17 @@
                 "<?php echo base_url("index.php/administrativo/searchxid") ?>",
                 {empReg_id : $(this).attr("emp_id")}
                 ).done(function(msg){
+                    $('.archivo').remove()
                     $('#empReg_carpeta').val(msg.empReg_carpeta);
                     $('#empReg_version').val(msg.empReg_version);
                     $('#empReg_descripcion').val(msg.empReg_descripcion);
-                    
+                    var div = "<div class='row archivo'>\n\
+                                <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>Archivo Adjunto:</div>\n\
+                                <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>\n\
+                                <a target='_blank' href='<?php echo base_url("/uploads/empleado/")  ?>/"+msg.emp_id+"/"+msg.empReg_id+"/"+msg.empReg_archivo+"' title='descargar' >"+msg.empReg_archivo+"</a>\n\
+                                </div>\n\
+                               </div>";
+                    $('#formregistro').append(div);
                 }).fail(function(msg){
                    alerta("rojo","Error, por favor comunicarse con el administrador del sistema") 
                 });
