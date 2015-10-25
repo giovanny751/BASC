@@ -59,6 +59,9 @@ class Registro_model extends CI_Model {
         $avance = $this->db->get("registro");
         return $avance->num_rows();
     }
+    function guardar_registro($post){
+        $this->db->insert("registro",$post);
+    }
 
 }
 

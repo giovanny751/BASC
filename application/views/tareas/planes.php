@@ -441,7 +441,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                        <label for="nombreactividad">Versión:</label>
+                                        <label for="version">Versión:</label>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                         <input type="text" id="version" name="version" class="form-control ">
@@ -449,15 +449,15 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                        <label for="nombreactividad">Descripción:</label>
+                                        <label for="reg_descripcion">Descripción:</label>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                        <textarea id="nombreactividad" name="descripcion" class="form-control "></textarea>
+                                        <textarea id="reg_descripcion" name="reg_descripcion" class="form-control "></textarea>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                        <label for="nombreactividad">Adjuntar archivo:</label>
+                                        <label for="archivo">Adjuntar archivo:</label>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                         <input type="file" id="archivo" name="archivo" class="form-control ">
@@ -994,4 +994,30 @@
             });
         }
     });
+    $('#btnguardarregistro').click(function(){
+        var file_data = $('#archivo').prop('files')[0];
+            var form_data = new FormData();
+            form_data.append('archivo', file_data);
+            form_data.append('pla_id',$('#pla_id').val());
+            form_data.append('regCar_id',$('#carpeta').val());
+            form_data.append('reg_version',$('#version').val());
+            form_data.append('reg_descripcion',$('#reg_descripcion').val());
+            $.ajax({
+            url: '<?php echo base_url("index.php/tareas/guardarregistroempleado") ?>',
+            dataType: 'text', // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function (result) {
+                $('#carpeta').val('');
+                $('#version').val('');
+                $('#reg_descripcion').val('');
+                $('#archivo').val('');
+                $("#myModal15").hide();
+                alerta('verde','Registro guardado con exito.');
+            }
+        });
+    })
 </script>
