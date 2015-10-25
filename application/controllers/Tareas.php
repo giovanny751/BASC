@@ -423,12 +423,17 @@ class Tareas extends My_Controller {
         }
     }
 
+    function consultar_actividad_padre() {
+        $this->load->model("Actividadpadre_model");
+        $planes=$this->Actividadpadre_model->consultar_actividad_padre($this->input->post("actPad_id"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($planes[0]));
+    }
     function guardaractividadpadre() {
 
         try {
             $this->load->model("Actividadpadre_model");
             $this->Actividadpadre_model->create(
-                    $this->input->post("idactividad"), $this->input->post("nombreactividad"), $this->input->post("pla_id")
+                    $this->input->post("idactividad"), $this->input->post("nombreactividad"), $this->input->post("pla_id"),$this->input->post("actPad_id")
             );
             $actividades = $this->Actividadpadre_model->searchregister(
                     $this->input->post("idactividad"), $this->input->post("nombreactividad"), $this->input->post("pla_id")
