@@ -309,7 +309,7 @@
                 </div>
                 <div class="tools">
                     <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModal">Carpeta</button>
-                    <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModal2">Registro</button>
+                    <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModal2" id="agregarregistro">Registro</button>
                 </div>
             </div>
             <div class="portlet-body">
@@ -438,6 +438,7 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" id="formregistro" >
+                            <input type="hidden" name="empReg_id" id="empReg_id" />
                             <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                     <label for="empReg_carpeta">Carpeta:</label>
@@ -476,6 +477,7 @@
                                 </div>
                             </div>
                             <input type="hidden" value="<?php echo $empleado[0]->Emp_Id ?>" name="Emp_Id" />
+                            
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -494,18 +496,26 @@
     ?>
     <script>
         
+        $("#agregarregistro").click(function(){
+            $('#agregarregistro').text("Guardar");
+            $('#empReg_id').val("");
+        });
+        
+        
         $('body').delegate('.modificar','click',function(){
-            
+            $('#guardarRegistro').text("Actualizar");
             $.post(
                 "<?php echo base_url("index.php/administrativo/searchxid") ?>",
                 {empReg_id : $(this).attr("emp_id")}
                 ).done(function(msg){
                     $('.archivo').remove()
+                    $('#regEmp_id').val(msg.empReg_id);
                     $('#empReg_carpeta').val(msg.empReg_carpeta);
                     $('#empReg_version').val(msg.empReg_version);
                     $('#empReg_descripcion').val(msg.empReg_descripcion);
+                    $('#empReg_id').val(msg.empReg_id);
                     var div = "<div class='row archivo'>\n\
-                                <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>Archivo Adjunto:</div>\n\
+                                <label class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='color:black'>Archivo:</label>\n\
                                 <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>\n\
                                 <a target='_blank' href='<?php echo base_url("/uploads/empleado/")  ?>/"+msg.emp_id+"/"+msg.empReg_id+"/"+msg.empReg_archivo+"' title='descargar' >"+msg.empReg_archivo+"</a>\n\
                                 </div>\n\
@@ -768,6 +778,7 @@
             var file_data = $('#archivocarpeta').prop('files')[0];
             var form_data = new FormData();
             form_data.append('archivo', file_data);
+            form_data.append('empReg_id',$('#empReg_id').val());
             form_data.append('empReg_carpeta',$('#empReg_carpeta').val());
             form_data.append('empReg_version',$('#empReg_version').val());
             form_data.append('empReg_descripcion',$('#empReg_descripcion').val());
@@ -801,7 +812,7 @@
                 });
                 var numero = $('#empReg_carpeta').val();
                 $('#collapse_'+numero).find('table tbody').append(filas);
-                $('#myModal2').hide();
+                $('#myModal2').modal("toggle")
             }
         });
         });
