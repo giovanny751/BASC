@@ -357,8 +357,8 @@
                                                                     <td><?php echo $campos[5] ?></td>
                                                                     <td><?php echo $campos[6] ?></td>
                                                                     <td>
-                                                                        <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" empReg_id="<?php echo $campos[4] ?>"></i>
-                                                                        <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" data-target='#myModal2' data-toggle='modal'  emp_id="<?php echo $campos[4] ?>" ></i>
+                                                                        <i class="fa fa-times eliminar btn btn-danger" title="Eliminar" empReg_id="<?php echo $campos[4] ?>"></i>
+                                                                        <i class="fa fa-pencil-square-o modificar btn btn-info" title="Modificar" data-target='#myModal2' data-toggle='modal'  emp_id="<?php echo $campos[4] ?>" ></i>
                                                                     </td>
                                                                 </tr>
                                                                 <?php
@@ -499,11 +499,11 @@
         $('body').delegate('.accordion-toggle',"click",function(){
             
             if($(this).attr('aria-expanded') == "true"){
-                $('.carpeta').removeClass('fa fa-folder-open-o');
-                $('.carpeta').addClass('fa fa-folder-o');
+                $(this).children('.carpeta').removeClass('fa fa-folder-open-o');
+                $(this).children('.carpeta').addClass('fa fa-folder-o');
             }else{ 
-                $('.carpeta').removeClass('fa fa-folder-o');
-                $('.carpeta').addClass('fa fa-folder-open-o');
+                $(this).children('.carpeta').removeClass('fa fa-folder-o');
+                $(this).children('.carpeta').addClass('fa fa-folder-open-o');
             }
         });
 
@@ -710,9 +710,6 @@
                                 $("#btnRegistro").show();
                                 $("#guardar").show();
                             }
-
-                            //Empleado Aseguradora
-
                             $('#incluiraseguradoras').find("#agregarClones").html("");
                             var url2 = "<?php echo base_url("index.php/administrativo/consultaempleadoflechasaseguradora") ?>";
                             $.post(url2, {idEmpleadoCreado: msg.Emp_Id})
@@ -733,7 +730,6 @@
                         })
                         .fail(function (msg) {
                             alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-                            //$("input[type='text'], select").val();
                             $("#actualizar").hide();
                             $("#btnRegistro").show();
                             $("#guardar").show();
@@ -816,8 +812,8 @@
                         filas += "<td>" + val.empReg_tamano + "</td>";
                         filas += "<td>" + val.empgReg_fecha + "</td>";
                         filas += "<td>\n\
-                                <i class='fa fa-times fa-2x eliminar btn btn-danger' title='Eliminar' empReg_id='" + val.empReg_id + "'></i>\n\
-                                <i class='fa fa-pencil-square-o fa-2x modificar btn btn-info' title='Modificar' data-target='#myModal2' data-toggle='modal'  emp_id='" + val.empReg_id + "' ></i>\n\
+                                <i class='fa fa-times eliminar btn btn-danger' title='Eliminar' empReg_id='" + val.empReg_id + "'></i>\n\
+                                <i class='fa fa-pencil-square-o modificar btn btn-info' title='Modificar' data-target='#myModal2' data-toggle='modal'  emp_id='" + val.empReg_id + "' ></i>\n\
                              </td>";
                         filas += "</tr>";
                     });
