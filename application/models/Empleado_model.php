@@ -121,21 +121,7 @@ class Empleado_model extends CI_Model {
         return $empleado->result();
     }
 
-    function empleado_registro($post) {
-//        $this->db->select('count(Emp_Id) dd'); //
-//        $this->db->where('Emp_Id', $post['Emp_Id']);
-//        $datos = $this->db->get('empleado_registro');
-//        $datos = $datos->result();
-//        if ($datos[0]->dd == 0){
-            $this->db->insert('empleado_registro', $post);
-            return $this->db->insert_id();
-//        }
-//        else {
-//            $this->db->where('Emp_Id', $post['Emp_Id']);
-//            $this->db->update('empleado_registro', $post);
-//        }
-//        echo $this->db->last_query();die;
-    }
+
 
 }
 

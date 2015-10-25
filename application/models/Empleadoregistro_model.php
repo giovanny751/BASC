@@ -21,6 +21,19 @@ class Empleadoregistro_model extends CI_Model {
         $data = $this->db->get("empleado_carpeta");
         return $data->result();
     }
+        function empleado_registro($post) {
+            $this->db->insert('empleado_registro', $post);
+            return $this->db->insert_id();
+    }
+    function detallexcarpeta($id){
+        
+        $this->db->select("empleado_registro.*");
+        $this->db->select("CONCAT(empleado.Emp_Nombre,' ',empleado.Emp_Apellidos) as nombre",false);
+        $this->db->where("empReg_carpeta",$id);
+        $this->db->join("empleado","empleado.emp_id = empleado_registro.emp_id ");
+        $data = $this->db->get("empleado_registro");
+        return $data->result(); 
+    }
 
 
 

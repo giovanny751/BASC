@@ -350,7 +350,7 @@
                                                             if (!empty($campos[1])):
                                                                 ?>
                                                                 <tr>
-                                                                    <td> <a target="_blank" href="<?php echo base_url("/uploads/empleado/" . $campos[4] . "/" . $empleado[0]->Emp_Id . "/" . $campos[1]) ?>" title="descargar" ><?php echo $campos[1] ?> </a></td>
+                                                                    <td> <a target="_blank" href="<?php echo base_url("/uploads/empleado/" . $empleado[0]->Emp_Id . "/" . $campos[4] . "/" . $campos[1]) ?>" title="descargar" ><?php echo $campos[1] ?> </a></td>
                                                                     <td><?php echo $campos[2] ?></td>
                                                                     <td><?php echo $campos[3] ?></td>
                                                                     <td><?php echo $campos[0] ?></td>
@@ -572,7 +572,9 @@
             $.post("<?php echo base_url("index.php/administrativo/guardarcarpeta") ?>",
                     $("#formcarpeta").serialize()
                     ).done(function(msg) {
-
+                       
+                var option = "<option value='"+msg.empCar_id+"'>"+msg.empCar_nombre+"</option>"; 
+                $('#empReg_carpeta').append(option);
                 var acordeon = '<div class="panel panel-default" id="' + msg.empCar_id + '">\n\
                                                 <div class="panel-heading">\n\
                                                     <h4 class="panel-title">\n\
@@ -691,30 +693,7 @@
             }
 
         });
-
-        //    $("body").on("change", ".tipoaseguradora", function () {
-        //        var filaSeleccioanda = $(this).parents(".row");
-        //        var id = $(this).val();
-        //        $.post("<?php echo base_url("index.php/administrativo/consultaaseguradoras") ?>",
-        //                {id: id})
-        //                .done(function (msg) {
-        //                    filaSeleccioanda.find(".nombreaseguradora").find("option").remove()
-        //                    var aseguradora = "<option value=''>::Seleccionar::</option>";
-        //                    var i = 0;
-        //                    $.each(msg, function (key, val) {
-        //                        aseguradora += "<option value='" + val.ase_id + "'>" + val.ase_nombre + "</option>"
-        //                        i++
-        //                    });
-        //                    if (i == 0)
-        //                        aseguradora += "<option value=''>Sin Datos</option>";
-        //                    filaSeleccioanda.find(".nombreaseguradora").append(aseguradora);
-        //                })
-        //                .fail(function (msg) {
-        //                    alert("Error en la operación");
-        //                });
-        //
-        //    });
-
+        
         $('#guardar').click(function() {
 
             if ((obligatorio('obligatorio') == true) && (email("email") == true))
@@ -773,9 +752,30 @@
             data: form_data,
             type: 'post',
             success: function (result) {
+                $('#collapse_'+$('#empReg_carpeta').val()).find('table tbody *').remove();
+                var filas = ""
+//                console.log(result);
+                var result = jQuery.parseJSON(result);
+                $.each(result,function(key,val){
+                    filas += "<tr>";
+                    filas += "<td><a target='_blank' href='<?php echo base_url("/uploads/empleado/")  ?>/"+val.emp_id+"/"+val.empReg_id+"/"+val.empReg_archivo+"' title='descargar' >"+val.empReg_archivo+"</td>";
+                    filas += "<td>"+val.empReg_descripcion+"</td>";
+                    filas += "<td>"+val.empReg_version+"</td>";
+                    filas += "<td>"+val.nombre+"</td>";
+                    filas += "<td>"+val.empReg_tamano+"</td>";
+                    filas += "<td>"+val.empgReg_fecha+"</td>";
+                    filas += "<td>\n\
+                                <i class='fa fa-times fa-2x eliminar btn btn-danger' title='Eliminar' empReg_id='"+val.empReg_id+"'></i>\n\
+                                <i class='fa fa-pencil-square-o fa-2x modificar btn btn-info' title='Modificar'  emp_id='"+val.empReg_id+"' ></i>\n\
+                             </td>";
+                    filas += "</tr>";
+                });
+                var numero = $('#empReg_carpeta').val();
+                $('#collapse_'+numero).find('table tbody').append(filas);
+                $('#myModal2').hide();
             }
         });
-        })
+        });
 //        $("body").on("click", "#guardarRegistro", function() {
 //            $("#formregistro").submit();
 //        });

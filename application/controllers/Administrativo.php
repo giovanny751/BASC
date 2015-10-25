@@ -94,6 +94,7 @@ class Administrativo extends My_Controller {
         try {
             $post = $this->input->post();
             $this->load->model('Empleado_model');
+            $this->load->model('Empleadoregistro_model');
             
             $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
             $post["empReg_tamano"] = $tamano;
@@ -105,7 +106,7 @@ class Administrativo extends My_Controller {
             if (isset($_FILES['archivo']['name']))
                 if (!empty($_FILES['archivo']['name']))
                     $post['empReg_archivo'] = basename($_FILES['archivo']['name']);
-            $emp_id = $this->Empleado_model->empleado_registro($post);
+            $emp_id = $this->Empleadoregistro_model->empleado_registro($post);
             
             if(empty($emp_id))
                 $emp_id = $post['Emp_Id'];
@@ -124,9 +125,9 @@ class Administrativo extends My_Controller {
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
-            
-            
-            
+            $detallecarpeta = $this->Empleadoregistro_model->detallexcarpeta($post['empReg_carpeta']);
+            $this->output->set_content_type('application/json')->set_output(json_encode($detallecarpeta));
+
         } catch (exception $e) {
             
         }
