@@ -327,7 +327,7 @@
 
                                             <h4 class="panel-title">
                                                 <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id; ?>" aria-expanded="false"> 
-                                                    <?php echo $nom ?>
+                                                    <i class="fa fa-folder-o carpeta"></i>     <?php echo $nom ?>
                                                 </a>
                                             </h4>
                                         </div>
@@ -391,7 +391,7 @@
                 </div>
             </div>
 
-<?php } ?>
+        <?php } ?>
         <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -448,7 +448,7 @@
                                         <option value="">::Seleccionar::</option>
                                         <?php foreach ($carpeta as $car): ?>
                                             <option value="<?php echo $car->empCar_id ?>"><?php echo $car->empCar_nombre ?></option>
-<?php endforeach; ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -477,7 +477,7 @@
                                 </div>
                             </div>
                             <input type="hidden" value="<?php echo $empleado[0]->Emp_Id ?>" name="Emp_Id" />
-                            
+
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -495,70 +495,81 @@
     endforeach;
     ?>
     <script>
-        
-        $("#agregarregistro").click(function(){
+
+        $('body').delegate('.accordion-toggle',"click",function(){
+            
+            if($(this).attr('aria-expanded') == "true"){
+                $('.carpeta').removeClass('fa fa-folder-open-o');
+                $('.carpeta').addClass('fa fa-folder-o');
+            }else{ 
+                $('.carpeta').removeClass('fa fa-folder-o');
+                $('.carpeta').addClass('fa fa-folder-open-o');
+            }
+        });
+
+        $("#agregarregistro").click(function () {
             $('#agregarregistro').text("Guardar");
             $('#empReg_id').val("");
         });
-        
-        
-        $('body').delegate('.modificar','click',function(){
+
+
+        $('body').delegate('.modificar', 'click', function () {
             $('#guardarRegistro').text("Actualizar");
             $.post(
-                "<?php echo base_url("index.php/administrativo/searchxid") ?>",
-                {empReg_id : $(this).attr("emp_id")}
-                ).done(function(msg){
-                    $('.archivo').remove()
-                    $('#regEmp_id').val(msg.empReg_id);
-                    $('#empReg_carpeta').val(msg.empReg_carpeta);
-                    $('#empReg_version').val(msg.empReg_version);
-                    $('#empReg_descripcion').val(msg.empReg_descripcion);
-                    $('#empReg_id').val(msg.empReg_id);
-                    var div = "<div class='row archivo'>\n\
+                    "<?php echo base_url("index.php/administrativo/searchxid") ?>",
+                    {empReg_id: $(this).attr("emp_id")}
+            ).done(function (msg) {
+                $('.archivo').remove()
+                $('#regEmp_id').val(msg.empReg_id);
+                $('#empReg_carpeta').val(msg.empReg_carpeta);
+                $('#empReg_version').val(msg.empReg_version);
+                $('#empReg_descripcion').val(msg.empReg_descripcion);
+                $('#empReg_id').val(msg.empReg_id);
+                var div = "<div class='row archivo'>\n\
                                 <label class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='color:black'>Archivo:</label>\n\
                                 <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>\n\
-                                <a target='_blank' href='<?php echo base_url("/uploads/empleado/")  ?>/"+msg.emp_id+"/"+msg.empReg_id+"/"+msg.empReg_archivo+"' title='descargar' >"+msg.empReg_archivo+"</a>\n\
+                                <a target='_blank' href='<?php echo base_url("/uploads/empleado/") ?>/" + msg.emp_id + "/" + msg.empReg_id + "/" + msg.empReg_archivo + "' title='descargar' >" + msg.empReg_archivo + "</a>\n\
                                 </div>\n\
                                </div>";
-                    $('#formregistro').append(div);
-                }).fail(function(msg){
-                   alerta("rojo","Error, por favor comunicarse con el administrador del sistema") 
-                });
-            
+                $('#formregistro').append(div);
+            }).fail(function (msg) {
+                alerta("rojo", "Error, por favor comunicarse con el administrador del sistema")
+            });
+
         })
-        
-        $("body").delegate('.eliminar',"click",function(){
+
+        $("body").delegate('.eliminar', "click", function () {
             var apuntador = $(this);
             $.post(
                     "<?php echo base_url("index.php/administrativo/eliminarregistro"); ?>"
-                    ,{empReg_id : $(this).attr('empreg_id')}
-                    ).done(function(msg){
-                        apuntador.parents('tr').remove();
-                        alerta("verde","Registro eliminado correctamente");
-                    }).fail(function(msg){
-                        alerta("rojo","Error, por favor comunicarse con el administrador del sistema")
-                    })
+                    , {empReg_id: $(this).attr('empreg_id')}
+            ).done(function (msg) {
+                apuntador.parents('tr').remove();
+                alerta("verde", "Registro eliminado correctamente");
+            }).fail(function (msg) {
+                alerta("rojo", "Error, por favor comunicarse con el administrador del sistema")
+            })
         });
-        
-        $('#cedula').change(function() {
+
+        $('#cedula').change(function () {
             var data = $(this);
             $.post(
                     "<?php echo base_url("index.php/administrativo/validarcedula") ?>",
                     {cedula: $(this).val()}
-            ).done(function(msg) {
+            ).done(function (msg) {
                 if (msg == 1) {
                     data.val("");
                     data.focus();
                     alerta("amarillo", "Empleado ya existe en el sistema")
                 }
             })
-                    .fail(function(msg) {
+                    .fail(function (msg) {
 
                     });
 
         });
 
-        $('body').delegate(".eliminaraseguradora", "click", function() {
+        $('body').delegate(".eliminaraseguradora", "click", function () {
             //        console.log($(this).parent().parent().lenght);
             //        if ($(this).parent().parent().lenght > 2) {
             $(this).parents('.row').remove();
@@ -595,11 +606,11 @@
             return cuerpo;
         }
 
-        $('body').delegate("#agregaraseguradora", "click", function() {
+        $('body').delegate("#agregaraseguradora", "click", function () {
             $('#incluiraseguradoras').find("#agregarClones").append(agregarClonAseguradora());
         });
 
-        $(function() {
+        $(function () {
             //$("#actualizar").hide();
 <?php if (!empty($empleado[0])) { ?>
                 $("#btnRegistro").hide();
@@ -610,13 +621,13 @@
 <?php } ?>
         });
 
-        $('#guardarcarpeta').click(function() {
+        $('#guardarcarpeta').click(function () {
 
             $.post("<?php echo base_url("index.php/administrativo/guardarcarpeta") ?>",
                     $("#formcarpeta").serialize()
-                    ).done(function(msg) {
-                       
-                var option = "<option value='"+msg.empCar_id+"'>"+msg.empCar_nombre+"</option>"; 
+                    ).done(function (msg) {
+
+                var option = "<option value='" + msg.empCar_id + "'>" + msg.empCar_nombre + "</option>";
                 $('#empReg_carpeta').append(option);
                 var acordeon = '<div class="panel panel-default" id="' + msg.empCar_id + '">\n\
                                                 <div class="panel-heading">\n\
@@ -653,13 +664,13 @@
                 $("#myModal").modal("toggle");
                 alerta("verde", "Datos guardados correctamente")
             })
-                    .fail(function(msg) {
+                    .fail(function (msg) {
                         alerta("rojo", "Error en el sistema por favor comunicarse con el administrador");
                     });
 
         });
 
-        $(".flecha").click(function() {
+        $(".flecha").click(function () {
             var url = "<?php echo base_url("index.php/administrativo/consultaempleadoflechas") ?>";
             var idEmpleadoCreado = $("#emp_id").val();
             var metodo = $(this).attr("metodo");
@@ -669,7 +680,7 @@
             $("#guardar").hide();
             if (metodo != "documento") {
                 $.post(url, {idEmpleadoCreado: idEmpleadoCreado, metodo: metodo})
-                        .done(function(msg) {
+                        .done(function (msg) {
                             $("input[type='text'], select").val();
                             $("#emp_id").val(msg.Emp_Id);
                             $("#cedula").val(msg.Emp_Cedula);
@@ -705,9 +716,9 @@
                             $('#incluiraseguradoras').find("#agregarClones").html("");
                             var url2 = "<?php echo base_url("index.php/administrativo/consultaempleadoflechasaseguradora") ?>";
                             $.post(url2, {idEmpleadoCreado: msg.Emp_Id})
-                                    .done(function(msg) {
+                                    .done(function (msg) {
                                         if (msg != " null") {
-                                            $.each(msg, function(key, val) {
+                                            $.each(msg, function (key, val) {
                                                 $('#incluiraseguradoras').find("#agregarClones").append(agregarClonAseguradora());
                                                 $('#incluiraseguradoras').find("#agregarClones").find(".tipoaseguradora:last").val(val.tipAse_id);
                                                 $('#incluiraseguradoras').find("#agregarClones").find(".nombreaseguradora:last").html("<option value='" + val.ase_id + "'>" + val.ase_nombre + "</option>")
@@ -716,11 +727,11 @@
                                             $('#incluiraseguradoras').find("#agregarClones").append(agregarClonAseguradora());
                                         }
                                     })
-                                    .fail(function() {
+                                    .fail(function () {
                                         alert("Error al traer empleado");
                                     })
                         })
-                        .fail(function(msg) {
+                        .fail(function (msg) {
                             alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
                             //$("input[type='text'], select").val();
                             $("#actualizar").hide();
@@ -733,14 +744,14 @@
             }
 
         });
-        
-        $('#guardar').click(function() {
+
+        $('#guardar').click(function () {
             if ((obligatorio('obligatorio') == true) && (email("email") == true))
             {
                 $.post("<?php echo base_url('index.php/administrativo/guardarempleado') ?>",
                         $('#f1').serialize()
                         )
-                        .done(function(msg) {
+                        .done(function (msg) {
                             alerta("verde", "Guardado Correctamente");
                             if (confirm("¿Desea Guardar otro Empleado?")) {
                                 $('select,input').val('');
@@ -750,21 +761,21 @@
                             } else {
                                 window.location.href = '<?php echo base_url("index.php/administrativo/listadoempleados") ?>';
                             }
-                        }).fail(function(msg) {
+                        }).fail(function (msg) {
                     alerta("rojo", "Error en el sistema por favor comunicarse con el administrador");
                 });
             }
         });
-        $('#actualizar').click(function() {
+        $('#actualizar').click(function () {
 
             if (obligatorio('obligatorio') == true)
             {
                 $.post("<?php echo base_url('index.php/administrativo/guardaractualizacion') ?>",
                         $('#f1').serialize()
                         )
-                        .done(function(msg) {
+                        .done(function (msg) {
                             alerta("verde", "Guardado Correctamente");
-                        }).fail(function(msg) {
+                        }).fail(function (msg) {
                     alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
                 });
             }
@@ -774,47 +785,47 @@
         //                              GUARDAR REGISTR0
         //--------------------------------------------------------------------------
 
-        $('#guardarRegistro').click(function() {
+        $('#guardarRegistro').click(function () {
             var file_data = $('#archivocarpeta').prop('files')[0];
             var form_data = new FormData();
             form_data.append('archivo', file_data);
-            form_data.append('empReg_id',$('#empReg_id').val());
-            form_data.append('empReg_carpeta',$('#empReg_carpeta').val());
-            form_data.append('empReg_version',$('#empReg_version').val());
-            form_data.append('empReg_descripcion',$('#empReg_descripcion').val());
-            form_data.append('Emp_Id',$('#emp_id').val());
+            form_data.append('empReg_id', $('#empReg_id').val());
+            form_data.append('empReg_carpeta', $('#empReg_carpeta').val());
+            form_data.append('empReg_version', $('#empReg_version').val());
+            form_data.append('empReg_descripcion', $('#empReg_descripcion').val());
+            form_data.append('Emp_Id', $('#emp_id').val());
             $.ajax({
-            url: '<?php echo base_url("index.php/administrativo/guardarregistroempleado") ?>',
-            dataType: 'text', // what to expect back from the PHP script, if anything
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,
-            type: 'post',
-            success: function (result) {
-                $('#collapse_'+$('#empReg_carpeta').val()).find('table tbody *').remove();
-                var filas = ""
+                url: '<?php echo base_url("index.php/administrativo/guardarregistroempleado") ?>',
+                dataType: 'text', // what to expect back from the PHP script, if anything
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post',
+                success: function (result) {
+                    $('#collapse_' + $('#empReg_carpeta').val()).find('table tbody *').remove();
+                    var filas = ""
 //                console.log(result);
-                var result = jQuery.parseJSON(result);
-                $.each(result,function(key,val){
-                    filas += "<tr>";
-                    filas += "<td><a target='_blank' href='<?php echo base_url("/uploads/empleado/")  ?>/"+val.emp_id+"/"+val.empReg_id+"/"+val.empReg_archivo+"' title='descargar' >"+val.empReg_archivo+"</td>";
-                    filas += "<td>"+val.empReg_descripcion+"</td>";
-                    filas += "<td>"+val.empReg_version+"</td>";
-                    filas += "<td>"+val.nombre+"</td>";
-                    filas += "<td>"+val.empReg_tamano+"</td>";
-                    filas += "<td>"+val.empgReg_fecha+"</td>";
-                    filas += "<td>\n\
-                                <i class='fa fa-times fa-2x eliminar btn btn-danger' title='Eliminar' empReg_id='"+val.empReg_id+"'></i>\n\
-                                <i class='fa fa-pencil-square-o fa-2x modificar btn btn-info' title='Modificar' data-target='#myModal2' data-toggle='modal'  emp_id='"+val.empReg_id+"' ></i>\n\
+                    var result = jQuery.parseJSON(result);
+                    $.each(result, function (key, val) {
+                        filas += "<tr>";
+                        filas += "<td><a target='_blank' href='<?php echo base_url("/uploads/empleado/") ?>/" + val.emp_id + "/" + val.empReg_id + "/" + val.empReg_archivo + "' title='descargar' >" + val.empReg_archivo + "</td>";
+                        filas += "<td>" + val.empReg_descripcion + "</td>";
+                        filas += "<td>" + val.empReg_version + "</td>";
+                        filas += "<td>" + val.nombre + "</td>";
+                        filas += "<td>" + val.empReg_tamano + "</td>";
+                        filas += "<td>" + val.empgReg_fecha + "</td>";
+                        filas += "<td>\n\
+                                <i class='fa fa-times fa-2x eliminar btn btn-danger' title='Eliminar' empReg_id='" + val.empReg_id + "'></i>\n\
+                                <i class='fa fa-pencil-square-o fa-2x modificar btn btn-info' title='Modificar' data-target='#myModal2' data-toggle='modal'  emp_id='" + val.empReg_id + "' ></i>\n\
                              </td>";
-                    filas += "</tr>";
-                });
-                var numero = $('#empReg_carpeta').val();
-                $('#collapse_'+numero).find('table tbody').append(filas);
-                $('#myModal2').modal("toggle")
-            }
-        });
+                        filas += "</tr>";
+                    });
+                    var numero = $('#empReg_carpeta').val();
+                    $('#collapse_' + numero).find('table tbody').append(filas);
+                    $('#myModal2').modal("toggle")
+                }
+            });
         });
 //        $("body").on("click", "#guardarRegistro", function() {
 //            $("#formregistro").submit();
