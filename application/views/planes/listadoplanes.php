@@ -1,4 +1,4 @@
-<form method="post" id="f13" action="<?php echo base_url("index.php/planes/planes") ?>">
+<form method="post" id="f13" action="<?php echo base_url("index.php/planes/nuevoplan") ?>">
     <input type="hidden" name="pla_id" id="pla_id">
 </form>
 <div class="col-md-12">
