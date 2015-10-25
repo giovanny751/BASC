@@ -34,8 +34,17 @@ class Empleadoregistro_model extends CI_Model {
         $data = $this->db->get("empleado_registro");
         return $data->result(); 
     }
-
-
+    function eliminarregistroempleado($id){
+        
+        $this->db->where("empReg_id",$id);
+        $this->db->delete("empleado_registro");
+        
+    }
+    function searchxid($id){
+        $this->db->where("empReg_id",$id);
+        $data = $this->db->get("empleado_registro");
+        return $data->result(); 
+    }
 
 }
 

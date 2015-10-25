@@ -358,7 +358,7 @@
                                                                     <td><?php echo $campos[6] ?></td>
                                                                     <td>
                                                                         <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" empReg_id="<?php echo $campos[4] ?>"></i>
-                                                                        <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  emp_id="<?php echo $campos[4] ?>" ></i>
+                                                                        <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" data-target='#myModal2' data-toggle='modal'  emp_id="<?php echo $campos[4] ?>" ></i>
                                                                     </td>
                                                                 </tr>
                                                                 <?php
@@ -493,7 +493,36 @@
     endforeach;
     ?>
     <script>
-
+        
+        $('body').delegate('.modificar','click',function(){
+            
+            $.post(
+                "<?php echo base_url("index.php/administrativo/searchxid") ?>",
+                {empReg_id : $(this).attr("emp_id")}
+                ).done(function(msg){
+                    $('#empReg_carpeta').val(msg.empReg_carpeta);
+                    $('#empReg_version').val(msg.empReg_version);
+                    $('#empReg_descripcion').val(msg.empReg_descripcion);
+                    
+                }).fail(function(msg){
+                   alerta("rojo","Error, por favor comunicarse con el administrador del sistema") 
+                });
+            
+        })
+        
+        $("body").delegate('.eliminar',"click",function(){
+            var apuntador = $(this);
+            $.post(
+                    "<?php echo base_url("index.php/administrativo/eliminarregistro"); ?>"
+                    ,{empReg_id : $(this).attr('empreg_id')}
+                    ).done(function(msg){
+                        apuntador.parents('tr').remove();
+                        alerta("verde","Registro eliminado correctamente");
+                    }).fail(function(msg){
+                        alerta("rojo","Error, por favor comunicarse con el administrador del sistema")
+                    })
+        });
+        
         $('#cedula').change(function() {
             var data = $(this);
             $.post(
@@ -545,15 +574,12 @@
             cuerpo += '<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">';
             cuerpo += '<button type="button" class="btn btn-danger eliminaraseguradora">X</button>'
             cuerpo += '</div>';
-
             cuerpo += '</div>';
             return cuerpo;
         }
 
         $('body').delegate("#agregaraseguradora", "click", function() {
-
             $('#incluiraseguradoras').find("#agregarClones").append(agregarClonAseguradora());
-
         });
 
         $(function() {
@@ -606,10 +632,7 @@
                                                     </div>\n\
                                                 </div>\n\
                                         </div>';
-
-
                 $('#accordion1').append(acordeon);
-
                 $("#myModal").modal("toggle");
                 alerta("verde", "Datos guardados correctamente")
             })
@@ -695,7 +718,6 @@
         });
         
         $('#guardar').click(function() {
-
             if ((obligatorio('obligatorio') == true) && (email("email") == true))
             {
                 $.post("<?php echo base_url('index.php/administrativo/guardarempleado') ?>",
@@ -766,7 +788,7 @@
                     filas += "<td>"+val.empgReg_fecha+"</td>";
                     filas += "<td>\n\
                                 <i class='fa fa-times fa-2x eliminar btn btn-danger' title='Eliminar' empReg_id='"+val.empReg_id+"'></i>\n\
-                                <i class='fa fa-pencil-square-o fa-2x modificar btn btn-info' title='Modificar'  emp_id='"+val.empReg_id+"' ></i>\n\
+                                <i class='fa fa-pencil-square-o fa-2x modificar btn btn-info' title='Modificar' data-target='#myModal2' data-toggle='modal'  emp_id='"+val.empReg_id+"' ></i>\n\
                              </td>";
                     filas += "</tr>";
                 });
