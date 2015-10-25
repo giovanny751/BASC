@@ -7,11 +7,11 @@
     <form method="post" id="f1">
         <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <?php if(!empty($empleado[0]->Emp_Id)){?>
-                <button type="button" id="actualizar"  class="btn btn-success">Actualizar</button>   
-                <?php }else{ ?>
-                <!--<button type="button" id="btnRegistro" class="btn btn-info registro">Registro exámenes</button>-->
-                <button type="button" id="guardar" class="btn btn-success">Guardar</button>
+                <?php if (!empty($empleado[0]->Emp_Id)) { ?>
+                    <button type="button" id="actualizar"  class="btn btn-success">Actualizar</button>   
+                <?php } else { ?>
+                    <!--<button type="button" id="btnRegistro" class="btn btn-info registro">Registro exámenes</button>-->
+                    <button type="button" id="guardar" class="btn btn-success">Guardar</button>
                 <?php } ?>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
@@ -499,12 +499,12 @@
     ?>
     <script>
 
-        $('body').delegate('.accordion-toggle',"click",function(){
-            
-            if($(this).attr('aria-expanded') == "true"){
+        $('body').delegate('.accordion-toggle', "click", function () {
+
+            if ($(this).attr('aria-expanded') == "true") {
                 $(this).children('.carpeta').removeClass('fa fa-folder-open-o');
                 $(this).children('.carpeta').addClass('fa fa-folder-o');
-            }else{ 
+            } else {
                 $(this).children('.carpeta').removeClass('fa fa-folder-o');
                 $(this).children('.carpeta').addClass('fa fa-folder-open-o');
             }
@@ -619,8 +619,6 @@
                 $("#btnRegistro").hide();
                 $("#guardar").hide();
                 $("#actualizar").show();
-<?php } else { ?>
-                $("#actualizar").hide();
 <?php } ?>
         });
 
