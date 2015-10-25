@@ -1,93 +1,85 @@
-<div class="widgetTitle" >
-    <a href="<?php echo base_url("index.php/tareas/planes") ?>">
-        <button type="button" class="btn btn-default">Nuevo Plan</button>
-    </a> 
-    <h5><center>LISTADO PLANES</center>
-    </h5>
-</div>
-<div class='well'>
-    <form method="post" id="f9">
-        <div class="row">
-
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <label class="control-label">Nombre</label>
-                <input type="text" id="nombre" name="nombre" class="form-control">
-            </div>
-            <div class="col-md-3">
-                <label class="control-label">Estado</label>
-                <select id="estado" name="estado" class="form-control">
-                    <option value="">::Seleccionar::</option>
-                    <option value="1">Activos</option>
-                    <option value="2">Inactivos</option>
-                    <option value="3">Finalizados</option>
-                </select> 
-            </div>
-
-            <div class="col-md-3">
-                <label class="control-label">Responsable</label>
-                <select id="responsable" name="responsable" class="form-control">
-                    <option value="">::Seleccionar::</option>
-                    <?php foreach ($responsable as $re) { ?>
-                        <option value="<?php echo $re->Emp_Id ?>"><?php echo $re->Emp_Nombre . " " . $re->Emp_Apellidos ?></option>
-                    <?php } ?>
-                </select> 
-
-            </div>
-            <div class="col-md-3">
-                <label class="control-label">&nbsp;.</label>
-                <button id="consultar" class="btn btn-success" type="button"><i class="fa fa-arrow-left fa-fw"></i> Consultar</button>
-            </div>
-
-            <!--            <div class="col-lg-2 col-sx-2">
-                            <label for="estado">
-                                Estado
-                            </label>
-                            <select id="estado" name="estado" class="form-control">
-                                <option value="">::Seleccionar::</option>
-            <?php foreach ($estados as $e) { ?>
-                                                            <option value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
-            <?php } ?>
-                            </select>    
-                        </div>
-                        <div class="col-lg-3 col-sx-3">
-                            <label for="fecha">Nombre</label><input type="text" name="nombre" id="nombre" class="form-control">
-                        </div>    
-                        <div class="col-lg-2 col-sx-2">
-                            <label for="fecha">Fecha</label><input type="text" name="fecha" id="fecha" class="form-control fecha">
-                        </div>  -->
-        </div>
-        <div class="row">
-
-        </div>    
-    </form>
-    <hr>
-    <div class="row">
-        <table class="table table-bordered table-hover">
-            <thead>
-            <th>Nombre</th>
-            <th>Fecha inicio</th>
-            <th>Fecha fin</th>
-            <th>Fecha real</th>
-            <th>Responsable</th>
-            <th>Presupuesto</th>
-            <th>Descripción</th>
-            <th>Tareas propias</th>
-            <th>Opciones</th>
-            </thead>
-            <tbody id="cargaplanes">
-                <tr>
-                    <td colspan="9"><center>Consultar Registros</center></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>    
-</div>
 <form method="post" id="f13" action="<?php echo base_url("index.php/tareas/planes") ?>">
     <input type="hidden" name="pla_id" id="pla_id">
 </form>
+<div class="col-md-12">
+    <div class="portlet blue box">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>LISTADO PLANES
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="form-actions top">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <a href="<?php echo base_url("index.php/tareas/planes") ?>" class="btn btn-default">
+                            Nuevo Plan
+                        </a> 
+                    </div>
+                </div>
+            </div>
+            <form method="post" id="f9">
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="nombre">Nombre</label>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><input type="text" id="nombre" name="nombre" class="form-control"></div>
+                        <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="estado">Estado</label>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <select id="estado" name="estado" class="form-control">
+                                <option value="">::Seleccionar::</option>
+                                <option value="1">Activos</option>
+                                <option value="2">Inactivos</option>
+                                <option value="3">Finalizados</option>
+                            </select> 
+                        </div>
+
+                        <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="responsable">Responsable</label>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <select id="responsable" name="responsable" class="form-control">
+                                <option value="">::Seleccionar::</option>
+                                <?php foreach ($responsable as $re) { ?>
+                                    <option value="<?php echo $re->Emp_Id ?>"><?php echo $re->Emp_Nombre . " " . $re->Emp_Apellidos ?></option>
+                                <?php } ?>
+                            </select> 
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
+                        <button id="consultar" class="btn btn-success" type="button">Consultar</button>
+                    </div>
+                </div>   
+            </form>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                    <table class="table table-striped table-bordered table-hover" id="sample_2">
+                        <thead>
+                        <th>Nombre</th>
+                        <th>Fecha inicio</th>
+                        <th>Fecha fin</th>
+                        <th>Fecha real</th>
+                        <th>Responsable</th>
+                        <th>Presupuesto</th>
+                        <th>Descripción</th>
+                        <th>Tareas propias</th>
+                        <th>Opciones</th>
+                        </thead>
+                        <tbody id="cargaplanes">
+                            <tr class="odd gradeX">
+                                <td colspan="9">
+                        <center>Consultar Registros</center>
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table> 
+                </div>    
+            </div>    
+        </div>
+    </div>
+</div>
 <script>
+
 
     $('body').delegate('.modificar', "click", function () {
         $('#pla_id').val($(this).attr('pla_id'));
@@ -120,7 +112,7 @@
             var body = ""
             $('#cargaplanes *').remove()
             $.each(msg, function (key, val) {
-                body += "<tr>";
+                body += "<tr class='odd gradeX'>";
                 body += "<td>" + val.pla_nombre + "</td>";
                 body += "<td>" + val.pla_fechaInicio + "</td>";
                 body += "<td>" + val.pla_fechaFin + "</td>";
@@ -129,8 +121,8 @@
                 body += "<td>" + val.pla_presupuesto + "</td>";
                 body += "<td>" + val.pla_descripcion + "</td>";
                 body += "<td></td>";
-                body += '<td><i class="fa fa-times eliminar btn btn-danger" title="Eliminar" pla_id="' + val.pla_id + '"></i>\n\
-            <i class="fa fa-pencil-square-o modificar btn btn-info" title="Modificar"  pla_id="' + val.pla_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
+                body += '<td><i class="fa fa-times eliminar btn-danger" title="Eliminar" pla_id="' + val.pla_id + '"></i>\n\
+            <i class="fa fa-pencil-square-o modificar btn-info" title="Modificar"  pla_id="' + val.pla_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
                 body += "</tr>";
             })
             $('#cargaplanes').append(body)

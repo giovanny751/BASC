@@ -287,16 +287,26 @@ class Administrativo extends My_Controller {
 
     function listadoempleados() {
         if ($this->consultaacceso($this->data["usu_id"])) :
-            $this->load->model('Tipo_documento_model');
-            $this->load->model('Tipocontrato_model');
-            $this->load->model("Estados_model");
-            $this->load->model('Cargo_model');
-            $this->data['cargo'] = $this->Cargo_model->detail();
-            $this->data['estado'] = $this->Estados_model->detail();
-            $this->data['tipocontrato'] = $this->Tipocontrato_model->detail();
+            $this->load->model('Empresa_model');
+            $this->data['empresa'] = $this->Empresa_model->detail();
+            if ((!empty($this->data['empresa'][0]->Dim_id)) && (!empty($this->data['empresa'][0]->Dimdos_id))) {
+                $this->load->model('Tipo_documento_model');
+                $this->load->model('Tipocontrato_model');
+                $this->load->model("Estados_model");
+                $this->load->model('Cargo_model');
+                $this->load->model('Dimension2_model');
+                $this->load->model('Dimension_model');
+                $this->data['dimension'] = $this->Dimension_model->detail();
+                $this->data['dimension2'] = $this->Dimension2_model->detail();
+                $this->data['cargo'] = $this->Cargo_model->detail();
+                $this->data['estado'] = $this->Estados_model->detail();
+                $this->data['tipocontrato'] = $this->Tipocontrato_model->detail();
 //        var_dump($this->data['tipocontrato']);die;
-            $this->data["tipodocumento"] = $this->Tipo_documento_model->detail();
-            $this->layout->view("administrativo/listadoempleados", $this->data);
+                $this->data["tipodocumento"] = $this->Tipo_documento_model->detail();
+                $this->layout->view("administrativo/listadoempleados", $this->data);
+            } else {
+                redirect('index.php/administrativo/empresa', 'location');
+            }
         else:
             $this->layout->view("permisos");
         endif;
@@ -310,9 +320,12 @@ class Administrativo extends My_Controller {
         $codigo = $this->input->post('codigo');
         $cargo = $this->input->post('cargo');
         $estado = $this->input->post('estado');
+        $dim1 = $this->input->post('dimension1');
+        $dim2 = $this->input->post('dimension2');
+        $estado = $this->input->post('estado');
         $tipocontrato = $this->input->post('tipocontrato');
         $contratosvencidos = $this->input->post('contratosvencidos');
-        $this->data['listado'] = $this->Empleado_model->filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos, $tipocontrato);
+        $this->data['listado'] = $this->Empleado_model->filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos, $tipocontrato,$dim1,$dim2);
         $this->output->set_content_type('application/json')->set_output(json_encode($this->data['listado']));
     }
 
