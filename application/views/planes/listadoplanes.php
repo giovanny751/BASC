@@ -1,4 +1,4 @@
-<form method="post" id="f13" action="<?php echo base_url("index.php/tareas/planes") ?>">
+<form method="post" id="f13" action="<?php echo base_url("index.php/planes/planes") ?>">
     <input type="hidden" name="pla_id" id="pla_id">
 </form>
 <div class="col-md-12">
@@ -12,7 +12,7 @@
             <div class="form-actions top">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <a href="<?php echo base_url("index.php/tareas/planes") ?>" class="btn btn-default">
+                        <a href="<?php echo base_url("index.php/planes/planes") ?>" class="btn btn-default">
                             Nuevo Plan
                         </a> 
                     </div>
@@ -106,7 +106,7 @@
 //        $('select,input').val('');
 //    });
     $('#consultar').click(function () {
-        $.post("<?php echo base_url("index.php/tareas/consultaplanes") ?>",
+        $.post("<?php echo base_url("index.php/planes/consultaplanes") ?>",
                 $('#f9').serialize()
                 ).done(function (msg) {
             var body = ""
@@ -133,7 +133,7 @@
                 })
     });
     $('body').delegate('.eliminar', 'click', function () {
-        $.post("<?php echo base_url("index.php/administrativo/eliminarplan") ?>"
+        $.post("<?php echo base_url("index.php/planes/eliminarplan") ?>"
                 , {
                     id: $(this).attr('pla_id')
                 }

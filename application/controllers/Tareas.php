@@ -50,43 +50,6 @@ class Tareas extends My_Controller {
         }
     }
 
-    function guardarregistroempleado() {
-        try {
-            $post = $this->input->post();
-            $this->load->model('Registro_model');
-
-//            $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
-//            $post["empReg_tamano"] = $tamano;
-            $fecha = new DateTime();
-            $post["reg_fechaCreacion"] = $fecha->format('Y-m-d H:i:s');
-
-            //Creamos carpeta con el ID del registro
-            if (isset($_FILES['archivo']['name']))
-                if (!empty($_FILES['archivo']['name']))
-                    $post['reg_ruta'] = basename($_FILES['archivo']['name']);
-
-            $pla_id = $post['pla_id'];
-            $targetPath = "./uploads/tareas/";
-
-            //De la carpeta idRegistro, creamos carpeta con el id del empleado
-            if (!file_exists($targetPath)) {
-                mkdir($targetPath, 0777, true);
-            }
-            $targetPath = "./uploads/tareas/". $pla_id;
-            if (!file_exists($targetPath)) {
-                mkdir($targetPath, 0777, true);
-            }
-
-            $post['reg_ruta']=$target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
-            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
-                
-            }
-            $this->Registro_model->guardar_registro($post);
-        } catch (exception $e) {
-            
-        }
-    }
-
     function listadoavance() {
 
         $this->load->model('Avancetarea_model');
@@ -315,82 +278,6 @@ class Tareas extends My_Controller {
         endif;
     }
 
-    function guardaractividadhijo() {
-        $post=  $this->input->post();
-        try {
-            $this->load->model('Actividad_model');
-            $data = array(
-                "actHij_padreid" => $this->input->post("idpadre"),
-                "actHij_nombre" => $this->input->post("nombre"),
-                "actHij_fechaInicio" => $this->input->post("fechainicio"),
-                "actHij_fechaFinalizacion" => $this->input->post("fechafinalizacion"),
-                "actHij_peso" => $this->input->post("peso"),
-                "actHij_riesgoSancion" => $this->input->post("riesgosancion"),
-                "tip_id" => $this->input->post("tipo"),
-                "actHij_presupuestoTotal" => $this->input->post("presupuestototal"),
-                "actHij_costoReal" => $this->input->post("costoreal"),
-                "actHij_descripcion" => $this->input->post("descripcion"),
-                "actHij_modoVerificacion" => $this->input->post("modoverificacion"),
-                "pla_id" => $this->input->post("pla_id"),
-                "actHij_fechaCreacion" => date("Y-m-d H:i:s")
-            );
-            $this->Actividad_model->create($data,$post);
-            $data = $this->Actividad_model->search($this->input->post("idpadre"));
-            $this->output->set_content_type('application/json')->set_output(json_encode($data));
-        } catch (exception $e) {
-            
-        }
-    }
-
-    function planes() {
-        if ($this->consultaacceso($this->data["usu_id"])):
-            $this->load->model('User_model');
-            $this->load->model('Tipo_model');
-            $this->load->model("Estados_model");
-            $this->load->model("Cargo_model");
-            $this->load->model("Planes_model");
-            $this->load->model("Norma_model");
-            $this->load->model("Notificacion_model");
-            $this->load->model("Actividad_padre__model");
-            $this->load->model("Registrocarpeta_model");
-            $this->data['plan'] = array();
-            if (!empty($this->input->post('pla_id'))) {
-                $carpeta = $this->Registrocarpeta_model->detailxplan($this->input->post('pla_id'));
-                $this->data['carpetas'] = $carpeta;
-                $d = array();
-                foreach ($carpeta as $c) {
-                    $d[$c->regCar_id][$c->regCar_nombre][] = array(1, 1, 1, 1, 5, 5);
-                }
-                $this->data['carpeta'] = $d;
-                $this->data["actividadpadre"] = $this->Actividad_padre__model->detail($this->input->post('pla_id'));
-                $this->data['plan'] = $this->Planes_model->planxid($this->input->post('pla_id'));
-                $actividades = $this->Planes_model->actividadhijoxplan($this->input->post('pla_id'));
-                $i = array();
-                foreach ($actividades as $ac) {
-                    $i[$ac->actPad_id][$ac->actPad_nombre][] = array(
-                        $ac->actHij_fechaInicio,
-                        $ac->actHij_fechaFinalizacion,
-                        $ac->actHij_presupuestoTotal,
-                        $ac->actHij_descripcion,
-                        $ac->actHij_nombre,
-                        $ac->actHij_id
-                    );
-                }
-                $this->data["actividades"] = $i;
-                $this->data['tipo'] = $this->Tipo_model->detail();
-                $this->data['tareas'] = $this->Planes_model->tareaxplan($this->input->post('pla_id'));
-//                echo "<pre>";
-//                var_dump($this->data["actividades"]);die;
-            }
-            $this->data['notificacion'] = $this->Notificacion_model->detail();
-            $this->data['norma'] = $this->Norma_model->detail();
-            $this->data['estado'] = $this->Estados_model->detail();
-            $this->data['cargo'] = $this->Cargo_model->allcargos();
-            $this->layout->view("tareas/planes", $this->data);
-        else:
-            $this->layout->view("permisos");
-        endif;
-    }
     function eliminar_actividad_hijo(){
         $this->load->model('Registro_model');
         $id = $this->Registro_model->eliminar_actividad_hijo($this->input->post());
@@ -439,85 +326,12 @@ class Tareas extends My_Controller {
         $planes=$this->Actividadpadre_model->consultar_actividad_padre($this->input->post("actPad_id"));
         $this->output->set_content_type('application/json')->set_output(json_encode($planes[0]));
     }
-    function guardaractividadpadre() {
-
-        try {
-            $this->load->model("Actividadpadre_model");
-            $this->Actividadpadre_model->create(
-                    $this->input->post("idactividad"), $this->input->post("nombreactividad"), $this->input->post("pla_id"),$this->input->post("actPad_id")
-            );
-            $actividades = $this->Actividadpadre_model->searchregister(
-                    $this->input->post("idactividad"), $this->input->post("nombreactividad"), $this->input->post("pla_id")
-            );
-
-//            var_dump($actividades);die;
-
-            $this->output->set_content_type('application/json')->set_output(json_encode($actividades[0]));
-        } catch (exception $e) {
-            
-        }
-    }
-
+    
     function consultaractividadpadre() {
 
         $this->load->model("Actividadpadre_model");
         $data = $this->Actividadpadre_model->detailxid($this->input->post('plan'));
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
-    }
-
-    function guardarplan() {
-        try {
-            $this->load->model("Planes_model");
-            $data[] = array(
-                'est_id' => $this->input->post('estado'),
-                'pla_nombre' => $this->input->post('nombre'),
-                'pla_descripcion' => $this->input->post('descripcion'),
-                'pla_fechaInicio' => $this->input->post('fechainicio'),
-                'pla_fechaFin' => $this->input->post('fechafin'),
-                'pla_avanceProgramado' => $this->input->post('avanceprogramado'),
-                'pla_presupuesto' => $this->input->post('presupuesto'),
-                'pla_avanceReal' => $this->input->post('avancereal'),
-                'pla_costoReal' => $this->input->post('costoreal'),
-                'pla_eficiencia' => $this->input->post('eficiencia'),
-                'emp_id' => $this->input->post('empleado'),
-                'car_id' => $this->input->post('cargo'),
-                'nor_id' => $this->input->post('norma')
-            );
-            $this->Planes_model->create($data);
-        } catch (exception $e) {
-            
-        }
-    }
-
-    function listadoplanes() {
-        if ($this->consultaacceso($this->data["usu_id"])):
-            $this->load->model("Estados_model");
-            $this->load->model("Planes_model");
-            $this->data['responsable'] = $this->Planes_model->responsables();
-            $this->data['estados'] = $this->Estados_model->finalizados();
-            $this->layout->view("tareas/listadoplanes", $this->data);
-        else:
-            $this->layout->view("permisos");
-        endif;
-    }
-
-    function consultaplanes() {
-        $this->load->model("Planes_model");
-//        $planes = $this->Planes_model->filtrobusqueda(
-//                $this->input->post("codigo"), $this->input->post("nombre"), $this->input->post("fecha"), $this->input->post("estado"), $this->input->post("responsable"));
-        $planes = $this->Planes_model->filtrobusqueda(
-                $this->input->post("nombre"), $this->input->post("responsable"), $this->input->post("estado")
-        );
-        $this->output->set_content_type('application/json')->set_output(json_encode($planes));
-    }
-
-    function eliminarplan() {
-        try {
-            $this->load->model("Planes_model");
-            $this->Planes_model->delete($this->input->post('id'));
-        } catch (exception $e) {
-            
-        }
     }
 
     function listadoregistros() {

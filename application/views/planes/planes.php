@@ -6,7 +6,7 @@
 <div class='well'>
 
     <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-4 col-md-4 col-resm-4 col-xs-4">
             <button type="button" id="guardarplan" class="guardar btn btn-success">
                 <?php echo (!empty($plan[0]->pla_id)) ? "Actualizar" : "Guardar"; ?>
             </button>
@@ -242,8 +242,8 @@
                                         <i class="fa fa-gift"></i>Actividades
                                     </div>
                                     <div class="tools">
-                                        <button type="button" class="btn btn-default crear_padre" data-toggle="modal" data-target="#myModal">CREAR ACTIVIDAD PADRE</button>
-                                        <button type="button" class="btn btn-default nuevo_hijo" data-toggle="modal" data-target="#myModal8">CREAR ACTIVIDAD HIJO</button>
+                                        <button type="button" class="btn btn-default crear_padre" data-toggle="modal" data-target="#myModal"><i class="fa fa-clipboard carpeta" title='ACTIVIDAD PADRE'></i></button>
+                                        <button type="button" class="btn btn-default nuevo_hijo" data-toggle="modal" data-target="#myModal8"><i class="fa fa-file-o carpeta" title='ACTIVIDAD HIJO'></i></button>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -257,7 +257,7 @@
                                                     <div class="panel-heading">
                                                         <h4 class="panel-title">
                                                             <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id . 'c'; ?>" aria-expanded="false"> 
-                                                                <?php echo $nombre ?>
+                                                                <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombre ?>
                                                             </a>
                                                         </h4>
                                                     </div>
@@ -323,11 +323,11 @@
                             <div class="portlet box blue" style="margin-top: 30px;">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i>Registro
+                                        
                                     </div>
                                     <div class="tools">
-                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal4">NUEVA CARPETA</button>
-                                        <button type="button" class="btn btn-default" id="nuevoregistro" data-toggle="modal" data-target="#myModal15">NUEVO REGISTRO</button>
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal4"><i class="fa fa-folder-o carpeta"></i></button>
+                                        <button type="button" class="btn btn-default" id="nuevoregistro" data-toggle="modal" data-target="#myModal15"><i class="fa fa-file-archive-o carpeta"></i></button>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -344,7 +344,7 @@
                                                             <div class="panel-heading">
                                                                 <h4 class="panel-title">
                                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false"> 
-                                                                        <?php echo $nombrecar ?>
+                                                                        <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
                                                                     </a>
                                                                 </h4>
                                                             </div>
@@ -358,6 +358,7 @@
                                                                         <th>Responsable</th>
                                                                         <th>Tamaño</th>
                                                                         <th>Fecha</th>
+                                                                        <th>Acción</th>
                                                                         </thead>
                                                                         <tbody>
                                                                             <?php foreach ($numcar as $numerocar => $campocar): ?>
@@ -368,6 +369,10 @@
                                                                                     <td><?php echo $campocar[3] ?></td>
                                                                                     <td><?php echo $campocar[4] ?></td>
                                                                                     <td><?php echo $campocar[5] ?></td>
+                                                                                    <td>
+                                                                                        <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" usu_id=""></i>
+                                                                                        <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" usu_id="" ></i>
+                                                                                    </td>
                                                                                 </tr>   
                                                                             <?php endforeach; ?>
                                                                         </tbody>
@@ -381,7 +386,6 @@
                                                 endforeach;
                                                 ?>
                                             </div> 
-
                                         </div>
                                     </div>
                                 </div>
@@ -405,7 +409,7 @@
                         <div class="modal-body">
                             <form method="post" id="formactividadpadre">
                                 <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
-                                <input type="text" value="" name="actPad_id" id="actPad_id"/>
+                                <input type="hidden" value="" name="actPad_id" id="actPad_id"/>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                         <label for="idactividad">Id:</label>
@@ -436,7 +440,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">AGREGAR REGISTRO</h4>
+                            <h4 class="modal-title" id="myModalLabel">NUEVO REGISTRO</h4>
                         </div>
                         <div class="modal-body">
                             <form method="post" id="frmagregarregistro">
@@ -492,7 +496,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">AGREGAR CARPETA</h4>
+                            <h4 class="modal-title" id="myModalLabel">NUEVA CARPETA</h4>
                         </div>
                         <div class="modal-body">
                             <form method="post" id="frmcarpetaregistro">
@@ -701,9 +705,20 @@
 </div>
 <script>
 
+    $('body').delegate('.accordion-toggle', "click", function () {
+
+            if ($(this).attr('aria-expanded') == "true") {
+                $(this).children('.carpeta').removeClass('fa fa-folder-open-o');
+                $(this).children('.carpeta').addClass('fa fa-folder-o');
+            } else {
+                $(this).children('.carpeta').removeClass('fa fa-folder-o');
+                $(this).children('.carpeta').addClass('fa fa-folder-open-o');
+            }
+        });
+
     $('#guardarcarpeta').click(function() {
         if (obligatorio("carbligatorio")) {
-            $.post("<?php echo base_url("index.php/tareas/guardarcarpetaregistro") ?>",
+            $.post("<?php echo base_url("index.php/planes/guardarcarpetaregistro") ?>",
                     $('#frmcarpetaregistro').serialize()
                     ).done(function(msg) {
                 var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>"
@@ -751,7 +766,7 @@
     });
     $('#guardar').click(function() {
         $.post(
-                "<?php echo base_url("index.php/tareas/guardaractividadhijo") ?>",
+                "<?php echo base_url("index.php/planes/guardaractividadhijo") ?>",
                 $('#f6').serialize()
                 ).done(function(msg) {
             var body = "";
@@ -877,7 +892,7 @@
         numero = $('#accordion1').last('div').attr("id");
         if (obligatorio('acobligatorio')) {
 
-            $.post("<?php echo base_url("index.php/tareas/guardaractividadpadre") ?>",
+            $.post("<?php echo base_url("index.php/planes/guardaractividadpadre") ?>",
                     $('#formactividadpadre').serialize()
                     )
                     .done(function(msg) {
@@ -963,7 +978,7 @@
                         $("input[type='text'], select").val();
                     })
         } else {
-            window.location = "<?php echo base_url("index.php/tareas/listadoplanes"); ?>";
+            window.location = "<?php echo base_url("index.php/planes/listadoplanes"); ?>";
         }
 
     });
@@ -989,7 +1004,7 @@
         if (obligatorio('obligatorio') == true) {
             $.post(
                     "<?php
-    echo (empty($plan[0]->pla_id)) ? base_url('index.php/tareas/guardarplan') : base_url('index.php/tareas/actualizarplan');
+    echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base_url('index.php/tareas/actualizarplan');
     ?>",
                     $('#f7').serialize()
                     ).done(function(msg) {
@@ -1013,7 +1028,7 @@
         form_data.append('reg_version', $('#version').val());
         form_data.append('reg_descripcion', $('#reg_descripcion').val());
         $.ajax({
-            url: '<?php echo base_url("index.php/tareas/guardarregistroempleado") ?>',
+            url: '<?php echo base_url("index.php/planes/guardarregistroempleado") ?>',
             dataType: 'text', // what to expect back from the PHP script, if anything
             cache: false,
             contentType: false,
