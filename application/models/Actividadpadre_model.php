@@ -4,12 +4,23 @@ class Actividadpadre_model extends CI_Model {
     function __construct() {
         parent::__construct();
     }
-    function create($id,$nombre,$pla_id){
+    function create($id,$nombre,$pla_id,$actPad_id){
         
           $this->db->set("actPad_codigo",$nombre);
           $this->db->set("actPad_nombre",$id);
           $this->db->set("pla_id",$pla_id);
-            $this->db->insert("actividad_padre");
+          if(empty($actPad_id)){
+             $this->db->insert("actividad_padre"); 
+          }else{
+              $this->db->where("actPad_id",$actPad_id);
+              $this->db->update("actividad_padre"); 
+          }
+            
+    }
+    function consultar_actividad_padre($actPad_id){
+        $this->db->where('actPad_id',$actPad_id);
+        $retult=$this->db->get('actividad_padre');
+        return $retult->result();
     }
     function detailxid($id){
         $this->db->where("actividad_padre.pla_id",$id);

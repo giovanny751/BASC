@@ -242,7 +242,7 @@
                                         <i class="fa fa-gift"></i>Actividades
                                     </div>
                                     <div class="tools">
-                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">CREAR ACTIVIDAD PADRE</button>
+                                        <button type="button" class="btn btn-default crear_padre" data-toggle="modal" data-target="#myModal">CREAR ACTIVIDAD PADRE</button>
                                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal8">CREAR ACTIVIDAD HIJO</button>
                                     </div>
                                 </div>
@@ -265,11 +265,20 @@
                                                         <div class="panel-body">
                                                             <table class="table table-hover table-bordered">
                                                                 <thead>
-                                                                <th>Nombre</th>
-                                                                <th>Fecha inicio</th>
-                                                                <th>Fecha fin</th>
-                                                                <th>Presupuesto</th>
-                                                                <th>Descripción</th>
+                                                                    <tr>
+                                                                        <th colspan="5">
+                                                                            <span>
+                                                                                <button class="btn btn-default editar_padre" actPad_id="<?php echo $id ?>" data-target="#myModal" data-toggle="modal" type="button">EDITAR ACTIVIDAD PADRE</button>
+                                                                            </span>
+                                                                        </th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Nombre</th>
+                                                                        <th>Fecha inicio</th>
+                                                                        <th>Fecha fin</th>
+                                                                        <th>Presupuesto</th>
+                                                                        <th>Descripción</th>
+                                                                    </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <?php foreach ($num as $numero => $campo): ?>
@@ -391,6 +400,7 @@
                         <div class="modal-body">
                             <form method="post" id="formactividadpadre">
                                 <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
+                                <input type="hidden" value="" name="actPad_id" id="actPad_id"/>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                         <label for="idactividad">Id:</label>
@@ -685,11 +695,11 @@
 </div>
 <script>
 
-    $('#guardarcarpeta').click(function () {
+    $('#guardarcarpeta').click(function() {
         if (obligatorio("carbligatorio")) {
             $.post("<?php echo base_url("index.php/tareas/guardarcarpetaregistro") ?>",
                     $('#frmcarpetaregistro').serialize()
-                    ).done(function (msg) {
+                    ).done(function(msg) {
                 var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>"
                 var contenido = "<table class='table table-hover table-bordered'>\n\
                                         <thead>\n\
@@ -712,16 +722,16 @@
                 $('#carpeta').append(option);
                 agregarregistro('accordion5', msg, contenido, 'r');
                 $('.carbligatorio').val("");
-                $('#myModal4').hide();
+                $('#myModal4').modal("toggle")
                 alerta("verde", "Carpeta agregada con exito")
-            }).fail(function (msg) {
+            }).fail(function(msg) {
                 alerta("rojo", "ha ocurrido un error por favor cumunicarse con el administrador del sistema")
             });
         }
 
     });
 
-    $('.direccionar').click(function () {
+    $('.direccionar').click(function() {
 
         if ($(this).attr('num') == 1)
             $('#frmdireccionar').attr("action", "<?php echo base_url("index.php/tareas/nuevatarea") ?>");
@@ -729,22 +739,22 @@
             $('#frmdireccionar').attr("action", "<?php echo base_url("index.php/tareas/registro") ?>");
         $('#frmdireccionar').submit();
     });
-    $('body').delegate(".editarhistorial", "click", function () {
+    $('body').delegate(".editarhistorial", "click", function() {
         $('#internotarea').val($(this).attr('tar_id'));
     });
-    jQuery(document).ready(function () {
+    jQuery(document).ready(function() {
         TableAjax.init();
 
     });
 
-    $('#guardar').click(function () {
+    $('#guardar').click(function() {
         $.post(
                 "<?php echo base_url("index.php/tareas/guardaractividadhijo") ?>",
                 $('#f6').serialize()
-                ).done(function (msg) {
+                ).done(function(msg) {
             var body = "";
             var id = "";
-            $.each(msg, function (key, val) {
+            $.each(msg, function(key, val) {
                 id = val.actHij_padreid;
                 body += "<tr>";
                 body += "<td>" + val.actHij_nombre + "</td>";
@@ -756,19 +766,19 @@
             });
             $('#' + id).find('table tbody *').remove();
             $('#' + id).find('table tbody').append(body);
-            $('#myModal8').hide();
+            $('#myModal8').modal("toggle")
             $('#myModal8').find('input[type="text"],select,textarea').val("");
             alerta("verde", "Datos guardados correctamente");
-        }).fail(function (msg) {
+        }).fail(function(msg) {
             alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
         });
     });
 
 
 
-    var TableAjax = function () {
+    var TableAjax = function() {
 
-        var initPickers = function () {
+        var initPickers = function() {
             //init date pickers
             $('.date-picker').datepicker({
                 rtl: Metronic.isRTL(),
@@ -776,19 +786,19 @@
             });
         }
 
-        var handleRecords = function () {
+        var handleRecords = function() {
 
             var grid = new Datatable();
 
             grid.init({
                 src: $("#datatable_ajax2"),
-                onSuccess: function (grid) {
+                onSuccess: function(grid) {
                     // execute some code after table records loaded
                 },
-                onError: function (grid) {
+                onError: function(grid) {
                     // execute some code on network or other general error  
                 },
-                onDataLoad: function (grid) {
+                onDataLoad: function(grid) {
                     // execute some code on ajax data load
                 },
                 loadingMessage: 'Cargando...',
@@ -809,7 +819,7 @@
             });
 
             // handle group actionsubmit button click
-            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
+            grid.getTableWrapper().on('click', '.table-group-action-submit', function(e) {
                 e.preventDefault();
                 grid.setAjaxParam("xyz", "1");
                 var action = $(".table-group-action-input", grid.getTableWrapper());
@@ -840,7 +850,7 @@
         }
         return {
             //main function to initiate the module
-            init: function () {
+            init: function() {
 
                 initPickers();
                 handleRecords();
@@ -850,33 +860,33 @@
 
     }();
 
-    $('#gavance').click(function () {
+    $('#gavance').click(function() {
 
         $.post(
                 "<?php echo base_url("index.php/tareas/guardaravance") ?>",
                 $('#guardaravance').serialize()
-                ).done(function () {
+                ).done(function() {
             $('.avance').val("");
             $('.avance').prop("checked", false);
-            $('#myModal0').modal('hide');
+            $('#myModal0').modal("toggle")
             $('#fecha').val("<?php echo date("Y-m-d") ?>");
             alerta("verde", "Avance guardado correctamente");
-        }).fail(function () {
+        }).fail(function() {
             alerta("Error", "Error por favor comunicarse con el administrador");
         });
 
     });
 
-    $('#guardaractividadpadre').click(function () {
+    $('#guardaractividadpadre').click(function() {
         numero = $('#accordion1').last('div').attr("id");
         if (obligatorio('acobligatorio')) {
 
             $.post("<?php echo base_url("index.php/tareas/guardaractividadpadre") ?>",
                     $('#formactividadpadre').serialize()
                     )
-                    .done(function (msg) {
+                    .done(function(msg) {
                         $('.acobligatorio').val('');
-                        var option = "<option value='" + msg.actPad_id + "'>" + msg.actPad_nombre + "</option>"
+                        var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>";
                         $('#idpadre').append(option);
                         var contenido = '<table class="table table-hover table-bordered">\n\
                                                         <thead>\n\
@@ -895,10 +905,10 @@
                                                         </tbody>\n\
                                                     </table>';
                         agregarregistro('accordion1', msg, contenido, 'c');
-                        $('#myModal').hide();
+                        $('#myModal').modal("toggle")
                         alerta("verde", "Actividad padre guardada con exito");
                     })
-                    .fail(function () {
+                    .fail(function() {
                         alerta("error", "Error por favor comunicarse con el administrador del sistema");
                     })
         }
@@ -924,13 +934,13 @@
 
     }
 
-    $(".flecha").click(function () {
+    $(".flecha").click(function() {
         var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
         var idUsuarioCreado = $("#usuid").val();
         var metodo = $(this).attr("metodo");
         if (metodo != "documento") {
             $.post(url, {idUsuarioCreado: idUsuarioCreado, metodo: metodo})
-                    .done(function (msg) {
+                    .done(function(msg) {
                         $("input[type='text'],select").val("");
                         $("#usuid").val(msg.usu_id);
                         $("#cedula").val(msg.usu_cedula);
@@ -947,7 +957,7 @@
                             $("#cambiocontrasena").is(":checked");
                         }
                     })
-                    .fail(function (msg) {
+                    .fail(function(msg) {
                         alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
                         $("input[type='text'], select").val();
                     })
@@ -957,52 +967,52 @@
 
     });
 
-    $('#cargo').change(function () {
+    $('#cargo').change(function() {
 
         $.post(
                 "<?php echo base_url("index.php/administrativo/consultausuarioscargo") ?>",
                 {
                     cargo: $(this).val()
                 }
-        ).done(function (msg) {
+        ).done(function(msg) {
             var data = "";
             $('#empleado *').remove();
-            $.each(msg, function (key, val) {
+            $.each(msg, function(key, val) {
                 data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
             });
             $('#empleado').append(data);
-        }).fail(function (msg) {
+        }).fail(function(msg) {
 
         });
     });
-    $('#guardarplan').click(function () {
+    $('#guardarplan').click(function() {
         if (obligatorio('obligatorio') == true) {
             $.post(
                     "<?php
     echo (empty($plan[0]->pla_id)) ? base_url('index.php/tareas/guardarplan') : base_url('index.php/tareas/actualizarplan');
     ?>",
                     $('#f7').serialize()
-                    ).done(function (msg) {
+                    ).done(function(msg) {
                 if ($(this).text() == "Actualizar") {
 
                 } else {
                     $('input,select,textarea').val("");
                 }
                 alerta("verde", "Datos guardados correctamente");
-            }).fail(function (msg) {
+            }).fail(function(msg) {
                 alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
             });
         }
     });
-    $('#btnguardarregistro').click(function(){
+    $('#btnguardarregistro').click(function() {
         var file_data = $('#archivo').prop('files')[0];
-            var form_data = new FormData();
-            form_data.append('archivo', file_data);
-            form_data.append('pla_id',$('#pla_id').val());
-            form_data.append('regCar_id',$('#carpeta').val());
-            form_data.append('reg_version',$('#version').val());
-            form_data.append('reg_descripcion',$('#reg_descripcion').val());
-            $.ajax({
+        var form_data = new FormData();
+        form_data.append('archivo', file_data);
+        form_data.append('pla_id', $('#pla_id').val());
+        form_data.append('regCar_id', $('#carpeta').val());
+        form_data.append('reg_version', $('#version').val());
+        form_data.append('reg_descripcion', $('#reg_descripcion').val());
+        $.ajax({
             url: '<?php echo base_url("index.php/tareas/guardarregistroempleado") ?>',
             dataType: 'text', // what to expect back from the PHP script, if anything
             cache: false,
@@ -1010,14 +1020,34 @@
             processData: false,
             data: form_data,
             type: 'post',
-            success: function (result) {
+            success: function(result) {
                 $('#carpeta').val('');
                 $('#version').val('');
                 $('#reg_descripcion').val('');
                 $('#archivo').val('');
-                $("#myModal15").hide();
-                alerta('verde','Registro guardado con exito.');
+                $("#myModal15").modal("toggle")
+                
+                alerta('verde', 'Registro guardado con exito.');
             }
         });
+    })
+    $('.editar_padre').click(function() {
+        $('#actPad_id').val($(this).attr('actPad_id'));
+        var url = '<?php echo base_url("index.php/tareas/consultar_actividad_padre") ?>';
+        $.post(url, {actPad_id: $(this).attr('actPad_id')})
+                .done(function(msg) {
+//                    var msg=JSON.parse(data);
+                    console.log(msg.actPad_nombre);
+                    $('#idactividad').val(msg.actPad_nombre);
+                    $('#nombreactividad').val(msg.actPad_codigo);
+                })
+                .fail(function() {
+                    alerta('rojo','Error al guardar');
+                })
+    })
+    $('.crear_padre').click(function() {
+        $('#actPad_id').val('');
+        $('#idactividad').val('');
+        $('#nombreactividad').val('');
     })
 </script>
