@@ -316,9 +316,10 @@ class Tareas extends My_Controller {
     }
 
     function guardaractividadhijo() {
+        $post=  $this->input->post();
         try {
             $this->load->model('Actividad_model');
-            $data[] = array(
+            $data = array(
                 "actHij_padreid" => $this->input->post("idpadre"),
                 "actHij_nombre" => $this->input->post("nombre"),
                 "actHij_fechaInicio" => $this->input->post("fechainicio"),
@@ -333,7 +334,7 @@ class Tareas extends My_Controller {
                 "pla_id" => $this->input->post("pla_id"),
                 "actHij_fechaCreacion" => date("Y-m-d H:i:s")
             );
-            $this->Actividad_model->create($data);
+            $this->Actividad_model->create($data,$post);
             $data = $this->Actividad_model->search($this->input->post("idpadre"));
             $this->output->set_content_type('application/json')->set_output(json_encode($data));
         } catch (exception $e) {
@@ -371,7 +372,8 @@ class Tareas extends My_Controller {
                         $ac->actHij_fechaFinalizacion,
                         $ac->actHij_presupuestoTotal,
                         $ac->actHij_descripcion,
-                        $ac->actHij_nombre
+                        $ac->actHij_nombre,
+                        $ac->actHij_id
                     );
                 }
                 $this->data["actividades"] = $i;
@@ -388,6 +390,15 @@ class Tareas extends My_Controller {
         else:
             $this->layout->view("permisos");
         endif;
+    }
+    function eliminar_actividad_hijo(){
+        $this->load->model('Registro_model');
+        $id = $this->Registro_model->eliminar_actividad_hijo($this->input->post());
+    }
+    function editar_actividad_hijo(){
+        $this->load->model('Registro_model');
+        $data = $this->Registro_model->editar_actividad_hijo($this->input->post()); 
+        $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
 
     function guardarcarpetaregistro() {

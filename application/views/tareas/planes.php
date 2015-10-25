@@ -243,7 +243,7 @@
                                     </div>
                                     <div class="tools">
                                         <button type="button" class="btn btn-default crear_padre" data-toggle="modal" data-target="#myModal">CREAR ACTIVIDAD PADRE</button>
-                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal8">CREAR ACTIVIDAD HIJO</button>
+                                        <button type="button" class="btn btn-default nuevo_hijo" data-toggle="modal" data-target="#myModal8">CREAR ACTIVIDAD HIJO</button>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -266,7 +266,7 @@
                                                             <table class="table table-hover table-bordered">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th colspan="5">
+                                                                        <th colspan="6">
                                                                             <span>
                                                                                 <button class="btn btn-default editar_padre" actPad_id="<?php echo $id ?>" data-target="#myModal" data-toggle="modal" type="button">EDITAR ACTIVIDAD PADRE</button>
                                                                             </span>
@@ -278,6 +278,7 @@
                                                                         <th>Fecha fin</th>
                                                                         <th>Presupuesto</th>
                                                                         <th>Descripción</th>
+                                                                        <th>Acción</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -288,6 +289,10 @@
                                                                             <td><?php echo $campo[1] ?></td>
                                                                             <td><?php echo $campo[2] ?></td>
                                                                             <td><?php echo $campo[3] ?></td>
+                                                                            <td>
+                                                                                <i class="fa fa-times eliminar btn btn-danger" actHij_id="<?php echo $campo[5] ?>" title="Eliminar"></i>
+                                                                                <i class="fa fa-pencil-square-o modificar btn btn-info" data-target="#myModal8" data-toggle="modal" actHij_id="<?php echo $campo[5] ?>" title="Modificar"></i>
+                                                                            </td>
                                                                         </tr>   
                                                                     <?php endforeach; ?>
                                                                 </tbody>
@@ -400,7 +405,7 @@
                         <div class="modal-body">
                             <form method="post" id="formactividadpadre">
                                 <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
-                                <input type="hidden" value="" name="actPad_id" id="actPad_id"/>
+                                <input type="text" value="" name="actPad_id" id="actPad_id"/>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                         <label for="idactividad">Id:</label>
@@ -612,7 +617,7 @@
                                     <input type="hidden" value="<?php echo $plan[0]->pla_id; ?>" name="pla_id">
                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><label for="idpadre">Id Padre</label></div>
                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                        <select id="idpadre" name="idpadre" class="form-control">
+                                        <select id="idpadre" name="idpadre" class="form-control idpadre2">
                                             <option value="">::Seleccionar::</option>
                                             <?php foreach ($actividadpadre as $ap): ?>
                                                 <option value="<?php echo $ap->actPad_id ?>  "><?php echo $ap->actPad_nombre ?></option>
@@ -620,12 +625,12 @@
                                         </select>
                                     </div>
                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><label for="nombre">Nombre</label></div>
-                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><input type="text" id="nombre" name="nombre" class="form-control"></div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><input type="text" id="nombre" name="nombre" class="form-control nombre2"></div>
                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                         <div class="row">
                                             <div class="form-group">
                                                 <label for="fechainicio">Fecha Inicio</label>
-                                                <input type="text" class="form-control fecha" id="fechainicio" name="fechainicio" />
+                                                <input type="text" class="form-control fecha fechainicio2" id="fechainicio" name="fechainicio" />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -666,14 +671,15 @@
                                         <div class="row">
                                             <div class="form-group">
                                                 <label for="costoreal">Costo Real</label>
-                                                <input type="text" class="form-control number" id="costoreal" name="costoreal" />
+                                                <input type="text" class="form-control number costoreal2" id="costoreal" name="costoreal" />
+                                                <input type="hidden" name="actHij_id" id="actHij_id" class="form-control" readonly="readonly" value=""/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                                         <div class="form-group">
                                             <label for="descripcion">Descripción</label>
-                                            <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
+                                            <textarea class="form-control descripcion2" id="descripcion" name="descripcion"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="modoverificacion">Modo Verificación</label>
@@ -718,7 +724,6 @@
                                             </tr>\n\
                                         </tbody>\n\
                                 </table>";
-
                 $('#carpeta').append(option);
                 agregarregistro('accordion5', msg, contenido, 'r');
                 $('.carbligatorio').val("");
@@ -730,7 +735,6 @@
         }
 
     });
-
     $('.direccionar').click(function() {
 
         if ($(this).attr('num') == 1)
@@ -744,9 +748,7 @@
     });
     jQuery(document).ready(function() {
         TableAjax.init();
-
     });
-
     $('#guardar').click(function() {
         $.post(
                 "<?php echo base_url("index.php/tareas/guardaractividadhijo") ?>",
@@ -762,6 +764,9 @@
                 body += "<td>" + val.actHij_fechaFinalizacion + "</td>";
                 body += "<td>" + val.actHij_presupuestoTotal + "</td>";
                 body += "<td>" + val.actHij_descripcion + "</td>";
+                body += "<td>" +
+                        '<i class="fa fa-times eliminar btn btn-danger" title="Eliminar" acthij_id="' + val.actHij_id + '"></i><i class="fa fa-pencil-square-o modificar btn btn-info" title="Modificar" acthij_id="' + val.actHij_id + '" data-toggle="modal" data-target="#myModal8"></i>'
+                        + "</td>";
                 body += "</tr>";
             });
             $('#' + id).find('table tbody *').remove();
@@ -773,9 +778,6 @@
             alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
         });
     });
-
-
-
     var TableAjax = function() {
 
         var initPickers = function() {
@@ -789,7 +791,6 @@
         var handleRecords = function() {
 
             var grid = new Datatable();
-
             grid.init({
                 src: $("#datatable_ajax2"),
                 onSuccess: function(grid) {
@@ -817,7 +818,6 @@
                     ]// set first column as a default sort by asc
                 }
             });
-
             // handle group actionsubmit button click
             grid.getTableWrapper().on('click', '.table-group-action-submit', function(e) {
                 e.preventDefault();
@@ -857,9 +857,7 @@
             }
 
         };
-
     }();
-
     $('#gavance').click(function() {
 
         $.post(
@@ -874,9 +872,7 @@
         }).fail(function() {
             alerta("Error", "Error por favor comunicarse con el administrador");
         });
-
     });
-
     $('#guardaractividadpadre').click(function() {
         numero = $('#accordion1').last('div').attr("id");
         if (obligatorio('acobligatorio')) {
@@ -885,6 +881,13 @@
                     $('#formactividadpadre').serialize()
                     )
                     .done(function(msg) {
+                        $('#myModal').modal("toggle")
+                        if ($('#actPad_id').val() != '') {
+//                            console.log($('a[href="#collapse_'+$('#actPad_id').val()+'c"]').text());
+                            $('a[href="#collapse_' + $('#actPad_id').val() + 'c"]').text(msg.dos)
+                            alerta('verde', 'Datos Actualizados');
+                            return false
+                        }
                         $('.acobligatorio').val('');
                         var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>";
                         $('#idpadre').append(option);
@@ -914,7 +917,6 @@
         }
 
     });
-
     function agregarregistro(tabla, msg, contenido, destino) {
         var acordeon = '<div class="panel panel-default" id="' + msg.uno + '">\n\
                                             <div class="panel-heading">\n\
@@ -931,7 +933,6 @@
                                             </div>\n\
                                     </div>';
         $('#' + tabla).append(acordeon);
-
     }
 
     $(".flecha").click(function() {
@@ -950,9 +951,9 @@
                         $("#contrasena").val(msg.usu_contrasena);
                         $("#email").val(msg.usu_email);
                         $("#genero").val(msg.sex_id);
-                        $("#estado").val(msg.est_id);//estado
-                        $("#cargo").val(msg.car_id);//cargo
-                        $("#empleado").val(msg.emp_id);//empleado
+                        $("#estado").val(msg.est_id); //estado
+                        $("#cargo").val(msg.car_id); //cargo
+                        $("#empleado").val(msg.emp_id); //empleado
                         if (msg.cambiocontrasena == "1") {
                             $("#cambiocontrasena").is(":checked");
                         }
@@ -966,7 +967,6 @@
         }
 
     });
-
     $('#cargo').change(function() {
 
         $.post(
@@ -1026,28 +1026,73 @@
                 $('#reg_descripcion').val('');
                 $('#archivo').val('');
                 $("#myModal15").modal("toggle")
-                
+
                 alerta('verde', 'Registro guardado con exito.');
             }
         });
     })
     $('.editar_padre').click(function() {
-        $('#actPad_id').val($(this).attr('actPad_id'));
+        var j = $(this).attr('actPad_id')
+        $('#actPad_id').val(j);
         var url = '<?php echo base_url("index.php/tareas/consultar_actividad_padre") ?>';
         $.post(url, {actPad_id: $(this).attr('actPad_id')})
                 .done(function(msg) {
-//                    var msg=JSON.parse(data);
-                    console.log(msg.actPad_nombre);
                     $('#idactividad').val(msg.actPad_nombre);
                     $('#nombreactividad').val(msg.actPad_codigo);
+//                    alerta('verde','Registro actualizado con exito.')
                 })
                 .fail(function() {
-                    alerta('rojo','Error al guardar');
+                    alerta('rojo', 'Error al guardar');
                 })
     })
     $('.crear_padre').click(function() {
         $('#actPad_id').val('');
         $('#idactividad').val('');
         $('#nombreactividad').val('');
+    })
+    $('body').delegate('.eliminar', 'click', function() {
+        if ($(this).attr('acthij_id') == '')
+            return false;
+        var r = confirm('Desea eliminar el registro')
+        if (r == false) {
+            return false;
+        }
+        $(this).parent().parent().remove();
+        var url = '<?php echo base_url("index.php/tareas/eliminar_actividad_hijo") ?>';
+        $.post(url, {actHij_id: $(this).attr('actHij_id')})
+                .done(function() {
+
+                    alerta('verde', 'Eliminado con exito')
+                }).fail(function() {
+//            alerta('rojo', 'Error al Eliminar')
+        })
+    });
+    $('body').delegate('.modificar', 'click', function() {
+        var acthij_id = $(this).attr('acthij_id');
+        if (acthij_id == "")
+            return false;
+        var url = '<?php echo base_url("index.php/tareas/editar_actividad_hijo") ?>';
+        $.post(url, {acthij_id: acthij_id})
+                .done(function(msg) {
+                    $('.nombre2').val(msg.actHij_nombre)
+                    $('.idpadre2').val(msg.actHij_padreid)
+                    $('.fechainicio2').val(msg.actHij_fechaInicio)
+                    $('.descripcion2').val(msg.actHij_descripcion)
+                    $('#fechafinalizacion').val(msg.actHij_fechaFinalizacion)
+                    $('#modoverificacion').val(msg.actHij_modoVerificacion)
+                    $('#peso').val(msg.actHij_peso)
+                    $('#riesgosancion').val(msg.actHij_riesgoSancion)
+                    $('#tipo').val(msg.tip_id)
+                    $('#presupuestototal').val(msg.actHij_presupuestoTotal)
+                    $('.costoreal2').val(msg.actHij_costoReal)
+                    $('#actHij_id').val(msg.actHij_id)
+                })
+                .fail(function() {
+                    alerta('rojo', 'Error al consultar')
+                })
+
+    })
+    $('.nuevo_hijo').click(function() {
+        $('#actHij_id').val('')
     })
 </script>

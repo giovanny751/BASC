@@ -71,6 +71,7 @@ class Planes_model extends CI_Model {
         $this->db->select("actividad_hijo.actHij_fechaFinalizacion");
         $this->db->select("actividad_hijo.actHij_presupuestoTotal");
         $this->db->select("actividad_hijo.actHij_descripcion");
+        $this->db->select("actividad_hijo.actHij_id");
         $this->db->where("actividad_padre.pla_id",$id);
 //        $this->db->join("planes","actividad_padre.pla_id = planes.pla_id","LEFT"); 
         $this->db->join("actividad_hijo","actividad_hijo.actHij_padreid = actividad_padre.actPad_id","LEFT");

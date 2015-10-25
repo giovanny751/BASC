@@ -62,6 +62,15 @@ class Registro_model extends CI_Model {
     function guardar_registro($post){
         $this->db->insert("registro",$post);
     }
+    function eliminar_actividad_hijo($post){
+        $this->db->where("actHij_id",$post['actHij_id']);
+        $this->db->delete("actividad_hijo");
+    }
+    function editar_actividad_hijo($post){
+        $this->db->where("actHij_id",$post['acthij_id']);
+        $datos=$this->db->get("actividad_hijo");
+        return $datos->result();
+    }
 
 }
 

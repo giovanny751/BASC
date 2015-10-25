@@ -12,9 +12,13 @@ class Actividad_model extends CI_Model {
         $actividad = $this->db->get("actividad");
         return $actividad->result();
     }
-    function create($data){
-        
-        $this->db->insert_batch("actividad_hijo",$data);
+    function create($data,$post){
+        if($post['actHij_id']==""){
+        $this->db->insert("actividad_hijo",$data);
+        }else{
+        $this->db->where("actHij_id",$post['actHij_id']);    
+        $this->db->update("actividad_hijo",$data);    
+        }
     }
     function search($idpadre){
         $this->db->where("actHij_padreid",$idpadre);
