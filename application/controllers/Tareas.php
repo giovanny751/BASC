@@ -122,7 +122,7 @@ class Tareas extends My_Controller {
         try {
             $this->load->model('Avancetarea_model');
             $this->load->model('Avancenotificacion_model');
-            $data[] = array(
+            $data = array(
                 "tar_id" => $this->input->post('idtarea'),
                 "avaTar_fecha" => $this->input->post("fecha"),
                 "avaTar_progreso" => $this->input->post("progreso"),
@@ -132,7 +132,8 @@ class Tareas extends My_Controller {
                 "avaTar_fechaCreacion" => date("Y-m-d H:i:s"),
                 "usu_id" => $this->data["usu_id"]
             );
-            $id = $this->Avancetarea_model->create($data);
+            $id = $this->Avancetarea_model->create($data,$this->input->post());
+            $result = $this->Avancetarea_model->consulta($this->input->post('idtarea'));
             $notificar = array();
             if (!empty($this->input->post("notificar"))):
                 $notificacion = $this->input->post("notificar");
@@ -144,9 +145,22 @@ class Tareas extends My_Controller {
                 }
                 $this->Avancenotificacion_model->create($notificar);
             endif;
+
+            $this->output->set_content_type('application/json')->set_output(json_encode($result));
         } catch (exception $e) {
             
         }
+    }
+
+    function consulta() {
+        $this->load->model('Avancetarea_model');
+        $result = $this->Avancetarea_model->consulta($this->input->post('idtarea'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($result));
+    }
+    function consulta2() {
+        $this->load->model('Avancetarea_model');
+        $result = $this->Avancetarea_model->consulta2($this->input->post('avaTar_id'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($result[0]));
     }
 
     function guardartarea() {
@@ -278,13 +292,14 @@ class Tareas extends My_Controller {
         endif;
     }
 
-    function eliminar_actividad_hijo(){
+    function eliminar_actividad_hijo() {
         $this->load->model('Registro_model');
         $id = $this->Registro_model->eliminar_actividad_hijo($this->input->post());
     }
-    function editar_actividad_hijo(){
+
+    function editar_actividad_hijo() {
         $this->load->model('Registro_model');
-        $data = $this->Registro_model->editar_actividad_hijo($this->input->post()); 
+        $data = $this->Registro_model->editar_actividad_hijo($this->input->post());
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
 
@@ -323,10 +338,10 @@ class Tareas extends My_Controller {
 
     function consultar_actividad_padre() {
         $this->load->model("Actividadpadre_model");
-        $planes=$this->Actividadpadre_model->consultar_actividad_padre($this->input->post("actPad_id"));
+        $planes = $this->Actividadpadre_model->consultar_actividad_padre($this->input->post("actPad_id"));
         $this->output->set_content_type('application/json')->set_output(json_encode($planes[0]));
     }
-    
+
     function consultaractividadpadre() {
 
         $this->load->model("Actividadpadre_model");

@@ -1,6 +1,6 @@
 <script type="text/javascript">
-        $(".menNUEVA_TAREA").addClass("active open");
-        $(".subMenCREACIÓN_TAREAS").addClass("active");
+    $(".menNUEVA_TAREA").addClass("active open");
+    $(".subMenCREACIÓN_TAREAS").addClass("active");
 </script>
 <div class="widgetTitle" >
     <h5>
@@ -46,8 +46,10 @@
                         <select name="plan" id="plan" class="form-control obligatorio" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($planes as $p) { ?>
-                                <option  <?php echo (!empty($pla_id) && $pla_id == $p->pla_id ) ? "selected" : "";
-                            echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : ""; ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
+                                <option  <?php
+                                echo (!empty($pla_id) && $pla_id == $p->pla_id ) ? "selected" : "";
+                                echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : "";
+                                ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
 <?php } ?>
                         </select>
                     </div>
@@ -219,7 +221,7 @@
                                 <label for="fechamodificacion">Fecha de modificación</label>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <input type="text" value="<?php echo (!empty($tarea->tar_fechaUltimaMod)) ? $tarea->tar_fechaUltimaMod : ""; ?>" name="fechamodificacion" id="fechamodificacion" readonly="readonly" class="form-control" >
+                                <input type="text" value="<?php echo (!empty($tarea->tar_fechaUltimaMod)) ? $tarea->tar_fechaUltimaMod : date('Y-m-d'); ?>" name="fechamodificacion" id="fechamodificacion" readonly="readonly" class="form-control" >
                             </div>
                         </div>
                     </div>
@@ -259,10 +261,10 @@
                     <i class="fa fa-gift"></i>AVANCES
                 </div>
                 <div class="tools">
-<!--                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
-                    <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
-                    <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
-                    <a class="remove" href="javascript:;" data-original-title="" title=""> </a>-->
+                    <!--                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
+                                        <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
+                                        <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
+                                        <a class="remove" href="javascript:;" data-original-title="" title=""> </a>-->
                 </div>
             </div>
             <div class="portlet-body">
@@ -287,7 +289,7 @@
                                             <div class="table-container">
                                                 <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                                                     <thead>
-                                                        <tr role="row" class="heading">
+                                                        <tr role="row" class="heading" style="background:#008ac9">
                                                             <th>Editar</th>
                                                             <th>Fecha</th>
                                                             <th>Resumen</th>
@@ -306,7 +308,7 @@
                                                             <td></td>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody class="datatable_ajax1">
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -319,6 +321,7 @@
                         <div id="tab2" class="tab-pane">
                             <form method="post" id="guardaravance">
                                 <input type="hidden" value="<?php echo (!empty($tarea->tar_id)) ? $tarea->tar_id : ""; ?>" name="idtarea" id="interno">
+                                <input type="hidden" value="" name="avaTar_id" id="avaTar_id">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
                                         <div class="row">
@@ -506,7 +509,7 @@
 
 </div> 
 <form method="post" id="frmplan" action="<?php echo base_url("index.php/tareas/planes") ?>">
-            <input type="hidden" name="pla_id" id="planantiguo" value="<?php echo (!empty($pla_id)) ? $pla_id : ""; ?>">
+    <input type="hidden" name="pla_id" id="planantiguo" value="<?php echo (!empty($pla_id)) ? $pla_id : ""; ?>">
 </form>
 <script>
     jQuery(document).ready(function () {
@@ -640,15 +643,78 @@
         $.post(
                 "<?php echo base_url("index.php/tareas/guardaravance") ?>",
                 $('#guardaravance').serialize()
-                ).done(function () {
+                ).done(function (msg) {
             $('.avance').val("");
             $('.avance').prop("checked", false);
             alerta("verde", "Avance guardado correctamente");
+            var html = "";
+            $.each(msg, function (key, val) {
+                html += "<tr>"
+                        + "<td><a href='javascript:' class='avances_' avaTar_id='" + val.avaTar_id + "' >editar</a></td>"
+                        + "<td>" + val.avaTar_fecha + "</td>"
+                        + "<td></td>"
+                        + "<td>" + val.nombre + "</td>"
+                        + "<td>" + val.avaTar_horasTrabajadas + "</td>"
+                        + "<td>" + val.avaTar_costo + "</td>"
+                        + "<td>" + val.avaTar_comentarios + "</td>"
+                        + "</tr>";
+            })
+            $('.datatable_ajax1').html(html)
         }).fail(function () {
             alerta("Error", "Error por favor comunicarse con el administrador");
         });
 
     });
+    function primer() {
+        $.post(
+                "<?php echo base_url("index.php/tareas/consulta") ?>", {idtarea: '<?php echo (!empty($tarea->tar_id)) ? $tarea->tar_id : ""; ?>'}
+        ).done(function (msg) {
+            $('.avance').val("");
+            $('.avance').prop("checked", false);
+            var html = "";
+            $.each(msg, function (key, val) {
+                html += "<tr>"
+                        + "<td><a href='javascript:' class='avances_' avaTar_id='" + val.avaTar_id + "' >editar</a></td>"
+                        + "<td>" + val.avaTar_fecha + "</td>"
+                        + "<td></td>"
+                        + "<td>" + val.nombre + "</td>"
+                        + "<td>" + val.avaTar_horasTrabajadas + "</td>"
+                        + "<td>" + val.avaTar_costo + "</td>"
+                        + "<td>" + val.avaTar_comentarios + "</td>"
+                        + "</tr>";
+            })
+            $('.datatable_ajax1').html(html)
+        }).fail(function () {
+            alerta("Error", "Error por favor comunicarse con el administrador");
+        });
+    }
+    primer();
+
+    $('body').delegate('.avances_', 'click', function () {
+        var avaTar_id = $(this).attr('avaTar_id');
+        var url = "<?php echo base_url("index.php/tareas/consulta2") ?>";
+        $.post(url, {avaTar_id: avaTar_id})
+                .done(function (msg) {
+                    $('#avaTar_id').val(msg.avaTar_id)
+                    $('#fecha').val(msg.avaTar_fecha)
+                    $('#progreso').val(msg.avaTar_progreso)
+                    $('#horastrabajadas').val(msg.avaTar_horasTrabajadas)
+                    $('#costo').val(msg.avaTar_costo)
+                    $('#comentarios').val(msg.avaTar_comentarios)
+                    $('.tabbable a[href="#tab2"]').tab('show')
+                })
+                .fail(function () {
+                    alerta("Error", "Error por favor comunicarse con el administrador");
+                })
+    })
+    $('.tabbable a[href="#tab2"]').click(function () {
+        $('#avaTar_id').val('')
+        $('#fecha').val('')
+        $('#progreso').val('')
+        $('#horastrabajadas').val('')
+        $('#costo').val('')
+        $('#comentarios').val('')
+    })
 
     $(".flecha").click(function () {
         var url = "<?php echo base_url("index.php/tareas/consultaTareasFlechas") ?>";
@@ -668,7 +734,7 @@
             window.location = "<?php echo base_url("index.php/tareas/listadotareas"); ?>";
         }
     });
-    $('document').ready(function(){
+    $('document').ready(function () {
         $('#guardartarea').click(function () {
 
             if (obligatorio("obligatorio")) {
@@ -680,19 +746,19 @@
                     alerta("verde", "Datos guardados correctamente");
                     if ($('#planantiguo').val() != "") {
                         $('#frmplan').submit();
-                    }else if ($("#interno").val() == "") {
+                    } else if ($("#interno").val() == "") {
                         $('input,select,textarea').val("");
                     }
-                    alert("paso por aca"+$('#planantiguo').val());
-                    
+                    alert("paso por aca" + $('#planantiguo').val());
+
                 }).fail(function (msg) {
                     alerta("rojo", "Error por favor comunicarse con el administrador");
                 });
             }
         });
-    
+
     });
-    
+
     $('#cargo').change(function () {
 
         $.post(
