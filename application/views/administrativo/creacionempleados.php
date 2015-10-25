@@ -7,9 +7,12 @@
     <form method="post" id="f1">
         <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <?php if(!empty($empleado[0]->Emp_Id)){?>
                 <button type="button" id="actualizar"  class="btn btn-success">Actualizar</button>   
+                <?php }else{ ?>
                 <!--<button type="button" id="btnRegistro" class="btn btn-info registro">Registro exámenes</button>-->
                 <button type="button" id="guardar" class="btn btn-success">Guardar</button>
+                <?php } ?>
             </div>
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                 <center>
@@ -357,8 +360,8 @@
                                                                     <td><?php echo $campos[5] ?></td>
                                                                     <td><?php echo $campos[6] ?></td>
                                                                     <td>
-                                                                        <i class="fa fa-times eliminar btn btn-danger" title="Eliminar" empReg_id="<?php echo $campos[4] ?>"></i>
-                                                                        <i class="fa fa-pencil-square-o modificar btn btn-info" title="Modificar" data-target='#myModal2' data-toggle='modal'  emp_id="<?php echo $campos[4] ?>" ></i>
+                                                                        <i class="fa fa-times eliminar btn-danger" title="Eliminar" empReg_id="<?php echo $campos[4] ?>"></i>
+                                                                        <i class="fa fa-pencil-square-o modificar  btn-info" title="Modificar" data-target='#myModal2' data-toggle='modal'  emp_id="<?php echo $campos[4] ?>" ></i>
                                                                     </td>
                                                                 </tr>
                                                                 <?php
@@ -812,8 +815,8 @@
                         filas += "<td>" + val.empReg_tamano + "</td>";
                         filas += "<td>" + val.empgReg_fecha + "</td>";
                         filas += "<td>\n\
-                                <i class='fa fa-times eliminar btn btn-danger' title='Eliminar' empReg_id='" + val.empReg_id + "'></i>\n\
-                                <i class='fa fa-pencil-square-o modificar btn btn-info' title='Modificar' data-target='#myModal2' data-toggle='modal'  emp_id='" + val.empReg_id + "' ></i>\n\
+                                <i class='fa fa-times eliminar btn-danger' title='Eliminar' empReg_id='" + val.empReg_id + "'></i>\n\
+                                <i class='fa fa-pencil-square-o modificar btn-info' title='Modificar' data-target='#myModal2' data-toggle='modal'  emp_id='" + val.empReg_id + "' ></i>\n\
                              </td>";
                         filas += "</tr>";
                     });
