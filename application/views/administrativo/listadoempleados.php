@@ -1,3 +1,25 @@
+<!-- Colorear Menu -->
+<script type="text/javascript">
+        $(".menORGANIZACIÓN").addClass("active open");
+        $(".subMenEMPLEADOS").addClass("active");
+        $(".subMenLISTADO_EMPLEADOS").addClass("active");
+</script>
+<div class="page-bar" style="background-color: transparent !important;">
+    <ul class="page-breadcrumb">
+        <li class="devolver">
+            <i class="fa fa-home"></i>
+            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Organización</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Listado Empleados</a>
+        </li>
+    </ul>
+</div>
 <div class="widgetTitle" >
     <a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>">
         <button type="button" class="btn btn-default">Nuevo empleado</button>

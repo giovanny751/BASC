@@ -1,3 +1,25 @@
+<!-- Colorear Menu -->
+<script type="text/javascript">
+        $(".menORGANIZACIÓN").addClass("active open");
+        $(".subMenUSUARIOS").addClass("active open");
+        $(".subMenLISTADO_USUARIOS").addClass("active");
+</script>
+<div class="page-bar" style="background-color: transparent !important;">
+    <ul class="page-breadcrumb">
+        <li class="devolver">
+            <i class="fa fa-home"></i>
+            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Organización</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Listado Usuarios</a>
+        </li>
+    </ul>
+</div>
 <div class="widgetTitle" >
     <a href="<?php echo base_url("index.php/administrativo/creacionusuarios") ?>"><button type="button" class="btn btn-default">Crear usuario</button></a><h5>
         - LISTADO USUARIOS

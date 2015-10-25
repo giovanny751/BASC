@@ -1,3 +1,24 @@
+<!-- Colorear Menu -->
+<script type="text/javascript">
+        $(".menPLAN_DE_TRABAJO").addClass("active open");
+        $(".subMenLISTADO_PLANES").addClass("active");
+</script>
+<div class="page-bar" style="background-color: transparent !important;">
+    <ul class="page-breadcrumb">
+        <li class="devolver">
+            <i class="fa fa-home"></i>
+            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Plan De Trabajo</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Listado Planes</a>
+        </li>
+    </ul>
+</div>
 <form method="post" id="f13" action="<?php echo base_url("index.php/planes/nuevoplan") ?>">
     <input type="hidden" name="pla_id" id="pla_id">
 </form>

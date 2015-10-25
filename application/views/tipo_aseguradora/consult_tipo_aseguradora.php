@@ -1,3 +1,25 @@
+<!-- Colorear Menu -->
+<script type="text/javascript">
+        $(".menORGANIZACIÓN").addClass("active open");
+        $(".menTIPO_ASEGURADORAS").addClass("active open");
+        $(".subMenLISTADO_TIPOS_DE_ASEGURADORA").addClass("active");
+</script>
+<div class="page-bar" style="background-color: transparent !important;">
+    <ul class="page-breadcrumb">
+        <li class="devolver">
+            <i class="fa fa-home"></i>
+            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Organización</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Consulta Tipo Aseguradora</a>
+        </li>
+    </ul>
+</div>
 <div class="widgetTitle" >
     <h5>
         <i class="glyphicon glyphicon-ok"></i> CREAR TIPO DE ASEGURADORA    </h5>

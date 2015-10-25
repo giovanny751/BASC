@@ -1,3 +1,24 @@
+<!-- Colorear Menu -->
+<script type="text/javascript">
+        $(".menDOCUMENTOS").addClass("active open");
+        $(".subMenTIPOS_DE_DOCUMENTOS").addClass("active");
+</script>
+<div class="page-bar" style="background-color: transparent !important;">
+    <ul class="page-breadcrumb">
+        <li class="devolver">
+            <i class="fa fa-home"></i>
+            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Documentos</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Tipos Documento</a>
+        </li>
+    </ul>
+</div>
 <div class="col-md-12">
     <div class="portlet green-meadow box">
         <div class="portlet-title">

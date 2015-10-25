@@ -1,3 +1,22 @@
+<script type="text/javascript">
+    $(".subMenREGISTROS").addClass("active");
+</script>
+<div class="page-bar" style="background-color: transparent !important;">
+    <ul class="page-breadcrumb">
+        <li class="devolver">
+            <i class="fa fa-home"></i>
+            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Registros</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Index</a>
+        </li>
+    </ul>
+</div>
 <div class="col-md-12">
     <div class="portlet green-meadow box">
         <div class="portlet-title">

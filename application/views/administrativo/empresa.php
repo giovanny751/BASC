@@ -1,4 +1,25 @@
+<!-- Colorear Menu -->
+<script type="text/javascript">
+        $(".menORGANIZACIÓN").addClass("active open");
+        $(".subMenCARACTERIZAR_EMPRESA").addClass("active");
+</script>
 <div class="col-md-12">
+    <div class="page-bar" style="background-color: transparent !important;">
+        <ul class="page-breadcrumb">
+            <li class="devolver">
+                <i class="fa fa-home"></i>
+                <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li class="devolver">
+                <a href="#">Organización</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li class="devolver">
+                <a href="#">Empresa</a>
+            </li>
+        </ul>
+    </div>
     <div class="portlet green-meadow box">
         <div class="portlet-title">
             <div class="caption">

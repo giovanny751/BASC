@@ -1,3 +1,24 @@
+<!-- Colorear Menu -->
+<script type="text/javascript">
+        $(".menPLAN_DE_TRABAJO").addClass("active open");
+        $(".subMenCREACIÓN_PLAN_DE_TRABAJO").addClass("active");
+</script>
+<div class="page-bar" style="background-color: transparent !important;">
+    <ul class="page-breadcrumb">
+        <li class="devolver">
+            <i class="fa fa-home"></i>
+            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Plan De Trabajo</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Nuevo Plan</a>
+        </li>
+    </ul>
+</div>
 <div class="widgetTitle" >
     <h5>
         <i class="glyphicon glyphicon-ok"></i>PLANES

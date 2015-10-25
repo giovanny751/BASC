@@ -1,3 +1,23 @@
+<script type="text/javascript">
+    $(".menINDICADORES").addClass("active open");
+    $(".subMenLISTADO_INDICADORES").addClass("active");
+</script>
+<div class="page-bar" style="background-color: transparent !important;">
+    <ul class="page-breadcrumb">
+        <li class="devolver">
+            <i class="fa fa-home"></i>
+            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Indicadores</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Listado Indicadores</a>
+        </li>
+    </ul>
+</div>
 <div class="widgetTitle" >
     <h5>
         <i class="glyphicon glyphicon-ok"></i>VER INDICADORES

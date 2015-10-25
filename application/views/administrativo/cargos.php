@@ -1,3 +1,27 @@
+<script type="text/javascript">
+    $(".menORGANIZACIÓN").addClass("active open");
+    $(".subMenCARGOS").addClass("active");
+</script>
+<div class="page-bar" style="background-color: transparent !important;">
+    <ul class="page-breadcrumb">
+        <li class="devolver">
+            <i class="fa fa-home"></i>
+            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">Empresa</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Organización</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="#">Cargos</a>
+        </li>
+    </ul>
+</div>
 <div class="widgetTitle" >
     <h5>
         <i class="glyphicon glyphicon-ok"></i>CARGOS
@@ -114,20 +138,20 @@
     </div>
 </div>
 <script>
-    $('body').delegate(".riesgo","click",function(){
-        
+    $('body').delegate(".riesgo", "click", function () {
+
         var car_id = $(this).attr("car_id");
         $.post(
                 "<?php echo base_url("index.php/administrativo/cargoriesgo") ?>",
                 {
-                    car_id:car_id,
+                    car_id: car_id,
                 }
         ).done(function (msg) {
             $("#riesgocargo *").remove();
             var body = "";
-            $.each(msg,function(key,val){
+            $.each(msg, function (key, val) {
                 body += "<tr>";
-                body += "<td>"+val.rie_descripcion+"</td>";
+                body += "<td>" + val.rie_descripcion + "</td>";
                 body += "</tr>";
             });
             $("#riesgocargo").append(body);
@@ -211,25 +235,25 @@
             $.post("<?php echo base_url('index.php/administrativo/guardarcargo') ?>",
                     $("#formcargos").serialize())
                     .done(function (msg) {
-                        if(msg != 1){
-                        $('#bodycargo *').remove()
-                        $('#cargojefe *').remove()
-                        var body = "";
-                        var option = "";
-                        $.each(msg, function (key, val) {
-                            body += "<tr>";
-                            body += "<td>" + val.car_nombre + "</td>";
-                            body += "<td>" + val.jefe + "</td>";
-                            body += "<td>" + val.car_porcentajearl + "</td>";
-                            body += '<td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="' + val.car_id + '" data-toggle="modal" data-target="#riesgo"></i></td>';
-                            body += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="' + val.car_id + '"></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="' + val.car_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
-                            body += "</tr>";
-                            option += "<option value='" + val.car_id + "'>" + val.car_nombre + "</option>";
-                        });
-                        $('#bodycargo').append(body);
-                        $('#cargojefe').append(option);
+                        if (msg != 1) {
+                            $('#bodycargo *').remove()
+                            $('#cargojefe *').remove()
+                            var body = "";
+                            var option = "";
+                            $.each(msg, function (key, val) {
+                                body += "<tr>";
+                                body += "<td>" + val.car_nombre + "</td>";
+                                body += "<td>" + val.jefe + "</td>";
+                                body += "<td>" + val.car_porcentajearl + "</td>";
+                                body += '<td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="' + val.car_id + '" data-toggle="modal" data-target="#riesgo"></i></td>';
+                                body += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="' + val.car_id + '"></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="' + val.car_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
+                                body += "</tr>";
+                                option += "<option value='" + val.car_id + "'>" + val.car_nombre + "</option>";
+                            });
+                            $('#bodycargo').append(body);
+                            $('#cargojefe').append(option);
                             alerta("verde", "Guardado Correctamente");
-                        }else{
+                        } else {
                             alerta("amarillo", "Cargo ya existente");
                         }
                     })
