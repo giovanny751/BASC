@@ -197,6 +197,12 @@ class Planes extends My_Controller {
             $this->layout->view("permisos");
         endif;
     }
+    function modificarregistro(){
+        $this->load->model('Registro_model');
+        $data = $this->Registro_model->detallexidregitro($this->input->post("registro"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
+    }
+    
     function eliminar_actividad_hijo(){
         $this->load->model('Registro_model');
         $id = $this->Registro_model->eliminar_actividad_hijo($this->input->post());

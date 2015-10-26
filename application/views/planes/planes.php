@@ -392,7 +392,7 @@
                                                                                     <td><?php echo $campocar[5] ?></td>
                                                                                     <td>
                                                                                         <i class="fa fa-times fa-2x eliminarregistro btn btn-danger" title="Eliminar" reg_id="<?php echo $campocar[6] ?>"></i>
-                                                                                        <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" reg_id="<?php echo $campocar[6] ?>" ></i>
+                                                                                        <i class="fa fa-pencil-square-o fa-2x modificarregistro btn btn-info" title="Modificar" reg_id="<?php echo $campocar[6] ?>" ></i>
                                                                                     </td>
                                                                                 </tr>   
                                                                             <?php endforeach; ?>
@@ -726,6 +726,18 @@
 </div>
 <script>
     
+    $('body').delegate('.modificarregistro','click',function(){
+        var registro = $(this).attr('reg_id');
+        $.post(
+                "<?php echo base_url("index.php/planes/modificarregistro") ?>",
+                {registro:registro}
+                ).done(function(msg){
+                    
+                }).fail(function(msg){
+                    
+                })
+        ;
+    });
     $('body').delegate(".eliminarregistro","click",function(){
         var reg_id = $(this).attr("reg_id");
         var registro = $(this);
@@ -1005,7 +1017,7 @@
                         filas += "<td>"+val.reg_fechaCreacion+"</td>";
                         filas += "<td>";
                         filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='"+val.reg_id+"'></i>";
-                        filas += "<i class='fa fa-pencil-square-o fa-2x modificar btn btn-info' title='Modificar' reg_id='"+val.reg_id+"'></i>";
+                        filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='"+val.reg_id+"'></i>";
                         filas += "</td>";
                     filas += "</tr>";
                 });
