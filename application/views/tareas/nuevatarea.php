@@ -392,6 +392,10 @@
                         </div>
                         <div id="tab3" class="tab-pane">
                             <div style="text-align:right">
+                                
+                                 <!--<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal4"><i class="fa fa-folder-o carpeta"></i></button>-->
+                                <!--<button type="button" class="btn btn-default" id="nuevoregistro" data-toggle="modal" data-target="#myModal"><i class="fa fa-file-archive-o carpeta"></i></button>-->
+                                
                                 <button type="button" id="nuevoregistro" class="btn btn-success" data-toggle="modal" data-target="#myModal">Nuevo registro</button>
                             </div>
                             <table class="table table-bordered table-hover">
@@ -777,4 +781,58 @@
 
         })
     });
+    
+// -----------------------------------------------------------------------------
+//                          Guardar Registro
+// -----------------------------------------------------------------------------
+    $('#guardarregistro2').click(function() {
+        //Capturamos el archivo
+        var file_data = $('#archivo').prop('files')[0];
+        //Creamos formularios archivo
+        var form_data = new FormData();
+        //Agremamos Datos a enviar (Archivo)
+        form_data.append('archivo', file_data);
+        //Agregamos Datos a enviar
+        form_data.append('pla_id', $('#pla_id').val());
+        form_data.append('regCar_id', $('#carpeta').val());
+        form_data.append('reg_version', $('#version').val());
+        form_data.append('reg_descripcion', $('#reg_descripcion').val());
+        $.ajax({
+            url: '<?php echo base_url("index.php/tareas/guardarregistrotarea") ?>',
+            dataType: 'text', // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(result) {
+                
+                $("#myModal15").modal("toggle");
+                result = jQuery.parseJSON(result);
+                var idcarpeta = $('#carpeta').val()
+                $('#collapse_'+idcarpeta+'r').find('table tbody *').remove();
+                var filas = "";
+                $.each(result,function(key,val){
+                    filas += "<tr>";
+                        filas += "<td>"+val.reg_archivo+"</td>";
+                        filas += "<td>"+val.reg_descripcion+"</td>";
+                        filas += "<td>"+val.reg_version+"</td>";
+                        filas += "<td></td>";
+                        filas += "<td>"+val.reg_tamano+"</td>";
+                        filas += "<td>"+val.reg_fechaCreacion+"</td>";
+                        filas += "<td>";
+                        filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='"+val.reg_id+"'></i>";
+                        filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='"+val.reg_id+"'></i>";
+                        filas += "</td>";
+                    filas += "</tr>";
+                });
+                $('#collapse_'+idcarpeta+'r').find('table tbody').append(filas)
+                $('#carpeta').val('');
+                $('#version').val('');
+                $('#reg_descripcion').val('');
+                $('#archivo').val('');
+                alerta('verde', 'Registro guardado con exito.');
+            }
+        });
+    })
 </script>    

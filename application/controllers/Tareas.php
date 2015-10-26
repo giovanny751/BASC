@@ -49,6 +49,46 @@ class Tareas extends My_Controller {
             $this->layout->view("permisos");
         }
     }
+    
+    function guardarregistrotarea(){
+        try {
+            $post = $this->input->post();
+            $this->load->model('Registro_model');
+            $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
+            $post["reg_tamano"] = $tamano;
+            $fecha = new DateTime();
+            $post["reg_fechaCreacion"] = $fecha->format('Y-m-d H:i:s');
+
+            //Creamos carpeta con el ID del registro
+            if (isset($_FILES['archivo']['name']))
+                if (!empty($_FILES['archivo']['name']))
+                    $post['reg_ruta'] = basename($_FILES['archivo']['name']);
+
+            $pla_id = $post['pla_id'];
+            $targetPath = "./uploads/tareas/";
+
+            //De la carpeta idRegistro, creamos carpeta con el id del empleado
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+            $targetPath = "./uploads/tareas/". $pla_id;
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+
+            $post['reg_ruta']=$target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            $post['reg_archivo']= basename($_FILES['archivo']['name']);
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
+                
+            }
+            $this->Registro_model->guardar_registro($post);
+            $data = $this->Registro_model->registroxcarpeta($post['regCar_id']);
+            $this->output->set_content_type('application/json')->set_output(json_encode($data));
+        } catch (exception $e) {
+            
+        }
+    
+    }
 
     function listadoavance() {
 
