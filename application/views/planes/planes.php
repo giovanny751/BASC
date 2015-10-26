@@ -1092,7 +1092,7 @@
 
                     alerta('verde', 'Eliminado con exito')
                 }).fail(function() {
-//            alerta('rojo', 'Error al Eliminar')
+            alerta('rojo', 'Error, por favor comunicarse con el administrador del sistema');
         })
     });
     $('body').delegate('.modificar', 'click', function() {
