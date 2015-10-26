@@ -154,14 +154,13 @@ class Planes extends My_Controller {
             if (!empty($this->input->post('pla_id'))) {
                 $carpeta = $this->Registrocarpeta_model->detailxplan($this->input->post('pla_id'));
                 $this->data['carpetas'] = $this->Registrocarpeta_model->detailxplancarpetas($this->input->post('pla_id'));
-
                 $d = array();
                 foreach ($carpeta as $c) {
                     $d[$c->regCar_id][$c->regCar_nombre][] = array(
                         $c->reg_archivo, 
                         $c->reg_descripcion, 
                         $c->reg_version, 
-                        1, 
+                        "", 
                         $c->reg_tamano, 
                         $c->reg_fechaCreacion,
                         $c->reg_id
@@ -185,6 +184,7 @@ class Planes extends My_Controller {
                 $this->data["actividades"] = $i;
                 $this->data['tipo'] = $this->Tipo_model->detail();
                 $this->data['tareas'] = $this->Planes_model->tareaxplan($this->input->post('pla_id'));
+                $this->data['tareasinactivas'] = $this->Planes_model->tareaxplaninactivas($this->input->post('pla_id'));
 //                echo "<pre>";
 //                var_dump($this->data["actividades"]);die;
             }

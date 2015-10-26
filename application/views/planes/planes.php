@@ -234,6 +234,18 @@
                                 <th>Responsables</th>
                                 </thead>
                                 <tbody >
+                                    <?php foreach($tareasinactivas as $ti): ?>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td><?php echo $ti->tip_tipo ?></td>
+                                        <td><?php echo $ti->tar_nombre ?></td>
+                                        <td><?php echo $ti->tar_fechaInicio ?></td>
+                                        <td><?php echo $ti->tar_fechaFinalizacion ?></td>
+                                        <td><?php echo $ti->diferencia ?>&nbsp;Días</td>
+                                        <td><?php echo $ti->nombre ?></td>
+                                    </tr>
+                                    <?php endforeach;?>
                                 </tbody>
                             </table>
                         </div>
@@ -392,7 +404,7 @@
                                                                                     <td><?php echo $campocar[5] ?></td>
                                                                                     <td>
                                                                                         <i class="fa fa-times fa-2x eliminarregistro btn btn-danger" title="Eliminar" reg_id="<?php echo $campocar[6] ?>"></i>
-                                                                                        <i class="fa fa-pencil-square-o fa-2x modificarregistro btn btn-info" title="Modificar" reg_id="<?php echo $campocar[6] ?>" ></i>
+                                                                                        <i class="fa fa-pencil-square-o fa-2x modificarregistro btn btn-info" title="Modificar" reg_id="<?php echo $campocar[6] ?>" data-target="#myModal15" data-toggle="modal"></i>
                                                                                     </td>
                                                                                 </tr>   
                                                                             <?php endforeach; ?>
@@ -726,13 +738,30 @@
 </div>
 <script>
     
+    $('body').delegate("#nuevoregistro,.modificarregistro","click",function(){
+        $('#carpeta').val("");
+        $('#version').val("");
+        $('#reg_descripcion').val("");
+        $("#archivoadescargar").remove();
+    });
+    
     $('body').delegate('.modificarregistro','click',function(){
-        var registro = $(this).attr('reg_id');
         $.post(
                 "<?php echo base_url("index.php/planes/modificarregistro") ?>",
-                {registro:registro}
+                {registro:$(this).attr('reg_id')}
                 ).done(function(msg){
-                    
+                    $('#carpeta').val(msg.regCar_id);
+                    $('#version').val(msg.reg_version);
+                    $('#reg_descripcion').val(msg.reg_descripcion);
+                    var fila = "<div class='row' id='archivoadescargar' >\n\
+                                    <label style='color:black' class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>\n\
+                                        ARCHIVO\n\
+                                    </label>\n\
+                                    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>\n\
+                                        <a target='_blank' href='"+"<?php echo base_url()?>"+msg.reg_ruta+"'>"+msg.reg_archivo+"</a>\n\
+                                    </div>\n\
+                                </div>"
+                    $('#frmagregarregistro').append(fila);            
                 }).fail(function(msg){
                     
                 })
@@ -1017,7 +1046,7 @@
                         filas += "<td>"+val.reg_fechaCreacion+"</td>";
                         filas += "<td>";
                         filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='"+val.reg_id+"'></i>";
-                        filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='"+val.reg_id+"'></i>";
+                        filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='"+val.reg_id+"'  data-target='#myModal15' data-toggle='modal'></i>";
                         filas += "</td>";
                     filas += "</tr>";
                 });
