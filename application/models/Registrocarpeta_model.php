@@ -13,7 +13,22 @@ class Registrocarpeta_model extends CI_Model {
     }
     function detailxplan($pla_id){
         
-        $this->db->where("pla_id",$pla_id);
+        $this->db->where("registro_carpeta.pla_id",$pla_id);
+        $this->db->select("registro_carpeta.regCar_id");
+        $this->db->select("registro_carpeta.regCar_nombre");
+        $this->db->select("registro.reg_version");
+        $this->db->select("registro.reg_descripcion");
+        $this->db->select("registro.reg_fechaCreacion");
+        $this->db->select("registro.reg_id");
+        $this->db->select("registro.reg_archivo");
+        $this->db->select("registro.reg_tamano");
+        $this->db->join("registro","registro.regCar_id = registro_carpeta.regCar_id","LEFT");
+        $carpeta = $this->db->get("registro_carpeta");
+        return $carpeta->result();
+    }
+    function detailxplancarpetas($pla_id){
+        
+        $this->db->where("registro_carpeta.pla_id",$pla_id);
         $carpeta = $this->db->get("registro_carpeta");
         return $carpeta->result();
     }

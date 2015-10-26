@@ -62,6 +62,18 @@ class Registro_model extends CI_Model {
     function guardar_registro($post){
         $this->db->insert("registro",$post);
     }
+    function registroxcarpeta($carpeta){
+         $this->db->where("regCar_id",$carpeta);
+//         $this->db->join("empleado","empleado.emp_id = registro.emp_id");
+        $registro = $this->db->get("registro");
+        return $registro->result();
+    }
+    function eliminarregistro($id){
+        
+        $this->db->where("reg_id",$id);
+        $this->db->delete("registro");
+    }
+    
     function eliminar_actividad_hijo($post){
         $this->db->where("actHij_id",$post['actHij_id']);
         $this->db->delete("actividad_hijo");
@@ -71,6 +83,7 @@ class Registro_model extends CI_Model {
         $datos=$this->db->get("actividad_hijo");
         return $datos->result();
     }
+    
 
 }
 

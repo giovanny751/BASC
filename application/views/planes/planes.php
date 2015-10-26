@@ -361,10 +361,10 @@
                                                 foreach ($carpeta as $idcar => $nomcar):
                                                     foreach ($nomcar as $nombrecar => $numcar):
                                                         ?>
-                                                        <div class="panel panel-default">
+                                                        <div class="panel panel-default" id="<?php echo $idcar ?>">
                                                             <div class="panel-heading">
                                                                 <h4 class="panel-title">
-                                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false"> 
+                                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false" id=""> 
                                                                         <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
                                                                     </a>
                                                                 </h4>
@@ -391,8 +391,8 @@
                                                                                     <td><?php echo $campocar[4] ?></td>
                                                                                     <td><?php echo $campocar[5] ?></td>
                                                                                     <td>
-                                                                                        <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" usu_id=""></i>
-                                                                                        <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" usu_id="" ></i>
+                                                                                        <i class="fa fa-times fa-2x eliminarregistro btn btn-danger" title="Eliminar" reg_id="<?php echo $campocar[6] ?>"></i>
+                                                                                        <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" reg_id="<?php echo $campocar[6] ?>" ></i>
                                                                                     </td>
                                                                                 </tr>   
                                                                             <?php endforeach; ?>
@@ -474,7 +474,7 @@
                                         <select id="carpeta" name="carpeta" class="form-control ">
                                             <option value="">::Seleccionar::</option>
                                             <?php foreach ($carpetas as $carp): ?>
-                                                <option value="<?php echo $carp->regCar_id ?>"><?php echo $carp->regCar_descripcion ?></option>
+                                                <option value="<?php echo $carp->regCar_id ?>"><?php echo $carp->regCar_nombre ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -725,6 +725,19 @@
     <?php endif; ?>
 </div>
 <script>
+    
+    $('body').delegate(".eliminarregistro","click",function(){
+        var reg_id = $(this).attr("reg_id");
+        var registro = $(this);
+       $.post(
+               "<?php echo base_url("index.php/planes/eliminarregistroplan") ?>",
+                {reg_id : reg_id}
+                ).done(function(msg){
+                    registro.parents('tr').remove();
+                }).fail(function(msg){
+                    
+                }) 
+    });
 
     $('body').delegate('.accordion-toggle', "click", function () {
 
@@ -751,6 +764,7 @@
                                             <th>Responsable</th>\n\
                                             <th>Tamaño</th>\n\
                                             <th>Fecha</th>\n\
+                                            <th>Acción</th>\n\
                                         </thead>\n\
                                         <tbody>\n\
                                             <tr>\n\
@@ -782,9 +796,6 @@
     $('body').delegate(".editarhistorial", "click", function() {
         $('#internotarea').val($(this).attr('tar_id'));
     });
-    jQuery(document).ready(function() {
-        TableAjax.init();
-    });
     $('#guardar').click(function() {
         $.post(
                 "<?php echo base_url("index.php/planes/guardaractividadhijo") ?>",
@@ -814,86 +825,7 @@
             alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
         });
     });
-    var TableAjax = function() {
 
-        var initPickers = function() {
-            //init date pickers
-            $('.date-picker').datepicker({
-                rtl: Metronic.isRTL(),
-                autoclose: true
-            });
-        }
-
-        var handleRecords = function() {
-
-            var grid = new Datatable();
-            grid.init({
-                src: $("#datatable_ajax2"),
-                onSuccess: function(grid) {
-                    // execute some code after table records loaded
-                },
-                onError: function(grid) {
-                    // execute some code on network or other general error  
-                },
-                onDataLoad: function(grid) {
-                    // execute some code on ajax data load
-                },
-                loadingMessage: 'Cargando...',
-                dataTable: {
-                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-                    "lengthMenu": [
-                        [10, 20, 50, 100, 150, -1],
-                        [10, 20, 50, 100, 150, "All"] // change per page values here
-                    ],
-                    "pageLength": 10, // default record count per page
-                    "ajax": {
-                        "url": "<?php echo base_url("index.php/tareas/listadotareasinactivasxplanfiltro") ?>", // ajax source
-                    },
-                    "order": [
-                        [1, "asc"]
-                    ]// set first column as a default sort by asc
-                }
-            });
-            // handle group actionsubmit button click
-            grid.getTableWrapper().on('click', '.table-group-action-submit', function(e) {
-                e.preventDefault();
-                grid.setAjaxParam("xyz", "1");
-                var action = $(".table-group-action-input", grid.getTableWrapper());
-                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
-                    grid.setAjaxParam("xyz", "group_action");
-                    grid.setAjaxParam("avaTar_fecha", action.val());
-                    grid.setAjaxParam("usu_id", grid.getSelectedRows());
-                    grid.getDataTable().ajax.reload();
-                    grid.clearAjaxParams();
-                } else if (action.val() == "") {
-                    Metronic.alert({
-                        type: 'danger',
-                        icon: 'warning',
-                        message: 'Please select an action',
-                        container: grid.getTableWrapper(),
-                        place: 'prepend'
-                    });
-                } else if (grid.getSelectedRowsCount() === 0) {
-                    Metronic.alert({
-                        type: 'danger',
-                        icon: 'warning',
-                        message: 'No record selected',
-                        container: grid.getTableWrapper(),
-                        place: 'prepend'
-                    });
-                }
-            });
-        }
-        return {
-            //main function to initiate the module
-            init: function() {
-
-                initPickers();
-                handleRecords();
-            }
-
-        };
-    }();
     $('#gavance').click(function() {
 
         $.post(
@@ -957,12 +889,12 @@
         var acordeon = '<div class="panel panel-default" id="' + msg.uno + '">\n\
                                             <div class="panel-heading">\n\
                                                 <h4 class="panel-title">\n\
-                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.dos + destino + '" aria-expanded="false">\n\
-                                                        ' + msg.dos + '\n\
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
+                                                        <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + '\n\
                                                     </a>\n\
                                                 </h4>\n\
                                             </div>\n\
-                                            <div id="collapse_' + msg.dos + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
+                                            <div id="collapse_' + msg.uno + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
                                                 <div class="panel-body">\n\
                                                     ' + contenido + '\n\
                                                 </div>\n\
@@ -1057,12 +989,31 @@
             data: form_data,
             type: 'post',
             success: function(result) {
+                
+                $("#myModal15").modal("toggle");
+                result = jQuery.parseJSON(result);
+                var idcarpeta = $('#carpeta').val()
+                $('#collapse_'+idcarpeta+'r').find('table tbody *').remove();
+                var filas = "";
+                $.each(result,function(key,val){
+                    filas += "<tr>";
+                        filas += "<td>"+val.reg_archivo+"</td>";
+                        filas += "<td>"+val.reg_descripcion+"</td>";
+                        filas += "<td>"+val.reg_version+"</td>";
+                        filas += "<td></td>";
+                        filas += "<td>"+val.reg_tamano+"</td>";
+                        filas += "<td>"+val.reg_fechaCreacion+"</td>";
+                        filas += "<td>";
+                        filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='"+val.reg_id+"'></i>";
+                        filas += "<i class='fa fa-pencil-square-o fa-2x modificar btn btn-info' title='Modificar' reg_id='"+val.reg_id+"'></i>";
+                        filas += "</td>";
+                    filas += "</tr>";
+                });
+                $('#collapse_'+idcarpeta+'r').find('table tbody').append(filas)
                 $('#carpeta').val('');
                 $('#version').val('');
                 $('#reg_descripcion').val('');
                 $('#archivo').val('');
-                $("#myModal15").modal("toggle")
-
                 alerta('verde', 'Registro guardado con exito.');
             }
         });

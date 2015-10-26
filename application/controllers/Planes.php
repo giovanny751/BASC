@@ -22,9 +22,8 @@ class Planes extends My_Controller {
         try {
             $post = $this->input->post();
             $this->load->model('Registro_model');
-
-//            $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
-//            $post["empReg_tamano"] = $tamano;
+            $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
+            $post["reg_tamano"] = $tamano;
             $fecha = new DateTime();
             $post["reg_fechaCreacion"] = $fecha->format('Y-m-d H:i:s');
 
@@ -46,13 +45,22 @@ class Planes extends My_Controller {
             }
 
             $post['reg_ruta']=$target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            $post['reg_archivo']= basename($_FILES['archivo']['name']);
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
             $this->Registro_model->guardar_registro($post);
+            $data = $this->Registro_model->registroxcarpeta($post['regCar_id']);
+            $this->output->set_content_type('application/json')->set_output(json_encode($data));
         } catch (exception $e) {
             
         }
+    }
+    
+    function eliminarregistroplan(){
+        
+        $this->load->model('Registro_model');
+        $this->Registro_model->eliminarregistro($this->input->post("reg_id"));
     }
 
     function listadotareas() {
@@ -145,10 +153,19 @@ class Planes extends My_Controller {
             $this->data['plan'] = array();
             if (!empty($this->input->post('pla_id'))) {
                 $carpeta = $this->Registrocarpeta_model->detailxplan($this->input->post('pla_id'));
-                $this->data['carpetas'] = $carpeta;
+                $this->data['carpetas'] = $this->Registrocarpeta_model->detailxplancarpetas($this->input->post('pla_id'));
+
                 $d = array();
                 foreach ($carpeta as $c) {
-                    $d[$c->regCar_id][$c->regCar_nombre][] = array(1, 1, 1, 1, 5, 5);
+                    $d[$c->regCar_id][$c->regCar_nombre][] = array(
+                        $c->reg_archivo, 
+                        $c->reg_descripcion, 
+                        $c->reg_version, 
+                        1, 
+                        $c->reg_tamano, 
+                        $c->reg_fechaCreacion,
+                        $c->reg_id
+                            );
                 }
                 $this->data['carpeta'] = $d;
                 $this->data["actividadpadre"] = $this->Actividad_padre__model->detail($this->input->post('pla_id'));
