@@ -18,7 +18,7 @@ class Tareas extends My_Controller {
 
     function nuevatarea() {
 
-        if ($this->consultaacceso($this->data["usu_id"])) {
+        if ($this->consultaacceso($this->data["usu_id"])) { 
             $this->load->model('Estados_model');
             $this->load->model('Tarea_model');
             $this->load->model('Cargo_model');

@@ -409,7 +409,7 @@
                                 <th>Acción</th>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr> 
                                         <td colspan="7"></td>
                                     </tr>
                                 </tbody>
