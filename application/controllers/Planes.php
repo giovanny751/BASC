@@ -156,7 +156,7 @@ class Planes extends My_Controller {
                 $this->data['carpetas'] = $this->Registrocarpeta_model->detailxplancarpetas($this->input->post('pla_id'));
                 $d = array();
                 foreach ($carpeta as $c) {
-                    $d[$c->regCar_id][$c->regCar_nombre][] = array(
+                    $d[$c->regCar_id][$c->regCar_descripcion][] = array(
                         $c->reg_archivo, 
                         $c->reg_descripcion, 
                         $c->reg_version, 
@@ -315,7 +315,7 @@ class Planes extends My_Controller {
     function eliminarplan() {
         try {
             $this->load->model("Planes_model");
-            $this->Planes_model->delete($this->input->post('id'));
+            $this->Planes_model->delete($this->input->post('id'));  
         } catch (exception $e) {
             
         }
@@ -394,6 +394,56 @@ class Planes extends My_Controller {
         else:
             $this->layout->view("permisos");
         endif;
+    }
+    function cargarplanescarpeta(){
+        
+        $this->load->model('Registrocarpeta_model');
+        $data = $this->Registrocarpeta_model->cargarcarpetas(
+                    $this->input->post("carpeta")
+                );
+        
+        $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
+    }
+    function eliminarcarpeta(){
+        
+        $this->load->model('Registrocarpeta_model');
+        $data = $this->Registrocarpeta_model->eliminarcarpeta($this->input->post("regCar_id")); 
+        
+    }
+    function modificarpeta(){
+        
+        $this->load->model('Registrocarpeta_model');
+        $this->Registrocarpeta_model->modificarpeta(
+                $this->input->post("nombrecarpeta"),
+                $this->input->post("descripcioncarpeta"),
+                $this->input->post("plaCar_id")
+                ); 
+        $data = $this->Registrocarpeta_model->cargarcarpetas($this->input->post("plaCar_id"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
+        
+    }
+    function eliminaractividad(){
+        
+        $this->load->model('Actividadpadre_model');
+        $data = $this->Actividadpadre_model->eliminaractividad($this->input->post("actPad_id")); 
+        
+    }
+    function datosactividad(){
+        
+        $this->load->model('Actividadpadre_model');
+        $data = $this->Actividadpadre_model->cargardatos($this->input->post("carpeta"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
+    }
+    function modificaractividad(){
+        
+        $this->load->model('Actividadpadre_model');
+         $this->Actividadpadre_model->modificardatos(
+                $this->input->post("actividadpadre"),
+                $this->input->post("idactividad"),
+                $this->input->post("nombreactividad")
+                );
+        $data = $this->Actividadpadre_model->cargardatos($this->input->post("actividadpadre"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
 }
 

@@ -1,7 +1,7 @@
 <!-- Colorear Menu -->
 <script type="text/javascript">
-        $(".menPLAN_DE_TRABAJO").addClass("active open");
-        $(".subMenLISTADO_PLANES").addClass("active");
+    $(".menPLAN_DE_TRABAJO").addClass("active open");
+    $(".subMenLISTADO_PLANES").addClass("active");
 </script>
 <div class="page-bar" style="background-color: transparent !important;">
     <ul class="page-breadcrumb">
@@ -142,8 +142,8 @@
                 body += "<td>" + val.pla_presupuesto + "</td>";
                 body += "<td>" + val.pla_descripcion + "</td>";
                 body += "<td></td>";
-                body += '<td><i class="fa fa-times eliminar btn-danger" title="Eliminar" pla_id="' + val.pla_id + '"></i>\n\
-            <i class="fa fa-pencil-square-o modificar btn-info" title="Modificar"  pla_id="' + val.pla_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
+                body += '<td><i class="fa fa-times eliminar btn btn-default" title="Eliminar" pla_id="' + val.pla_id + '"></i>\n\
+            <i class="fa fa-pencil-square-o modificar btn  btn-default" title="Modificar"  pla_id="' + val.pla_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
                 body += "</tr>";
             })
             $('#cargaplanes').append(body)
@@ -154,16 +154,18 @@
                 })
     });
     $('body').delegate('.eliminar', 'click', function () {
-        $.post("<?php echo base_url("index.php/planes/eliminarplan") ?>"
-                , {
-                    id: $(this).attr('pla_id')
-                }
-        ).done(function (msg) {
-            $(this).parents('tr').remove();
-            alerta("verde", "Eliminado Correctamente");
-        }).fail(function (msg) {
-            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-        })
-
+        var objeto = $(this);
+        if (confirm("Esta seguro de eliminar el plan")) {
+            $.post("<?php echo base_url("index.php/planes/eliminarplan") ?>"
+                    , {
+                        id: $(this).attr('pla_id')
+                    }
+            ).done(function (msg) {
+                objeto.parents('tr').remove();
+                alerta("verde", "Eliminado Correctamente");
+            }).fail(function (msg) {
+                alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+            })
+        }
     });
 </script>

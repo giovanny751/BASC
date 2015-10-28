@@ -37,6 +37,12 @@ class Roles_model extends CI_Model {
         $this->db->insert('roles');
         return $this->db->insert_id();
     } 
+    
+    function modificarrol($id){
+        $this->db->where("rol_id",$id);
+        $this->db->set("rol_fechaModificacion",date('Y-m-d H:i:s'));
+        $this->db->update('roles');
+    }
     function insertapermisos($insert){
 //        var_dump($insert);die;
         $this->db->insert_batch('permisos_rol',$insert);

@@ -37,5 +37,20 @@ class Actividadpadre_model extends CI_Model {
         $data = $this->db->get("actividad_padre");
         return $data->result();
     }
+    function cargardatos($actividad){
+        $this->db->where("actPad_id",$actividad);
+        $data = $this->db->get("actividad_padre");
+        return $data->result();
+    }
+    function eliminaractividad($actividad){
+        $this->db->where("actPad_id",$actividad);
+        $data = $this->db->delete("actividad_padre");
+    }
+    function modificardatos($actividad,$id,$nombre){
+        $this->db->where("actPad_id",$actividad);
+        $this->db->set("actPad_nombre",$id);
+        $this->db->set("actPad_codigo",$nombre);
+        $this->db->update("actividad_padre");
+    }
 }
 ?>

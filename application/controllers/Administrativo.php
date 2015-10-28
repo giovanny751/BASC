@@ -96,6 +96,16 @@ class Administrativo extends My_Controller {
                 $this->input->post("descripcioncarpeta"),
                 $this->input->post("empCar_id")
                 );
+        $carpeta = $this->Empleadocarpeta_model->cargarcarpeta($this->input->post("empCar_id"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($carpeta[0]));
+    }
+    function eliminarcarpeta(){
+        
+        $this->load->model('Empleadocarpeta_model');
+        $carpeta = $this->Empleadocarpeta_model->eliminarcarpeta(
+                $this->input->post("empCar_id")
+                );
+        
     }
 
     function searchxid() {

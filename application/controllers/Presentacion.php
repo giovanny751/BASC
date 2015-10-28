@@ -227,7 +227,6 @@ class Presentacion extends My_Controller {
 
     function guardarroles() {
         $nombre = $this->input->post('nombre');
-
         if (!empty($nombre)) {
             $permisorol = $this->input->post('permisorol');
             $id = $this->Roles_model->guardarrol($nombre);
@@ -245,6 +244,7 @@ class Presentacion extends My_Controller {
         } else {
             $id = $this->input->post('rol');
             $this->Roles_model->eliminpermisosrol($id);
+            $this->Roles_model->modificarrol($id);
         }
         $permisorol = $this->input->post('permisorol');
         $insert = array();

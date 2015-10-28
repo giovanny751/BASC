@@ -32,8 +32,7 @@ class Planes_model extends CI_Model {
     function delete($id){
         
         $this->db->where('pla_id',$id);
-        $this->db->set('est_id',3);
-        $this->db->update('planes');
+        $this->db->delete('planes');   
     }
     function planxid($pla_id){
         

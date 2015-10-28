@@ -692,7 +692,7 @@
             alerta("Error", "Error por favor comunicarse con el administrador");
         });
     }
-    primer();
+//    primer();
 
     $('body').delegate('.avances_', 'click', function () {
         var avaTar_id = $(this).attr('avaTar_id');

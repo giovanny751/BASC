@@ -148,10 +148,6 @@
                     Tareas asociadas al plan
                 </div>
                 <div class="tools">
-                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
-                    <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
-                    <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
-                    <a class="remove" href="javascript:;" data-original-title="" title=""> </a>
                 </div>
             </div>
             <div class="portlet-body">
@@ -275,8 +271,8 @@
                                         <i class="fa fa-gift"></i>Actividades
                                     </div>
                                     <div class="tools">
-                                        <button type="button" class="btn btn-default crear_padre" data-toggle="modal" data-target="#myModal"><i class="fa fa-clipboard carpeta" title='ACTIVIDAD PADRE'></i></button>
-                                        <button type="button" class="btn btn-default nuevo_hijo" data-toggle="modal" data-target="#myModal8"><i class="fa fa-file-o carpeta" title='ACTIVIDAD HIJO'></i></button>
+                                        <i class="fa fa-clipboard carpeta btn btn-default crear_padre" data-toggle="modal" data-target="#myModal" title='ACTIVIDAD PADRE'></i>
+                                        <i class="fa fa-file-o carpeta btn btn-default nuevo_hijo" data-toggle="modal" data-target="#myModal8" title='ACTIVIDAD HIJO'></i>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -291,20 +287,13 @@
                                                         <h4 class="panel-title">
                                                             <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id . 'c'; ?>" aria-expanded="false"> 
                                                                 <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombre ?>
-                                                            </a>
+                                                            </a><i class="fa fa-edit editaractividad" car_id="<?php echo $id ?>"></i>
                                                         </h4>
                                                     </div>
                                                     <div id="collapse_<?php echo $id . 'c'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                                         <div class="panel-body">
                                                             <table class="table table-hover table-bordered">
                                                                 <thead>
-                                                                    <tr>
-                                                                        <th colspan="6">
-                                                                            <span>
-                                                                                <button class="btn btn-default editar_padre" actPad_id="<?php echo $id ?>" data-target="#myModal" data-toggle="modal" type="button">EDITAR ACTIVIDAD PADRE</button>
-                                                                            </span>
-                                                                        </th>
-                                                                    </tr>
                                                                     <tr>
                                                                         <th>Nombre</th>
                                                                         <th>Fecha inicio</th>
@@ -359,8 +348,8 @@
                                         
                                     </div>
                                     <div class="tools">
-                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal4"><i class="fa fa-folder-o carpeta"></i></button>
-                                        <button type="button" class="btn btn-default" id="nuevoregistro" data-toggle="modal" data-target="#myModal15"><i class="fa fa-file-archive-o carpeta"></i></button>
+                                        <i class=" btn btn-default fa fa-folder-o carpeta" data-toggle="modal" data-target="#myModal4" ></i>
+                                        <i class="fa fa-file-archive-o  btn btn-default"  id="nuevoregistro" data-toggle="modal" data-target="#myModal15"></i>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -378,7 +367,7 @@
                                                                 <h4 class="panel-title">
                                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false" id=""> 
                                                                         <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
-                                                                    </a>
+                                                                    </a><i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
                                                                 </h4>
                                                             </div>
                                                             <div id="collapse_<?php echo $idcar . 'r'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -461,7 +450,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer" id="editaractividadpadre">
                             <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
                             <button type="button" class="btn btn-primary" id="guardaractividadpadre">Guardar</button>
                         </div>
@@ -552,7 +541,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer" id="opcionescarpeta">
                             <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
                             <button type="button" class="btn btn-primary" id="guardarcarpeta">Guardar</button>
                         </div>
@@ -737,6 +726,104 @@
     <?php endif; ?>
 </div>
 <script>
+    $('body').delegate(".carpeta","click",function(){
+            $('#eliminaractividad').remove();
+            $('#actPad_id').remove();
+            $('#nombrecarpeta').val("");
+            $('#descripcioncarpeta').val("");
+            $('.modificarcarpeta').replaceWith('<button class="btn btn-default" data-target="#myModal" data-toggle="modal" type="button">Carpeta</button>');
+            
+        });
+    
+    $('body').delegate("#eliminarcarpeta","click",function(){
+                var regCar_id = $(this).attr("regCar_id");
+                $.post("<?php echo base_url("index.php/planes/eliminarcarpeta") ?>",
+                        {regCar_id : regCar_id}
+                ).done(function(msg){
+                    $('a[href="#collapse_'+regCar_id+'r"]').parents('.panel-default').remove();
+                    $('#myModal4').modal("toggle");
+                    alerta("verde","Datos eliminados los datos correctamente");
+                }).fail(function(msg){
+                    alerta("rojo","Error, por favor comunicarse con el administrador del sistema");
+                });
+        });
+    $('body').delegate("#eliminaractividad","click",function(){
+                var actPad_id = $(this).attr("actPad_id");
+                $.post("<?php echo base_url("index.php/planes/eliminaractividad") ?>",
+                        {actPad_id : actPad_id}
+                ).done(function(msg){
+                    $('a[href="#collapse_'+actPad_id+'c"]').parents('.panel-default').remove();
+                    $('#myModal').modal("hide");
+                    alerta("verde","Datos eliminados los datos correctamente");
+                }).fail(function(msg){
+                    alerta("rojo","Error, por favor comunicarse con el administrador del sistema");
+                });
+        });
+        
+    $('body').delegate(".editarcarpeta","click",function(){
+            $.post(
+                "<?php echo base_url("index.php/planes/cargarplanescarpeta") ?>",
+                    {carpeta : $(this).attr("car_id")}  
+                )
+                .done(function(msg){
+                    if($('#plaCar_id').length == 0)
+                    $('#frmcarpetaregistro').append("<input type='hidden' value='"+msg.regCar_id+"' name='plaCar_id' id='plaCar_id' >");
+                    if($('#eliminarcarpeta').length == 0)
+                    $('#opcionescarpeta').append("<button type='button' id='eliminarcarpeta' class='btn btn-danger' regCar_id='"+msg.regCar_id+"'>Eliminar</button>");
+                    $('#nombrecarpeta').val(msg.regCar_nombre);
+                    $('#descripcioncarpeta').val(msg.regCar_descripcion);
+                    $('#guardarcarpeta').replaceWith("<button type='button' empCar_id='"+msg.regCar_id+"' class='btn btn-primary modificarcarpeta'>Actualizar</button>");
+                    $('#myModal4').modal("show");
+                })
+                .fail(function(msg){
+                    alerta("rojo","Error,por favor comunicarse con el administrador del sistema");
+                });
+            
+        });
+        
+    $('body').delegate(".editaractividad","click",function(){
+            $.post(
+                "<?php echo base_url("index.php/planes/datosactividad") ?>",
+                    {carpeta : $(this).attr("car_id")}  
+                )
+                .done(function(msg){
+                    $('#actividadpadreid').remove();
+                    $('#formactividadpadre').append("<input type='hidden' value='"+msg.actPad_id+"' name='actividadpadre' id='actividadpadreid' >");
+                    $('#eliminaractividad').remove()
+                    $('#editaractividadpadre').append("<button type='button' id='eliminaractividad' class='btn btn-danger' actPad_id='"+msg.actPad_id+"'>Eliminar</button>");
+                    $('#idactividad').val(msg.actPad_nombre);
+                    $('#nombreactividad').val(msg.actPad_codigo);
+                    $('#guardaractividadpadre').replaceWith("<button type='button' empCar_id='"+msg.actPad_id+"' class='btn btn-primary modificaractividad'>Actualizar</button>");
+                    $('#myModal').modal("show");
+                })
+                .fail(function(msg){
+                    alerta("rojo","Error,por favor comunicarse con el administrador del sistema");
+                });
+        });
+        $('body').delegate(".modificaractividad","click",function(){
+            
+            $.post("<?php echo base_url("index.php/planes/modificaractividad") ?>",
+                        $('#formactividadpadre').serialize()
+                ).done(function(msg){
+                    $('a[href="#collapse_'+msg.actPad_id+'c"]').text(msg.actPad_nombre+" "+msg.actPad_codigo);
+                    $('#myModal').modal("toggle");
+                    alerta("verde","Se actualizaron los datos correctamente");
+                }).fail(function(msg){
+                    
+                });
+        });
+        $('body').delegate(".modificarcarpeta","click",function(){
+            
+            $.post("<?php echo base_url("index.php/planes/modificarpeta") ?>",
+                        $('#frmcarpetaregistro').serialize()
+                ).done(function(msg){
+                    $('a[href="#collapse_'+msg.regCar_id+'r"]').text(msg.regCar_descripcion);
+                    $('#myModal4').modal("toggle");
+                    alerta("verde","Se actualizaron los datos correctamente");
+                }).fail(function(msg){
+                    
+                });
+        });
     
     $('body').delegate("#nuevoregistro,.modificarregistro","click",function(){
         $('#carpeta').val("");
@@ -816,7 +903,7 @@
                                         </tbody>\n\
                                 </table>";
                 $('#carpeta').append(option);
-                agregarregistro('accordion5', msg, contenido, 'r');
+                agregarregistro('accordion5', msg, contenido, 'r','editarcarpeta');
                 $('.carbligatorio').val("");
                 $('#myModal4').modal("toggle")
                 alerta("verde", "Carpeta agregada con exito")
@@ -885,7 +972,7 @@
     $('#guardaractividadpadre').click(function() {
         numero = $('#accordion1').last('div').attr("id");
         if (obligatorio('acobligatorio')) {
-
+            
             $.post("<?php echo base_url("index.php/planes/guardaractividadpadre") ?>",
                     $('#formactividadpadre').serialize()
                     )
@@ -916,7 +1003,8 @@
                                                             </tr>\n\
                                                         </tbody>\n\
                                                     </table>';
-                        agregarregistro('accordion1', msg, contenido, 'c');
+                                                                        alert("esta cerca");
+                        agregarregistro('accordion1', msg, contenido, 'c','editaractividad');
                         $('#myModal').modal("toggle")
                         alerta("verde", "Actividad padre guardada con exito");
                     })
@@ -926,13 +1014,14 @@
         }
 
     });
-    function agregarregistro(tabla, msg, contenido, destino) {
+    function agregarregistro(tabla, msg, contenido, destino, clase) {
+        alert("paso por aca");
         var acordeon = '<div class="panel panel-default" id="' + msg.uno + '">\n\
                                             <div class="panel-heading">\n\
                                                 <h4 class="panel-title">\n\
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + '\n\
-                                                    </a>\n\
+                                                    </a><i class="fa fa-edit '+clase+'" car_id="'+msg.uno+'"></i>\n\
                                                 </h4>\n\
                                             </div>\n\
                                             <div id="collapse_' + msg.uno + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
@@ -1059,20 +1148,7 @@
             }
         });
     })
-    $('.editar_padre').click(function() {
-        var j = $(this).attr('actPad_id')
-        $('#actPad_id').val(j);
-        var url = '<?php echo base_url("index.php/tareas/consultar_actividad_padre") ?>';
-        $.post(url, {actPad_id: $(this).attr('actPad_id')})
-                .done(function(msg) {
-                    $('#idactividad').val(msg.actPad_nombre);
-                    $('#nombreactividad').val(msg.actPad_codigo);
-//                    alerta('verde','Registro actualizado con exito.')
-                })
-                .fail(function() {
-                    alerta('rojo', 'Error al guardar');
-                })
-    })
+    
     $('.crear_padre').click(function() {
         $('#actPad_id').val('');
         $('#idactividad').val('');
@@ -1089,7 +1165,6 @@
         var url = '<?php echo base_url("index.php/tareas/eliminar_actividad_hijo") ?>';
         $.post(url, {actHij_id: $(this).attr('actHij_id')})
                 .done(function() {
-
                     alerta('verde', 'Eliminado con exito')
                 }).fail(function() {
             alerta('rojo', 'Error, por favor comunicarse con el administrador del sistema');
@@ -1116,10 +1191,9 @@
                     $('#actHij_id').val(msg.actHij_id)
                 })
                 .fail(function() {
-                    alerta('rojo', 'Error al consultar')
-                })
-
-    })
+                    alerta('rojo', 'Error, por favor comunicarse con el administrador del sistema')
+                });
+    });
     $('.nuevo_hijo').click(function() {
         $('#actHij_id').val('')
     })

@@ -58,8 +58,26 @@ class Registrocarpeta_model extends CI_Model {
         $this->db->insert("registro_carpeta",$data);
         return $this->db->insert_id();
     }
-
-
+    function cargarcarpetas($regCar_id){
+        
+        $this->db->where("regCar_id",$regCar_id);
+        $carpeta = $this->db->get("registro_carpeta");
+//        echo $this->db->last_query();die;
+        return $carpeta->result();
+    }
+    function eliminarcarpeta($regCar_id){
+        
+        $this->db->where("regCar_id",$regCar_id);
+        $this->db->delete("registro_carpeta");
+    }
+    function modificarpeta($nombre,$descripcion,$regCar_id){
+        
+        $this->db->where("regCar_id",$regCar_id);
+        $this->db->set("regCar_nombre",$nombre);
+        $this->db->set("regCar_descripcion",$descripcion);
+        $this->db->update("registro_carpeta");
+        
+    }
 }
 
 ?>

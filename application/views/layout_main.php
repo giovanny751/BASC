@@ -433,7 +433,8 @@ $('.portlet').find('label,h4').css('color','black');
 
 
     $('.fecha').datepicker({
-        format: "yyyy-mm-dd"
+        format: "yyyy-mm-dd",
+        autoclose: true
     });
 
     $(function () {

@@ -87,8 +87,7 @@ class Registro_model extends CI_Model {
         $datos=$this->db->get("actividad_hijo");
         return $datos->result();
     }
-    
-    
+
 
 }
 

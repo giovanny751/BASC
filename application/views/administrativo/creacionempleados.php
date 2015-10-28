@@ -445,7 +445,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer" id="opcionescarpeta">
                         <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
                         <button type="button" class="btn btn-primary" id="guardarcarpeta">Guardar</button>
                     </div>
@@ -526,17 +526,34 @@
                         $('#formcarpeta').serialize()
                 ).done(function(msg){
                     
+                    $('a[href="#collapse_'+msg.empCar_id+'"]').text(msg.empCar_nombre);
+                    $('#myModal').modal("toggle");
+                    alerta("verde","Se actualizaron los datos correctamente");
                 }).fail(function(msg){
                     
                 });
         });
 
         $('body').delegate(".agregarcarpeta","click",function(){
+            $('#eliminarcarpeta').remove();
             $('#empCar_id').remove();
             $('#nombrecarpeta').val("");
             $('#descripcioncarpeta').val("");
             $('.modificarcarpeta').replaceWith('<button class="btn btn-default" data-target="#myModal" data-toggle="modal" type="button">Carpeta</button>');
             
+        });
+
+        $('body').delegate("#eliminarcarpeta","click",function(){
+                var empCar_id = $(this).attr("empCar_id");
+                $.post("<?php echo base_url("index.php/administrativo/eliminarcarpeta") ?>",
+                        {empCar_id : empCar_id}
+                ).done(function(msg){
+                    $('a[href="#collapse_'+empCar_id+'"]').parents('.panel-default').remove();
+                    $('#myModal').modal("toggle");
+                    alerta("verde","Datos eliminados los datos correctamente");
+                }).fail(function(msg){
+                    alerta("verde","Error, por favor comunicarse con el administrador del sistema");
+                });
         });
 
         $('body').delegate(".editarcarpeta","click",function(){
@@ -545,7 +562,8 @@
                 {carpeta : $(this).attr("car_id")}
                 )
                 .done(function(msg){
-                    $('#formcarpeta').append("<input type='hidden' value='"+msg.empCar_id+"' name='empCar_id' id='empCar_id' >")
+                    $('#formcarpeta').append("<input type='hidden' value='"+msg.empCar_id+"' name='empCar_id' id='empCar_id' >");
+                    $('#opcionescarpeta').append("<button type='button' id='eliminarcarpeta' class='btn btn-danger' empCar_id='"+msg.empCar_id+"'>Eliminar</button>");
                     $('#nombrecarpeta').val(msg.empCar_nombre);
                     $('#descripcioncarpeta').val(msg.empCar_descripcion);
                     $('#guardarcarpeta').replaceWith("<button type='button' empCar_id='"+msg.empCar_id+"' class='btn btn-primary modificarcarpeta'>Actualizar</button>");
@@ -569,7 +587,11 @@
         });
 
         $("#agregarregistro").click(function () {
-            $('#agregarregistro').text("Guardar");
+            $('#empReg_id').val("");
+            $('#empReg_carpeta').val("");
+            $('#empReg_version').val("");
+            $('#empReg_descripcion').val("");
+            $('.archivo').remove();
             $('#empReg_id').val("");
         });
 

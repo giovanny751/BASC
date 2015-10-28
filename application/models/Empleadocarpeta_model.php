@@ -34,13 +34,16 @@ class Empleadocarpeta_model extends CI_Model {
         $carpeta = $this->db->get("empleado_carpeta");
         return $carpeta->result();
     }
-    function actualizacarpeta($empCar_id,$nombre,$descripcion){
+    function actualizacarpeta($nombre,$descripcion,$empCar_id){
         
-        $this->db->where("empCar_id",$car_id);
+        $this->db->where("empCar_id",$empCar_id);
         $this->db->set("empCar_nombre",$nombre);        
-        $this->db->set("empCar_descripcion",$descripcion);        
-        $carpeta = $this->db->update("empleado_carpeta");
-        
+        $this->db->set("empCar_descripcion",$descripcion);  
+        $this->db->update("empleado_carpeta");
+    }
+    function eliminarcarpeta($empCar_id){
+        $this->db->where("empCar_id",$empCar_id);
+        $this->db->delete("empleado_carpeta");
     }
 }
 
