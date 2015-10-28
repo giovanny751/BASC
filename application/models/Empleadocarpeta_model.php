@@ -32,7 +32,6 @@ class Empleadocarpeta_model extends CI_Model {
         
         $this->db->where("empCar_id",$car_id);
         $carpeta = $this->db->get("empleado_carpeta");
-        echo $this->db->last_query();die;
         return $carpeta->result();
     }
 

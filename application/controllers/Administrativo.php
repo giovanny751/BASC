@@ -76,9 +76,7 @@ class Administrativo extends My_Controller {
     
     function cargarempleadocarpeta(){
         $this->load->model('Empleadocarpeta_model');
-        $carpeta = $this->Empleadocarpeta_model->cargarcarpeta($this->input->post("car_id"));
-        echo "<pre>";
-        var_dump($carpeta);die;
+        $carpeta = $this->Empleadocarpeta_model->cargarcarpeta($this->input->post("carpeta"));
         $this->output->set_content_type('application/json')->set_output(json_encode($carpeta[0]));
     }
     
