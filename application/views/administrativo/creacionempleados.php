@@ -349,11 +349,10 @@
                                     ?>
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-
                                             <h4 class="panel-title">
                                                 <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id; ?>" aria-expanded="false"> 
-                                                    <i class="fa fa-folder-o carpeta"></i>     <?php echo $nom ?>
-                                                </a>
+                                                    &nbsp;<i class="fa fa-folder-o carpeta"></i>     <?php echo $nom ?>
+                                                </a><i class="fa fa-edit editarcarpeta" car_id="<?php echo $id ?>"></i>
                                             </h4>
                                         </div>
                                         <div id="collapse_<?php echo $id; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -521,6 +520,21 @@
     ?>
     <script>
 
+        $('body').delegate(".editarcarpeta","click",function(){
+            
+            $.post(
+                "<?php echo base_url("index.php/administrativo/cargarempleadocarpeta") ?>",
+                {carpeta : $(this).attr("car_id")}
+                )
+                .done(function(){
+                    
+                })
+                .fail(function(){
+                    
+                });
+            
+        });
+
         $('body').delegate('.accordion-toggle', "click", function () {
 
             if ($(this).attr('aria-expanded') == "true") {
@@ -574,7 +588,6 @@
             }).fail(function (msg) {
                 alerta("rojo", "Error, por favor comunicarse con el administrador del sistema")
             })
-        }
         });
 
         $('#cedula').change(function () {
@@ -646,7 +659,6 @@
         });
 
         $('#guardarcarpeta').click(function () {
-
             $.post("<?php echo base_url("index.php/administrativo/guardarcarpeta") ?>",
                     $("#formcarpeta").serialize()
                     ).done(function (msg) {

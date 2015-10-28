@@ -33,6 +33,26 @@ class Riesgo extends My_Controller {
             redirect('index.php/administrativo/empresa', 'location');
         }
     }
+    
+    function guardarriesgo(){
+        
+        $this->load->model('Riesgo_model');
+        $data = array(
+            "cat_id"=>$this->input->post("categoria"),
+            "col_id"=>$this->input->post("color"),
+            "rie_descripcion"=>$this->input->post("descripcion"),
+            "dim1_id"=>$this->input->post("dimensionuno"),
+            "dim2_id"=>$this->input->post("dimensiondos"),
+            "est_id"=>$this->input->post("estado"),
+            "rie_fecha"=>$this->input->post("fecha"),
+            "rie_observaciones"=>$this->input->post("observaciones"),
+            "rie_requisito"=>$this->input->post("requisito"),
+            "tip_id"=>$this->input->post("tipo"),
+            "rie_zona"=>$this->input->post("zona"),
+            "rie_fechaCreacion"=>date("Y-m-d H:i:s")
+        );
+        $this->Riesgo_model->guardarriesgo($data);
+    }
 
     function consultaestadoxcolor() {
 

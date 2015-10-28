@@ -73,7 +73,15 @@ class Administrativo extends My_Controller {
             $this->layout->view("permisos");
         endif;
     }
-
+    
+    function cargarempleadocarpeta(){
+        $this->load->model('Empleadocarpeta_model');
+        $carpeta = $this->Empleadocarpeta_model->cargarcarpeta($this->input->post("car_id"));
+        echo "<pre>";
+        var_dump($carpeta);die;
+        $this->output->set_content_type('application/json')->set_output(json_encode($carpeta[0]));
+    }
+    
     function eliminarregistro() {
         try {
             $this->load->model('Empleadoregistro_model');

@@ -13,9 +13,6 @@
             <a href="#">Riesgos</a>
             <i class="fa fa-angle-right"></i>
         </li>
-        <li class="devolver">
-            <a href="#">Nuevo Aceptación</a>
-        </li>
     </ul>
 </div>
 <div class="widgetTitle">
