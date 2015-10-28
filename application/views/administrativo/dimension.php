@@ -1,21 +1,21 @@
 <!-- Colorear Menu -->
 <script type="text/javascript">
-        $(".menORGANIZACIÓN").addClass("active open");
-        $(".subMenDIMENSIÓN_1").addClass("active");
+    $(".menORGANIZACIÓN").addClass("active open");
+    $(".subMenDIMENSIÓN_1").addClass("active");
 </script>
 <div class="page-bar" style="background-color: transparent !important;">
     <ul class="page-breadcrumb">
         <li class="devolver">
-                <i class="fa fa-home"></i>
-                <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-                <i class="fa fa-angle-right"></i>
-            </li>
-            <li class="devolver">
-            <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">Empresa</a>
+            <i class="fa fa-home"></i>
+            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li class="devolver">
             <a href="#">Organización</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="devolver">
+            <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">Empresa</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li class="devolver">
@@ -115,28 +115,28 @@
     </div>
 </div>
 <script>
-$('body').delegate(".riesgo","click",function(){
-        
+    $('body').delegate(".riesgo", "click", function() {
+
         var dim_id = $(this).attr("dim_id");
         $.post(
                 "<?php echo base_url("index.php/administrativo/dimensionunoriesgo") ?>",
                 {
-                    dim_id:dim_id,
+                    dim_id: dim_id,
                 }
-        ).done(function (msg) {
+        ).done(function(msg) {
             $("#riesgodimension *").remove();
             var body = "";
-            $.each(msg,function(key,val){
+            $.each(msg, function(key, val) {
                 body += "<tr>";
-                body += "<td>"+val.rie_descripcion+"</td>";
+                body += "<td>" + val.rie_descripcion + "</td>";
                 body += "</tr>";
             });
             $("#riesgodimension").append(body);
-        }).fail(function (msg) {
+        }).fail(function(msg) {
             alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
         });
     });
-    $('.guardarmodificacion').click(function () {
+    $('.guardarmodificacion').click(function() {
 
         $.post(
                 "<?php echo base_url("index.php/administrativo/guardarmodificaciondimension") ?>",
@@ -144,66 +144,66 @@ $('body').delegate(".riesgo","click",function(){
                     dimid: $('#dimid').val(),
                     descripcion: $('#descripcion2').val()
                 }
-        ).done(function () {
+        ).done(function() {
             alerta("verde", "Modificado correctamente");
             window.location.href = '';
-        }).fail(function () {
+        }).fail(function() {
             alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
         })
 
     });
 
-    $('body').delegate(".modificar", "click", function () {
+    $('body').delegate(".modificar", "click", function() {
 
         $.post(
                 "<?php echo base_url("index.php/administrativo/consultadimensionxid") ?>",
                 {dim_id: $(this).attr('dim_id')}
-        ).done(function (msg) {
+        ).done(function(msg) {
             $('#dimid').val(msg.dim_id);
             $('#descripcion2').val(msg.dim_descripcion);
-        }).fail(function (msg) {
+        }).fail(function(msg) {
 
         });
 
     });
 
-    $('body').delegate(".eliminar", "click", function () {
+    $('body').delegate(".eliminar", "click", function() {
         var eliminar = $(this);
         if (confirm("Esta seguro de eliminar la dimension") == true) {
             $.post("<?php echo base_url('index.php/administrativo/eliminardimension') ?>",
                     {id: $(this).attr('dim_id')}
-            ).done(function (msg) {
+            ).done(function(msg) {
                 eliminar.parents('tr').remove();
                 alerta("verde", "Eliminado Correctamente");
-            }).fail(function (msg) {
+            }).fail(function(msg) {
                 alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
             });
         }
     });
-    $('.guardar').click(function () {
+    $('.guardar').click(function() {
         if (obligatorio('obligatorio') == true) {
             $.post("<?php echo base_url("index.php/administrativo/guardardimension") ?>"
                     , {
                         descripcion: $('#descripcion').val()
                     })
-                    .done(function (msg) {
-                        if(msg != 1){
-                        $('#bodydimension *').remove();
-                        var bodydimension = "";
-                        $.each(msg, function (key, val) {
-                            bodydimension += "<tr>";
-                            bodydimension += "<td>" + val.dim_descripcion + "</td>";
-                            bodydimension += "<td style='text-align: center'><i class='fa fa-child fa-2x riesgo btn btn-default' title='Eliminar' dim_id='"+ val.dim_id +"' data-toggle='modal' data-target='#riesgo'></i></td>";
-                            bodydimension += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="' + val.dim_id + '" ></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  dim_id="' + val.dim_id + '" data-toggle="modal" data-target="#myModal"></i></td>';
-                            bodydimension += "</tr>";
-                        });
-                        $('#bodydimension').append(bodydimension);
-                        alerta("verde", "Guardado Correctamente");
-                        }else{
-                        alerta("amarillo", "datos ya existentes en el sistema");
+                    .done(function(msg) {
+                        if (msg != 1) {
+                            $('#bodydimension *').remove();
+                            var bodydimension = "";
+                            $.each(msg, function(key, val) {
+                                bodydimension += "<tr>";
+                                bodydimension += "<td>" + val.dim_descripcion + "</td>";
+                                bodydimension += "<td style='text-align: center'><i class='fa fa-child fa-2x riesgo btn btn-default' title='Eliminar' dim_id='" + val.dim_id + "' data-toggle='modal' data-target='#riesgo'></i></td>";
+                                bodydimension += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="' + val.dim_id + '" ></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  dim_id="' + val.dim_id + '" data-toggle="modal" data-target="#myModal"></i></td>';
+                                bodydimension += "</tr>";
+                            });
+                            $('#bodydimension').append(bodydimension);
+                            alerta("verde", "Guardado Correctamente");
+                        } else {
+                            alerta("amarillo", "datos ya existentes en el sistema");
                         }
                     })
-                    .fail(function (msg) {
+                    .fail(function(msg) {
                         alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
                     })
         }

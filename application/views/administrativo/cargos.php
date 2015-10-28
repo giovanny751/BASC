@@ -10,13 +10,14 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li class="devolver">
-            <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">Empresa</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
             <a href="#">Organización</a>
             <i class="fa fa-angle-right"></i>
         </li>
+        <li class="devolver">
+            <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">Empresa</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        
         <li class="devolver">
             <a href="#">Cargos</a>
         </li>
