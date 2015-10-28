@@ -88,6 +88,15 @@ class Administrativo extends My_Controller {
             
         }
     }
+    function modificarcarpeta(){
+        
+        $this->load->model('Empleadocarpeta_model');
+        $carpeta = $this->Empleadocarpeta_model->actualizacarpeta(
+                $this->input->post("nombrecarpeta"),
+                $this->input->post("descripcioncarpeta"),
+                $this->input->post("empCar_id")
+                );
+    }
 
     function searchxid() {
         try {

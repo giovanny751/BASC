@@ -333,7 +333,7 @@
                     <i class="fa fa-gift"></i>Registro
                 </div>
                 <div class="tools">
-                    <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModal">Carpeta</button>
+                    <button type="button" class="btn btn-default agregarcarpeta"  data-toggle="modal" data-target="#myModal">Carpeta</button>
                     <button type="button" class="btn btn-default"  data-toggle="modal" data-target="#myModal2" id="agregarregistro">Registro</button>
                 </div>
             </div>
@@ -519,17 +519,39 @@
     endforeach;
     ?>
     <script>
+        
+        $('body').delegate(".modificarcarpeta","click",function(){
+            
+            $.post("<?php echo base_url("index.php/administrativo/modificarcarpeta") ?>",
+                        $('#formcarpeta').serialize()
+                ).done(function(msg){
+                    
+                }).fail(function(msg){
+                    
+                });
+        });
+
+        $('body').delegate(".agregarcarpeta","click",function(){
+            $('#empCar_id').remove();
+            $('#nombrecarpeta').val("");
+            $('#descripcioncarpeta').val("");
+            $('.modificarcarpeta').replaceWith('<button class="btn btn-default" data-target="#myModal" data-toggle="modal" type="button">Carpeta</button>');
+            
+        });
 
         $('body').delegate(".editarcarpeta","click",function(){
-            
             $.post(
                 "<?php echo base_url("index.php/administrativo/cargarempleadocarpeta") ?>",
                 {carpeta : $(this).attr("car_id")}
                 )
-                .done(function(){
-                    
+                .done(function(msg){
+                    $('#formcarpeta').append("<input type='hidden' value='"+msg.empCar_id+"' name='empCar_id' id='empCar_id' >")
+                    $('#nombrecarpeta').val(msg.empCar_nombre);
+                    $('#descripcioncarpeta').val(msg.empCar_descripcion);
+                    $('#guardarcarpeta').replaceWith("<button type='button' empCar_id='"+msg.empCar_id+"' class='btn btn-primary modificarcarpeta'>Actualizar</button>");
+                    $('#myModal').modal("show");
                 })
-                .fail(function(){
+                .fail(function(msg){
                     
                 });
             
