@@ -63,7 +63,7 @@ class Planes_model extends CI_Model {
         
         
         $this->db->select("actividad_padre.actPad_id");
-        $this->db->select("actividad_padre.actPad_nombre");
+        $this->db->select("CONCAT(actividad_padre.actPad_nombre,' - ',actividad_padre.actPad_codigo) as nombre",false);
         $this->db->select("actividad_hijo.actHij_nombre");
         $this->db->select("actividad_hijo.actHij_padreid");
         $this->db->select("actividad_hijo.actHij_fechaInicio");

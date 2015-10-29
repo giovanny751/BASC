@@ -731,7 +731,7 @@
             $('#actPad_id').remove();
             $('#nombrecarpeta').val("");
             $('#descripcioncarpeta').val("");
-            $('.modificarcarpeta').replaceWith('<button class="btn btn-default" data-target="#myModal" data-toggle="modal" type="button">Carpeta</button>');
+            $('.modificaractividad').replaceWith('<button class="btn btn-primary" id="guardaractividadpadre" type="button">Guardar</button>');
             
         });
     
@@ -805,7 +805,7 @@
             $.post("<?php echo base_url("index.php/planes/modificaractividad") ?>",
                         $('#formactividadpadre').serialize()
                 ).done(function(msg){
-                    $('a[href="#collapse_'+msg.actPad_id+'c"]').text(msg.actPad_nombre+" "+msg.actPad_codigo);
+                    $('a[href="#collapse_'+msg.actPad_id+'c"]').html("<i class='fa fa-folder-o carpeta'></i>&nbsp; "+msg.actPad_nombre+" - "+msg.actPad_codigo);
                     $('#myModal').modal("toggle");
                     alerta("verde","Se actualizaron los datos correctamente");
                 }).fail(function(msg){
@@ -969,7 +969,8 @@
             alerta("Error", "Error por favor comunicarse con el administrador");
         });
     });
-    $('#guardaractividadpadre').click(function() {
+    $('body').delegate("#guardaractividadpadre","click",function(){
+    
         numero = $('#accordion1').last('div').attr("id");
         if (obligatorio('acobligatorio')) {
             
@@ -977,13 +978,6 @@
                     $('#formactividadpadre').serialize()
                     )
                     .done(function(msg) {
-                        $('#myModal').modal("toggle")
-                        if ($('#actPad_id').val() != '') {
-//                            console.log($('a[href="#collapse_'+$('#actPad_id').val()+'c"]').text());
-                            $('a[href="#collapse_' + $('#actPad_id').val() + 'c"]').text(msg.dos)
-                            alerta('verde', 'Datos Actualizados');
-                            return false
-                        }
                         $('.acobligatorio').val('');
                         var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>";
                         $('#idpadre').append(option);
@@ -1003,24 +997,23 @@
                                                             </tr>\n\
                                                         </tbody>\n\
                                                     </table>';
-                                                                        alert("esta cerca");
+                                                                        
                         agregarregistro('accordion1', msg, contenido, 'c','editaractividad');
                         $('#myModal').modal("toggle")
                         alerta("verde", "Actividad padre guardada con exito");
                     })
-                    .fail(function() {
+                    .fail(function(msg) {
                         alerta("error", "Error por favor comunicarse con el administrador del sistema");
-                    })
+                    });
         }
 
     });
     function agregarregistro(tabla, msg, contenido, destino, clase) {
-        alert("paso por aca");
         var acordeon = '<div class="panel panel-default" id="' + msg.uno + '">\n\
                                             <div class="panel-heading">\n\
                                                 <h4 class="panel-title">\n\
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
-                                                        <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + '\n\
+                                                        <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - "+msg.tres+'\n\
                                                     </a><i class="fa fa-edit '+clase+'" car_id="'+msg.uno+'"></i>\n\
                                                 </h4>\n\
                                             </div>\n\

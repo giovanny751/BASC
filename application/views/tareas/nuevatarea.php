@@ -15,7 +15,7 @@
                 <button type="button" id="guardartarea" class="btn btn-success">
                     <?php echo (!empty($tarea->tar_id)) ? "Actualizar" : "Guardar"; ?>
                 </button>
-                <button type="button" id="guardartarea" class="btn btn-danger">Eliminar</button>
+                <button type="button" id="" class="btn btn-danger">Eliminar</button>
             </div>   
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 
@@ -635,6 +635,7 @@
                 option += "<option value='" + val.actPad_id + "'>" + val.actPad_nombre + "</option>";
             })
             $('#actividad').append(option);
+            $('#actividad').val('<?php echo $tarea->act_id ?>');
 
             alerta("verde", "Actividades padres cargadas correctamente");
         }).fail(function () {
@@ -738,7 +739,6 @@
             window.location = "<?php echo base_url("index.php/tareas/listadotareas"); ?>";
         }
     });
-    $('document').ready(function () {
         $('#guardartarea').click(function () {
 
             if (obligatorio("obligatorio")) {
@@ -753,7 +753,6 @@
                     } else if ($("#interno").val() == "") {
                         $('input,select,textarea').val("");
                     }
-                    alert("paso por aca" + $('#planantiguo').val());
 
                 }).fail(function (msg) {
                     alerta("rojo", "Error por favor comunicarse con el administrador");
@@ -761,7 +760,6 @@
             }
         });
 
-    });
 
     $('#cargo').change(function () {
 

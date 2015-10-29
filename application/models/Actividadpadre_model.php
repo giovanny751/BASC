@@ -30,7 +30,7 @@ class Actividadpadre_model extends CI_Model {
     }
     function searchregister($idactividad,$descripcion,$pla_id){
         
-        $this->db->select("actPad_id as uno, actPad_nombre as dos");
+        $this->db->select("actPad_id as uno, actPad_nombre as dos, actPad_codigo as tres");
         $this->db->where("actPad_nombre",$idactividad);
         $this->db->where("actPad_codigo",$descripcion);
         $this->db->where("pla_id",$pla_id);

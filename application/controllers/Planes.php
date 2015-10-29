@@ -172,7 +172,7 @@ class Planes extends My_Controller {
                 $actividades = $this->Planes_model->actividadhijoxplan($this->input->post('pla_id'));
                 $i = array();
                 foreach ($actividades as $ac) {
-                    $i[$ac->actPad_id][$ac->actPad_nombre][] = array(
+                    $i[$ac->actPad_id][$ac->nombre][] = array(
                         $ac->actHij_fechaInicio,
                         $ac->actHij_fechaFinalizacion,
                         $ac->actHij_presupuestoTotal,
