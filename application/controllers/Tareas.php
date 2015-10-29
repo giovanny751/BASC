@@ -98,10 +98,7 @@ class Tareas extends My_Controller {
             $post["tarReg_tamano"] = $tamano;
             $fecha = new DateTime();
             $post["tarReg_fecha_creacion"] = $fecha->format('Y-m-d H:i:s');
-            
-            
-            
-//            $post["tar_id"] = $post['interno'];
+            $post["usu_id"] = $this->data["usu_id"];
             
             //Creamos carpeta con el ID del registro
 //            if (isset($_FILES['archivo']['name']))
@@ -125,8 +122,8 @@ class Tareas extends My_Controller {
                 
             }
             $this->Tarea_model->guardar_tarea_registro($post);
-//            $data = $this->Registro_model->registroxcarpeta($post['regCar_id']);
-//            $this->output->set_content_type('application/json')->set_output(json_encode($data));
+            $data = $this->Registro_model->traer_tarea_registro($post);
+            $this->output->set_content_type('application/json')->set_output(json_encode($data));
         } catch (exception $e) {
             
         }
