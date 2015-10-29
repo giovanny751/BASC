@@ -988,6 +988,7 @@
                                                             <th>Fecha fin</th>\n\
                                                             <th>Presupuesto</th>\n\
                                                             <th>Descripción</th>\n\
+                                                            <th>Acción</th>\n\
                                                         </thead> \n\
                                                         <tbody>\n\
                                                             <tr>\n\

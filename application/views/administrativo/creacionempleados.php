@@ -539,12 +539,13 @@
             $('#empCar_id').remove();
             $('#nombrecarpeta').val("");
             $('#descripcioncarpeta').val("");
-            $('.modificarcarpeta').replaceWith('<button class="btn btn-default" data-target="#myModal" data-toggle="modal" type="button">Carpeta</button>');
+            $('.modificarcarpeta').replaceWith('<button id="guardarcarpeta" class="btn btn-primary" type="button">Guardar</button>');
             
         });
 
         $('body').delegate("#eliminarcarpeta","click",function(){
                 var empCar_id = $(this).attr("empCar_id");
+                $('#empReg_carpeta option[value="'+empCar_id+'"]').remove();
                 $.post("<?php echo base_url("index.php/administrativo/eliminarcarpeta") ?>",
                         {empCar_id : empCar_id}
                 ).done(function(msg){
@@ -557,6 +558,7 @@
         });
 
         $('body').delegate(".editarcarpeta","click",function(){
+            $('#eliminarcarpeta').remove();
             $.post(
                 "<?php echo base_url("index.php/administrativo/cargarempleadocarpeta") ?>",
                 {carpeta : $(this).attr("car_id")}
@@ -701,8 +703,8 @@
                 $("#actualizar").show();
 <?php } ?>
         });
-
-        $('#guardarcarpeta').click(function () {
+        
+        $('body').delegate("#guardarcarpeta","click",function(){
             $.post("<?php echo base_url("index.php/administrativo/guardarcarpeta") ?>",
                     $("#formcarpeta").serialize()
                     ).done(function (msg) {
@@ -714,7 +716,7 @@
                                                     <h4 class="panel-title">\n\
                                                         <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.empCar_id + '" aria-expanded="false">\n\
                                                             ' + msg.empCar_nombre + '\n\
-                                                        </a>\n\
+                                                        </a><i class="fa fa-edit editarcarpeta" car_id="'+ msg.empCar_id +'"></i>\n\
                                                     </h4>\n\
                                                 </div>\n\
                                                 <div id="collapse_' + msg.empCar_id + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
