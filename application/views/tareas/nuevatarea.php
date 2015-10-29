@@ -108,7 +108,12 @@
                         <label for="norma">Artículos Norma</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-<?php echo listaMultiple2("articulosnorma[]", "norma", "form-control", "norma", "nor_id", "nor_norma", null, null, null) ?>
+                        <?php 
+                            foreach ($tarea_norma as $value) {
+                                $g[]=$value->nor_id;
+                            }
+                        ?>
+                        <?php echo listaMultiple2("articulosnorma[]", "norma", "form-control", "norma", "nor_id", "nor_norma", $g, null, null) ?>
                     </div>
                 </div>
                 <div class="row">
@@ -434,20 +439,21 @@
                     <div class="modal-body">
                         <form method="post" id="formactividadpadre">
                             <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
-                            <div class="row">
+<!--                            <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                     <label for="plan">Plan:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <select name="plan" id="plan" class="form-control obligatorio" >
+                                    <select name="plan_modal" id="plan_modal" class="form-control obligatorio" >
                                         <option value="">::Seleccionar::</option>
                                         <?php foreach ($planes as $p) { ?>
                                             <option  <?php echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : ""; ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
-    <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
+-->
+<!--                            <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                     <label for="tarea">Tarea:</label>
                                 </div>
@@ -456,7 +462,7 @@
                                         <option value=""></option>
                                     </select>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                     <label for="carpeta">Carpeta:</label>
@@ -480,7 +486,7 @@
                                     <label for="descripcion">Descripción:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <textarea id="descripcion" name="descripcion" class="form-control acobligatorio"></textarea>
+                                    <textarea id="descripcion_tarea" name="descripcion_tarea" class="form-control acobligatorio"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -491,16 +497,11 @@
                                     <input type="file" id="nombreactividad" name="nombreactividad" class="form-control acobligatorio">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <button type="button" class="btn btn-success" id="guardarregistro">Guardar</button>
-                                </div>
-                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" id="guardaractividadpadre">Guardar</button>
+                        <button type="button" class="btn btn-success" id="guardarregistro">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -636,6 +637,8 @@
             })
             $('#actividad').append(option);
             $('#actividad').val('<?php echo $tarea->act_id ?>');
+            $('#dimensionuno').val('<?php echo $tarea->dim2_id ?>');
+            $('#dimensiondos').val('<?php echo $tarea->dim_id ?>');
 
             alerta("verde", "Actividades padres cargadas correctamente");
         }).fail(function () {
@@ -775,6 +778,7 @@
                 data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
             });
             $('#nombreempleado').append(data);
+            $('#nombreempleado').val('<?php echo $tarea->emp_id ?>');
         }).fail(function (msg) {
 
         })
@@ -833,4 +837,34 @@
             }
         });
     })
+    $('#guardarregistro').click(function() {
+        //Capturamos el archivo
+        var file_data = $('#nombreactividad').prop('files')[0];
+        //Creamos formularios archivo
+        var form_data = new FormData();
+        //Agremamos Datos a enviar (Archivo)
+        form_data.append('archivo', file_data);
+        //Agregamos Datos a enviar
+        form_data.append('pla_id', $('#plan').val());
+//        form_data.append('tarea', $('#tarea').val());
+        form_data.append('tarReg_carpeta', $('#carpeta').val());
+        form_data.append('tarReg_version', $('#version').val());
+        form_data.append('tar_id', $('#interno').val());
+        form_data.append('tarReg_descripcion', $('#descripcion_tarea').val());
+        $.ajax({
+            url: '<?php echo base_url("index.php/tareas/guardar_registro_tarea") ?>',
+            dataType: 'text', // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(result) {
+                $('#myModal').modal('hide')
+            }
+        });
+    })
+    
+    $('#plan').trigger('change');//dim2_id
+    $('#cargo').trigger('change');//dim2_id
 </script>    

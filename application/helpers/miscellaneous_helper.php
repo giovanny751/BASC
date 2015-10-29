@@ -425,11 +425,6 @@ function lista($name, $id, $class, $tabla, $option_value, $option_name, $value, 
         $query = $CI->db->get($tabla); //var_dump($this->db1->last_query());echo '</br>';
         if ($query->num_rows() > 0) {
             $html = "<select multiple id=$id class=$class name=$name required='required'     >";
-//            if ($bloqued) {
-//                $html .= "<option value='' disabled=disabled>Seleccione</option>";
-//            } else {
-//                $html .= "<option value=''>Seleccione</option>";
-//            }
             $i=0;
             if(isset($value[$i]))
             if($value[$i]=="")

@@ -30,6 +30,7 @@ class Tareas extends My_Controller {
             $this->load->model("Riesgoclasificacion_model");
             if (!empty($this->input->post("tar_id"))):
                 $this->data['tarea'] = $this->Tarea_model->detailxid($this->input->post("tar_id"))[0];
+                $this->data['tarea_norma'] = $this->Tarea_model->tarea_norma($this->input->post("tar_id"));
 //                $this->data['tarea'] = $this->data['tarea'];
             endif;
             $this->data['pla_id'] = "";
@@ -84,6 +85,48 @@ class Tareas extends My_Controller {
             $this->Registro_model->guardar_registro($post);
             $data = $this->Registro_model->registroxcarpeta($post['regCar_id']);
             $this->output->set_content_type('application/json')->set_output(json_encode($data));
+        } catch (exception $e) {
+            
+        }
+    
+    }
+    function guardar_registro_tarea(){
+        try {
+            $post = $this->input->post();
+            $this->load->model('Tarea_model');
+            $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
+            $post["tarReg_tamano"] = $tamano;
+            $fecha = new DateTime();
+            $post["tarReg_fecha_creacion"] = $fecha->format('Y-m-d H:i:s');
+            
+            
+            
+//            $post["tar_id"] = $post['interno'];
+            
+            //Creamos carpeta con el ID del registro
+//            if (isset($_FILES['archivo']['name']))
+//                if (!empty($_FILES['archivo']['name']))
+//                    $post['tarReg_archivo'] = basename($_FILES['archivo']['name']);
+
+            $pla_id = $post['tar_id'];
+            $targetPath = "./uploads/tareas_registro/";
+
+            //De la carpeta idRegistro, creamos carpeta con el id del empleado
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+            $targetPath = "./uploads/tareas_registro/". $pla_id;
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+
+            $post['tarReg_archivo']=$target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
+                
+            }
+            $this->Tarea_model->guardar_tarea_registro($post);
+//            $data = $this->Registro_model->registroxcarpeta($post['regCar_id']);
+//            $this->output->set_content_type('application/json')->set_output(json_encode($data));
         } catch (exception $e) {
             
         }

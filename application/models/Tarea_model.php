@@ -14,6 +14,10 @@ class Tarea_model extends CI_Model {
         
         $this->db->insert_batch("norma_tarea",$data);
     }
+    function guardar_tarea_registro($data){
+        
+        $this->db->insert("tarea_registro",$data);
+    }
     function update($data,$idtarea){
         $this->db->where("tar_id",$idtarea);
         $this->db->update("tarea",$data);
@@ -28,6 +32,11 @@ class Tarea_model extends CI_Model {
     function detailxid($id){
         $this->db->where("tar_id",$id);
         $tarea = $this->db->get("tarea");
+        return $tarea->result();
+    }
+    function tarea_norma($id){
+        $this->db->where("tar_id",$id);
+        $tarea = $this->db->get("norma_tarea");
         return $tarea->result();
     }
     function detailxidplan($id){
