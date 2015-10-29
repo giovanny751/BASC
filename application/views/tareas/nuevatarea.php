@@ -396,29 +396,76 @@
                             </div>
                         </div>
                         <div id="tab3" class="tab-pane">
-                            <div style="text-align:right">
-                                
-                                 <!--<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal4"><i class="fa fa-folder-o carpeta"></i></button>-->
-                                <!--<button type="button" class="btn btn-default" id="nuevoregistro" data-toggle="modal" data-target="#myModal"><i class="fa fa-file-archive-o carpeta"></i></button>-->
-                                
-                                <button type="button" id="nuevoregistro" class="btn btn-success" data-toggle="modal" data-target="#myModal">Nuevo registro</button>
+                            <div class="portlet box blue" style="margin-top: 30px;">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        
+                                    </div>
+                                    <div class="tools">                                        
+                                        <i class=" btn btn-default fa fa-folder-o carpeta" data-toggle="modal" data-target="#modalCarpeta" ></i>
+                                        <i class="fa fa-file-archive-o  btn btn-default"  id="nuevoregistro" data-toggle="modal" data-target="#myModal"></i>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="tabbable tabbable-tabdrop">
+                                        <div class="tab-content">
+                                            <br>
+                                            <div class="panel-group accordion" id="accordion5">
+                                                <?php
+                                                $o = 1;
+                                                foreach ($carpeta as $idcar => $nomcar):
+                                                    foreach ($nomcar as $nombrecar => $numcar):
+                                                        ?>
+                                                        <div class="panel panel-default" id="<?php echo $idcar ?>">
+                                                            <div class="panel-heading">
+                                                                <h4 class="panel-title">
+                                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false" id=""> 
+                                                                        <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
+                                                                    </a><i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="collapse_<?php echo $idcar . 'r'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                                <div class="panel-body">
+                                                                    <table class="table table-hover table-bordered">
+                                                                        <thead>
+                                                                        <th>Nombre de archivo</th>
+                                                                        <th>Descripción</th>
+                                                                        <th>Versión</th>
+                                                                        <th>Responsable</th>
+                                                                        <th>Tamaño</th>
+                                                                        <th>Fecha</th>
+                                                                        <th>Acción</th>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <?php foreach ($numcar as $numerocar => $campocar): ?>
+                                                                                <tr>
+                                                                                    <td><?php echo $campocar[0] ?></td>
+                                                                                    <td><?php echo $campocar[1] ?></td>
+                                                                                    <td><?php echo $campocar[2] ?></td>
+                                                                                    <td><?php echo $campocar[3] ?></td>
+                                                                                    <td><?php echo $campocar[4] ?></td>
+                                                                                    <td><?php echo $campocar[5] ?></td>
+                                                                                    <td>
+                                                                                        <i class="fa fa-times fa-2x eliminarregistro btn btn-danger" title="Eliminar" reg_id="<?php echo $campocar[6] ?>"></i>
+                                                                                        <i class="fa fa-pencil-square-o fa-2x modificarregistro btn btn-info" title="Modificar" reg_id="<?php echo $campocar[6] ?>" data-target="#myModal15" data-toggle="modal"></i>
+                                                                                    </td>
+                                                                                </tr>   
+                                                                            <?php endforeach; ?>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <?php
+                                                        $o++;
+                                                    endforeach;
+                                                endforeach;
+                                                ?>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Versión</th>
-                                <th>Responsable</th>
-                                <th>Tamaño</th>
-                                <th>Fecha</th>
-                                <th>Acción</th>
-                                </thead>
-                                <tbody>
-                                    <tr> 
-                                        <td colspan="7"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -429,6 +476,43 @@
             </div>
         </div>
         <!-- Modal -->
+        <!-- Carpeta -->
+        <div class="modal fade" id="modalCarpeta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">NUEVA CARPETA</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" id="frmcarpetaregistro">
+                            <input type="hidden" value="<?php echo $tarea->tar_id; ?>" name="tar_id" id="tar_id_carRegistro"/>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="nombrecarpeta">Nombre</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <input type="text" id="nombrecarpeta" name="nombrecarpeta" class="form-control carbligatorio">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <label for="descripcioncarpeta">Descripción:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                    <input type="text" id="descripcioncarpeta" name="descripcioncarpeta" class="form-control carbligatorio">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" id="opcionescarpeta">
+                        <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" id="guardarcarpeta">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Registro -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -438,7 +522,8 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" id="formactividadpadre">
-                            <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
+                            <!--<input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>-->
+                            <input type="hidden" value="<?php echo $tarea->tar_id ;?>" name="tar_id" id="tar_id_registro"/>
 <!--                            <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                     <label for="plan">Plan:</label>
@@ -458,7 +543,7 @@
                                     <label for="tarea">Tarea:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <select id="tarea" name="tarea" class="form-control acobligatorio">
+                                    <select id="tarea" name="tarea" class="form-control tarRegObligatorio">
                                         <option value=""></option>
                                     </select>
                                 </div>
@@ -468,8 +553,11 @@
                                     <label for="carpeta">Carpeta:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <select id="carpeta" name="carpeta" class="form-control acobligatorio">
+                                    <select id="carpeta" name="tarCar_id" class="form-control tarRegObligatorio">
                                         <option value=""></option>
+                                        <?php foreach ($carpetas as $carp): ?>
+                                            <option value="<?php echo $carp->tarCar_id ?>"><?php echo $carp->tarCar_nombre ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -478,7 +566,7 @@
                                     <label for="version">Versión:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="text" id="version" name="version" class="form-control acobligatorio">
+                                    <input type="text" id="version" name="tarReg_version" class="form-control tarRegObligatorio">
                                 </div>
                             </div>
                             <div class="row">
@@ -486,7 +574,7 @@
                                     <label for="descripcion">Descripción:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <textarea id="descripcion_tarea" name="descripcion_tarea" class="form-control acobligatorio"></textarea>
+                                    <textarea id="descripcion_tarea" name="tarReg_descripcion" class="form-control tarRegObligatorio"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -494,7 +582,7 @@
                                     <label for="nombreactividad">Adjuntar Archivo:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="file" id="nombreactividad" name="nombreactividad" class="form-control acobligatorio">
+                                    <input type="file" id="nombreactividad" name="archivo" class="form-control tarRegObligatorio">
                                 </div>
                             </div>
                         </form>
@@ -787,84 +875,120 @@
 // -----------------------------------------------------------------------------
 //                          Guardar Registro
 // -----------------------------------------------------------------------------
-    $('#guardarregistro2').click(function() {
-        //Capturamos el archivo
-        var file_data = $('#archivo').prop('files')[0];
-        //Creamos formularios archivo
-        var form_data = new FormData();
-        //Agremamos Datos a enviar (Archivo)
-        form_data.append('archivo', file_data);
-        //Agregamos Datos a enviar
-        form_data.append('pla_id', $('#pla_id').val());
-        form_data.append('regCar_id', $('#carpeta').val());
-        form_data.append('reg_version', $('#version').val());
-        form_data.append('reg_descripcion', $('#reg_descripcion').val());
-        $.ajax({
-            url: '<?php echo base_url("index.php/tareas/guardarregistrotarea") ?>',
-            dataType: 'text', // what to expect back from the PHP script, if anything
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,
-            type: 'post',
-            success: function(result) {
-                
-                $("#myModal15").modal("toggle");
-                result = jQuery.parseJSON(result);
-                var idcarpeta = $('#carpeta').val()
-                $('#collapse_'+idcarpeta+'r').find('table tbody *').remove();
-                var filas = "";
-                $.each(result,function(key,val){
-                    filas += "<tr>";
-                        filas += "<td>"+val.reg_archivo+"</td>";
-                        filas += "<td>"+val.reg_descripcion+"</td>";
-                        filas += "<td>"+val.reg_version+"</td>";
-                        filas += "<td></td>";
-                        filas += "<td>"+val.reg_tamano+"</td>";
-                        filas += "<td>"+val.reg_fechaCreacion+"</td>";
-                        filas += "<td>";
-                        filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='"+val.reg_id+"'></i>";
-                        filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='"+val.reg_id+"'></i>";
-                        filas += "</td>";
-                    filas += "</tr>";
-                });
-                $('#collapse_'+idcarpeta+'r').find('table tbody').append(filas)
-                $('#carpeta').val('');
-                $('#version').val('');
-                $('#reg_descripcion').val('');
-                $('#archivo').val('');
-                alerta('verde', 'Registro guardado con exito.');
-            }
-        });
-    })
+    
+    $('#guardarcarpeta').click(function() {
+        if (obligatorio("carbligatorio")) {
+            $.post("<?php echo base_url("index.php/tareas/guardarcarpetatarea") ?>",
+                    $('#frmcarpetaregistro').serialize()
+                    ).done(function(msg) {
+                var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>"
+                var contenido = "<table class='table table-hover table-bordered'>\n\
+                                        <thead>\n\
+                                            <th>Nombre de archivo</th>\n\
+                                            <th>Descripción</th>\n\
+                                            <th>Versión</th>\n\
+                                            <th>Responsable</th>\n\
+                                            <th>Tamaño</th>\n\
+                                            <th>Fecha</th>\n\
+                                            <th>Acción</th>\n\
+                                        </thead>\n\
+                                        <tbody>\n\
+                                            <tr>\n\
+                                            <td colspan='6'>\n\
+                                            <center><b>No hay registros asociados</b></center>\n\
+                                            </td>\n\
+                                            </tr>\n\
+                                        </tbody>\n\
+                                </table>";
+                $('#carpeta').append(option);
+                agregarregistro('accordion5', msg, contenido, 'r','editarcarpeta');
+                $('.carbligatorio').val("");
+                $('#myModal4').modal("toggle")
+                alerta("verde", "Carpeta agregada con exito")
+            }).fail(function(msg) {
+                alerta("rojo", "ha ocurrido un error por favor cumunicarse con el administrador del sistema")
+            });
+        }
+
+    });
+    
     $('#guardarregistro').click(function() {
-        //Capturamos el archivo
-        var file_data = $('#nombreactividad').prop('files')[0];
-        //Creamos formularios archivo
-        var form_data = new FormData();
-        //Agremamos Datos a enviar (Archivo)
-        form_data.append('archivo', file_data);
-        //Agregamos Datos a enviar
-        form_data.append('pla_id', $('#plan').val());
-//        form_data.append('tarea', $('#tarea').val());
-        form_data.append('tarReg_carpeta', $('#carpeta').val());
-        form_data.append('tarReg_version', $('#version').val());
-        form_data.append('tar_id', $('#interno').val());
-        form_data.append('tarReg_descripcion', $('#descripcion_tarea').val());
-        $.ajax({
-            url: '<?php echo base_url("index.php/tareas/guardar_registro_tarea") ?>',
-            dataType: 'text', // what to expect back from the PHP script, if anything
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,
-            type: 'post',
-            success: function(result) {
-                $('#myModal').modal('hide')
-            }
-        });
+        if(obligatorio("tarRegObligatorio")){
+            //Capturamos el archivo
+            var file_data = $('#nombreactividad').prop('files')[0];
+            //Creamos formularios archivo
+            var form_data = new FormData();
+            //Agremamos Datos a enviar (Archivo)
+            form_data.append('archivo', file_data);
+            //Agregamos Datos a enviar
+            form_data.append('pla_id', $('#plan').val());
+    //        form_data.append('tarea', $('#tarea').val());
+            form_data.append('tarCar_id', $('#carpeta').val());
+            form_data.append('tarReg_version', $('#version').val());
+            form_data.append('tar_id', $('#interno').val());
+            form_data.append('tarReg_descripcion', $('#descripcion_tarea').val());
+            $.ajax({
+                url: '<?php echo base_url("index.php/tareas/guardar_registro_tarea") ?>',
+                dataType: 'text', // what to expect back from the PHP script, if anything
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post',
+                success: function(result) {
+                    $('#myModal').modal('hide')
+                    result = jQuery.parseJSON(result);
+                    var idcarpeta = $('#carpeta').val()
+                    $('#collapse_'+idcarpeta+'r').find('table tbody *').remove();
+                    var filas = "";
+                    $.each(result,function(key,val){
+                        filas += "<tr>";
+                            filas += "<td>"+val.tarReg_archivo+"</td>";
+                            filas += "<td>"+val.tarReg_descripcion+"</td>";
+                            filas += "<td>"+val.tarReg_version+"</td>";
+                            filas += "<td></td>";
+                            filas += "<td>"+val.tarReg_tamano+"</td>";
+                            filas += "<td>"+val.tarReg_fechaCreacion+"</td>";
+                            filas += "<td>";
+                            filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='"+val.tarReg_id+"'></i>";
+                            filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='"+val.tarReg_id+"'  data-target='#myModal15' data-toggle='modal'></i>";
+                            filas += "</td>";
+                        filas += "</tr>";
+                    });
+                    $('#collapse_'+idcarpeta+'r').find('table tbody').append(filas)
+                    $('#carpeta').val('');
+                    $('#version').val('');
+                    $('#reg_descripcion').val('');
+                    $('#archivo').val('');
+                    alerta('verde', 'Registro guardado con exito.');
+                }
+            });
+        }
     })
     
     $('#plan').trigger('change');//dim2_id
     $('#cargo').trigger('change');//dim2_id
+    
+    
+    
+    //--------------------------------------------------------------------------
+    //                          FUNCIONES
+    //--------------------------------------------------------------------------
+    function agregarregistro(tabla, msg, contenido, destino, clase) {
+        var acordeon = '<div class="panel panel-default" id="' + msg.uno + '">\n\
+                                            <div class="panel-heading">\n\
+                                                <h4 class="panel-title">\n\
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
+                                                        <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - "+msg.tres+'\n\
+                                                    </a><i class="fa fa-edit '+clase+'" car_id="'+msg.uno+'"></i>\n\
+                                                </h4>\n\
+                                            </div>\n\
+                                            <div id="collapse_' + msg.uno + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
+                                                <div class="panel-body">\n\
+                                                    ' + contenido + '\n\
+                                                </div>\n\
+                                            </div>\n\
+                                    </div>';
+        $('#' + tabla).append(acordeon);
+    }
 </script>    

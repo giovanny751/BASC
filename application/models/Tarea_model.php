@@ -14,9 +14,10 @@ class Tarea_model extends CI_Model {
         
         $this->db->insert_batch("norma_tarea",$data);
     }
-    function guardar_tarea_registro($data){
-        $this->db->insert("tarea_registro",$data);
-    }
+    //tarea_registro
+    //function guardar_tarea_registro($data){
+    //    $this->db->insert("tarea_registro",$data);
+    //}
     function traer_tarea_registro($data){
         $this->db->where("pla_id",$data['pla_id']);
         $this->db->where("tar_id",$data['tar_id']);

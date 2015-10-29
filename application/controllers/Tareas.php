@@ -28,7 +28,27 @@ class Tareas extends My_Controller {
             $this->load->model('Tipo_model');
             $this->load->model('Notificacion_model');
             $this->load->model("Riesgoclasificacion_model");
+            
+            $this->load->model("Tareacarpeta_model");
+            
             if (!empty($this->input->post("tar_id"))):
+                
+                $carpeta = $this->Tareacarpeta_model->detailxtareas($this->input->post('tar_id'));
+                $this->data['carpetas'] = $this->Tareacarpeta_model->detailxtareascarpetas($this->input->post('tar_id'));
+                $d = array();
+                foreach ($carpeta as $c) {
+                    $d[$c->tarCar_id][$c->tarCar_nombre][] = array(
+                        $c->tarReg_archivo, 
+                        $c->tarReg_descripcion, 
+                        $c->tarReg_version, 
+                        "", 
+                        $c->tarReg_tamano, 
+                        $c->tarReg_fecha_creacion,
+                        $c->tarReg_id
+                            );
+                }
+                $this->data['carpeta'] = $d;
+                
                 $this->data['tarea'] = $this->Tarea_model->detailxid($this->input->post("tar_id"))[0];
                 $this->data['tarea_norma'] = $this->Tarea_model->tarea_norma($this->input->post("tar_id"));
 //                $this->data['tarea'] = $this->data['tarea'];
@@ -93,26 +113,27 @@ class Tareas extends My_Controller {
     function guardar_registro_tarea(){
         try {
             $post = $this->input->post();
-            $this->load->model('Tarea_model');
+            $this->load->model('Tarearegistro_model');
             $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
             $post["tarReg_tamano"] = $tamano;
             $fecha = new DateTime();
             $post["tarReg_fecha_creacion"] = $fecha->format('Y-m-d H:i:s');
             $post["usu_id"] = $this->data["usu_id"];
             
+            
             //Creamos carpeta con el ID del registro
 //            if (isset($_FILES['archivo']['name']))
 //                if (!empty($_FILES['archivo']['name']))
 //                    $post['tarReg_archivo'] = basename($_FILES['archivo']['name']);
 
-            $pla_id = $post['tar_id'];
+            $tar_id = $post['tar_id'];
             $targetPath = "./uploads/tareas_registro/";
 
             //De la carpeta idRegistro, creamos carpeta con el id del empleado
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
-            $targetPath = "./uploads/tareas_registro/". $pla_id;
+            $targetPath = "./uploads/tareas_registro/". $tar_id;
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
@@ -121,8 +142,9 @@ class Tareas extends My_Controller {
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
-            $this->Tarea_model->guardar_tarea_registro($post);
-            $data = $this->Registro_model->traer_tarea_registro($post);
+            
+            $this->Tarearegistro_model->guardar_registro($post);
+            $data = $this->Tarearegistro_model->registroxcarpeta($tar_id);
             $this->output->set_content_type('application/json')->set_output(json_encode($data));
         } catch (exception $e) {
             
@@ -383,14 +405,15 @@ class Tareas extends My_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
 
-    function guardarcarpetaregistro() {
-        $this->load->model("Registrocarpeta_model");
-        $id = $this->Registrocarpeta_model->create(
-                $this->input->post("nombrecarpeta"), $this->input->post("descripcioncarpeta"), $this->input->post("pla_id")
+    function guardarcarpetatarea() {
+        $this->load->model("Tareacarpeta_model");
+        $id = $this->Tareacarpeta_model->create(
+            $this->input->post("nombrecarpeta"), $this->input->post("descripcioncarpeta"), $this->input->post("tar_id")
         );
-        $data = $this->Registrocarpeta_model->detailxid($id);
+        $data = $this->Tareacarpeta_model->detailxid($id);
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
+    
 
     function actualizarplan() {
         try {
