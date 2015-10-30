@@ -38,7 +38,7 @@ class Riesgo extends My_Controller {
         
         $this->load->model('Riesgo_model');
         $data = array(
-            "cat_id"=>$this->input->post("categoria"),
+            "cat_id"=>$this->input->post("categoria"), 
             "col_id"=>$this->input->post("color"),
             "rie_descripcion"=>$this->input->post("descripcion"),
             "dim1_id"=>$this->input->post("dimensionuno"),

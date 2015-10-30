@@ -272,6 +272,11 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
 
 
 <style>
+    //2015-10-29
+    .blockOverlay{
+        z-index:10000 !important;
+    }
+    
     tbody{
         color: black;
     }

@@ -6,7 +6,7 @@ class Riesgo_model extends CI_Model {
         parent::__construct();
     }
     
-    function guardarriesgo($data){
+    function guardarriesgo($data){ 
         
         $this->db->insert("riesgo",$data);
         

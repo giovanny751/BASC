@@ -414,10 +414,10 @@
             $.post("<?php echo base_url("index.php/riesgo/guardarriesgo") ?>"
                     , $("#riesgos").serialize()
                     ).done(function (msg) {
-
+                         alerta("verde", "Guardado");   
             })
                     .fail(function (msg) {
-
+                        alerta("rojo", "Error en el sistema por favor comunicarse con el administrador del aplicativo");
                     });
         }
     });
