@@ -579,7 +579,12 @@ class Tareas extends My_Controller {
             
         }
     }
-
+    
+    function eliminaravance(){
+        
+        $this->load->model("AvanceTarea_model");
+        $this->AvanceTarea_model->eliminaravance($this->input->post("avaTar_id"));
+    }
 }
 
 /* End of file welcome.php */

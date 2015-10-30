@@ -723,7 +723,7 @@
                                 + "<td>"
                                 +"<a href='javascript:' class='avances_ fa fa-pencil-square-o fa-2x btn btn-info' avaTar_id='" + val.avaTar_id + "' ></a></td>"
                                 + "<td>" + val.avaTar_fecha + "</td>"
-                                + "<td></td>"
+                                + "<td>" + val.tar_nombre + "</td>"
                                 + "<td>" + val.nombre + "</td>"
                                 + "<td>" + val.avaTar_horasTrabajadas + "</td>"
                                 + "<td>" + val.avaTar_costo + "</td>"
@@ -747,7 +747,7 @@
             $('#actividad *').remove();
             var option = "<option value=''>::Seleccionar::</option>";
             $.each(msg, function (key, val) {
-                option += "<option value='" + val.actPad_id + "'>" + val.actPad_nombre + "</option>";
+                option += "<option value='" + val.actPad_id + "'>" + val.actPad_nombre +" - "+ val.actPad_codigo +"</option>";
             })
             $('#actividad').append(option);
             $('#actividad').val('<?php echo (isset($tarea->act_id) ? $tarea->act_id : '') ?>');
@@ -756,7 +756,7 @@
 
             //alerta("verde", "Actividades padres cargadas correctamente");
         }).fail(function () {
-            alerta("Error", "Error por favor comunicarse con el administrador");
+            alerta("rojo", "Error por favor comunicarse con el administrador");
         });
     });
 

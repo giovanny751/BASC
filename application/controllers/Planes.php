@@ -119,8 +119,6 @@ class Planes extends My_Controller {
             $data = array(
                 "actHij_padreid" => $this->input->post("idpadre"),
                 "actHij_nombre" => $this->input->post("nombre"),
-                "actHij_fechaInicio" => $this->input->post("fechainicio"),
-                "actHij_fechaFinalizacion" => $this->input->post("fechafinalizacion"),
                 "actHij_peso" => $this->input->post("peso"),
                 "actHij_riesgoSancion" => $this->input->post("riesgosancion"),
                 "tip_id" => $this->input->post("tipo"),
@@ -185,8 +183,8 @@ class Planes extends My_Controller {
                 $this->data['tipo'] = $this->Tipo_model->detail();
                 $this->data['tareas'] = $this->Planes_model->tareaxplan($this->input->post('pla_id'));
                 $this->data['tareasinactivas'] = $this->Planes_model->tareaxplaninactivas($this->input->post('pla_id'));
-//                echo "<pre>";
-//                var_dump($this->data["actividades"]);die;
+                $this->load->model("AvanceTarea_model");
+                $this->data['avances'] = $this->AvanceTarea_model->listadoAvancexPlan($this->input->post('pla_id'));
             }
             $this->data['notificacion'] = $this->Notificacion_model->detail();
             $this->data['norma'] = $this->Norma_model->detail();

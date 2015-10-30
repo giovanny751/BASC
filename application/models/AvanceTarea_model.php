@@ -66,13 +66,31 @@ class AvanceTarea_model extends CI_Model {
         return $id;
     }
     function listado_avance($id){
+        $this->db->select("avance_tarea.avaTar_id ");
         $this->db->select("avaTar_fecha ");
-        $this->db->select("tar_id ");
+        $this->db->select("avance_tarea.tar_id ");
         $this->db->select("CONCAT(`user`.`usu_nombre`,' ',`user`.`usu_apellido`) as nombre", false);
         $this->db->select("avaTar_horasTrabajadas");
         $this->db->select("avaTar_costo ");
         $this->db->select("avaTar_comentarios");
-        $this->db->where("tar_id", $id);
+        $this->db->select("tarea.tar_nombre");
+        $this->db->where("avance_tarea.tar_id", $id);
+        $this->db->join("tarea","tarea.tar_id = avance_tarea.tar_id");
+        $this->db->join("user", "user.usu_id = avance_tarea.usu_id");
+        $avance = $this->db->get("avance_tarea");
+        return $avance->result();
+    }
+    function listadoAvancexPlan($id){
+        $this->db->select("avance_tarea.avaTar_id ");
+        $this->db->select("avaTar_fecha ");
+        $this->db->select("avance_tarea.tar_id ");
+        $this->db->select("CONCAT(`user`.`usu_nombre`,' ',`user`.`usu_apellido`) as nombre", false);
+        $this->db->select("avaTar_horasTrabajadas");
+        $this->db->select("avaTar_costo ");
+        $this->db->select("avaTar_comentarios");
+        $this->db->select("tarea.tar_nombre");
+        $this->db->where("tarea.pla_id", $id);
+        $this->db->join("tarea","tarea.tar_id = avance_tarea.tar_id");
         $this->db->join("user", "user.usu_id = avance_tarea.usu_id");
         $avance = $this->db->get("avance_tarea");
         return $avance->result();
@@ -92,6 +110,12 @@ class AvanceTarea_model extends CI_Model {
         $this->db->join("user", "user.usu_id = avance_tarea.usu_id");
         $avance = $this->db->get("avance_tarea");
         return $avance->result();
+    }
+    function eliminaravance($avaTar_id){
+        
+        $this->db->where("avaTar_id",$avaTar_id);
+        $this->db->delete("avance_tarea");
+        
     }
 
 }
