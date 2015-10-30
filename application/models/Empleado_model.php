@@ -88,7 +88,7 @@ class Empleado_model extends CI_Model {
     }
 
     function empleadoxcargo($id) {
-
+        $this->db->select('Emp_Apellidos,Emp_Nombre,Emp_Id');
         $this->db->where("car_id", $id);
         $empleado = $this->db->get("empleado");
         return $empleado->result();

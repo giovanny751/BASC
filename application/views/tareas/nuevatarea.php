@@ -50,7 +50,7 @@
                                 echo (!empty($pla_id) && $pla_id == $p->pla_id ) ? "selected" : "";
                                 echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : "";
                                 ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
-<?php } ?>
+                                <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($dimension as $d1) { ?>
                                 <option  <?php echo (!empty($tarea->dim_id) && $tarea->dim_id == $d1->dim_id) ? "selected" : ""; ?> value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
-<?php } ?>
+                            <?php } ?>
                         </select> 
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($dimension2 as $d2) { ?>
                                 <option  <?php echo (!empty($tarea->dim2_id) && $tarea->dim2_id == $d2->dim_id) ? "selected" : ""; ?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
-<?php } ?>
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($tipo as $t) { ?>
                                 <option  <?php echo (!empty($tarea->tip_id) && $tarea->tip_id == $t->tip_id) ? "selected" : ""; ?> value="<?php echo $t->tip_id ?>"><?php echo $t->tip_tipo ?></option>
-<?php } ?>
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -108,10 +108,14 @@
                         <label for="norma">Artículos Norma</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <?php 
+                        <?php
+                        if (isset($tarea->emp_id)) {
                             foreach ($tarea_norma as $value) {
-                                $g[]=$value->nor_id;
+                                $g[] = $value->nor_id;
                             }
+                        } else {
+                            $g[] = 0;
+                        }
                         ?>
                         <?php echo listaMultiple2("articulosnorma[]", "norma", "form-control", "norma", "nor_id", "nor_norma", $g, null, null) ?>
                     </div>
@@ -158,7 +162,7 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($cargo as $c) { ?>
                                 <option  <?php echo (!empty($tarea->car_id) && $tarea->car_id == $c->car_id) ? "selected" : ""; ?> value="<?php echo $c->car_id ?>"><?php echo $c->car_nombre ?></option> 
-<?php } ?>
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -195,7 +199,7 @@
                                     <option value="">::Seleccionar::</option>
                                     <?php foreach ($estados as $e) { ?>
                                         <option <?php echo (!empty($tarea->est_id) && $tarea->est_id == $e->est_id) ? "selected" : ""; ?>  value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
-<?php } ?>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
@@ -241,7 +245,7 @@
                             <option value=''>::Seleccionar::</option>
                             <?php foreach ($categoria as $ca) { ?>
                                 <option value="<?php echo $ca->rieCla_id ?>"><?php echo $ca->rieCla_categoria ?></option>
-<?php } ?>
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -259,7 +263,7 @@
         </div>
 
     </form>
-<?php if (!empty($tarea->tar_id)): ?>
+    <?php if (!empty($tarea->tar_id)): ?>
         <div class="portlet box blue">
             <div class="portlet-title">
                 <div class="caption">
@@ -292,28 +296,20 @@
                                     <div class="portlet">
                                         <div class="portlet-body">
                                             <div class="table-container">
-                                                <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                                <table  class="table table-striped table-bordered table-hover" id="datatable_ajax1">
                                                     <thead>
-                                                        <tr role="row" class="heading" style="background:#008ac9">
-                                                            <th>Editar</th>
-                                                            <th>Fecha</th>
-                                                            <th>Resumen</th>
-                                                            <th>Usuario</th>
-                                                            <th>Horas</th>
-                                                            <th>Costo</th>
-                                                            <th>Comentarios</th>
-                                                        </tr>
-                                                        <tr role="row" class="filter">
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>
+                                                    <thead style="background-color: blue;color: white;">
+                                                    <th>Editar</th>
+                                                    <th>Fecha</th>
+                                                    <th>Resumen</th>
+                                                    <th>Usuario</th>
+                                                    <th>Horas</th>
+                                                    <th>Costo</th>
+                                                    <th>Comentarios</th>
                                                     </thead>
-                                                    <tbody class="datatable_ajax1">
+                                                    </thead>
+                                                    <tbody class="datatable_ajax12">
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -346,7 +342,7 @@
                                                     <option value="">::Seleccionar::</option>
                                                     <?php for ($i = 1; $i < 101; $i++) { ?>
                                                         <option value="<?php echo $i; ?>"><?php echo $i . " " . "%"; ?></option>
-    <?php } ?>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -377,7 +373,7 @@
                                         <div class="row">
                                             <center><h4>Notificar a:</h4></center>
                                         </div>
-    <?php foreach ($notificacion as $n): ?>
+                                        <?php foreach ($notificacion as $n): ?>
                                             <div class="row">
                                                 <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
                                                     <label for="creotarea"><?php echo $n->not_notificacion ?></label>
@@ -386,7 +382,7 @@
                                                     <input type="checkbox" name="notificar[]" value="<?php echo $n->not_id ?>" id="creotarea" class="form-control avance">
                                                 </div>
                                             </div>
-    <?php endforeach; ?>
+                                        <?php endforeach; ?>
                                     </div>
 
                                 </div>
@@ -399,7 +395,7 @@
                             <div class="portlet box blue" style="margin-top: 30px;">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        
+
                                     </div>
                                     <div class="tools">                                        
                                         <i class=" btn btn-default fa fa-folder-o carpeta" data-toggle="modal" data-target="#modalCarpeta" ></i>
@@ -427,7 +423,7 @@
                                                             <div id="collapse_<?php echo $idcar . 'r'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                                                 <div class="panel-body">
                                                                     <table class="table table-hover table-bordered">
-                                                                        <thead>
+                                                                        <thead style="background-color: blue">
                                                                         <th>Nombre de archivo</th>
                                                                         <th>Descripción</th>
                                                                         <th>Versión</th>
@@ -523,31 +519,31 @@
                     <div class="modal-body">
                         <form method="post" id="formactividadpadre">
                             <!--<input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>-->
-                            <input type="hidden" value="<?php echo $tarea->tar_id ;?>" name="tar_id" id="tar_id_registro"/>
-<!--                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="plan">Plan:</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <select name="plan_modal" id="plan_modal" class="form-control obligatorio" >
-                                        <option value="">::Seleccionar::</option>
-                                        <?php foreach ($planes as $p) { ?>
-                                            <option  <?php echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : ""; ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
--->
-<!--                            <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="tarea">Tarea:</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <select id="tarea" name="tarea" class="form-control tarRegObligatorio">
-                                        <option value=""></option>
-                                    </select>
-                                </div>
-                            </div>-->
+                            <input type="hidden" value="<?php echo $tarea->tar_id; ?>" name="tar_id" id="tar_id_registro"/>
+                            <!--                            <div class="row">
+                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                                <label for="plan">Plan:</label>
+                                                            </div>
+                                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                                                <select name="plan_modal" id="plan_modal" class="form-control obligatorio" >
+                                                                    <option value="">::Seleccionar::</option>
+                            <?php foreach ($planes as $p) { ?>
+                                                                                    <option  <?php echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : ""; ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
+                            <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                            -->
+                            <!--                            <div class="row">
+                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                                <label for="tarea">Tarea:</label>
+                                                            </div>
+                                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                                                <select id="tarea" name="tarea" class="form-control tarRegObligatorio">
+                                                                    <option value=""></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>-->
                             <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                     <label for="carpeta">Carpeta:</label>
@@ -595,7 +591,7 @@
             </div>
         </div>
 
-<?php endif; ?>
+    <?php endif; ?>
     <input type="hidden" id="tareid" name="tareid" />
 
 
@@ -605,112 +601,142 @@
     <input type="hidden" name="pla_id" id="planantiguo" value="<?php echo (!empty($pla_id)) ? $pla_id : ""; ?>">
 </form>
 <script>
-    jQuery(document).ready(function () {
-        TableAjax.init();
+    $('document').ready(function () {
+        jQuery(document).ready(function () {
+            TableAjax.init();
 
-    });
-
-    $('#clasificacionriesgo').change(function () {
-
-        $.post(
-                "<?php echo base_url("index.php/riesgo/consultatiporiesgoxclasificacion") ?>",
-                {categoria: $(this).val()}
-        )
-                .done(function (msg) {
-                    $('#tiposriesgos *').remove();
-                    var option = "<option value=''>::Seleccionar::</option>";
-                    $.each(msg, function (key, val) {
-                        option += "<option value='" + val.rieClaTip_id + "'>" + val.rieClaTip_tipo + "</option>";
-                    });
-                    $('#tiposriesgos').append(option);
-                }).fail(function (msg) {
-            alerta("rojo", "fallo al traer los tipos de riesgo");
         });
 
+        $('#clasificacionriesgo').change(function () {
+
+            $.post(
+                    "<?php echo base_url("index.php/riesgo/consultatiporiesgoxclasificacion") ?>",
+                    {categoria: $(this).val()}
+            )
+                    .done(function (msg) {
+                        $('#tiposriesgos *').remove();
+                        var option = "<option value=''>::Seleccionar::</option>";
+                        $.each(msg, function (key, val) {
+                            option += "<option value='" + val.rieClaTip_id + "'>" + val.rieClaTip_tipo + "</option>";
+                        });
+                        $('#tiposriesgos').append(option);
+                    }).fail(function (msg) {
+                alerta("rojo", "fallo al traer los tipos de riesgo");
+            });
+
+        });
+
+
+
+//        var TableAjax = function () {
+//
+//            var initPickers = function () {
+//                //init date pickers
+//                $('.date-picker').datepicker({
+//                    rtl: Metronic.isRTL(),
+//                    autoclose: true
+//                });
+//            }
+//
+//            var handleRecords = function () {
+//                var grid = new Datatable();
+//                grid.init({
+//                    src: $("#datatable_ajax1"),
+//                    onSuccess: function (grid) {
+//                        // execute some code after table records loaded
+//                    },
+//                    onError: function (grid) {
+//                        // execute some code on network or other general error  
+//                    },
+//                    onDataLoad: function (grid) {
+//                        // execute some code on ajax data load
+//                    },
+//                    loadingMessage: 'Loading...',
+//                    dataTable: { // here you can define a typical datatable settings from http://datatables.net/usage/options 
+//                        "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+//                        "lengthMenu": [
+//                            [10, 20, 50, 100, 150, -1],
+//                            [10, 20, 50, 100, 150, "All"] // change per page values here
+//                        ],
+//                        "pageLength": 10, // default record count per page
+//                        "ajax": {
+//                            "url": "<?php echo base_url("index.php/tareas/listadoavance") ?>", // ajax source
+//                        },
+//                        "order": [
+//                            [1, "asc"]
+//                        ]// set first column as a default sort by asc
+//                    }
+//                });
+//
+//                // handle group actionsubmit button click
+//                grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
+//                    e.preventDefault();
+//                    var action = $(".table-group-action-input", grid.getTableWrapper());
+//                    if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
+//                        grid.setAjaxParam("customActionType", "group_action");
+//                        grid.setAjaxParam("customActionName", action.val());
+//                        grid.setAjaxParam("id", grid.getSelectedRows());
+//                        grid.getDataTable().ajax.reload();
+//                        grid.clearAjaxParams();
+//                    } else if (action.val() == "") {
+//                        Metronic.alert({
+//                            type: 'danger',
+//                            icon: 'warning',
+//                            message: 'Please select an action',
+//                            container: grid.getTableWrapper(),
+//                            place: 'prepend'
+//                        });
+//                    } else if (grid.getSelectedRowsCount() === 0) {
+//                        Metronic.alert({
+//                            type: 'danger',
+//                            icon: 'warning',
+//                            message: 'No record selected',
+//                            container: grid.getTableWrapper(),
+//                            place: 'prepend'
+//                        });
+//                    }
+//                });
+//            }
+//
+//            return {
+//                //main function to initiate the module
+//                init: function () {
+//
+//                    initPickers();
+//                    handleRecords();
+//                }
+//
+//            };
+//
+//        }();
     });
 
-    var TableAjax = function () {
-
-        var initPickers = function () {
-            //init date pickers
-            $('.date-picker').datepicker({
-                rtl: Metronic.isRTL(),
-                autoclose: true
-            });
-        }
-
-        var handleRecords = function () {
-
-            var grid = new Datatable();
-
-            grid.init({
-                src: $("#datatable_ajax"),
-                onSuccess: function (grid) {
-                    // execute some code after table records loaded
-                },
-                onError: function (grid) {
-                    // execute some code on network or other general error  
-                },
-                onDataLoad: function (grid) {
-                    // execute some code on ajax data load
-                },
-                loadingMessage: 'Loading...',
-                dataTable: {
-                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-                    "lengthMenu": [
-                        [10, 20, 50, 100, 150, -1],
-                        [10, 20, 50, 100, 150, "All"] // change per page values here
-                    ],
-                    "pageLength": 10, // default record count per page
-                    "ajax": {
-                        "url": "<?php echo base_url("index.php/tareas/listadoavance") ?>", // ajax source
-                    },
-                    "order": [
-                        [1, "asc"]
-                    ]// set first column as a default sort by asc
-                }
-            });
-
-            // handle group actionsubmit button click
-            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
-                e.preventDefault();
-                var action = $(".table-group-action-input", grid.getTableWrapper());
-                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
-                    grid.setAjaxParam("avaTar_fecha", "group_action");
-                    grid.setAjaxParam("avaTar_fecha", action.val());
-                    grid.setAjaxParam("usu_id", grid.getSelectedRows());
-                    grid.getDataTable().ajax.reload();
-                    grid.clearAjaxParams();
-                } else if (action.val() == "") {
-                    Metronic.alert({
-                        type: 'danger',
-                        icon: 'warning',
-                        message: 'Please select an action',
-                        container: grid.getTableWrapper(),
-                        place: 'prepend'
+    function tabla() {
+        var url = '<?php echo base_url("index.php/tareas/listadoavance2") ?>';
+        var tar_id = $('#interno').val()
+        $.post(url, {tar_id: tar_id})
+                .done(function (msg) {
+                    $('.datatable_ajax12').html('');
+                    var html = "";
+                    $.each(msg, function (key, val) {
+                        html += "<tr>"
+                                + "<td>"
+                                +"<a href='javascript:' class='avances_ fa fa-pencil-square-o fa-2x btn btn-info' avaTar_id='" + val.avaTar_id + "' ></a></td>"
+                                + "<td>" + val.avaTar_fecha + "</td>"
+                                + "<td></td>"
+                                + "<td>" + val.nombre + "</td>"
+                                + "<td>" + val.avaTar_horasTrabajadas + "</td>"
+                                + "<td>" + val.avaTar_costo + "</td>"
+                                + "<td>" + val.avaTar_comentarios + "</td>"
+                                + "</tr>";
                     });
-                } else if (grid.getSelectedRowsCount() === 0) {
-                    Metronic.alert({
-                        type: 'danger',
-                        icon: 'warning',
-                        message: 'No record selected',
-                        container: grid.getTableWrapper(),
-                        place: 'prepend'
-                    });
-                }
-            });
-        }
-        return {
-            //main function to initiate the module
-            init: function () {
+                    $('.datatable_ajax12').html(html);
+                })
+                .fail(function () {
 
-                initPickers();
-                handleRecords();
-            }
-
-        };
-
-    }();
+                })
+    }
+    tabla();
 
     $('#plan').change(function () {
         var plan = $(this).val();
@@ -724,11 +750,11 @@
                 option += "<option value='" + val.actPad_id + "'>" + val.actPad_nombre + "</option>";
             })
             $('#actividad').append(option);
-            $('#actividad').val('<?php echo $tarea->act_id ?>');
-            $('#dimensionuno').val('<?php echo $tarea->dim2_id ?>');
-            $('#dimensiondos').val('<?php echo $tarea->dim_id ?>');
+            $('#actividad').val('<?php echo (isset($tarea->act_id) ? $tarea->act_id : '') ?>');
+            $('#dimensionuno').val('<?php echo (isset($tarea->dim2_id) ? $tarea->dim2_id : '') ?>');
+            $('#dimensiondos').val('<?php echo (isset($tarea->dim_id) ? $tarea->dim_id : '') ?>');
 
-            alerta("verde", "Actividades padres cargadas correctamente");
+            //alerta("verde", "Actividades padres cargadas correctamente");
         }).fail(function () {
             alerta("Error", "Error por favor comunicarse con el administrador");
         });
@@ -802,7 +828,7 @@
                 .fail(function () {
                     alerta("Error", "Error por favor comunicarse con el administrador");
                 })
-    })
+    });
     $('.tabbable a[href="#tab2"]').click(function () {
         $('#avaTar_id').val('')
         $('#fecha').val('')
@@ -830,30 +856,29 @@
             window.location = "<?php echo base_url("index.php/tareas/listadotareas"); ?>";
         }
     });
-        $('#guardartarea').click(function () {
+    $('#guardartarea').click(function () {
 
-            if (obligatorio("obligatorio")) {
-                $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
-                        $('#f8').serialize()
-                        ).done(function (msg) {
-                    $("#fechacreacion").val(msg.tar_fechaCreacion)
-                    $("#fechamodificacion").val(msg.tar_fechaUltimaMod)
-                    alerta("verde", "Datos guardados correctamente");
-                    if ($('#planantiguo').val() != "") {
-                        $('#frmplan').submit();
-                    } else if ($("#interno").val() == "") {
-                        $('input,select,textarea').val("");
-                    }
+        if (obligatorio("obligatorio")) {
+            $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
+                    $('#f8').serialize()
+                    ).done(function (msg) {
+                $("#fechacreacion").val(msg.tar_fechaCreacion)
+                $("#fechamodificacion").val(msg.tar_fechaUltimaMod)
+                alerta("verde", "Datos guardados correctamente");
+                if ($('#planantiguo').val() != "") {
+                    $('#frmplan').submit();
+                } else if ($("#interno").val() == "") {
+                    $('input,select,textarea').val("");
+                }
 
-                }).fail(function (msg) {
-                    alerta("rojo", "Error por favor comunicarse con el administrador");
-                });
-            }
-        });
+            }).fail(function (msg) {
+                alerta("rojo", "Error por favor comunicarse con el administrador");
+            });
+        }
+    });
 
 
     $('#cargo').change(function () {
-
         $.post(
                 "<?php echo base_url("index.php/administrativo/consultausuarioscargo") ?>",
                 {
@@ -866,21 +891,21 @@
                 data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
             });
             $('#nombreempleado').append(data);
-            $('#nombreempleado').val('<?php echo $tarea->emp_id ?>');
+            $('#nombreempleado').val('<?php echo (isset($tarea->emp_id) ? $tarea->emp_id : '') ?>');
         }).fail(function (msg) {
 
         })
     });
-    
+
 // -----------------------------------------------------------------------------
 //                          Guardar Registro
 // -----------------------------------------------------------------------------
-    
-    $('#guardarcarpeta').click(function() {
+
+    $('#guardarcarpeta').click(function () {
         if (obligatorio("carbligatorio")) {
             $.post("<?php echo base_url("index.php/tareas/guardarcarpetatarea") ?>",
                     $('#frmcarpetaregistro').serialize()
-                    ).done(function(msg) {
+                    ).done(function (msg) {
                 var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>"
                 var contenido = "<table class='table table-hover table-bordered'>\n\
                                         <thead>\n\
@@ -901,19 +926,19 @@
                                         </tbody>\n\
                                 </table>";
                 $('#carpeta').append(option);
-                agregarregistro('accordion5', msg, contenido, 'r','editarcarpeta');
+                agregarregistro('accordion5', msg, contenido, 'r', 'editarcarpeta');
                 $('.carbligatorio').val("");
                 $('#myModal4').modal("toggle")
                 alerta("verde", "Carpeta agregada con exito")
-            }).fail(function(msg) {
+            }).fail(function (msg) {
                 alerta("rojo", "ha ocurrido un error por favor cumunicarse con el administrador del sistema")
             });
         }
 
     });
-    
-    $('#guardarregistro').click(function() {
-        if(obligatorio("tarRegObligatorio")){
+
+    $('#guardarregistro').click(function () {
+        if (obligatorio("tarRegObligatorio")) {
             //Capturamos el archivo
             var file_data = $('#nombreactividad').prop('files')[0];
             //Creamos formularios archivo
@@ -922,7 +947,7 @@
             form_data.append('archivo', file_data);
             //Agregamos Datos a enviar
             form_data.append('pla_id', $('#plan').val());
-    //        form_data.append('tarea', $('#tarea').val());
+            //        form_data.append('tarea', $('#tarea').val());
             form_data.append('tarCar_id', $('#carpeta').val());
             form_data.append('tarReg_version', $('#version').val());
             form_data.append('tar_id', $('#interno').val());
@@ -935,27 +960,27 @@
                 processData: false,
                 data: form_data,
                 type: 'post',
-                success: function(result) {
+                success: function (result) {
                     $('#myModal').modal('hide')
                     result = jQuery.parseJSON(result);
                     var idcarpeta = $('#carpeta').val()
-                    $('#collapse_'+idcarpeta+'r').find('table tbody *').remove();
+                    $('#collapse_' + idcarpeta + 'r').find('table tbody *').remove();
                     var filas = "";
-                    $.each(result,function(key,val){
+                    $.each(result, function (key, val) {
                         filas += "<tr>";
-                            filas += "<td>"+val.tarReg_archivo+"</td>";
-                            filas += "<td>"+val.tarReg_descripcion+"</td>";
-                            filas += "<td>"+val.tarReg_version+"</td>";
-                            filas += "<td></td>";
-                            filas += "<td>"+val.tarReg_tamano+"</td>";
-                            filas += "<td>"+val.tarReg_fechaCreacion+"</td>";
-                            filas += "<td>";
-                            filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='"+val.tarReg_id+"'></i>";
-                            filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='"+val.tarReg_id+"'  data-target='#myModal15' data-toggle='modal'></i>";
-                            filas += "</td>";
+                        filas += "<td>" + val.tarReg_archivo + "</td>";
+                        filas += "<td>" + val.tarReg_descripcion + "</td>";
+                        filas += "<td>" + val.tarReg_version + "</td>";
+                        filas += "<td></td>";
+                        filas += "<td>" + val.tarReg_tamano + "</td>";
+                        filas += "<td>" + val.tarReg_fechaCreacion + "</td>";
+                        filas += "<td>";
+                        filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='" + val.tarReg_id + "'></i>";
+                        filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='" + val.tarReg_id + "'  data-target='#myModal15' data-toggle='modal'></i>";
+                        filas += "</td>";
                         filas += "</tr>";
                     });
-                    $('#collapse_'+idcarpeta+'r').find('table tbody').append(filas)
+                    $('#collapse_' + idcarpeta + 'r').find('table tbody').append(filas)
                     $('#carpeta').val('');
                     $('#version').val('');
                     $('#reg_descripcion').val('');
@@ -965,12 +990,13 @@
             });
         }
     })
-    
-    $('#plan').trigger('change');//dim2_id
-    $('#cargo').trigger('change');//dim2_id
-    
-    
-    
+
+<?php if (isset($tarea->emp_id)) { ?>
+        $('#plan').trigger('change');//dim2_id
+        $('#cargo').trigger('change');//dim2_id
+<?php } ?>
+
+
     //--------------------------------------------------------------------------
     //                          FUNCIONES
     //--------------------------------------------------------------------------
@@ -979,8 +1005,8 @@
                                             <div class="panel-heading">\n\
                                                 <h4 class="panel-title">\n\
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
-                                                        <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - "+msg.tres+'\n\
-                                                    </a><i class="fa fa-edit '+clase+'" car_id="'+msg.uno+'"></i>\n\
+                                                        <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - " + msg.tres + '\n\
+                                                    </a><i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
                                                 </h4>\n\
                                             </div>\n\
                                             <div id="collapse_' + msg.uno + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\

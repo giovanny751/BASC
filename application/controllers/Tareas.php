@@ -167,6 +167,11 @@ class Tareas extends My_Controller {
         $data['recordsFiltered'] = $alldatacount;
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
+    function listadoavance2() {
+        $this->load->model('AvanceTarea_model');
+        $datos=$this->AvanceTarea_model->listado_avance($this->input->post('tar_id'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($datos));
+    }
 
     function listadotareasxplanfiltro() {
 
