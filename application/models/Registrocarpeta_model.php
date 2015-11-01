@@ -16,6 +16,7 @@ class Registrocarpeta_model extends CI_Model {
         $this->db->where("registro_carpeta.pla_id",$pla_id);
         $this->db->select("registro_carpeta.regCar_id");
         $this->db->select("registro_carpeta.regCar_nombre");
+        $this->db->select("registro_carpeta.regCar_descripcion");
         $this->db->select("registro.reg_version");
         $this->db->select("registro.reg_descripcion");
         $this->db->select("registro.reg_fechaCreacion");

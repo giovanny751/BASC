@@ -18,7 +18,7 @@ class Tareas extends My_Controller {
 
     function nuevatarea() {
 
-        if ($this->consultaacceso($this->data["usu_id"])) { 
+        if ($this->consultaacceso($this->data["usu_id"])) {
             $this->load->model('Estados_model');
             $this->load->model('Tarea_model');
             $this->load->model('Cargo_model');
@@ -28,27 +28,27 @@ class Tareas extends My_Controller {
             $this->load->model('Tipo_model');
             $this->load->model('Notificacion_model');
             $this->load->model("Riesgoclasificacion_model");
-            
+
             $this->load->model("Tareacarpeta_model");
-            
+
             if (!empty($this->input->post("tar_id"))):
-                
+
                 $carpeta = $this->Tareacarpeta_model->detailxtareas($this->input->post('tar_id'));
                 $this->data['carpetas'] = $this->Tareacarpeta_model->detailxtareascarpetas($this->input->post('tar_id'));
                 $d = array();
                 foreach ($carpeta as $c) {
                     $d[$c->tarCar_id][$c->tarCar_nombre][] = array(
-                        $c->tarReg_archivo, 
-                        $c->tarReg_descripcion, 
-                        $c->tarReg_version, 
-                        "", 
-                        $c->tarReg_tamano, 
+                        $c->tarReg_archivo,
+                        $c->tarReg_descripcion,
+                        $c->tarReg_version,
+                        "",
+                        $c->tarReg_tamano,
                         $c->tarReg_fecha_creacion,
                         $c->tarReg_id
-                            );
+                    );
                 }
                 $this->data['carpeta'] = $d;
-                
+
                 $this->data['tarea'] = $this->Tarea_model->detailxid($this->input->post("tar_id"))[0];
                 $this->data['tarea_norma'] = $this->Tarea_model->tarea_norma($this->input->post("tar_id"));
 //                $this->data['tarea'] = $this->data['tarea'];
@@ -70,12 +70,17 @@ class Tareas extends My_Controller {
             $this->layout->view("permisos");
         }
     }
-    
-    function guardarregistrotarea(){
+    function eliminartarea(){
+        
+        $this->load->model("Tarea_model");
+        $this->Tarea_model->eliminartarea($this->input->post("tarea"));
+    }
+
+    function guardarregistrotarea() {
         try {
             $post = $this->input->post();
             $this->load->model('Registro_model');
-            $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
+            $tamano = round($_FILES["archivo"]["size"] / 1024, 1) . " KB";
             $post["reg_tamano"] = $tamano;
             $fecha = new DateTime();
             $post["reg_fechaCreacion"] = $fecha->format('Y-m-d H:i:s');
@@ -92,13 +97,13 @@ class Tareas extends My_Controller {
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
-            $targetPath = "./uploads/tareas/". $pla_id;
+            $targetPath = "./uploads/tareas/" . $pla_id;
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
 
-            $post['reg_ruta']=$target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
-            $post['reg_archivo']= basename($_FILES['archivo']['name']);
+            $post['reg_ruta'] = $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            $post['reg_archivo'] = basename($_FILES['archivo']['name']);
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
@@ -108,19 +113,19 @@ class Tareas extends My_Controller {
         } catch (exception $e) {
             
         }
-    
     }
-    function guardar_registro_tarea(){
+
+    function guardar_registro_tarea() {
         try {
             $post = $this->input->post();
             $this->load->model('Tarearegistro_model');
-            $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
+            $tamano = round($_FILES["archivo"]["size"] / 1024, 1) . " KB";
             $post["tarReg_tamano"] = $tamano;
             $fecha = new DateTime();
             $post["tarReg_fecha_creacion"] = $fecha->format('Y-m-d H:i:s');
             $post["usu_id"] = $this->data["usu_id"];
-            
-            
+
+
             //Creamos carpeta con el ID del registro
 //            if (isset($_FILES['archivo']['name']))
 //                if (!empty($_FILES['archivo']['name']))
@@ -133,23 +138,22 @@ class Tareas extends My_Controller {
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
-            $targetPath = "./uploads/tareas_registro/". $tar_id;
+            $targetPath = "./uploads/tareas_registro/" . $tar_id;
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
             }
 
-            $post['tarReg_archivo']=$target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            $post['tarReg_archivo'] = $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
-            
+
             $this->Tarearegistro_model->guardar_registro($post);
             $data = $this->Tarearegistro_model->registroxcarpeta($tar_id);
             $this->output->set_content_type('application/json')->set_output(json_encode($data));
         } catch (exception $e) {
             
         }
-    
     }
 
     function listadoavance() {
@@ -167,9 +171,10 @@ class Tareas extends My_Controller {
         $data['recordsFiltered'] = $alldatacount;
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
+
     function listadoavance2() {
         $this->load->model('AvanceTarea_model');
-        $datos=$this->AvanceTarea_model->listado_avance($this->input->post('tar_id'));
+        $datos = $this->AvanceTarea_model->listado_avance($this->input->post('tar_id'));
         $this->output->set_content_type('application/json')->set_output(json_encode($datos));
     }
 
@@ -239,7 +244,7 @@ class Tareas extends My_Controller {
                 "avaTar_fechaCreacion" => date("Y-m-d H:i:s"),
                 "usu_id" => $this->data["usu_id"]
             );
-            $id = $this->Avancetarea_model->create($data,$this->input->post());
+            $id = $this->Avancetarea_model->create($data, $this->input->post());
             $result = $this->Avancetarea_model->consulta($this->input->post('idtarea'));
             $notificar = array();
             if (!empty($this->input->post("notificar"))):
@@ -264,6 +269,7 @@ class Tareas extends My_Controller {
         $result = $this->Avancetarea_model->consulta($this->input->post('idtarea'));
         $this->output->set_content_type('application/json')->set_output(json_encode($result));
     }
+
     function consulta2() {
         $this->load->model('Avancetarea_model');
         $result = $this->Avancetarea_model->consulta2($this->input->post('avaTar_id'));
@@ -353,10 +359,24 @@ class Tareas extends My_Controller {
 
         try {
             $this->load->model('Tarea_model');
-            $this->data["tareas"] = $this->Tarea_model->filtrobusqueda(
+            $tareas = $this->Tarea_model->filtrobusqueda(
                     $this->input->post("Plan"), $this->input->post("filtrotarea"), $this->input->post("responsable")
             );
-            $this->output->set_content_type('application/json')->set_output(json_encode($this->data["tareas"]));
+            $data = array();
+            foreach ($tareas as $t):
+                $data[$t->pla_id][$t->pla_nombre][$t->tar_id] = array(
+                    "detalle"=>array(
+                        "fechainicio"=>$t->tar_fechaInicio,
+                        "fechafinalizacion"=>$t->tar_fechaFinalizacion,
+                        "diferencia"  => $t->diferencia,
+                        "nombretarea" => $t->tar_nombre,
+                        "nombre" => $t->Emp_Nombre,
+                        "tipo" => $t->tip_tipo
+                    )
+                );
+            endforeach;
+            
+            $this->output->set_content_type('application/json')->set_output(json_encode($data));
         } catch (exception $e) {
             
         }
@@ -413,12 +433,11 @@ class Tareas extends My_Controller {
     function guardarcarpetatarea() {
         $this->load->model("Tareacarpeta_model");
         $id = $this->Tareacarpeta_model->create(
-            $this->input->post("nombrecarpeta"), $this->input->post("descripcioncarpeta"), $this->input->post("tar_id")
+                $this->input->post("nombrecarpeta"), $this->input->post("descripcioncarpeta"), $this->input->post("tar_id")
         );
         $data = $this->Tareacarpeta_model->detailxid($id);
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
-    
 
     function actualizarplan() {
         try {
@@ -579,12 +598,13 @@ class Tareas extends My_Controller {
             
         }
     }
-    
-    function eliminaravance(){
-        
+
+    function eliminaravance() {
+
         $this->load->model("AvanceTarea_model");
         $this->AvanceTarea_model->eliminaravance($this->input->post("avaTar_id"));
     }
+
 }
 
 /* End of file welcome.php */

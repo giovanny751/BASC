@@ -280,7 +280,6 @@
                             <div class="portlet box blue" style="margin-top: 30px;">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-gift"></i>Actividades
                                     </div>
                                     <div class="tools">
                                         <i class="fa fa-clipboard carpeta btn btn-default crear_padre" data-toggle="modal" data-target="#myModal" title='ACTIVIDAD PADRE'></i>
@@ -299,7 +298,9 @@
                                                         <h4 class="panel-title">
                                                             <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id . 'c'; ?>" aria-expanded="false"> 
                                                                 <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombre ?>
-                                                            </a><i class="fa fa-edit editaractividad" car_id="<?php echo $id ?>"></i>
+                                                            </a>
+                                                            <i class="fa fa-edit editaractividad" car_id="<?php echo $id ?>"></i>
+                                                            <i class="fa fa-times eliminarcarpeta" tipo="c" title="Eliminar" car_id="<?php echo $id ?>"></i>
                                                         </h4>
                                                     </div>
                                                     <div id="collapse_<?php echo $id . 'c'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -379,7 +380,9 @@
                                                                 <h4 class="panel-title">
                                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false" id=""> 
                                                                         <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
-                                                                    </a><i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
+                                                                    </a>
+                                                                    <i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
+                                                                    <i class="fa fa-times eliminarcarpeta" tipo="r" title="Eliminar" car_id="<?php echo $idcar ?>"></i>
                                                                 </h4>
                                                             </div>
                                                             <div id="collapse_<?php echo $idcar . 'r'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -761,26 +764,15 @@
 
     });
 
-    $('body').delegate("#eliminarcarpeta", "click", function () {
-        var regCar_id = $(this).attr("regCar_id");
-        $.post("<?php echo base_url("index.php/planes/eliminarcarpeta") ?>",
-                {regCar_id: regCar_id}
+    $('body').delegate(".eliminarcarpeta", "click", function () {
+        var carpeta = $(this).attr("car_id");
+        var tipo = $(this).attr("tipo");
+        if($(this).attr('tipo') == "r") var url = "<?php echo base_url("index.php/planes/eliminarcarpeta") ?>";
+        else if($(this).attr('tipo') == "c") var url = "<?php echo base_url("index.php/planes/eliminaractividad") ?>";
+        $.post(url,
+                {carpeta: carpeta}
         ).done(function (msg) {
-            $('a[href="#collapse_' + regCar_id + 'r"]').parents('.panel-default').remove();
-            $('#myModal4').modal("toggle");
-            alerta("verde", "Datos eliminados los datos correctamente");
-        }).fail(function (msg) {
-            alerta("rojo", "Error, por favor comunicarse con el administrador del sistema");
-        });
-    });
-    $('body').delegate("#eliminaractividad", "click", function () {
-        var actPad_id = $(this).attr("actPad_id");
-        $.post("<?php echo base_url("index.php/planes/eliminaractividad") ?>",
-                {actPad_id: actPad_id}
-        ).done(function (msg) {
-            $('a[href="#collapse_' + actPad_id + 'c"]').parents('.panel-default').remove();
-            $('#myModal').modal("hide");
-            alerta("verde", "Datos eliminados los datos correctamente");
+            $('a[href="#collapse_' + carpeta + tipo+'"]').parents('.panel-default').remove();
         }).fail(function (msg) {
             alerta("rojo", "Error, por favor comunicarse con el administrador del sistema");
         });
@@ -794,8 +786,6 @@
                 .done(function (msg) {
                     if ($('#plaCar_id').length == 0)
                         $('#frmcarpetaregistro').append("<input type='hidden' value='" + msg.regCar_id + "' name='plaCar_id' id='plaCar_id' >");
-                    if ($('#eliminarcarpeta').length == 0)
-                        $('#opcionescarpeta').append("<button type='button' id='eliminarcarpeta' class='btn btn-danger' regCar_id='" + msg.regCar_id + "'>Eliminar</button>");
                     $('#nombrecarpeta').val(msg.regCar_nombre);
                     $('#descripcioncarpeta').val(msg.regCar_descripcion);
                     $('#guardarcarpeta').replaceWith("<button type='button' empCar_id='" + msg.regCar_id + "' class='btn btn-primary modificarcarpeta'>Actualizar</button>");
@@ -1041,7 +1031,9 @@
                                                 <h4 class="panel-title">\n\
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - " + msg.tres + '\n\
-                                                    </a><i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
+                                                    </a>\n\
+                                                        <i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
+                                                        <i class="fa fa-times eliminarcarpeta" title="Eliminar" tipo="'+destino+'" car_id="' + msg.uno + '"></i>\n\
                                                 </h4>\n\
                                             </div>\n\
                                             <div id="collapse_' + msg.uno + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\

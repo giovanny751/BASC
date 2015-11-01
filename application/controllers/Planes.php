@@ -405,7 +405,7 @@ class Planes extends My_Controller {
     function eliminarcarpeta(){
         
         $this->load->model('Registrocarpeta_model');
-        $data = $this->Registrocarpeta_model->eliminarcarpeta($this->input->post("regCar_id")); 
+        $data = $this->Registrocarpeta_model->eliminarcarpeta($this->input->post("carpeta")); 
         
     }
     function modificarpeta(){
@@ -423,7 +423,7 @@ class Planes extends My_Controller {
     function eliminaractividad(){
         
         $this->load->model('Actividadpadre_model');
-        $data = $this->Actividadpadre_model->eliminaractividad($this->input->post("actPad_id")); 
+        $data = $this->Actividadpadre_model->eliminaractividad($this->input->post("carpeta")); 
         
     }
     function datosactividad(){

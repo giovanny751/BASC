@@ -191,7 +191,7 @@ function modulos($datosmodulos, $idusuario, $dato = null) {
 				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 					<div class="dashboard-stat blue-madison">
 						
-						<a href="<?php echo base_url("index.php/tareas/listadoplanes") ?>" class="more">
+						<a href="<?php echo base_url("index.php/planes/listadoplanes") ?>" class="more">
 						PLANES <i class="m-icon-swapright m-icon-white"></i>
 						</a>
 					</div>
