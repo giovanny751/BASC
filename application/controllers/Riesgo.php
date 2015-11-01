@@ -19,12 +19,14 @@ class Riesgo extends My_Controller {
         $this->load->model('Empresa_model');
         $this->load->model("Riesgoclasificacion_model");
         $this->load->model("Estadoaceptacion_model");
+        $this->load->model("Riesgo_model");
         $this->data['categoria'] = $this->Riesgoclasificacion_model->detail();
         $this->data['estadoaceptacionxcolor'] = $this->Estadoaceptacion_model->detail();
         $this->data['empresa'] = $this->Empresa_model->detail();
         if (!empty($this->data['empresa'][0]->Dim_id) && !empty($this->data['empresa'][0]->Dimdos_id)) {
             if (!empty($this->input->post("rie_id"))) {
                 $this->data['rie_id'] = $this->input->post("rie_id");
+                $this->data['riesgo'] = $this->Riesgo_model->detailxid($this->input->post("rie_id"))[0];
             }
             $this->data['dimension'] = $this->Dimension_model->detail();
             $this->data['dimension2'] = $this->Dimension2_model->detail();
@@ -163,6 +165,14 @@ class Riesgo extends My_Controller {
         $data = $this->Riesgoclasificaciontipo_model->tipoxcategoria($this->input->post("categoria"));
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
         
+    }
+    
+    function busquedariesgo() {
+        $this->load->model("Riesgo_model");
+        $planes = $this->Riesgo_model->filtrobusqueda(
+            $this->input->post("clasificacion"), $this->input->post("dimensionuno"), $this->input->post("cargo"), $this->input->post("tipo"), $this->input->post("dimensiondos")
+        );
+        $this->output->set_content_type('application/json')->set_output(json_encode($planes));
     }
 
 }

@@ -16,7 +16,12 @@ class Riesgo_model extends CI_Model {
         $this->db->insert("riesgo", $data);
         return $this->db->insert_id();
     }
-    function filtrobusqueda($cargo,$clasificacion,$dimension2,$dimension,$tipo){
+    function detailxid($id){
+        $this->db->where("rie_id",$id);
+        $tarea = $this->db->get("riesgo");
+        return $tarea->result();
+    }
+    function filtrobusqueda($cargo,$clasificacion,$dimension2,$dimension,$tipo){ 
         
         if(!empty($cargo))$this->db->where("car_id",$cargo);
         if(!empty($clasificacion))$this->db->where("cla_id",$clasificacion);

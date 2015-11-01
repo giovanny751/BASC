@@ -102,9 +102,15 @@
             </tbody>
         </table>
     </div>
+    <form method="post" id="f13" action="<?php echo base_url("index.php/riesgo/nuevoriesgo") ?>">
+        <input type="hidden" name="rie_id" id="rie_id">
+    </form>
 </div>
 <script>
-    
+    $('body').delegate('.modificar', "click", function () {
+        $('#rie_id').val($(this).attr('rie_id'));
+        $('#f13').submit();
+    });
     $('#clasificacion').change(function () {
 
         $.post(
@@ -141,13 +147,14 @@
                 tbody += "<td>" + val.rie_fecha + "</td>";
                 tbody += "<td></td>";
                 tbody += "<td></td>";
+                tbody += '<td><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" rie_id="'+ val.rie_id+'" ></i></td>'; 
                 tbody += "</tr>";
             });
             $('#inforiesgo *').remove();
             $('#inforiesgo').append(tbody);
             alerta("verde", "Datos cargados con exito");
         }).fail(function (msg) {
-            alert("rojo", "Error en el sistema por favor comunicarse con el administrador");
+            alerta("rojo", "Error en el sistema por favor comunicarse con el administrador");
         });
 
     });
