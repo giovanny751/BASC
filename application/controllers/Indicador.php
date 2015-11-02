@@ -22,6 +22,8 @@ class Indicador extends My_Controller {
         $this->load->model('Dimension_model');
         $this->load->model('Tipo_model');
         $this->load->model('Empresa_model');
+        
+        $this->load->model('Indicador_model');
         $this->data['empresa'] = $this->Empresa_model->detail();
         if (!empty($this->data['empresa'][0]->Dim_id) && !empty($this->data['empresa'][0]->Dimdos_id)) {
             $this->data['tipo'] = $this->Tipo_model->detail();
@@ -31,6 +33,7 @@ class Indicador extends My_Controller {
             $this->data['dimension2'] = $this->Dimension2_model->detail();
             if (!empty($this->input->post("ind_id"))) {
                 $this->data["ind_id"] = $this->input->post("ind_id");
+                $this->data["indicador"] = $this->Indicador_model->detailxid($this->input->post("ind_id"))[0];
             }
             $this->layout->view("indicador/nuevoindicador", $this->data);
         } else {
@@ -46,6 +49,32 @@ class Indicador extends My_Controller {
         $this->data['dimension2'] = $this->Dimension2_model->detail();
         $this->data['tipo'] = $this->Tipo_model->detail();
         $this->layout->view("indicador/verindicadores", $this->data);
+    }
+    
+    function guardarindicador(){
+        $this->load->model("Indicador_model");
+        $data = array(
+            "ind_indicador" => $this->input->post("indicador"),
+            "tip_id" => $this->input->post("tipo"),
+            "ind_mide" => $this->input->post("mide"),
+            "dim_id" => $this->input->post("dimensionuno"),
+            "dimdos_id" => $this->input->post("dimensiondos"),
+            "ind_frecuencia" => $this->input->post("frecuencia"),
+            "car_id" => $this->input->post("cargo"),
+            "emp_id" => $this->input->post("nombreempleado"), 
+            "ind_minimo" => $this->input->post("minimo"), 
+            "ind_maximo" => $this->input->post("maximo"), 
+            "est_id" => $this->input->post("estado"), 
+            "ind_objetivo" => $this->input->post("objetivo"), 
+            "ind_observaciones" => $this->input->post("observaciones"), 
+        );
+        $this->Indicador_model->create($data);
+    }
+    
+    function consultarindicador(){
+        $this->load->model("Indicador_model");
+        $tabla = $this->Indicador_model->search($this->input->post("tipo"),$this->input->post("dimensionUno"),$this->input->post("dimesionDos"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($tabla));
     }
 
 }

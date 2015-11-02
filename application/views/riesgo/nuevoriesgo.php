@@ -25,7 +25,7 @@
         <form method="post" id="riesgos">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    <button type="button" class="btn btn-success" id="guardar">
+                    <button type="button" class="btn btn-success" id="<?php echo(!empty($rie_id)) ? "actualizar" : "guardar"; ?>">
                         <?php echo(!empty($rie_id)) ? "Actualizar" : "Guardar"; ?> 
                     </button>
                 </div>
@@ -45,7 +45,7 @@
                         <label for="descripcion"><span class="campoobligatorio">*</span>Descripción</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 "> 
-                        <input type="text" name="descripcion" id="descripcion" class="form-control obligatorio">
+                        <input type="text" name="descripcion" id="descripcion" class="form-control obligatorio" value="<?php echo ((!empty($riesgo->rie_descripcion)) ? $riesgo->rie_descripcion:""); ?>">
                     </div>
                 </div>
                 <div class="row">
@@ -56,7 +56,7 @@
                         <select name="categoria" id="categoria" class="form-control obligatorio">
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($categoria as $ca) { ?>
-                                <option value="<?php echo $ca->rieCla_id ?>"><?php echo $ca->rieCla_categoria ?></option>
+                                <option <?php echo (!empty($riesgo->cat_id) && $riesgo->cat_id == $ca->rieCla_id) ? "selected" : ""; ?> value="<?php echo $ca->rieCla_id ?>"><?php echo $ca->rieCla_categoria ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -68,6 +68,13 @@
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">
                         <select class="form-control obligatorio" id="tipo" name="tipo" >
                             <option value="">::Seleccionar::</option>
+                            <?php 
+                            if (!empty($rie_id)):
+                                foreach ($tipo as $t): ?>
+                                    <option <?php echo ((!empty($riesgo->rieClaTip_id)) && ($t->rieClaTip_id == $riesgo->rieClaTip_id))?"selected":"" ; ?> value="<?php echo $t->rieClaTip_id ?>"><?php echo $t->rieClaTip_tipo ?></option> <?php
+                                endforeach;
+                            endif;
+                            ?>
                         </select>
                     </div>
                 </div>
@@ -79,7 +86,7 @@
                         <select type="text" name="dimensionuno" id="dimensionuno" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($dimension as $d1) { ?>
-                                <option value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
+                                <option <?php echo ((!empty($riesgo->dim1_id)) && ($d1->dim_id == $riesgo->dim1_id))? "selected" : ""; ?> value="<?php echo $d1->dim_id; ?>"><?php echo $d1->dim_descripcion ; ?></option>
                             <?php } ?>
                         </select> 
                     </div>
@@ -92,7 +99,7 @@
                         <select type="text" name="dimensiondos" id="dimensiondos" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($dimension2 as $d2) { ?>
-                                <option value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
+                                <option <?php echo ((!empty($riesgo->dim2_id)) && ($d2->dim_id == $riesgo->dim2_id)?"selected":"") ?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -102,7 +109,7 @@
                         <label for="zona">Lugar/Zona</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">
-                        <input type="text" name="zona" id="zona" class="form-control">
+                        <input type="text" name="zona" id="zona" class="form-control" value="<?php echo ((!empty($riesgo->rie_zona)) ? $riesgo->rie_zona:""); ?>">
                     </div>
                 </div>
                 <div class="row">
@@ -110,7 +117,7 @@
                         <label for="requisito">Requisito legal asociado</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">
-                        <input type="text" name="requisito" id="requisito" class="form-control">
+                        <input type="text" name="requisito" id="requisito" class="form-control" value="<?php echo ((!empty($riesgo->rie_requisito)) ? $riesgo->rie_requisito:""); ?>">
                     </div>
                 </div>
                 <div class="row">
@@ -118,7 +125,7 @@
                         <label for="observaciones">Observaciones</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">
-                        <textarea name="observaciones" id="observaciones" class="form-control"></textarea>
+                        <textarea name="observaciones" id="observaciones" class="form-control"><?php echo ((!empty($riesgo->rie_observaciones)) ? $riesgo->rie_observaciones:""); ?></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -129,7 +136,7 @@
                         <select name="estado" id="estado" class="form-control">
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($estadoaceptacionxcolor as $ec): ?>
-                                <option value="<?php echo $ec->estAce_id ?>"><?php echo $ec->estAce_estado ?></option>
+                                <option <?php echo ((!empty($riesgo->estAce_id)) && ($ec->estAce_id == $riesgo->estAce_id)?"selected":"") ?> value="<?php echo $ec->estAce_id ?>"><?php echo $ec->estAce_estado ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -141,6 +148,13 @@
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">
                         <select name="color" id="color" class="form-control">
                             <option value="">::Seleccionar::</option>
+                            <?php 
+                            if (!empty($rie_id)):
+                                foreach ($color as $co): ?>
+                                    <option <?php echo ((!empty($riesgo->col_id)) && ($co->col_id == $riesgo->col_id)?"selected":"") ?> value="<?php echo $co->col_id ?>"><?php echo $co->col_color ?></option> <?php
+                                endforeach;
+                            endif;
+                            ?>
                         </select>
                     </div>
                 </div>
@@ -151,7 +165,7 @@
                         <label for="actividades"><span class="campoobligatorio">*</span>Actividades</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                        <textarea name="actividades" id="actividades" class="form-control obligatorio"></textarea>
+                        <textarea name="actividades" id="actividades" class="form-control obligatorio"><?php echo ((!empty($riesgo->rie_observaciones)) ? $riesgo->rie_observaciones:""); ?></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -159,13 +173,16 @@
                         <label for="cargos">Cargos</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 "> 
-                        <?php echo listaMultiple2("cargo[]", "cargo", "form-control", "cargo", "car_id", "car_nombre", null, null, null) ?>
-<!--                        <select name="cargo" id="cargo" class="form-control">
-                            <option value="">::Seleccionar::</option>
-                        <?php foreach ($cargo as $c) { ?>
-                                    <option value="<?php echo $c->car_id ?>"><?php echo $c->car_nombre ?></option> 
-                        <?php } ?>
-                        </select>-->
+                        <?php
+                        if (!empty($rie_id)){
+                            foreach ($cargoId as $value) {
+                                $select[] = $value->car_id;
+                            }
+                        }else{
+                            $select[] = 0;
+                        }
+                        ?>
+                        <?php echo listaMultiple2("cargo[]", "cargo", "form-control", "cargo", "car_id", "car_nombre", $select, null, null) ?> 
                     </div>
                 </div>
                 <div class="row">
@@ -173,7 +190,7 @@
                         <label for="fecha">Fecha</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 "> 
-                        <input type="text" name="fecha" id="fecha" class="form-control fecha">
+                        <input type="text" name="fecha" id="fecha" class="form-control fecha" value="<?php echo ((!empty($riesgo->rie_fecha)) ? $riesgo->rie_fecha:""); ?>">
                     </div>
                 </div>
             </div>
@@ -409,7 +426,7 @@
             window.location = "<?php echo base_url("index.php/riesgo/listadoriesgo"); ?>";
         }
     });
-    $("#guardar").click(function () {
+    $("body").on("click","#guardar",function(){
         if (obligatorio("obligatorio")) {
             $.post("<?php echo base_url("index.php/riesgo/guardarriesgo") ?>"
                     , $("#riesgos").serialize()

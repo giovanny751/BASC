@@ -6,10 +6,8 @@ class Riesgo_model extends CI_Model {
         parent::__construct();
     }
     
-    function guardarriesgo($data){ 
-        
+    function guardarriesgo($data){
         $this->db->insert("riesgo",$data);
-        
     }
 
     function create($data) {
@@ -21,9 +19,9 @@ class Riesgo_model extends CI_Model {
         $tarea = $this->db->get("riesgo");
         return $tarea->result();
     }
-    function filtrobusqueda($cargo,$clasificacion,$dimension2,$dimension,$tipo){ 
+    function filtrobusqueda($cargo,$clasificacion,$dimension,$dimension2,$tipo){ 
         
-        if(!empty($cargo))$this->db->where("car_id",$cargo);
+        if(!empty($cargo))$this->db->where("riesgo_cargo.rieCar_id",$cargo);
         if(!empty($clasificacion))$this->db->where("cla_id",$clasificacion);
         if(!empty($dimension2))$this->db->where("dim2_id",$dimension2);
         if(!empty($dimension))$this->db->where("dim1_id",$dimension);
@@ -35,10 +33,12 @@ class Riesgo_model extends CI_Model {
         $this->db->select("riesgo.rie_zona");
         $this->db->select("riesgo.rie_descripcion");
         $this->db->select("riesgo.rie_fecha");
-        $this->db->select("tipo.tip_tipo");
-        $this->db->join("tipo","tipo.tip_id = riesgo.tip_id ");
+        $this->db->select("riesgo_clasificacion_tipo.rieClaTip_tipo");
+        
+        $this->db->join("riesgo_clasificacion_tipo","riesgo_clasificacion_tipo.rieClaTip_id = riesgo.rieClaTip_id ","left");
         $this->db->join("dimension2","dimension2.dim_id = riesgo.dim2_id");
         $this->db->join("dimension","dimension.dim_id = riesgo.dim1_id");
+        $this->db->join("riesgo_cargo","riesgo_cargo.rie_id = riesgo.rie_id","left");
         $riesgo =$this->db->get("riesgo");
         return $riesgo->result();
     }

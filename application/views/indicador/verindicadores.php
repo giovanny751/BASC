@@ -28,17 +28,35 @@
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <div class="form-group">
-                    <label for="cedula">Tipo</label><input type="text" name="cedula" id="cedula" class="form-control">
+                    <label for="tipo">Tipo</label>
+                    <select name="tipo" id="tipo" class="form-control">
+                        <option value="">::Seleccionar::</option>
+                        <?php foreach($tipo as $ti) {?>
+                            <option value="<?php echo $ti->tip_id ?>"><?php echo $ti->tip_tipo ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <div class="form-group">
-                    <label for="nombre">Dimensión 1</label><input type="text" name="nombre" id="nombre" class="form-control">
+                    <label for="dimensionUno">Dimensión 1</label>
+                    <select name="dimensionUno" id="dimensionUno" class="form-control">
+                        <option value="">::Seleccionar::</option>
+                        <?php foreach($dimension as $d1) {?>
+                            <option value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <div class="form-group">
-                    <label for="apellido">Dimensión 2</label><input type="text" name="apellido" id="apellido" class="form-control">
+                    <label for="dimesionDos">Dimensión 2</label>
+                    <select name="dimesionDos" id="dimesionDos" class="form-control">
+                        <option value="">::Seleccionar::</option>
+                        <?php foreach($dimension2 as $d2) {?>
+                            <option value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
             </div>
         </div>
@@ -49,8 +67,8 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="text-align: center">
                 <div class="form-group">
-                    <label>&nbsp;</label><button type="button" class="btn btn-danger limpiar">Limpiar</button>
-                    <label>&nbsp;</label><button type="button" class="btn btn-success consultar">Consultar</button>
+                    <label>&nbsp;</label><button type="button" class="btn btn-danger" id="limpiar">Limpiar</button>
+                    <label>&nbsp;</label><button type="button" class="btn btn-success" id="consultar">Consultar</button>
                 </div>
             </div>
         </div>
@@ -70,11 +88,49 @@
             <th>Responsable</th>
             <th>Opciones</th>
             </thead>
-            <tbody id="bodyuser">
+            <tbody id="bodyIndicador">
             </tbody>
         </table>
-    </div>    
+    </div>
 </div>
+<form method="post" id="fEnvio" action="<?php echo base_url("index.php/indicador/nuevoindicador") ?>">
+    <input type="hidden" name="ind_id" id="ind_id">
+</form>
 <script>
-
+    $("body").on("click",".modificar",function(){
+        $('#ind_id').val($(this).attr('ind_id'));
+        $('#fEnvio').submit();
+    });
+    $("body").on("click","#limpiar",function(){
+        $('select,input').val("");
+    });
+    $("body").on("click","#consultar",function(){
+        var datos = $("#f4").serialize();
+        var url = "<?php echo base_url("index.php/indicador/consultarindicador") ?>";
+        $.post(url,datos)
+                .done(function(msg){
+                    var tbody = "";
+                    $('#bodyIndicador *').remove();
+                    $.each(msg,function(indice,val){
+                        tbody += "<tr>";
+                        tbody += "<td>"+val.tip_tipo+"</td>";
+                        tbody += "<td>"+val.ind_indicador+"</td>";
+                        tbody += "<td>"+val.uno+"</td>";
+                        tbody += "<td>"+val.dos+"</td>";
+                        tbody += "<td>"+val.ind_mide+"</td>";
+                        tbody += "<td>"+val.ind_frecuencia+"</td>";
+                        tbody += "<td>"+val.ind_minimo+"</td>";
+                        tbody += "<td>"+val.ind_maximo+"</td>";
+                        tbody += "<td>"+val.nombre+"</td>";
+                        tbody += '<td><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" ind_id="'+ val.ind_id+'"></i></td>'; 
+                        tbody += "</tr>";
+                    })
+                    $('#bodyIndicador').append(tbody);
+                    alerta("verde","Exito al consultar");
+                })
+                .fail(function(){
+                    alerta("rojo","Error al consultar");
+                });
+        
+    });
 </script>

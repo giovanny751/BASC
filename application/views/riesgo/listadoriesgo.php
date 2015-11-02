@@ -137,7 +137,7 @@
             var tbody = "";
             $.each(msg, function (key, val) {
                 tbody += "<tr>";
-                tbody += "<td>" + val.tip_tipo + "</td>";
+                tbody += "<td>" + val.rieClaTip_tipo + "</td>";
                 tbody += "<td>" + val.rie_descripcion + "</td>";
                 tbody += "<td>" + val.des1 + "</td>";
                 tbody += "<td>" + val.des2 + "</td>";
