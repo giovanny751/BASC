@@ -95,6 +95,7 @@ class AvanceTarea_model extends CI_Model {
         $avance = $this->db->get("avance_tarea");
         return $avance->result();
     }
+    
     function consulta($id_tarea){
         $this->db->select("avance_tarea.*", false);
         $this->db->select("CONCAT(`user`.`usu_nombre`,' ',`user`.`usu_apellido`) as nombre", false);

@@ -17,6 +17,7 @@ class Tareacarpeta_model extends CI_Model {
         $this->db->where("tarea_carpeta.tar_id",$tar_id);
         $this->db->select("tarea_carpeta.tarCar_id");
         $this->db->select("tarea_carpeta.tarCar_nombre");
+        $this->db->select("tarea_carpeta.tarCar_descripcion");
         $this->db->select("tarea_registro.tarReg_version");
         $this->db->select("tarea_registro.tarReg_descripcion");
         $this->db->select("tarea_registro.tarReg_fecha_creacion");
@@ -50,9 +51,6 @@ class Tareacarpeta_model extends CI_Model {
         return $carpeta->result();
     }
     
-    
-    
-    
     function detailxplannombre($pla_id,$nombre,$descripcion){
         
         $this->db->where("regCar_nombre",$nombre);
@@ -71,17 +69,17 @@ class Tareacarpeta_model extends CI_Model {
 //        echo $this->db->last_query();die;
         return $carpeta->result();
     }
-    function eliminarcarpeta($regCar_id){
+    function eliminarcarpeta($tarCar_id){
         
-        $this->db->where("regCar_id",$regCar_id);
-        $this->db->delete("registro_carpeta");
+        $this->db->where("tarCar_id",$tarCar_id);
+        $this->db->delete("tarea_carpeta");
     }
-    function modificarpeta($nombre,$descripcion,$regCar_id){
+    function modificarpeta($nombre,$descripcion,$car_id){
         
-        $this->db->where("regCar_id",$regCar_id);
-        $this->db->set("regCar_nombre",$nombre);
-        $this->db->set("regCar_descripcion",$descripcion);
-        $this->db->update("registro_carpeta");
+        $this->db->where("tarCar_id",$car_id);
+        $this->db->set("tarCar_nombre",$nombre);
+        $this->db->set("tarCar_descripcion",$descripcion);
+        $this->db->update("tarea_carpeta");
         
     }
 }

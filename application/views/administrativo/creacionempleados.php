@@ -352,7 +352,9 @@
                                             <h4 class="panel-title">
                                                 <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id; ?>" aria-expanded="false"> 
                                                     &nbsp;<i class="fa fa-folder-o carpeta"></i>     <?php echo $nom ?>
-                                                </a><i class="fa fa-edit editarcarpeta" car_id="<?php echo $id ?>"></i>
+                                                </a>
+                                                <i class="fa fa-edit editarcarpeta" car_id="<?php echo $id ?>"></i>
+                                                <i class="fa fa-times eliminarcarpeta" car_id="<?php echo $id ?>"></i>
                                             </h4>
                                         </div>
                                         <div id="collapse_<?php echo $id; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -543,29 +545,29 @@
             
         });
 
-        $('body').delegate("#eliminarcarpeta","click",function(){
-                var empCar_id = $(this).attr("empCar_id");
+        $('body').delegate(".eliminarcarpeta","click",function(){
+                var empCar_id = $(this).attr("car_id");
+                if(confirm("Esta seguro de eliminar la carpeta")){
                 $('#empReg_carpeta option[value="'+empCar_id+'"]').remove();
                 $.post("<?php echo base_url("index.php/administrativo/eliminarcarpeta") ?>",
                         {empCar_id : empCar_id}
                 ).done(function(msg){
                     $('a[href="#collapse_'+empCar_id+'"]').parents('.panel-default').remove();
-                    $('#myModal').modal("toggle");
                     alerta("verde","Datos eliminados los datos correctamente");
                 }).fail(function(msg){
                     alerta("verde","Error, por favor comunicarse con el administrador del sistema");
                 });
+            }
         });
 
         $('body').delegate(".editarcarpeta","click",function(){
-            $('#eliminarcarpeta').remove();
+            
             $.post(
                 "<?php echo base_url("index.php/administrativo/cargarempleadocarpeta") ?>",
                 {carpeta : $(this).attr("car_id")}
                 )
                 .done(function(msg){
                     $('#formcarpeta').append("<input type='hidden' value='"+msg.empCar_id+"' name='empCar_id' id='empCar_id' >");
-                    $('#opcionescarpeta').append("<button type='button' id='eliminarcarpeta' class='btn btn-danger' empCar_id='"+msg.empCar_id+"'>Eliminar</button>");
                     $('#nombrecarpeta').val(msg.empCar_nombre);
                     $('#descripcioncarpeta').val(msg.empCar_descripcion);
                     $('#guardarcarpeta').replaceWith("<button type='button' empCar_id='"+msg.empCar_id+"' class='btn btn-primary modificarcarpeta'>Actualizar</button>");
@@ -716,7 +718,9 @@
                                                     <h4 class="panel-title">\n\
                                                         <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.empCar_id + '" aria-expanded="false">\n\
                                                             ' + msg.empCar_nombre + '\n\
-                                                        </a><i class="fa fa-edit editarcarpeta" car_id="'+ msg.empCar_id +'"></i>\n\
+                                                        </a>\n\
+                                                            <i class="fa fa-edit editarcarpeta" car_id="'+ msg.empCar_id +'"></i>\n\
+                                                            <i class="fa fa-times eliminarcarpeta" car_id="'+ msg.empCar_id +'"></i>\n\
                                                     </h4>\n\
                                                 </div>\n\
                                                 <div id="collapse_' + msg.empCar_id + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\

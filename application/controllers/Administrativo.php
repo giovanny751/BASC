@@ -73,13 +73,13 @@ class Administrativo extends My_Controller {
             $this->layout->view("permisos");
         endif;
     }
-    
-    function cargarempleadocarpeta(){
+
+    function cargarempleadocarpeta() {
         $this->load->model('Empleadocarpeta_model');
         $carpeta = $this->Empleadocarpeta_model->cargarcarpeta($this->input->post("carpeta"));
         $this->output->set_content_type('application/json')->set_output(json_encode($carpeta[0]));
     }
-    
+
     function eliminarregistro() {
         try {
             $this->load->model('Empleadoregistro_model');
@@ -88,24 +88,23 @@ class Administrativo extends My_Controller {
             
         }
     }
-    function modificarcarpeta(){
-        
+
+    function modificarcarpeta() {
+
         $this->load->model('Empleadocarpeta_model');
         $carpeta = $this->Empleadocarpeta_model->actualizacarpeta(
-                $this->input->post("nombrecarpeta"),
-                $this->input->post("descripcioncarpeta"),
-                $this->input->post("empCar_id")
-                );
+                $this->input->post("nombrecarpeta"), $this->input->post("descripcioncarpeta"), $this->input->post("empCar_id")
+        );
         $carpeta = $this->Empleadocarpeta_model->cargarcarpeta($this->input->post("empCar_id"));
         $this->output->set_content_type('application/json')->set_output(json_encode($carpeta[0]));
     }
-    function eliminarcarpeta(){
-        
+
+    function eliminarcarpeta() {
+
         $this->load->model('Empleadocarpeta_model');
         $carpeta = $this->Empleadocarpeta_model->eliminarcarpeta(
                 $this->input->post("empCar_id")
-                );
-        
+        );
     }
 
     function searchxid() {
@@ -139,49 +138,49 @@ class Administrativo extends My_Controller {
             $this->load->model('Empleado_model');
             $this->load->model('Empleadoregistro_model');
 
-            
 
-                $tamano = round($_FILES["archivo"]["size"] / 1024, 1) . " KB";
-                $post["empReg_tamano"] = $tamano;
+
+            $tamano = round($_FILES["archivo"]["size"] / 1024, 1) . " KB";
+            $post["empReg_tamano"] = $tamano;
 //                echo $tamano;die;
+
+            $fecha = new DateTime();
+            $post["empgReg_fecha"] = $fecha->format('Y-m-d H:i:s');
+
+
+            //Creamos carpeta con el ID del registro
+            if (isset($_FILES['archivo']['name']))
+                if (!empty($_FILES['archivo']['name']))
+                    $post['empReg_archivo'] = basename($_FILES['archivo']['name']);
+
+            if (empty($emp_id))
+                $emp_id = $post['Emp_Id'];
+            $targetPath = "./uploads/empleado/" . $post['Emp_Id'];
+
+            //De la carpeta idRegistro, creamos carpeta con el id del empleado
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+            $targetPath = "./uploads/empleado/" . $post['Emp_Id'] . '/' . $emp_id;
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+
+            $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
-                $fecha = new DateTime();
-                $post["empgReg_fecha"] = $fecha->format('Y-m-d H:i:s');
-
-
-                //Creamos carpeta con el ID del registro
-                if (isset($_FILES['archivo']['name']))
-                    if (!empty($_FILES['archivo']['name']))
-                        $post['empReg_archivo'] = basename($_FILES['archivo']['name']);
-
-                if (empty($emp_id))
-                    $emp_id = $post['Emp_Id'];
-                $targetPath = "./uploads/empleado/" . $post['Emp_Id'];
-
-                //De la carpeta idRegistro, creamos carpeta con el id del empleado
-                if (!file_exists($targetPath)) {
-                    mkdir($targetPath, 0777, true);
-                }
-                $targetPath = "./uploads/empleado/" . $post['Emp_Id'] . '/' . $emp_id;
-                if (!file_exists($targetPath)) {
-                    mkdir($targetPath, 0777, true);
-                }
-
-                $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
-                if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
-                    
-                }
-                if (empty($this->input->post('empReg_id')))
+            }
+            if (empty($this->input->post('empReg_id')))
                 $emp_id = $this->Empleadoregistro_model->empleado_registro($post);
             else {
                 $this->Empleadoregistro_model->empleado_registroactualizar($post, $this->input->post('empReg_id'));
                 $emp_id = $this->input->post('regEmp_id');
             }
-            
+
             $detallecarpeta = $this->Empleadoregistro_model->detallexcarpeta($post['empReg_carpeta']);
             $this->output->set_content_type('application/json')->set_output(json_encode($detallecarpeta));
         } catch (exception $e) {
-                
+            
         }
     }
 
@@ -288,19 +287,21 @@ class Administrativo extends My_Controller {
         $this->load->model('Empleadotipoaseguradora_model');
         $tipoaseguradora = $this->input->post("tipoaseguradora");
         $data = array();
-        if (!empty($tipoaseguradora)):
-            $nombreaseguradora = $this->input->post("nombreaseguradora");
-            for ($i = 0; $i < count($tipoaseguradora); $i++) {
-                if ($nombreaseguradora[$i] != ""):
-                    $data[$i] = array(
-                        "emp_id" => $id,
-                        "ase_id" => $nombreaseguradora[$i],
-                        "tipAse_id" => $tipoaseguradora[$i]
-                    );
-                endif;
-            }
-            $this->Empleadotipoaseguradora_model->actualizatipo($id, $data);
-        endif;
+        
+//        if (isset($tipoaseguradora)) 
+        if ((!empty($this->input->post("tipoaseguradora")[0])) && (!empty($this->input->post("nombreaseguradora")[0]))) {
+                $nombreaseguradora = $this->input->post("nombreaseguradora");
+                for ($i = 0; $i < count($tipoaseguradora); $i++) {
+                    if ($nombreaseguradora[$i] != ""):
+                        $data[$i] = array(
+                            "emp_id" => $id,
+                            "ase_id" => $nombreaseguradora[$i],
+                            "tipAse_id" => $tipoaseguradora[$i]
+                        );
+                    endif;
+                }
+                $this->Empleadotipoaseguradora_model->actualizatipo($id, $data);
+        }
     }
 
     function consultaaseguradoras() {
@@ -349,7 +350,7 @@ class Administrativo extends My_Controller {
         $estado = $this->input->post('estado');
         $tipocontrato = $this->input->post('tipocontrato');
         $contratosvencidos = $this->input->post('contratosvencidos');
-        $this->data['listado'] = $this->Empleado_model->filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos, $tipocontrato,$dim1,$dim2);
+        $this->data['listado'] = $this->Empleado_model->filtroempleados($cedula, $nombre, $apellido, $codigo, $cargo, $estado, $contratosvencidos, $tipocontrato, $dim1, $dim2);
         $this->output->set_content_type('application/json')->set_output(json_encode($this->data['listado']));
     }
 

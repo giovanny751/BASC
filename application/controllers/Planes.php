@@ -154,7 +154,7 @@ class Planes extends My_Controller {
                 $this->data['carpetas'] = $this->Registrocarpeta_model->detailxplancarpetas($this->input->post('pla_id'));
                 $d = array();
                 foreach ($carpeta as $c) {
-                    $d[$c->regCar_id][$c->regCar_descripcion][] = array(
+                    $d[$c->regCar_id][$c->regCar_nombre." - ".$c->regCar_descripcion][] = array(
                         $c->reg_archivo, 
                         $c->reg_descripcion, 
                         $c->reg_version, 
@@ -264,7 +264,6 @@ class Planes extends My_Controller {
             
         }
     }
-
 
     function guardarplan() {
         try {

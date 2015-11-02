@@ -201,7 +201,7 @@
                                     foreach ($tareas as $tar) {
                                         ?>
                                         <tr>
-                                            <td><button type="button"  class="btn btn-success editarhistorial" tar_id='tarea.tar_id' data-toggle="modal" data-target="#myModal0" >Nuevo avance</button></td>
+                                            <td><i class='fa fa-pencil btn btn-default editarhistorial' tar_id='tarea.tar_id' ></i></td>
                                             <td></td>
                                             <td><?php echo $tar->tip_tipo ?></td>
                                             <td><?php echo $tar->tar_nombre ?></td>
@@ -563,88 +563,6 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="myModal0" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">AGREGAR AVANCE</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form method="post" id="guardaravance">
-                                <input type="hidden" value="" name="idtarea" id="internotarea">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                <label for="fecha">Fecha</label>
-                                            </div>
-                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" style="text-align:center" name="fecha" id="fecha" class="form-control fecha avance" value="<?php echo date("Y-m-d") ?>">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                <label for="progreso">Progreso</label>
-                                            </div>
-                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <select name="progreso" id="progreso" class="form-control avance" style="text-align: center">
-                                                    <option value="">::Seleccionar::</option>
-                                                    <?php for ($i = 1; $i < 101; $i++) { ?>
-                                                        <option value="<?php echo $i; ?>"><?php echo $i . " " . "%"; ?></option>
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                <label for="horastrabajadas">Horas Trabajadas</label>
-                                            </div>
-                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input style="text-align:center" type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance number">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                <label for="costo">Costo</label>
-                                            </div>
-                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" style="text-align:center" name="costo" id="costo" class="form-control avance">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-sx-12 col-sm-12">
-                                                <label for="comentarios">Comentarios</label>
-                                                <textarea name="comentarios" id="comentarios" class="form-control avance"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <center><h4>Notificar a:</h4></center>
-                                        </div>
-                                        <?php foreach ($notificacion as $n): ?>
-                                            <div class="row">
-                                                <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                    <label for="creotarea"><?php echo $n->not_notificacion ?></label>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                    <input type="checkbox" name="notificar[]" value="<?php echo $n->not_id ?>" id="creotarea" class="form-control avance">
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-success" id="gavance">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="modal fade" id="myModal8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content ">
@@ -742,6 +660,12 @@
 </div>
 <script>
 
+    $('body').delegate(".editarhistorial","click",function(){
+        
+        
+        
+    })
+    
     $('body').delegate(".eliminaravance", "click", function () {
         var puntero = $(this);
         $.post(
@@ -765,17 +689,21 @@
     });
 
     $('body').delegate(".eliminarcarpeta", "click", function () {
-        var carpeta = $(this).attr("car_id");
-        var tipo = $(this).attr("tipo");
-        if($(this).attr('tipo') == "r") var url = "<?php echo base_url("index.php/planes/eliminarcarpeta") ?>";
-        else if($(this).attr('tipo') == "c") var url = "<?php echo base_url("index.php/planes/eliminaractividad") ?>";
-        $.post(url,
-                {carpeta: carpeta}
-        ).done(function (msg) {
-            $('a[href="#collapse_' + carpeta + tipo+'"]').parents('.panel-default').remove();
-        }).fail(function (msg) {
-            alerta("rojo", "Error, por favor comunicarse con el administrador del sistema");
-        });
+        if (confirm("Confirma la eliminación")) {
+            var carpeta = $(this).attr("car_id");
+            var tipo = $(this).attr("tipo");
+            if ($(this).attr('tipo') == "r")
+                var url = "<?php echo base_url("index.php/planes/eliminarcarpeta") ?>";
+            else if ($(this).attr('tipo') == "c")
+                var url = "<?php echo base_url("index.php/planes/eliminaractividad") ?>";
+            $.post(url,
+                    {carpeta: carpeta}
+            ).done(function (msg) {
+                $('a[href="#collapse_' + carpeta + tipo + '"]').parents('.panel-default').remove();
+            }).fail(function (msg) {
+                alerta("rojo", "Error, por favor comunicarse con el administrador del sistema");
+            });
+        }
     });
 
     $('body').delegate(".editarcarpeta", "click", function () {
@@ -970,21 +898,6 @@
         });
     });
 
-    $('#gavance').click(function () {
-
-        $.post(
-                "<?php echo base_url("index.php/tareas/guardaravance") ?>",
-                $('#guardaravance').serialize()
-                ).done(function () {
-            $('.avance').val("");
-            $('.avance').prop("checked", false);
-            $('#myModal0').modal("toggle")
-            $('#fecha').val("<?php echo date("Y-m-d") ?>");
-            alerta("verde", "Avance guardado correctamente");
-        }).fail(function () {
-            alerta("Error", "Error por favor comunicarse con el administrador");
-        });
-    });
     $('body').delegate("#guardaractividadpadre", "click", function () {
 
         numero = $('#accordion1').last('div').attr("id");
@@ -1033,7 +946,7 @@
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - " + msg.tres + '\n\
                                                     </a>\n\
                                                         <i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
-                                                        <i class="fa fa-times eliminarcarpeta" title="Eliminar" tipo="'+destino+'" car_id="' + msg.uno + '"></i>\n\
+                                                        <i class="fa fa-times eliminarcarpeta" title="Eliminar" tipo="' + destino + '" car_id="' + msg.uno + '"></i>\n\
                                                 </h4>\n\
                                             </div>\n\
                                             <div id="collapse_' + msg.uno + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\

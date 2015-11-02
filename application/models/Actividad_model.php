@@ -25,6 +25,12 @@ class Actividad_model extends CI_Model {
         $actividad = $this->db->get("actividad_hijo");
         return $actividad->result();  
     }
+    function actividadxPlan($plan){
+        
+        $this->db->where("pla_id",$plan);
+        $avance = $this->db->get("actividad_hijo");
+        return $avance->result();
+    }
 
 
 }

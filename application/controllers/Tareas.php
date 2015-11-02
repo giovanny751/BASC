@@ -23,6 +23,8 @@ class Tareas extends My_Controller {
             $this->load->model('Tarea_model');
             $this->load->model('Cargo_model');
             $this->load->model('Planes_model');
+            $this->load->model('AvanceTarea_model');
+            $this->load->model('Actividad_model');
             $this->load->model('Dimension2_model');
             $this->load->model('Dimension_model');
             $this->load->model('Tipo_model');
@@ -32,12 +34,12 @@ class Tareas extends My_Controller {
             $this->load->model("Tareacarpeta_model");
 
             if (!empty($this->input->post("tar_id"))):
-
+                $this->load->model('Empleado_model');
                 $carpeta = $this->Tareacarpeta_model->detailxtareas($this->input->post('tar_id'));
                 $this->data['carpetas'] = $this->Tareacarpeta_model->detailxtareascarpetas($this->input->post('tar_id'));
                 $d = array();
                 foreach ($carpeta as $c) {
-                    $d[$c->tarCar_id][$c->tarCar_nombre][] = array(
+                    $d[$c->tarCar_id][$c->tarCar_nombre." - ".$c->tarCar_descripcion][] = array(
                         $c->tarReg_archivo,
                         $c->tarReg_descripcion,
                         $c->tarReg_version,
@@ -48,10 +50,10 @@ class Tareas extends My_Controller {
                     );
                 }
                 $this->data['carpeta'] = $d;
-
                 $this->data['tarea'] = $this->Tarea_model->detailxid($this->input->post("tar_id"))[0];
                 $this->data['tarea_norma'] = $this->Tarea_model->tarea_norma($this->input->post("tar_id"));
-//                $this->data['tarea'] = $this->data['tarea'];
+                $this->data["hijo"] = $this->Actividad_model->actividadxPlan($this->data['tarea']->pla_id);
+                $this->data['empleado'] = $this->Empleado_model->empleadoxcargo($this->data['tarea']->car_id);
             endif;
             $this->data['pla_id'] = "";
             if (!empty($this->input->post("pla_id"))) {
@@ -70,6 +72,30 @@ class Tareas extends My_Controller {
             $this->layout->view("permisos");
         }
     }
+    function consultacarpeta(){
+        
+        $this->load->model("Tareacarpeta_model");
+        $data = $this->Tareacarpeta_model->detailxid($this->input->post("carpeta"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
+    }
+    
+    function actualizarcarpeta(){
+        
+        $this->load->model("Tareacarpeta_model");
+        $this->Tareacarpeta_model->modificarpeta(
+                $this->input->post("nombrecarpeta")
+                ,$this->input->post("descripcioncarpeta")
+                ,$this->input->post("tarCar_id"));
+        $data = $this->Tareacarpeta_model->detailxid($this->input->post("tarCar_id"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
+    }
+    
+    function eliminarregistrocarpeta(){
+        
+        $this->load->model("Tareacarpeta_model");
+        $this->Tareacarpeta_model->eliminarcarpeta($this->input->post("carpeta"));
+    }
+    
     function eliminartarea(){
         
         $this->load->model("Tarea_model");
@@ -245,7 +271,6 @@ class Tareas extends My_Controller {
                 "usu_id" => $this->data["usu_id"]
             );
             $id = $this->Avancetarea_model->create($data, $this->input->post());
-            $result = $this->Avancetarea_model->consulta($this->input->post('idtarea'));
             $notificar = array();
             if (!empty($this->input->post("notificar"))):
                 $notificacion = $this->input->post("notificar");
@@ -257,8 +282,6 @@ class Tareas extends My_Controller {
                 }
                 $this->Avancenotificacion_model->create($notificar);
             endif;
-
-            $this->output->set_content_type('application/json')->set_output(json_encode($result));
         } catch (exception $e) {
             
         }
@@ -281,7 +304,7 @@ class Tareas extends My_Controller {
             $this->load->model('Tarea_model');
             if (!empty($this->input->post('id'))):
                 $data = array(
-                    "act_id" => $this->input->post("actividad"),
+                    "actHij_id" => $this->input->post("actividad"),
                     "car_id" => $this->input->post("cargo"),
                     "claRie_id" => $this->input->post("clasificacionriesgo"),
                     "tar_costopresupuestado" => $this->input->post("costrospresupuestados"),
@@ -304,7 +327,7 @@ class Tareas extends My_Controller {
                 $consultaxid = $this->Tarea_model->detailxid($this->input->post('id'));
             else:
                 $data = array(
-                    "act_id" => $this->input->post("actividad"),
+                    "actHij_id" => $this->input->post("actividad"),
                     "car_id" => $this->input->post("cargo"),
                     "claRie_id" => $this->input->post("clasificacionriesgo"),
                     "tar_costopresupuestado" => $this->input->post("costrospresupuestados"),
