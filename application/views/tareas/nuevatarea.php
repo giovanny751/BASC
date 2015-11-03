@@ -61,10 +61,10 @@
                         <select name="actividad" id="actividad" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php
-                            if (!empty($hijo))
-                                foreach ($hijo as $h):
+                            if (!empty($actividades))
+                                foreach ($actividades as $h):
                                     ?>
-                                    <option <?php echo ($h->actHij_id == $tarea->actHij_id) ? "selected" : ""; ?> value='<?php echo $h->actHij_id ?>'><?php echo $h->actHij_nombre ?></option>
+                                    <option <?php echo ($h->actPad_id == $tarea->actHij_id) ? "selected" : ""; ?> value='<?php echo $h->actPad_id ?>'><?php echo $h->actPad_nombre." - ".$h->actPad_codigo ?></option>
                                     <?php
                                 endforeach;
                             ?>

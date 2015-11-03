@@ -17,6 +17,13 @@ class Actividadpadre_model extends CI_Model {
           }
             
     }
+    function detailxplaid($pla_id){
+        
+        $this->db->where("pla_id",$pla_id);
+        $retult=$this->db->get('actividad_padre');
+        return $retult->result();
+        
+    }
     function consultar_actividad_padre($actPad_id){
         $this->db->where('actPad_id',$actPad_id);
         $retult=$this->db->get('actividad_padre');

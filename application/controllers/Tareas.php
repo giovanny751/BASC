@@ -63,6 +63,8 @@ class Tareas extends My_Controller {
             $this->data['pla_id'] = "";
             if (!empty($this->input->post("pla_id"))) {
                 $this->data['pla_id'] = $this->input->post("pla_id");
+                $this->load->model('Actividadpadre_model');
+                $this->data["actividades"] = $this->Actividadpadre_model->detailxplaid($this->input->post("pla_id"));
             }
             $this->data['categoria'] = $this->Riesgoclasificacion_model->detail();
             $this->data['notificacion'] = $this->Notificacion_model->detail();
