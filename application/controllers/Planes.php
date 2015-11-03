@@ -15,9 +15,7 @@ class Planes extends My_Controller {
         $this->data["usu_id"] = $this->session->userdata('usu_id');
         validate_login($this->data["usu_id"]);
     }
-
-   
-
+    
     function guardarregistroempleado() {
         try {
             $post = $this->input->post();
@@ -176,7 +174,9 @@ class Planes extends My_Controller {
                         $ac->actHij_presupuestoTotal,
                         $ac->actHij_descripcion,
                         $ac->actHij_nombre,
-                        $ac->actHij_id
+                        $ac->actHij_id,
+                        $ac->fechainicio,
+                        $ac->fechafin
                     );
                 }
                 $this->data["actividades"] = $i;

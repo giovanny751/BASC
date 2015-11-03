@@ -232,7 +232,7 @@
                                 <label for="estado">Fecha de creación</label>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <input type="text" value="<?php echo (!empty($tarea->tar_fechaCreacion)) ? $tarea->tar_fechaCreacion : ""; ?>" name="fechacreacion" id="fechacreacion" readonly="readonly" class="form-control" >
+                                <input type="text" value="<?php echo (!empty($tarea->tar_fechaCreacion)) ? $tarea->tar_fechaCreacion : date('Y-m-d'); ?>" name="fechacreacion" id="fechacreacion" readonly="readonly" class="form-control" >
                             </div>
                         </div>
                     </div>
@@ -244,7 +244,7 @@
                                 <label for="fechamodificacion">Fecha de modificación</label>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <input type="text" value="<?php echo (!empty($tarea->tar_fechaUltimaMod)) ? $tarea->tar_fechaUltimaMod : date('Y-m-d'); ?>" name="fechamodificacion" id="fechamodificacion" readonly="readonly" class="form-control" >
+                                <input type="text" value="<?php echo (!empty($tarea->tar_fechaUltimaMod)) ? $tarea->tar_fechaUltimaMod : ""; ?>" name="fechamodificacion" id="fechamodificacion" readonly="readonly" class="form-control" >
                             </div>
                         </div>
                     </div>
@@ -293,10 +293,10 @@
             <div class="portlet-body">
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
-                        <li class="active">
+                        <li <?php  echo (empty($avance))?"class='active'":""; ?>>
                             <a data-toggle="tab" href="#tab1">Avance</a>
                         </li>
-                        <li>
+                        <li <?php  echo (!empty($avance))?"class='active'":""; ?>>
                             <a data-toggle="tab" href="#tab2">Agragar Avance</a>
                         </li>
                         <li>
@@ -304,7 +304,7 @@
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div id="tab1" class="tab-pane active">
+                        <div id="tab1" class="tab-pane <?php  echo (empty($avance))?"active":""; ?>">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="portlet">
@@ -332,10 +332,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="tab2" class="tab-pane">
+                        <div id="tab2" class="tab-pane <?php  echo (!empty($avance))?"active":""; ?>">
                             <form method="post" id="guardaravance">
                                 <input type="hidden" value="<?php echo (!empty($tarea->tar_id)) ? $tarea->tar_id : ""; ?>" name="idtarea" id="interno">
-                                <input type="hidden" value="" name="avaTar_id" id="avaTar_id">
+                                <input type="hidden" value="<?php echo (!empty($avance[0]->avaTar_id))?$avance[0]->avaTar_id:"";   ?>" name="avaTar_id" id="avaTar_id">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
                                         <div class="row">
@@ -343,7 +343,8 @@
                                                 <label for="fecha">Fecha</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" style="text-align:center" name="fecha" id="fecha" class="form-control fecha avance">
+                                                
+                                                <input value="<?php echo (!empty($avance[0]->avaTar_fecha))?$avance[0]->avaTar_fecha:"";   ?>"  type="text" style="text-align:center" name="fecha" id="fecha" class="form-control fecha avance">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -354,7 +355,7 @@
                                                 <select name="progreso" id="progreso" class="form-control avance" style="text-align: center">
                                                     <option value="">::Seleccionar::</option>
                                                     <?php for ($i = 1; $i < 101; $i++) { ?>
-                                                        <option value="<?php echo $i; ?>"><?php echo $i . " " . "%"; ?></option>
+                                                    <option <?php echo ((!empty($avance[0]->avaTar_progreso)) && ($avance[0]->avaTar_progreso == $i))?"selected":"";  ?> value="<?php echo $i; ?>"><?php echo $i . " " . "%"; ?></option>
                                                     <?php } ?>
                                                 </select>
                                             </div>
@@ -364,7 +365,7 @@
                                                 <label for="horastrabajadas">Horas Trabajadas</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input style="text-align:center" type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance number">
+                                                <input value="<?php echo (!empty($avance[0]->avaTar_horasTrabajadas))?$avance[0]->avaTar_horasTrabajadas:"";?>" style="text-align:center" type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance number">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -372,7 +373,7 @@
                                                 <label for="costo">Costo</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" style="text-align:center" name="costo" id="costo" class="form-control avance">
+                                                <input value="<?php echo (!empty($avance[0]->avaTar_costo))?$avance[0]->avaTar_costo:""; ?>" type="text" style="text-align:center" name="costo" id="costo" class="form-control avance">
                                             </div>
                                         </div>
                                     </div>
@@ -380,7 +381,7 @@
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-sx-12 col-sm-12">
                                                 <label for="comentarios">Comentarios</label>
-                                                <textarea name="comentarios" id="comentarios" class="form-control avance"></textarea>
+                                                <textarea  name="comentarios" id="comentarios" class="form-control avance"><?php echo (!empty($avance[0]->avaTar_comentarios))?$avance[0]->avaTar_comentarios:""; ?></textarea>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -808,6 +809,7 @@
                     alerta("Error", "Error por favor comunicarse con el administrador");
                 })
     });
+    $('document').ready(function(){
     $('.tabbable a[href="#tab2"]').click(function () {
         $('#avaTar_id').val('')
         $('#fecha').val('')
@@ -815,7 +817,8 @@
         $('#horastrabajadas').val('')
         $('#costo').val('')
         $('#comentarios').val('')
-    })
+    });
+    });
 
     $(".flecha").click(function () {
         var url = "<?php echo base_url("index.php/tareas/consultaTareasFlechas") ?>";

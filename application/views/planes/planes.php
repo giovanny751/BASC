@@ -201,8 +201,8 @@
                                     foreach ($tareas as $tar) {
                                         ?>
                                         <tr>
-                                            <td><i class='fa fa-pencil btn btn-default editarhistorial' tar_id='tarea.tar_id' ></i></td>
-                                            <td></td>
+                                            <td><i class='fa fa-pencil btn btn-default editarhistorial' avance="<?php echo $tar->avaTar_id?>" tar_id='<?php echo $tar->tar_id ?>' ></i></td>
+                                            <td><?php echo $tar->progreso ?></td>
                                             <td><?php echo $tar->tip_tipo ?></td>
                                             <td><?php echo $tar->tar_nombre ?></td>
                                             <td><?php echo $tar->tar_fechaInicio ?></td>
@@ -320,8 +320,8 @@
                                                                     <?php foreach ($num as $numero => $campo): ?>
                                                                         <tr>
                                                                             <td><?php echo $campo[4] ?></td>
-                                                                            <td><?php echo $campo[0] ?></td>
-                                                                            <td><?php echo $campo[1] ?></td>
+                                                                            <td><?php echo $campo[6] ?></td>
+                                                                            <td><?php echo $campo[7] ?></td>
                                                                             <td><?php echo $campo[2] ?></td>
                                                                             <td><?php echo $campo[3] ?></td>
                                                                             <td>
@@ -579,7 +579,7 @@
                                         <select id="idpadre" name="idpadre" class="form-control idpadre2">
                                             <option value="">::Seleccionar::</option>
                                             <?php foreach ($actividadpadre as $ap): ?>
-                                                <option value="<?php echo $ap->actPad_id ?>  "><?php echo $ap->actPad_nombre ?></option>
+                                                <option value="<?php echo $ap->actPad_id ?>"><?php echo $ap->actPad_nombre." - ".$ap->actPad_codigo ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -662,8 +662,12 @@
 
     $('body').delegate(".editarhistorial","click",function(){
         
-        
-        
+        var form = "<form method='post' id='frmFormAvance' action='<?php echo base_url("index.php/tareas/nuevatarea")?>'>";
+            form += "<input type='hidden' name='avaTar_id' value='"+$(this).attr("avance")+"'>"
+            form += "<input type='hidden' name='tar_id' value='"+$(this).attr("tar_id")+"'>"
+            form += "</form>";
+            $("body").append(form);
+            $('#frmFormAvance').submit();
     })
     
     $('body').delegate(".eliminaravance", "click", function () {
@@ -908,7 +912,7 @@
                     )
                     .done(function (msg) {
                         $('.acobligatorio').val('');
-                        var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>";
+                        var option = "<option value='" + msg.uno + "'>" + msg.dos+" - "+msg.tres + "</option>";
                         $('#idpadre').append(option);
                         var contenido = '<table class="table table-hover table-bordered">\n\
                                                         <thead>\n\
@@ -1100,20 +1104,24 @@
         if (acthij_id == "")
             return false;
         var url = '<?php echo base_url("index.php/tareas/editar_actividad_hijo") ?>';
-        $.post(url, {acthij_id: acthij_id})
+        $.post(url, 
+        {
+            acthij_id: acthij_id,
+            actPad_id: $(this).parents(".panel").attr('id')
+        })
                 .done(function (msg) {
-                    $('.nombre2').val(msg.actHij_nombre)
-                    $('.idpadre2').val(msg.actHij_padreid)
-                    $('.fechainicio2').val(msg.actHij_fechaInicio)
-                    $('.descripcion2').val(msg.actHij_descripcion)
-                    $('#fechafinalizacion').val(msg.actHij_fechaFinalizacion)
-                    $('#modoverificacion').val(msg.actHij_modoVerificacion)
-                    $('#peso').val(msg.actHij_peso)
-                    $('#riesgosancion').val(msg.actHij_riesgoSancion)
-                    $('#tipo').val(msg.tip_id)
-                    $('#presupuestototal').val(msg.actHij_presupuestoTotal)
-                    $('.costoreal2').val(msg.actHij_costoReal)
-                    $('#actHij_id').val(msg.actHij_id)
+                    $('#idpadre').val(msg[0].actHij_padreid)
+                    $('.nombre2').val(msg[0].actHij_nombre)
+                    $('.fechainicio2').val(msg[0].minimo)
+                    $('.descripcion2').val(msg[0].actHij_descripcion)
+                    $('#fechafinalizacion').val(msg[0].maximo)
+                    $('#modoverificacion').val(msg[0].actHij_modoVerificacion)
+                    $('#peso').val(msg[0].actHij_peso)
+                    $('#riesgosancion').val(msg[0].actHij_riesgoSancion)
+                    $('#tipo').val(msg[0].tip_id)
+                    $('#presupuestototal').val(msg[0].actHij_presupuestoTotal)
+                    $('.costoreal2').val(msg[0].actHij_costoReal)
+                    $('#actHij_id').val(msg[0].actHij_id)
                 })
                 .fail(function () {
                     alerta('rojo', 'Error, por favor comunicarse con el administrador del sistema')

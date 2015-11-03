@@ -49,6 +49,11 @@ class Tareas extends My_Controller {
                         $c->tarReg_id
                     );
                 }
+                $this->data["avance"] = "";
+                if(!empty($this->input->post('avaTar_id'))):
+                    $this->load->model("AvanceTarea_model");
+                    $this->data["avance"] = $this->AvanceTarea_model->avancexTarea($this->input->post("avaTar_id"));
+                endif;
                 $this->data['carpeta'] = $d;
                 $this->data['tarea'] = $this->Tarea_model->detailxid($this->input->post("tar_id"))[0];
                 $this->data['tarea_norma'] = $this->Tarea_model->tarea_norma($this->input->post("tar_id"));
@@ -449,8 +454,9 @@ class Tareas extends My_Controller {
 
     function editar_actividad_hijo() {
         $this->load->model('Registro_model');
+        $this->load->model('Tarea_model');
         $data = $this->Registro_model->editar_actividad_hijo($this->input->post());
-        $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
     function guardarcarpetatarea() {

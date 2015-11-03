@@ -118,6 +118,12 @@ class AvanceTarea_model extends CI_Model {
         $this->db->delete("avance_tarea");
         
     }
+    function avancexTarea($avaTar_id){
+        
+        $this->db->where("avaTar_id",$avaTar_id);
+        $data = $this->db->get("avance_tarea");
+        return $data->result();
+    }
 
 }
 
