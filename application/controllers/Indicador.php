@@ -34,6 +34,7 @@ class Indicador extends My_Controller {
             if (!empty($this->input->post("ind_id"))) {
                 $this->data["ind_id"] = $this->input->post("ind_id");
                 $this->data["indicador"] = $this->Indicador_model->detailxid($this->input->post("ind_id"))[0];
+                $this->data["empleado"] = $this->Empleado_model->empleadoxcargo($this->data["indicador"]->car_id);
             }
             $this->layout->view("indicador/nuevoindicador", $this->data);
         } else {
@@ -69,6 +70,44 @@ class Indicador extends My_Controller {
             "ind_observaciones" => $this->input->post("observaciones"), 
         );
         $this->Indicador_model->create($data);
+    }
+    
+    function actualizarindicador(){
+        $this->load->model("Indicador_model");
+        $data = array(
+            "ind_indicador" => $this->input->post("indicador"),
+            "tip_id" => $this->input->post("tipo"),
+            "ind_mide" => $this->input->post("mide"),
+            "dim_id" => $this->input->post("dimensionuno"),
+            "dimdos_id" => $this->input->post("dimensiondos"),
+            "ind_frecuencia" => $this->input->post("frecuencia"),
+            "car_id" => $this->input->post("cargo"),
+            "emp_id" => $this->input->post("nombreempleado"), 
+            "ind_minimo" => $this->input->post("minimo"), 
+            "ind_maximo" => $this->input->post("maximo"), 
+            "est_id" => $this->input->post("estado"), 
+            "ind_objetivo" => $this->input->post("objetivo"), 
+            "ind_observaciones" => $this->input->post("observaciones"), 
+        );
+        $this->Indicador_model->actualizar($this->input->post("ind_id"),$data);
+    }
+        function consultaIndicadorFlechas() {
+        try {
+            $this->load->model("Indicador_model");
+            $this->load->model('Empleado_model');
+            $idIndicador = $this->input->post("idIndicador");
+            $metodo = $this->input->post("metodo");
+            $campos["campos"] = $this->Indicador_model->consultaIndicadorFlechas($idIndicador, $metodo)[0];
+            if (!empty($campos)) {
+                $data["empleado"] = $this->Empleado_model->empleadoxcargo($campos["campos"]->car_id);
+                $campos = array_merge($campos,$data);
+                $this->output->set_content_type('application/json')->set_output(json_encode($campos));
+            }else{
+                $this->output->set_content_type('application/json')->set_output("vacio");
+            }
+        } catch (Exception $e) {
+            echo $e;die;
+        }
     }
     
     function consultarindicador(){

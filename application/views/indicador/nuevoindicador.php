@@ -58,7 +58,7 @@
                             <span class="campoobligatorio">*</span>Indicador
                         </label>
                         <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">    
-                            <input type="text" name="indicador" id="indicador" class="form-control obligatorio">
+                            <input type="text" name="indicador" id="indicador" class="form-control obligatorio" value="<?php echo (isset($indicador->ind_indicador)) ? $indicador->ind_indicador : "" ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -69,7 +69,7 @@
                             <select name="tipo" id="tipo" class="form-control" >
                                 <option value="">::Seleccionar::</option>
                                 <?php foreach ($tipo as $t) { ?>
-                                    <option value="<?php echo $t->tip_id ?>"><?php echo $t->tip_tipo ?></option>
+                                    <option <?php echo (isset($indicador->tip_id) && ($t->tip_id == $indicador->tip_id)) ? "Selected" : "" ;?> value="<?php echo $t->tip_id ?>"><?php echo $t->tip_tipo ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -79,7 +79,7 @@
                             <span class="campoobligatorio">*</span>Que Mide
                         </label>   
                         <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <textarea name="mide" id="mide" class="form-control obligatorio"></textarea>
+                            <textarea name="mide" id="mide" class="form-control obligatorio"><?php echo (isset($indicador->ind_mide)) ? $indicador->ind_mide : "" ?></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -90,7 +90,7 @@
                             <select name="dimensionuno" id="dimensionuno" class="form-control" >
                                 <option value="">::Seleccionar::</option>
                                 <?php foreach ($dimension as $d1) { ?>
-                                    <option value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
+                                    <option <?php echo (isset($indicador->dim_id) && ($d1->dim_id == $indicador->dim_id)) ? "Selected" : "" ;?> value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
                                 <?php } ?>
                             </select> 
                         </div>
@@ -103,7 +103,7 @@
                             <select  name="dimensiondos" id="dimensiondos" class="form-control" >
                                 <option value="">::Seleccionar::</option>
                                 <?php foreach ($dimension2 as $d2) { ?>
-                                    <option value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
+                                    <option <?php echo (isset($indicador->dimdos_id) && ($d2->dim_id == $indicador->dimdos_id)) ? "Selected" : "" ;?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -113,7 +113,7 @@
                             <span class="campoobligatorio">*</span>Frecuencia
                         </label>   
                         <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <input type="text" name="frecuencia" id="frecuencia" class="form-control obligatorio">
+                            <input type="text" name="frecuencia" id="frecuencia" class="form-control obligatorio" value="<?php echo (isset($indicador->ind_frecuencia)) ? $indicador->ind_frecuencia : "" ?>">
                         </div>
                     </div>
                     <div class="row">    
@@ -124,7 +124,7 @@
                             <select name="cargo" id="cargo" class="form-control obligatorio">
                                 <option value="">::Seleccionar::</option>
                                 <?php foreach ($cargo as $c) { ?>
-                                    <option value="<?php echo $c->car_id ?>"><?php echo $c->car_nombre ?></option> 
+                                    <option <?php echo (isset($indicador->car_id) && ($c->car_id == $indicador->car_id)) ? "Selected" : "" ;?> value="<?php echo $c->car_id ?>"><?php echo $c->car_nombre ?></option> 
                                 <?php } ?>
                             </select>
                         </div>
@@ -136,6 +136,12 @@
                         <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
                             <select name="nombreempleado" id="nombreempleado" class="form-control obligatorio">
                                 <option value="">::Seleccionar::</option>
+                                <?php 
+                                if(!empty($ind_id)):
+                                foreach($empleado as $em): ?>
+                                    <option <?php echo (isset($indicador->emp_id) && ($em->Emp_Id == $indicador->emp_id)) ? "Selected" : "" ;?> value="<?php echo $em->Emp_Id ?>"><?php echo $em->Emp_Nombre." ".$em->Emp_Apellidos ?></option>
+                                <?php endforeach;
+                                endif; ?>
                             </select>
                         </div>
                     </div>
@@ -144,7 +150,7 @@
                             Valor mínimo
                         </label>
                         <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <input type="text" name="minimo" id="minimo" class="form-control">
+                            <input type="text" name="minimo" id="minimo" class="form-control" value="<?php echo (isset($indicador->ind_minimo)) ? $indicador->ind_minimo : "" ?>">
                         </div>
                     </div>
                     <div class="row">    
@@ -152,7 +158,7 @@
                             Valor máximo
                         </label> 
                         <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <input type="text" name="maximo" id="maximo" class="form-control">
+                            <input type="text" name="maximo" id="maximo" class="form-control" value="<?php echo (isset($indicador->ind_maximo)) ? $indicador->ind_maximo : "" ?>">
                         </div>
                     </div>
                 </div>
@@ -165,7 +171,7 @@
                             <select name="estado" id="estado" class="form-control obligatorio" >
                                 <option value="">::Seleccionar::</option>
                                 <?php foreach ($estados as $e) { ?>
-                                    <option value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
+                                    <option <?php echo (isset($indicador->est_id) && ($e->est_id == $indicador->est_id)) ? "Selected" : "" ;?> value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -175,7 +181,7 @@
                             <span class="campoobligatorio">*</span>Objetivo
                         </label>
                         <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <textarea id="objetivo" name="objetivo" class="form-control obligatorio"></textarea>
+                            <textarea id="objetivo" name="objetivo" class="form-control obligatorio"><?php echo (isset($indicador->ind_objetivo)) ? $indicador->ind_objetivo : "" ?></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -183,10 +189,11 @@
                             Observaciones
                         </label>
                         <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <textarea id="observaciones" name="observaciones" class="form-control"></textarea>
+                            <textarea id="observaciones" name="observaciones" class="form-control"><?php echo (isset($indicador->ind_observaciones)) ? $indicador->ind_observaciones : "" ?></textarea>
                         </div>
                     </div>
                 </div>
+                <input type="hidden" id="ind_id" name="ind_id" value="<?php echo (!empty($ind_id))? $ind_id : ""; ?>" />
             </form>
         </div>
     </div>
@@ -381,6 +388,18 @@
         }
 
     });
+    $("body").on("click","#actualizar",function(){
+        if (obligatorio("obligatorio")) {
+            $.post("<?php echo base_url("index.php/indicador/actualizarindicador") ?>" , $("#indicador").serialize())
+                .done(function (msg) {
+                    alerta("verde", "Actualizado");
+                })
+                .fail(function (msg) {
+                    alerta("rojo", "Error al actualizar.");
+                });
+        }
+
+    });
     $("body").on("click","#guardar",function(){
         if (obligatorio("obligatorio")) {
             $.post("<?php echo base_url("index.php/indicador/guardarindicador") ?>" , $("#indicador").serialize())
@@ -390,7 +409,7 @@
                         $("#indicador").find("input").value("");
                         $("#indicador").find("textarea").value("");
                         $("#indicador").find("select").value("");
-                        $("#indicador").find("nombreempleado").html("<option>::Seleccionar::</option>");
+                        $("#indicador").find("#nombreempleado").html("<option>::Seleccionar::</option>");
                     }else{
                         window.location = "<?php echo base_url("index.php/indicador/verindicadores"); ?>";
                     }

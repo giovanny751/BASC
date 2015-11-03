@@ -13,6 +13,9 @@
             <a href="#">Riesgos</a>
             <i class="fa fa-angle-right"></i>
         </li>
+        <li class="devolver">
+            <a href="#">Nuevo Riesgo</a>
+        </li>
     </ul>
 </div>
 <div class="widgetTitle">
@@ -165,7 +168,7 @@
                         <label for="actividades"><span class="campoobligatorio">*</span>Actividades</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                        <textarea name="actividades" id="actividades" class="form-control obligatorio"><?php echo ((!empty($riesgo->rie_observaciones)) ? $riesgo->rie_observaciones:""); ?></textarea>
+                        <textarea name="actividades" id="actividades" class="form-control obligatorio"></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -194,6 +197,7 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="rie_id" id="rie_id" value="<?php echo (!empty($rie_id))? $rie_id:""; ?>" />
         </form>
     </div>
     <?php if (!empty($rie_id)): ?>
@@ -355,7 +359,6 @@
             </div>
         </div>
     <?php endif; ?>
-    <input type="hidden" id="rieid" name="rieid" />
 </div>
 <script>
 
@@ -397,26 +400,39 @@
 
     $(".flecha").click(function () {
         var url = "<?php echo base_url("index.php/riesgo/consultaRiesgoFlechas") ?>";
-        var idRiesgo = $("#rieid").val();
+        var idRiesgo = $("#rie_id").val();
         var metodo = $(this).attr("metodo");
         if (metodo != "documento") {
             $.post(url, {idRiesgo: idRiesgo, metodo: metodo})
                     .done(function (msg) {
-                        $("#riesgos input[type='text'],#riesgos select").val("");
-                        $("#rieid").val(msg.rie_id);
-                        $("#descripcion").val(msg.rie_descripcion);
-                        $("#categoria").val(msg.cat_id);
-                        $("#tipo").val(msg.tip_id);
-                        $("#dimensionuno").val(msg.dim1_id);
-                        $("#dimensiondos").val(msg.dim2_id);
-                        $("#zona").val(msg.rie_zona);
-                        $("#requisito").val(msg.rie_requisito);
-                        $("#observaciones").val(msg.rie_observaciones);
-                        $("#estado").val(msg.est_id);
-                        $("#color").val(msg.col_id);
-                        $("#actividades").val(msg.act_id);
-                        $("#cargos").val(msg.car_id);
-                        $("#fecha").val(msg.rie_fecha);
+                        $("#riesgos").find("#tipo,#color").html("<option value=''>::Seleccionar::</option>");
+                        $("#riesgos").find("input[type='text']").val("");
+                        $("#riesgos").find("select").val("");
+                        $("#rie_id").val(msg.campos.rie_id);
+                        $("#descripcion").val(msg.campos.rie_descripcion);
+                        $("#categoria").val(msg.campos.cat_id);
+                        $("#dimensionuno").val(msg.campos.dim1_id);
+                        $("#dimensiondos").val(msg.campos.dim2_id);
+                        $("#zona").val(msg.campos.rie_zona);
+                        $("#requisito").val(msg.campos.rie_requisito);
+                        $("#observaciones").val(msg.campos.rie_observaciones);
+                        $("#fecha").val(msg.campos.rie_fecha);
+                        $("#estado").val(msg.campos.estAce_id);
+                        var selectTipo = "";
+                        $.each(msg.tipo,function(indice,val){
+                            selectTipo += "<option "+((val.rieClaTip_id == msg.campos.rieClaTip_id) ? "selected" : "")+" value='"+val.rieClaTip_id+"'>"+val.rieClaTip_tipo+"</option>";
+                        });
+                        $("#tipo").append(selectTipo);
+                        var selectColor = "";
+                        $.each(msg.color,function(indice,val){
+                            selectColor += "<option "+((val.col_id == msg.campos.col_id) ? "selected" : "")+" value='"+val.col_id+"'>"+val.col_color+"</option>";
+                        });
+                        $("#color").append(selectColor);
+                        $.each(msg.cargoId,function(indice,val){
+                            $('#cargo option[value=' + val.car_id + ']').attr('selected', true);
+                        });
+                        //pendiente actividades
+                        //$("#actividades").val(msg.act_id);
                     })
                     .fail(function (msg) {
                         alerta("rojo", "Error en el sistema por favor comunicarse con el administrador del sistema");
@@ -431,8 +447,28 @@
             $.post("<?php echo base_url("index.php/riesgo/guardarriesgo") ?>"
                     , $("#riesgos").serialize()
                     ).done(function (msg) {
-                         alerta("verde", "Guardado");   
+                         alerta("verde", "Guardado");  
+                        if(confirm("Desea guardar otro riesgo?")){
+                            $("#riesgos").find("input").value("");
+                            $("#riesgos").find("textarea").value("");
+                            $("#riesgos").find("select").value("");
+                            $("#riesgos").find("#tipo").html("<option>::Seleccionar::</option>");
+                        }else{
+                            window.location = "<?php echo base_url("index.php/riesgo/listadoriesgo"); ?>";
+                        }
             })
+                    .fail(function (msg) {
+                        alerta("rojo", "Error en el sistema por favor comunicarse con el administrador del aplicativo");
+                    });
+        }
+    });
+    $("body").on("click","#actualizar",function(){
+        if (obligatorio("obligatorio")) {
+            $.post("<?php echo base_url("index.php/riesgo/actualizarriesgo") ?>"
+                    , $("#riesgos").serialize()
+                    ).done(function (msg) {
+                         alerta("verde", "Actualizado");  
+                    })
                     .fail(function (msg) {
                         alerta("rojo", "Error en el sistema por favor comunicarse con el administrador del aplicativo");
                     });

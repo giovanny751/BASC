@@ -28,11 +28,11 @@
         <form method="post" id="busquedariesgo">
             <div class="col-lg-3 col-sm-3 col-md-3">
                 <div class="form-group">
-                    <label for="clasificacion">Clasificación</label>
-                    <select class="form-control" name="clasificacion" id="clasificacion">
+                    <label for="categoria">Categoría</label>
+                    <select class="form-control" name="categoria" id="categoria">
                         <option value="">::Seleccionar::</option>
-                        <?php foreach($clasificacion as $cla): ?>
-                        <option value="<?php echo $cla->rieCla_id ?>"><?php echo $cla->rieCla_categoria ?></option>
+                        <?php foreach($categoria as $ca): ?>
+                        <option value="<?php echo $ca->rieCla_id ?>"><?php echo $ca->rieCla_categoria ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -74,7 +74,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-danger" style="margin-top: 28px">Limpiar</button>
+                    <button type="button" class="btn btn-danger limpiar" style="margin-top: 28px">Limpiar</button>
                     <button type="button" class="btn btn-success buscar" style="margin-top: 28px">Buscar</button>
                 </div>
             </div>
@@ -111,7 +111,7 @@
         $('#rie_id').val($(this).attr('rie_id'));
         $('#f13').submit();
     });
-    $('#clasificacion').change(function () {
+    $('#categoria').change(function () {
 
         $.post(
                 "<?php echo base_url("index.php/riesgo/consultatiporiesgo") ?>",
@@ -127,6 +127,9 @@
             alerta("rojo", "Error en el sistema por favor comunicarse con el administrador del sistema");
         });
 
+    });
+    $(".limpiar").click(function(){
+        $("select, input").val("");
     });
     
     $('.buscar').click(function () {
@@ -145,7 +148,7 @@
                 tbody += "<td></td>";
                 tbody += "<td></td>";
                 tbody += "<td>" + val.rie_fecha + "</td>";
-                tbody += "<td></td>";
+                tbody += "<td>" + val.estado + "</td>";
                 tbody += "<td></td>";
                 tbody += '<td><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" rie_id="'+ val.rie_id+'" ></i></td>'; 
                 tbody += "</tr>";

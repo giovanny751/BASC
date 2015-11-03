@@ -13,6 +13,10 @@ class Riesgocargo_model extends CI_Model {
         $tarea = $this->db->get("riesgo_cargo");
         return $tarea->result();
     }
+    function eliminarcargoriesgo($idRiesgo){
+        $this->db->where("rie_id",$idRiesgo);
+        $this->db->delete("riesgo_cargo");
+    }
     
 }
 

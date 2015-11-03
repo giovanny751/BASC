@@ -7,6 +7,10 @@ class Indicador_model extends CI_Model {
     function create($data){
         $this->db->insert("indicador",$data);
     }
+    function actualizar($id,$data){
+        $this->db->where("ind_id",$id);
+        $this->db->update("indicador",$data);
+    }
     function search($tipo,$dimension,$dimensiondos){
         
         if(!empty($tipo))$this->db->where("indicador.tip_id",$tipo);
@@ -33,10 +37,35 @@ class Indicador_model extends CI_Model {
         return $indicadores->result();
     }
     function detailxid($id){
-        
         $this->db->where("ind_id",$id);
         $indicadores = $this->db->get("indicador");
         return $indicadores->result();
+    }
+    function consultaIndicadorFlechas($idIndicador,$metodo){
+            switch ($metodo){
+                case "flechaIzquierdaDoble":
+                    $this->db->where("ind_id = (select min(ind_id) from indicador)");
+                    break;
+                case "flechaIzquierda":
+                    $this->db->where("ind_id < '".$idIndicador."' ");
+                    $this->db->order_by("ind_id desc");
+                    break;
+                case "flechaDerecha":
+                    $this->db->where("ind_id > '".$idIndicador."' ");
+                    $this->db->order_by("ind_id asc");
+                    break;
+                case "flechaDerechaDoble":
+                    $this->db->where("ind_id = (select max(ind_id) from indicador)");
+                    break;
+                default :
+                    die;
+                    break;
+            }
+        $usuario = $this->db->get("indicador"
+                . ""
+                . "",1);
+        //echo $this->db->last_query();die;
+        return $usuario->result();
     }
     
 }
