@@ -233,7 +233,7 @@ class Ingreso_model extends CI_Model {
         $this->db->delete('permisos');
     }
     function rolesasignados($id){
-        $this->db->select('permisos_rol.menu_id');
+        $this->db->select('permisos_rol.menu_id,perRol_crear,perRol_modificar,perRol_eliminar');
         $this->db->where('rol_id',$id);
         $rol = $this->db->get('permisos_rol');
         return $rol->result_array();

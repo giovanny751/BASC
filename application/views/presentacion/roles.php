@@ -1,7 +1,7 @@
 <!-- Colorear Menu -->
 <script type="text/javascript">
-        $(".menORGANIZACIÓN").addClass("active open");
-        $(".subMenROL").addClass("active");
+    $(".menORGANIZACIÓN").addClass("active open");
+    $(".subMenROL").addClass("active");
 </script>
 <div class="page-bar" style="background-color: transparent !important;">
     <ul class="page-breadcrumb">
@@ -28,10 +28,10 @@
             <div class="tools">
                 <a href="javascript:;" class="collapse" data-original-title="" title="">
                 </a>
-<!--                <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title="">
-                </a>
-                <a href="javascript:;" class="reload" data-original-title="" title="">
-                </a>-->
+                <!--                <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title="">
+                                </a>
+                                <a href="javascript:;" class="reload" data-original-title="" title="">
+                                </a>-->
                 <a href="javascript:;" class="remove" data-original-title="" title="">
                 </a>
             </div>
@@ -81,13 +81,18 @@
 
                             </div>
                             <div class="form-group datas"  style="overflow: scroll;height: 250px;">
-                                <label>Permisos </label>
+                                <b>Permisos <span style="float:right">1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;</span></b>
                                 <?php
                                 echo $content;
                                 ?>
                             </div>
                         </form>    
                     </div>
+                    <b>Permisos</b><br>
+                    <b>1</b> Incluir al menu<br>
+                    <b>2</b> Crear <br>
+                    <b>3</b> Modificar <br>
+                    <b>4</b> Eliminar <br>
                 </div>
             </div>		
             <div class="modal-footer">
@@ -106,14 +111,14 @@
 <script>
 
 
-    $('.seleccionados').click(function () {
+    $('.seleccionados').click(function() {
         var atr = $(this).attr('atr')
         var marcado = $(this).is(":checked");
         if (marcado == true)
             var r = true;
         else
             var r = false;
-        $("." + atr).each(function () {
+        $("." + atr).each(function() {
             $(this).prop('checked', r);
         });
     })
@@ -121,25 +126,25 @@
 //------------------------------------------------------------------------------
 //                      ELIMINAR ROL    
 //------------------------------------------------------------------------------ 
-    $('body').delegate('.eliminar', 'click', function () {
+    $('body').delegate('.eliminar', 'click', function() {
         $(this).parents('tr').remove();
         $.post("<?php echo base_url('index.php/presentacion/eliminarrol'); ?>", {id: $(this).attr('rol')})
-                .done(function (msg) {
+                .done(function(msg) {
                     alerta("verde", "Eliminado con exito");
-                }).fail(function (msg) {
+                }).fail(function(msg) {
             alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
         });
     });
 //------------------------------------------------------------------------------
 //                      NUEVO ROL    
 //------------------------------------------------------------------------------    
-    $('body').delegate('.guardar', 'click', function () {
+    $('body').delegate('.guardar', 'click', function() {
         if (obligatorio("obligatorio")) {
-            $.post("<?php echo base_url('index.php/presentacion/guardarroles'); ?>", $('#nuevorol').serialize(), function (data) {
+            $.post("<?php echo base_url('index.php/presentacion/guardarroles'); ?>", $('#nuevorol').serialize(), function(data) {
                 $('#myModal').modal('hide');
                 var filas = "";
                 data = jQuery.parseJSON(data);
-                $.each(data, function (key, val) {
+                $.each(data, function(key, val) {
                     filas += "<tr>";
                     filas += "<td>" + val.rol_nombre + "</td>";
                     filas += "<td>" + val.rol_fechaCreacion + "</td>";
@@ -155,7 +160,7 @@
         }
     });
 
-    $('.opciones').click(function () {
+    $('.opciones').click(function() {
         $(".nombres").remove()
         $('input[type="checkbox"]').prop('checked', false);
         $('.agregarrol').append('<label class="nombres">Nombre</label><input type="text" id="nombre" name="nombre" class="form-control nombres obligatorio">');
@@ -163,19 +168,44 @@
         $('.seleccionados').prop('checked', false);
     });
 
-    $("body").delegate(".modificar","click",  function () {
-        
+    $("body").delegate(".modificar", "click", function() {
+
 //        alert("444");
         $('#rolesuser').val($(this).attr('rol'));
         $('input[type="checkbox"]').parent("span").removeClass("checked");
         $('input[type="checkbox"]').prop('checked', false);
         $('.agregarrol *').remove();
-        $.post("<?php echo base_url('index.php/presentacion/rolesasignados'); ?>", {id: $(this).attr('rol')}, function (data) {
+        $.post("<?php echo base_url('index.php/presentacion/rolesasignados'); ?>", {id: $(this).attr('rol')}, function(data) {
             data = jQuery.parseJSON(data);
-            $.each(data, function (key, val) {
+            $.each(data, function(key, val) {
                 $('.seleccionados[value="' + val.menu_id + '"]').parent("span").addClass("checked");
                 $('.seleccionados[value="' + val.menu_id + '"]').attr('checked', true);
+                if (val.perRol_crear != 0) {
+                    $('.crear2[value="' + val.menu_id + '"]').parent("span").addClass("checked");
+                    $('.crear2[value="' + val.menu_id + '"]').attr('checked', true);
+                }
+                if (val.perRol_modificar != 0) {
+                    $('.modificar2[value="' + val.menu_id + '"]').parent("span").addClass("checked");
+                    $('.modificar2[value="' + val.menu_id + '"]').attr('checked', true);
+                }
+                if (val.perRol_eliminar != 0) {
+                    $('.eliminar2[value="' + val.menu_id + '"]').parent("span").addClass("checked");
+                    $('.eliminar2[value="' + val.menu_id + '"]').attr('checked', true);
+                }
             });
         });
     });
 </script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    $('body').tooltip();
+  });
+  </script>
+  <style>
+  label {
+    display: inline-block;
+    width: 5em;
+  }
+  </style>
