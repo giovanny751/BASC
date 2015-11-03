@@ -46,11 +46,11 @@ class Administrativo extends My_Controller {
                 $this->data["aserguradorasxempleado"] = $this->Empleadotipoaseguradora_model->consult_empleado($empleadoId);
 //                var_dump($this->data["aserguradorasxempleado"]);die;
                 $this->data["carpeta"] = $this->Empleadocarpeta_model->detail();
-                $registro = $this->Empleadoregistro_model->detail();
+                $registro = $this->Empleadoregistro_model->detailxIdEmpleado($empleadoId);
 
                 $i = array();
                 foreach ($registro as $campo) {
-                    $i[$campo->empCar_id][$campo->empCar_nombre][] = array($campo->nombreempleado, $campo->empReg_archivo, $campo->empReg_descripcion, $campo->empReg_version, $campo->empReg_id, $campo->empReg_tamano, $campo->empgReg_fecha);
+                    $i[$campo->empCar_id][$campo->empCar_nombre." - ".$campo->empCar_descripcion][] = array($campo->nombreempleado, $campo->empReg_archivo, $campo->empReg_descripcion, $campo->empReg_version, $campo->empReg_id, $campo->empReg_tamano, $campo->empgReg_fecha);
                 }
                 $this->data['registro'] = $i;
                 $this->session->guardadoExitoIdEmpleado = null;
@@ -137,17 +137,10 @@ class Administrativo extends My_Controller {
             $post = $this->input->post();
             $this->load->model('Empleado_model');
             $this->load->model('Empleadoregistro_model');
-
-
-
             $tamano = round($_FILES["archivo"]["size"] / 1024, 1) . " KB";
             $post["empReg_tamano"] = $tamano;
-//                echo $tamano;die;
-
             $fecha = new DateTime();
             $post["empgReg_fecha"] = $fecha->format('Y-m-d H:i:s');
-
-
             //Creamos carpeta con el ID del registro
             if (isset($_FILES['archivo']['name']))
                 if (!empty($_FILES['archivo']['name']))
@@ -157,6 +150,13 @@ class Administrativo extends My_Controller {
                 $emp_id = $post['Emp_Id'];
             $targetPath = "./uploads/empleado/" . $post['Emp_Id'];
 
+            if (empty($this->input->post('empReg_id')))
+                $emp_id = $this->Empleadoregistro_model->empleado_registro($post);
+            else {
+                $this->Empleadoregistro_model->empleado_registroactualizar($post, $this->input->post('empReg_id'));
+                $emp_id = $this->input->post('regEmp_id');
+            }
+            
             //De la carpeta idRegistro, creamos carpeta con el id del empleado
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
@@ -170,12 +170,7 @@ class Administrativo extends My_Controller {
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
-            if (empty($this->input->post('empReg_id')))
-                $emp_id = $this->Empleadoregistro_model->empleado_registro($post);
-            else {
-                $this->Empleadoregistro_model->empleado_registroactualizar($post, $this->input->post('empReg_id'));
-                $emp_id = $this->input->post('regEmp_id');
-            }
+            
 
             $detallecarpeta = $this->Empleadoregistro_model->detallexcarpeta($post['empReg_carpeta']);
             $this->output->set_content_type('application/json')->set_output(json_encode($detallecarpeta));

@@ -122,31 +122,11 @@ class Planes_model extends CI_Model {
                     LEFT JOIN `avance_tarea` ON `avance_tarea`.`tar_id` = `tarea`.`tar_id` 
                     LEFT JOIN `empleado` ON `empleado`.`emp_id` = `tarea`.`emp_id` 
                     LEFT JOIN `tipo` ON `tipo`.`tip_id` = `tarea`.`tip_id` 
-                    WHERE `planes`.`pla_id` = '19' AND `tarea`.`est_id` = 1
+                    WHERE `planes`.`pla_id` = '".$id."' AND `tarea`.`est_id` = 1
                     ORDER BY avance_tarea.avaTar_fechaCreacion desc
                     ) tabla
                     GROUP BY tar_id
                     ");
-
-//        $this->db->select("MAX(avance_tarea.avaTar_fechaCreacion) as ultimafechacreacion");
-//        $this->db->select("avance_tarea.avaTar_progreso as progreso");
-//        $this->db->select("tarea.car_id");
-//        $this->db->select("tipo.tip_tipo");
-//        $this->db->select("tar_nombre");
-//        $this->db->select("tarea.tar_fechaInicio");
-//        $this->db->select("tarea.tar_fechaFinalizacion");
-//        $this->db->select("DATEDIFF((tar_fechaFinalizacion),(tar_fechaInicio)) as diferencia");
-//        $this->db->select("empleado.Emp_Nombre");
-//        $this->db->where("planes.pla_id",$id);
-//        $this->db->where("tarea.est_id",1);
-//        $this->db->join("tarea","tarea.pla_id = planes.pla_id");
-//        $this->db->join("avance_tarea","avance_tarea.tar_id = tarea.tar_id","LEFT");
-//        $this->db->join("empleado","empleado.emp_id = tarea.emp_id","LEFT");
-//        $this->db->join("tipo","tipo.tip_id = tarea.tip_id","LEFT");
-//        $this->db->group_by("tarea.tar_id");
-//        $planes = $this->db->get("planes");   
-//        
-//        echo $this->db->last_query();die;
 
         return $planes->result();
     }
@@ -171,20 +151,26 @@ class Planes_model extends CI_Model {
 
     function tareaxplaninactivas($id) {
 
-        $this->db->select("planes.pla_id");
-        $this->db->select("tarea.tar_id");
-        $this->db->select("tipo.tip_tipo");
-        $this->db->select("tar_nombre");
-        $this->db->select("tarea.tar_fechaInicio");
-        $this->db->select("tarea.tar_fechaFinalizacion");
-        $this->db->select("DATEDIFF((tar_fechaFinalizacion),(tar_fechaInicio)) as diferencia");
-        $this->db->select("CONCAT(empleado.Emp_Nombre,' ',empleado.Emp_Apellidos) as nombre", false);
-        $this->db->where("planes.pla_id", $id);
-        $this->db->where("tarea.est_id", 2);
-        $this->db->join("tarea", "tarea.pla_id = planes.pla_id");
-        $this->db->join("empleado", "empleado.emp_id = tarea.emp_id", "LEFT");
-        $this->db->join("tipo", "tipo.tip_id = tarea.tip_id", "LEFT");
-        $planes = $this->db->get("planes");
+        $planes = $this->db->query("select avaTar_id,tar_fechaInicio,Emp_Nombre,tip_tipo,tar_nombre,diferencia,tar_fechaFinalizacion,MAX(avaTar_fechaCreacion) as ultimafechacreacion,tar_id,progreso from (
+                    SELECT 
+                    avance_tarea.avaTar_fechaCreacion as avaTar_fechaCreacion,
+                    tarea.tar_id,
+                    avance_tarea.avaTar_id,
+                    `avance_tarea`.`avaTar_progreso` as `progreso`, `tarea`.`car_id`, 
+                    `tipo`.`tip_tipo`, `tar_nombre`, `tarea`.`tar_fechaInicio`, 
+                    `tarea`.`tar_fechaFinalizacion`, 
+                    DATEDIFF((tar_fechaFinalizacion), (tar_fechaInicio)) as diferencia, 
+                    `empleado`.`Emp_Nombre` 
+                    FROM `planes` 
+                    JOIN `tarea` ON `tarea`.`pla_id` = `planes`.`pla_id` 
+                    LEFT JOIN `avance_tarea` ON `avance_tarea`.`tar_id` = `tarea`.`tar_id` 
+                    LEFT JOIN `empleado` ON `empleado`.`emp_id` = `tarea`.`emp_id` 
+                    LEFT JOIN `tipo` ON `tipo`.`tip_id` = `tarea`.`tip_id` 
+                    WHERE `planes`.`pla_id` = '".$id."' AND `tarea`.`est_id` = 2
+                    ORDER BY avance_tarea.avaTar_fechaCreacion desc
+                    ) tabla
+                    GROUP BY tar_id
+                    ");
         return $planes->result();
     }
 

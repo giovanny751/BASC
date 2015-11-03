@@ -391,7 +391,7 @@
                                                             else:
                                                                 ?>
                                                                 <tr>
-                                                                    <td colspan="7"><center><b>No hay regisros</b></center></td>
+                                                                    <td colspan="7"><center><b>No hay registros</b></center></td>
                                                             </tr>    
                                                         <?php
                                                         endif;
@@ -717,7 +717,7 @@
                                                 <div class="panel-heading">\n\
                                                     <h4 class="panel-title">\n\
                                                         <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.empCar_id + '" aria-expanded="false">\n\
-                                                            ' + msg.empCar_nombre + '\n\
+                                                            ' + msg.empCar_nombre + " - "+msg.empCar_descripcion + '\n\
                                                         </a>\n\
                                                             <i class="fa fa-edit editarcarpeta" car_id="'+ msg.empCar_id +'"></i>\n\
                                                             <i class="fa fa-times eliminarcarpeta" car_id="'+ msg.empCar_id +'"></i>\n\
@@ -738,7 +738,7 @@
                                                             <tbody>\n\
                                                                 <tr>\n\
                                                                     <td colspan="7">\n\
-                                                                        <center><b>Agregar Actividad Hijo</b></center>\n\
+                                                                        <center><b>No hay registros</b></center>\n\
                                                                     </td>\n\
                                                                 </tr>\n\
                                                             </tbody>\n\

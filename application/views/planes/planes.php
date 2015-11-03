@@ -3,11 +3,6 @@
     $(".menPLAN_DE_TRABAJO").addClass("active open");
     $(".subMenCREACIÓN_PLAN_DE_TRABAJO").addClass("active");
 </script>
-
-<!--<iframe src="<?php echo base_url('./grant')?>" width="500px">
-</iframe>-->
-
-
 <div class="page-bar" style="background-color: transparent !important;">
     <ul class="page-breadcrumb">
         <li class="devolver">
@@ -206,7 +201,7 @@
                                     foreach ($tareas as $tar) {
                                         ?>
                                         <tr>
-                                            <td><i class='fa fa-pencil btn btn-default editarhistorial' avance="<?php echo $tar->avaTar_id?>" tar_id='<?php echo $tar->tar_id ?>' ></i></td>
+                                            <td><i class='fa fa-pencil btn btn-default editartarea' tar_id='<?php echo $tar->tar_id ?>' ></i></td>
                                             <td><?php echo $tar->progreso ?></td>
                                             <td><?php echo $tar->tip_tipo ?></td>
                                             <td><?php echo $tar->tar_nombre ?></td>
@@ -237,7 +232,7 @@
                                 <tbody >
                                     <?php foreach ($tareasinactivas as $ti): ?>
                                         <tr>
-                                            <td></td>
+                                            <td><i class='fa fa-pencil btn btn-default editartarea' tar_id='<?php echo $ti->tar_id ?>' ></i></td>
                                             <td></td>
                                             <td><?php echo $ti->tip_tipo ?></td>
                                             <td><?php echo $ti->tar_nombre ?></td>
@@ -273,7 +268,7 @@
                                             <td><?php echo $av->avaTar_comentarios ?></td>
                                             <td>
                                                 <i class="fa fa-times eliminaravance btn btn-danger" title="Eliminar" avaTar_id="<?php echo $av->avaTar_id ?>"></i>
-                                                <i class="fa fa-pencil-square-o modificar btn  btn-default" title="Modificar" avaTar_id="<?php echo $av->avaTar_id ?>"></i>
+                                                <i class='fa fa-pencil btn btn-default editarhistorial' avance="<?php echo $av->avaTar_id?>" tar_id='<?php echo $av->tar_id ?>'></i>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -664,6 +659,14 @@
     <?php endif; ?>
 </div>
 <script>
+
+    $('body').delegate(".editartarea","click",function(){
+        var form = "<form method='post' id='frmFormAvance' action='<?php echo base_url("index.php/tareas/nuevatarea")?>'>";
+            form += "<input type='hidden' name='tar_id' value='"+$(this).attr("tar_id")+"'>"
+            form += "</form>";
+            $("body").append(form);
+            $('#frmFormAvance').submit();
+    });
 
     $('body').delegate(".editarhistorial","click",function(){
         
