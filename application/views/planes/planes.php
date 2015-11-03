@@ -3,6 +3,11 @@
     $(".menPLAN_DE_TRABAJO").addClass("active open");
     $(".subMenCREACIÓN_PLAN_DE_TRABAJO").addClass("active");
 </script>
+
+<!--<iframe src="<?php echo base_url('./grant')?>" width="500px">
+</iframe>-->
+
+
 <div class="page-bar" style="background-color: transparent !important;">
     <ul class="page-breadcrumb">
         <li class="devolver">
