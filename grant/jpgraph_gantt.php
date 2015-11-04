@@ -14,8 +14,8 @@ require_once('jpgraph_iconplot.php');
 require_once('jpgraph_plotmark.inc.php');
 
 // Maximum size for Automatic Gantt chart
-DEFINE('MAX_GANTTIMG_SIZE_W',4000);
-DEFINE('MAX_GANTTIMG_SIZE_H',5000);
+DEFINE('MAX_GANTTIMG_SIZE_W',40000);
+DEFINE('MAX_GANTTIMG_SIZE_H',50000);
 
 // Scale Header types
 DEFINE("GANTT_HDAY",1);
@@ -458,7 +458,7 @@ class GanttGraph extends Graph {
 	    // Setup caption
 	    $a->caption->Set($data[$i][$csimpos-1]);
 
-	    // Check if this activity should have a CSIM target ?
+	    // Check if this activity should have a CSIM targetï¿½?
 	    if( !empty($data[$i][$csimpos]) ) {
 		$a->SetCSIMTarget($data[$i][$csimpos]);
 		$a->SetCSIMAlt($data[$i][$csimpos+1]);

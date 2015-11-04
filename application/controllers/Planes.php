@@ -183,6 +183,7 @@ class Planes extends My_Controller {
                 $this->data['tipo'] = $this->Tipo_model->detail();
                 $this->data['tareas'] = $this->Planes_model->tareaxplan($this->input->post('pla_id'));
                 $this->data['tareasinactivas'] = $this->Planes_model->tareaxplaninactivas($this->input->post('pla_id'));
+                $this->data['plan_grant'] = $this->Planes_model->plan_grant($this->input->post('pla_id'));
                 $this->load->model("AvanceTarea_model");
                 $this->data['avances'] = $this->AvanceTarea_model->listadoAvancexPlan($this->input->post('pla_id'));
             }

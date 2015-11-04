@@ -352,7 +352,23 @@
                         </div> 
 
                         <div id="tab5" class="tab-pane">
-
+                            <div class="table-responsive">
+                                <div id="grafica_granf">
+                                    <form id="formulario_grant">
+                                        <input type="text" id="fecha_maxima" name="fecha_maxima" value="<?php echo (isset($plan_grant[0][0]->fecha_maxima)?$plan_grant[0][0]->fecha_maxima:'') ?>">
+                                        <input type="text" id="fecha_minima" name="fecha_minima" value="<?php echo (isset($plan_grant[0][0]->fecha_minima)?$plan_grant[0][0]->fecha_minima:'') ?>">
+                                            <?php foreach ($plan_grant[1] as $value) { ?>
+                                        <input type="text" id="tar_fechaInicio" name="tar_fechaInicio[]" value="<?php echo $value->tar_fechaInicio  ?>">        
+                                        <input type="text" id="tar_nombre" name="tar_nombre[]" value="<?php echo $value->tar_nombre  ?>">        
+                                        <input type="text" id="diferencia" name="diferencia[]" value="<?php echo $value->diferencia  ?>">        
+                                        <input type="text" id="tar_fechaFinalizacion" name="tar_fechaFinalizacion[]" value="<?php echo $value->tar_fechaFinalizacion  ?>">        
+                                        <input type="text" id="ultimafechacreacion" name="ultimafechacreacion[]" value="<?php echo $value->ultimafechacreacion  ?>">        
+                                        <input type="text" id="tar_id" name="tar_id[]" value="<?php echo $value->tar_id  ?>">        
+                                        <input type="text" id="progreso" name="progreso[]" value="<?php echo $value->progreso  ?>">        
+                                            <?php  } ?>                                        
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                         <div id="tab6" class="tab-pane">
                             <div class="portlet box blue" style="margin-top: 30px;">
@@ -1137,5 +1153,15 @@
     });
     $('.nuevo_hijo').click(function () {
         $('#actHij_id').val('')
-    })
+    });
+    
+    var url = '<?php echo base_url("grant/index.php") ?>';
+    $.post(url,$('#formulario_grant').serialize())
+            .done(function(msg){
+                var imagen='<img src="<?php echo base_url("grant") ?>/imagenprueba.jpg">';
+                $('#grafica_granf').html(imagen)
+            })
+            .fail(function(){
+                
+            })
 </script>

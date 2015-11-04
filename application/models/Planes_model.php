@@ -173,6 +173,44 @@ class Planes_model extends CI_Model {
                     ");
         return $planes->result();
     }
+    function plan_grant(){
+        $datos=$this->db->query("SELECT max(tar_fechaFinalizacion) as fecha_maxima,
+            min(tarea.tar_fechaInicio) as fecha_minima
+            FROM planes 
+            JOIN tarea ON tarea.pla_id = planes.pla_id 
+            LEFT JOIN avance_tarea ON avance_tarea.tar_id = tarea.tar_id 
+            LEFT JOIN empleado ON empleado.emp_id = tarea.emp_id 
+            LEFT JOIN tipo ON tipo.tip_id = tarea.tip_id 
+            WHERE planes.pla_id = '19' AND tarea.est_id = 1
+            ORDER BY avance_tarea.avaTar_fechaCreacion desc");
+        
+        $sql="select 
+                tar_fechaInicio,
+                tar_nombre,diferencia,
+                tar_fechaFinalizacion,MAX(avaTar_fechaCreacion) as ultimafechacreacion,
+                tar_id,progreso from (
+                    SELECT 
+                    avance_tarea.avaTar_fechaCreacion as avaTar_fechaCreacion,
+                    tarea.tar_id,
+                    avance_tarea.avaTar_id,
+                    avance_tarea.avaTar_progreso as progreso, tarea.car_id, 
+                    tipo.tip_tipo, tar_nombre, tarea.tar_fechaInicio, 
+                    tarea.tar_fechaFinalizacion, 
+                    DATEDIFF((tar_fechaFinalizacion), (tar_fechaInicio)) as diferencia, 
+                    empleado.Emp_Nombre 
+                    FROM planes 
+                    JOIN tarea ON tarea.pla_id = planes.pla_id 
+                    LEFT JOIN avance_tarea ON avance_tarea.tar_id = tarea.tar_id 
+                    LEFT JOIN empleado ON empleado.emp_id = tarea.emp_id 
+                    LEFT JOIN tipo ON tipo.tip_id = tarea.tip_id 
+                    WHERE planes.pla_id = '19' AND tarea.est_id = 1
+                    ORDER BY avance_tarea.avaTar_fechaCreacion desc
+                    ) tabla
+                GROUP BY tar_id";
+        $datos2=$this->db->query($sql);
+        
+        return array($datos->result(),$datos2->result());
+    }
 
 }
 

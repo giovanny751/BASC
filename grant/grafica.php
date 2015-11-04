@@ -3,12 +3,12 @@
 include('jpgraph.php');
 include('jpgraph_gantt.php');
 //ponemos todo en una función para poder ocuparlo en otros archivo sin amontonar código
-function grafica(){
+function grafica($fecha_max,$fecha_min,$datos){
     $graph = new GanttGraph();
     $graph->title->Set("Mi Nombre");
 
     // Rango de fechas a presentar 
-    $graph->SetDateRange('2011-07-09','2012-4-10');
+    $graph->SetDateRange($fecha_min,$fecha_max);
 
 
     // linea de espaciado vertical entre los elementos
@@ -36,7 +36,7 @@ function grafica(){
     
     $graph->scale->actinfo->SetColTitles(
         //el segundo array array(30,100) , es el espacio de cada titulo, 30 para ovservacion, 100 para accion, etc
-        array('Observacion','Acción','Duracion','Inicio','Final'),array(30,100)); 
+        array('Acción','Duracion','Inicio','Final','Porcentaje'),array(30,100)); 
     $graph->scale->actinfo->SetBackgroundColor('blue:0.5@0.5'); //color de fondo de los titulos de la tabla
     $graph->scale->actinfo->SetFont(FF_ARIAL,FS_NORMAL,12); //tipografia
     // division vertical de los datos a la izquierda, posibles valores 'solid', 'dotted', 'dashed'
@@ -53,20 +53,21 @@ function grafica(){
     $endconicon = new IconImage(GICON_TEXTIMPORTANT,0.5);
 
     //ahora ponemos los datos de la tabla e iniciamos los datos de las barras
-    $data = array(
-        //valores del arreglo:
-        //indice del arreglo, arreglo de datos para la informacion a la izquierda, fecha de inicio de la barra, fecha final de la barra, tipografia, estilo,tamaño tipografia,% de progreso en la barra 
-        array(0,array('prueba',"Pre-study","17 days","1 Nov '2011","1 Mar '2012")
-              , "2011-11-01","2012-01-1",FF_ARIAL,FS_NORMAL,8, 0.5),//el 0.5 indica el 50%, que ocuparemos en la linea 74, dando su posicion en el arreglo
-        array(1,array($startconicon,"Prototype","10 days","26 Oct '2011","16 Nov '2011"),
-              "2011-10-26","2011-11-01",FF_ARIAL,FS_NORMAL,8, 0.12),
-        array(2,array($endconicon,"Report","12 days","1 Mar '2012","13 Mar '2012"),
-              "2012-03-01","2012-03-13",FF_ARIAL,FS_NORMAL,8, 1)
-    );
-        
+    
+//    $data = array(
+//        //valores del arreglo:
+//        //indice del arreglo, arreglo de datos para la informacion a la izquierda, fecha de inicio de la barra, fecha final de la barra, tipografia, estilo,tamaño tipografia,% de progreso en la barra 
+//        array(0,array("Pre-study","17 days","1 Nov '2011","1 Mar '2012")
+//              , "2011-11-01","2012-01-1",FF_ARIAL,FS_NORMAL,8, 0.5),//el 0.5 indica el 50%, que ocuparemos en la linea 74, dando su posicion en el arreglo
+//        array(1,array("Prototype","10 days","26 Oct '2011","16 Nov '2011"),
+//              "2011-10-26","2011-11-01",FF_ARIAL,FS_NORMAL,8, 0.12),
+//        array(2,array("Report","12 days","1 Mar '2012","13 Mar '2012"),
+//              "2012-03-01","2012-03-13",FF_ARIAL,FS_NORMAL,8, 1)
+//    );
+    $data = $datos;    
     // Crea las barras y las añade a la grafica gantt
     for($i=0; $i<count($data); ++$i) {
-        $bar = new GanttBar($data[$i][0],$data[$i][1],$data[$i][2],$data[$i][3],"[30%]",10);
+        $bar = new GanttBar($data[$i][0],$data[$i][1],$data[$i][2],$data[$i][3],'',10);
         if( count($data[$i])>4 )
             $bar->title->SetFont($data[$i][4],$data[$i][5],$data[$i][6]);
         $bar->SetPattern(BAND_RDIAG,"yellow");
