@@ -173,7 +173,7 @@ class Planes_model extends CI_Model {
                     ");
         return $planes->result();
     }
-    function plan_grant(){
+    function plan_grant($ID){
         $datos=$this->db->query("SELECT max(tar_fechaFinalizacion) as fecha_maxima,
             min(tarea.tar_fechaInicio) as fecha_minima
             FROM planes 
@@ -203,7 +203,7 @@ class Planes_model extends CI_Model {
                     LEFT JOIN avance_tarea ON avance_tarea.tar_id = tarea.tar_id 
                     LEFT JOIN empleado ON empleado.emp_id = tarea.emp_id 
                     LEFT JOIN tipo ON tipo.tip_id = tarea.tip_id 
-                    WHERE planes.pla_id = '19' AND tarea.est_id = 1
+                    WHERE planes.pla_id = '".$ID."' AND tarea.est_id = 1
                     ORDER BY avance_tarea.avaTar_fechaCreacion desc
                     ) tabla
                 GROUP BY tar_id";
