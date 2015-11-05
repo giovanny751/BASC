@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="presupuesto">Cargo</label>
+                    <label for="cargo">Cargo</label>
                     <select name="cargo" id="cargo" class="form-control" >
                         <option value="">::Seleccionar::</option>
                         <?php foreach ($cargo as $c) { ?>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="form-group">
                     <label for="presupuesto">Presupuesto</label>
-                    <input type="text" name="presupuesto" id="presupuesto" class="form-control"  value="<?php echo (!empty($plan[0]->pla_presupuesto) ) ? $plan[0]->pla_presupuesto : ""; ?>"/>
+                    <input type="text" name="presupuesto" id="presupuesto" class="form-control number miles"  value="<?php echo (!empty($plan[0]->pla_presupuesto) ) ? $plan[0]->pla_presupuesto : ""; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="costoreal">Costo Real</label>
@@ -114,7 +114,7 @@
                 <div class="form-group">
                     <label for="estado"><span class="campoobligatorio">*</span>Estado</label>
                     <select name="estado" id="estado" class="form-control obligatorio">
-                        <option value="">::Seleccionar::</option>
+                        <!--<option value="">::Seleccionar::</option>-->
                         <?php foreach ($estado as $e) { ?>
                             <option <?php echo (!empty($plan[0]->est_id) && $e->est_id == $plan[0]->est_id) ? "selected" : ""; ?> value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
                         <?php } ?>
@@ -624,8 +624,8 @@
                                         </div>
                                         <div class="row">
                                             <div class="form-group">
-                                                <label for="riesgosancion">Riesgo Sanción</label>
-                                                <input type="text" class="form-control" id="riesgosancion" name="riesgosancion" />
+                                                <label for="riesgosancion">Valor Sanción</label>
+                                                <input type="text" class="form-control number miles" id="riesgosancion" name="riesgosancion" />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -1046,7 +1046,8 @@
 
     });
     $('#cargo').change(function () {
-
+    if($('#cargo').val()=='')
+        return false;
         $.post(
                 "<?php echo base_url("index.php/administrativo/consultausuarioscargo") ?>",
                 {
@@ -1059,6 +1060,9 @@
                 data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
             });
             $('#empleado').append(data);
+            <?php if(isset($plan[0]->emp_id)) { ?>
+                    $('#empleado').val('<?php echo $plan[0]->emp_id; ?>');
+            <?php } ?>
         }).fail(function (msg) {
 
         });
@@ -1191,4 +1195,5 @@
             .fail(function(){
                 
             })
+    $('#cargo').trigger('change');
 </script>

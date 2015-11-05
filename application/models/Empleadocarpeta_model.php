@@ -14,8 +14,9 @@ class Empleadocarpeta_model extends CI_Model {
         );
         $this->db->insert("empleado_carpeta",$data);
     }
-    function detail(){
-        
+    function detail($id){
+        $this->db->where("emp_id",$id);
+        $this->db->order_by("empCar_id",'asc');
         $carpeta = $this->db->get("empleado_carpeta");
         return $carpeta->result();
         
@@ -25,12 +26,14 @@ class Empleadocarpeta_model extends CI_Model {
         $this->db->where("empCar_nombre",$nombre);
         $this->db->where("empCar_descripcion",$descripcion);
         $this->db->where("emp_id",$empleado);
+        $this->db->order_by("empCar_id",'asc');
         $carpeta = $this->db->get("empleado_carpeta");
         return $carpeta->result();
     }
     function cargarcarpeta($car_id){
         
         $this->db->where("empCar_id",$car_id);
+        $this->db->order_by("empCar_id",'asc');
         $carpeta = $this->db->get("empleado_carpeta");
         return $carpeta->result();
     }

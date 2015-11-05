@@ -391,6 +391,9 @@ $('.portlet').find('label,h4').css('color','black');
         if (tecla.charCode > 0 && tecla.charCode < 48 || tecla.charCode > 57)
             return false;
     });
+    $('body').delegate('.miles', 'keypress', function(tecla) {
+        $(this).val(num_miles($(this).val()))
+    });
     $('body').delegate('.float', 'keypress', function(tecla) {
         if(tecla.charCode == 46) return true;
         if ((tecla.charCode > 0 && tecla.charCode < 48) || (tecla.charCode > 57)  )
@@ -443,4 +446,19 @@ $('.portlet').find('label,h4').css('color','black');
         $.blockUI.defaults.message = 'Procesando...';
         $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
     });
+    function num_miles(num) {
+        num = num.toString().replace(/\$|\,/g, '');
+        if (isNaN(num))
+            num = "0";
+        sign = (num == (num = Math.abs(num)));
+        num = Math.floor(num * 100 + 0.50000000001);
+        cents = num % 100;
+        num = Math.floor(num / 100).toString();
+        if (cents < 10)
+            cents = "0" + cents;
+        for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
+            num = num.substring(0, num.length - (4 * i + 3)) + ',' +
+                    num.substring(num.length - (4 * i + 3));
+        return (((sign) ? '' : '-') + num);
+    }
 </script>

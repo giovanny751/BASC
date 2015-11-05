@@ -149,7 +149,7 @@
                 <input type="text" id="peso" name="peso" class="form-control float"  value="<?php echo (!empty($empleado[0]->Emp_Peso)) ? $empleado[0]->Emp_Peso : ""; ?>" />
             </div> 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <center><button type="button" id="aseguradora" class="btn btn-success" data-toggle="modal" data-target="#myModal3">Registrar seguradoras del empleado</button></center>
+                <center><button type="button" id="aseguradora" class="btn btn-success" data-toggle="modal" data-target="#myModal3">Registrar aseguradoras del empleado</button></center>
             </div>  
         </div>
         <div class="row">
@@ -473,7 +473,7 @@
                                     <select id="empReg_carpeta" name="empReg_carpeta" class="form-control">
                                         <option value="">::Seleccionar::</option>
                                         <?php foreach ($carpeta as $car): ?>
-                                            <option value="<?php echo $car->empCar_id ?>"><?php echo $car->empCar_nombre ?></option>
+                                            <option value="<?php echo $car->empCar_id ?>"><?php echo $car->empCar_nombre ?> - <?php echo $car->empCar_descripcion ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -711,7 +711,7 @@
                     $("#formcarpeta").serialize()
                     ).done(function (msg) {
 
-                var option = "<option value='" + msg.empCar_id + "'>" + msg.empCar_nombre + "</option>";
+                var option = "<option value='" + msg.empCar_id + "'>" + msg.empCar_nombre + ' - ' +msg.empCar_descripcion+ "</option>";
                 $('#empReg_carpeta').append(option);
                 var acordeon = '<div class="panel panel-default" id="' + msg.empCar_id + '">\n\
                                                 <div class="panel-heading">\n\
@@ -868,6 +868,16 @@
         //--------------------------------------------------------------------------
 
         $('#guardarRegistro').click(function () {
+        
+        if($('#empReg_carpeta').val()==""){
+            alerta('rojo','Campo carpeta obligatorio');
+            return false;
+        }
+        if($('#archivocarpeta').val()==""){
+            alerta('rojo','Documento obligatorio');
+            return false;
+        }
+        
             var file_data = $('#archivocarpeta').prop('files')[0];
             var form_data = new FormData();
             form_data.append('archivo', file_data);
@@ -885,6 +895,7 @@
                 data: form_data,
                 type: 'post',
                 success: function (result) {
+                    $('#archivocarpeta').val('')
                     $('#collapse_' + $('#empReg_carpeta').val()).find('table tbody *').remove();
                     var filas = ""
 //                console.log(result);

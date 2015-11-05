@@ -5,7 +5,7 @@ include('jpgraph_gantt.php');
 //ponemos todo en una función para poder ocuparlo en otros archivo sin amontonar código
 function grafica($fecha_max,$fecha_min,$datos){
     $graph = new GanttGraph();
-    $graph->title->Set("Mi Nombre");
+    $graph->title->Set("");
 
     // Rango de fechas a presentar 
     $graph->SetDateRange($fecha_min,$fecha_max);

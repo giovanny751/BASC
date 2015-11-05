@@ -45,7 +45,7 @@ class Administrativo extends My_Controller {
                 $this->data['empleado'] = $this->Empleado_model->consultaempleadoxid($empleadoId);
                 $this->data["aserguradorasxempleado"] = $this->Empleadotipoaseguradora_model->consult_empleado($empleadoId);
 //                var_dump($this->data["aserguradorasxempleado"]);die;
-                $this->data["carpeta"] = $this->Empleadocarpeta_model->detail();
+                $this->data["carpeta"] = $this->Empleadocarpeta_model->detail($empleadoId);
                 $registro = $this->Empleadoregistro_model->detailxIdEmpleado($empleadoId);
 
                 $i = array();
