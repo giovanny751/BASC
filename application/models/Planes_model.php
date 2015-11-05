@@ -83,7 +83,7 @@ class Planes_model extends CI_Model {
         $this->db->where("actividad_padre.pla_id", $id);
 //        $this->db->join("planes","actividad_padre.pla_id = planes.pla_id","LEFT");
         $this->db->join("actividad_hijo", "actividad_hijo.actHij_padreid = actividad_padre.actPad_id", "LEFT");
-        $this->db->join("tarea", "tarea.actHij_id = actividad_hijo.actHij_padreid", "LEFT");
+        $this->db->join("tarea", "tarea.actHij_id = actividad_hijo.actHij_id", "LEFT");
         $planes = $this->db->get("actividad_padre");
 //        echo $this->db->last_query();die;
 
@@ -115,7 +115,7 @@ class Planes_model extends CI_Model {
                     `avance_tarea`.`avaTar_progreso` as `progreso`, `tarea`.`car_id`, 
                     `tipo`.`tip_tipo`, `tar_nombre`, `tarea`.`tar_fechaInicio`, 
                     `tarea`.`tar_fechaFinalizacion`, 
-                    SUM(DATEDIFF((tar_fechaFinalizacion), (tar_fechaInicio))*24) as diferencia, 
+                    timestampdiff(HOUR, (tar_fechaInicio),(tar_fechaFinalizacion)) as diferencia, 
                     `empleado`.`Emp_Nombre` 
                     FROM `planes` 
                     JOIN `tarea` ON `tarea`.`pla_id` = `planes`.`pla_id` 
@@ -127,7 +127,9 @@ class Planes_model extends CI_Model {
                     ) tabla
                     GROUP BY tar_id
                     ");
-
+        
+//        echo $this->db->last_query();die;
+        
         return $planes->result();
     }
 
@@ -159,7 +161,7 @@ class Planes_model extends CI_Model {
                     `avance_tarea`.`avaTar_progreso` as `progreso`, `tarea`.`car_id`, 
                     `tipo`.`tip_tipo`, `tar_nombre`, `tarea`.`tar_fechaInicio`, 
                     `tarea`.`tar_fechaFinalizacion`, 
-                    DATEDIFF((tar_fechaFinalizacion), (tar_fechaInicio)) as diferencia, 
+                    timestampdiff(HOUR, (tar_fechaInicio),(tar_fechaFinalizacion)) as diferencia, 
                     `empleado`.`Emp_Nombre` 
                     FROM `planes` 
                     JOIN `tarea` ON `tarea`.`pla_id` = `planes`.`pla_id` 

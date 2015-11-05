@@ -34,6 +34,11 @@ class Tareas extends My_Controller {
             $this->load->model("Tareacarpeta_model");
 
             if (!empty($this->input->post("tar_id"))):
+                if(!empty($this->input->post("nuevoavance")))
+                {
+                    $this->data["nuevoavance"] = $this->input->post("nuevoavance");
+//                    echo $this->data["nuevoavance"];die;
+                }  
                 $this->load->model('Empleado_model');
                 $carpeta = $this->Tareacarpeta_model->detailxtareas($this->input->post('tar_id'));
                 $this->data['carpetas'] = $this->Tareacarpeta_model->detailxtareascarpetas($this->input->post('tar_id'));

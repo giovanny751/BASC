@@ -306,10 +306,10 @@
             <div class="portlet-body">
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
-                        <li <?php  echo (empty($avance))?"class='active'":""; ?>>
+                        <li <?php  echo (empty($avance) && empty($nuevoavance) )?"class='active'":""; ?>>
                             <a data-toggle="tab" href="#tab1">Avance</a>
                         </li>
-                        <li <?php  echo (!empty($avance))?"class='active'":""; ?>>
+                        <li <?php  echo (!empty($avance) || !empty($nuevoavance))?"class='active'":""; ?>>
                             <a data-toggle="tab" href="#tab2">Agregar Avance</a>
                         </li>
                         <li>
@@ -317,7 +317,7 @@
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div id="tab1" class="tab-pane <?php  echo (empty($avance))?"active":""; ?>">
+                        <div id="tab1" class="tab-pane <?php  echo (empty($avance) && empty($nuevoavance))?"active":""; ?>">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="portlet">
@@ -345,7 +345,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="tab2" class="tab-pane <?php  echo (!empty($avance))?"active":""; ?>">
+                        <div id="tab2"  class="tab-pane <?php  echo (!empty($avance) || !empty($nuevoavance))?"active":""; ?>">
                             <form method="post" id="guardaravance">
                                 <input type="hidden" value="<?php echo (!empty($tarea->tar_id)) ? $tarea->tar_id : ""; ?>" name="idtarea" id="interno">
                                 <input type="hidden" value="<?php echo (!empty($avance[0]->avaTar_id))?$avance[0]->avaTar_id:"";   ?>" name="avaTar_id" id="avaTar_id">

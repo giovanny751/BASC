@@ -70,7 +70,7 @@
                 </div>
                 <div class="form-group">
                     <label for="fechafin">Fecha Fin</label>
-                    <input type="text" readonly="readonly" name="fechafin" id="fechafin" class="form-control"  value="<?php echo (!empty($plan[0]->pla_fechaFin) ) ? $plan[0]->pla_fechaFin : ""; ?>"/>
+                    <input type="text" readonly="readonly" name="fechafin" id="fechafin" class="form-control"  value="<?php echo (!empty($tareafechafinal[0]->fechafinalizacion) ) ? $tareafechafinal[0]->fechafinalizacion : ""; ?>"/>
                 </div>
                 <div class="row">
                     <div class="alert alert-info">
@@ -176,19 +176,20 @@
                         <div id="tab1" class="tab-pane active">
                             <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                                 <thead >
+                                <th>Editar</th>
                                 <th>Nuevo Historial</th>
                                 <th>Avance</th>
                                 <th>Tipo</th>
                                 <th>Nombre de la Tarea</th>
                                 <th>Fecha Inicio</th>
                                 <th>Fecha Fin</th>
-                                <th>Duracio&acute; n presupuestada (Horas)</th>
+                                <th>Duración presupuestada (Horas)</th>
                                 <th>Responsables</th>
                                 </thead> 
                                 <tbody>
                                     <?php if (empty($tareas)) { ?>
                                         <tr>
-                                            <td colspan="8">
+                                            <td colspan="9">
                                     <center>
                                         <b>
                                             No hay tareas asociadas al plan
@@ -201,7 +202,8 @@
                                     foreach ($tareas as $tar) {
                                         ?>
                                         <tr>
-                                            <td><i class='fa fa-pencil btn btn-default editartarea' tar_id='<?php echo $tar->tar_id ?>' ></i></td>
+                                            <td style="text-align: center"><i class='fa fa-pencil btn btn-default editartarea' tar_id='<?php echo $tar->tar_id ?>' ></i></td>
+                                            <td style="text-align: center"><i class='fa fa-bookmark-o btn btn-default nuevoavance' tar_id='<?php echo $tar->tar_id ?>' ></i></td>
                                             <td><?php echo $tar->progreso ?></td>
                                             <td><?php echo $tar->tip_tipo ?></td>
                                             <td><?php echo $tar->tar_nombre ?></td>
@@ -283,7 +285,6 @@
                                     </div>
                                     <div class="tools">
                                         <i class="fa fa-clipboard carpeta btn btn-default crear_padre" data-toggle="modal" data-target="#myModal" title='ACTIVIDAD PADRE'></i>
-                                        <i class="fa fa-file-o carpeta btn btn-default nuevo_hijo" data-toggle="modal" data-target="#myModal8" title='ACTIVIDAD HIJO'></i>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -299,6 +300,7 @@
                                                             <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id . 'c'; ?>" aria-expanded="false"> 
                                                                 <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombre ?>
                                                             </a>
+                                                            <i class="fa fa-file-o carpeta nuevo_hijo" data-toggle="modal" data-target="#myModal8" title='ACTIVIDAD HIJO'></i>
                                                             <i class="fa fa-edit editaractividad" car_id="<?php echo $id ?>"></i>
                                                             <i class="fa fa-times eliminarcarpeta" tipo="c" title="Eliminar" car_id="<?php echo $id ?>"></i>
                                                         </h4>
@@ -683,6 +685,14 @@
             $("body").append(form);
             $('#frmFormAvance').submit();
     });
+    $('body').delegate(".nuevoavance","click",function(){
+        var form = "<form method='post' id='frmFormAvance' action='<?php echo base_url("index.php/tareas/nuevatarea")?>'>";
+            form += "<input type='hidden' name='tar_id' value='"+$(this).attr("tar_id")+"'>"
+            form += "<input type='hidden' name='nuevoavance' value='"+$(this).attr("tar_id")+"'>"
+            form += "</form>";
+            $("body").append(form);
+            $('#frmFormAvance').submit();
+    });
 
     $('body').delegate(".editarhistorial","click",function(){
         
@@ -708,6 +718,22 @@
     });
 
     $('body').delegate(".carpeta", "click", function () {
+        var pla_id = $('#pla_id').val();
+        $("#idpadre *").remove();
+        $.post(
+                "<?php echo base_url("index.php/planes/detailxplaid") ?>"
+                ,{pla_id : pla_id}
+            ).done(function(msg){
+                var option = "<option value=''>::Seleccionar::</option>";
+                $.each(msg,function(key,val){
+                    option += "<option value='"+val.actPad_id+"'>"+val.actPad_nombre+" - "+val.actPad_codigo+"</option>"
+                });
+                
+                $("#idpadre").append(option);
+            }).fail(function(msg){
+                alerta("rojo","Error, favor comunicarse con el administrador del sistema");
+            });
+        
         $('#eliminaractividad').remove();
         $('#actPad_id').remove();
         $('#nombrecarpeta').val("");
@@ -973,6 +999,7 @@
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - " + msg.tres + '\n\
                                                     </a>\n\
+                                                        <i class="fa fa-file-o carpeta nuevo_hijo" data-toggle="modal" data-target="#myModal8" title="ACTIVIDAD HIJO"></i>\n\
                                                         <i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
                                                         <i class="fa fa-times eliminarcarpeta" title="Eliminar" tipo="' + destino + '" car_id="' + msg.uno + '"></i>\n\
                                                 </h4>\n\

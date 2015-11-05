@@ -147,8 +147,10 @@ class Planes extends My_Controller {
             $this->load->model("Actividad_padre__model");
             $this->load->model("Registrocarpeta_model");
             $this->load->model("Avancetarea_model"); 
+             
             $this->data['plan'] = array();  
             if (!empty($this->input->post('pla_id'))) {
+                $this->load->model("Tarea_model");
                 $carpeta = $this->Registrocarpeta_model->detailxplan($this->input->post('pla_id'));
                 $this->data['carpetas'] = $this->Registrocarpeta_model->detailxplancarpetas($this->input->post('pla_id'));
                 $d = array();
@@ -184,8 +186,8 @@ class Planes extends My_Controller {
                 $this->data['tipo'] = $this->Tipo_model->detail();
                 $this->data['tareas'] = $this->Planes_model->tareaxplan($this->input->post('pla_id'));
                 $this->data['tareasinactivas'] = $this->Planes_model->tareaxplaninactivas($this->input->post('pla_id'));
+                $this->data['tareafechafinal'] = $this->Tarea_model->fechaFinalTareaxPlan($this->input->post('pla_id'));
                 $this->data['plan_grant'] = $this->Planes_model->plan_grant($this->input->post('pla_id'));
-                
                 $this->data['avances'] = $this->Avancetarea_model->listadoAvancexPlan($this->input->post('pla_id'));
             }
             $this->data['notificacion'] = $this->Notificacion_model->detail();
@@ -201,6 +203,13 @@ class Planes extends My_Controller {
         $this->load->model('Registro_model');
         $data = $this->Registro_model->detallexidregitro($this->input->post("registro"));
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
+    }
+    
+    function detailxplaid(){
+        
+        $this->load->model("Actividadpadre_model");
+        $data = $this->Actividadpadre_model->detailxplaid($this->input->post("pla_id"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
     
     function eliminar_actividad_hijo(){

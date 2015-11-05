@@ -87,7 +87,7 @@ class Registro_model extends CI_Model {
         $this->db->select("MAX(tarea.tar_fechaFinalizacion) as maximo",false);
         $this->db->select("actividad_hijo.*",false);
         $this->db->where("actividad_hijo.actHij_id",$post['acthij_id']);
-        $this->db->join("tarea","tarea.actHij_id = actividad_hijo.actHij_padreid","LEFT");
+        $this->db->join("tarea","tarea.actHij_id = actividad_hijo.actHij_id","LEFT");
         $this->db->group_by("actividad_hijo.actHij_id");
         $datos=$this->db->get("actividad_hijo");
 //        echo $this->db->last_query();die;

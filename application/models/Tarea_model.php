@@ -109,7 +109,12 @@ class Tarea_model extends CI_Model {
         $usuario = $this->db->get("tarea",1);
         return $usuario->result();
     }
-
+    function fechaFinalTareaxPlan($pla_id){
+        $this->db->select("MAX(tar_fechaFinalizacion) as fechafinalizacion",false);
+        $this->db->where("pla_id",$pla_id);
+        $fecha = $this->db->get("tarea");
+        return $fecha->result();
+    }
 }
 
 ?>
