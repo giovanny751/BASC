@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('BASEPATH'))
+if (!defined('BASEPATH')) 
     exit('No direct script access allowed');
 
 class Tareas extends My_Controller {
@@ -61,10 +61,20 @@ class Tareas extends My_Controller {
                 $this->data['empleado'] = $this->Empleado_model->empleadoxcargo($this->data['tarea']->car_id);
             endif;
             $this->data['pla_id'] = "";
-            if (!empty($this->input->post("pla_id"))) {
-                $this->data['pla_id'] = $this->input->post("pla_id");
+//            echo $this->data['tarea']->actPad_id;die;
+//            var_dump($this->input->post());die;
+            if (!empty($this->input->post("pla_id")) || (!empty($this->data['tarea']->pla_id))) {
+                if(!empty($this->input->post("pla_id"))) $this->data['pla_id'] = $this->input->post("pla_id");
+                if(!empty($this->data['tarea']->pla_id)) $this->data['pla_id'] = $this->data['tarea']->pla_id;
+//                echo $this->data['pla_id'];die;
                 $this->load->model('Actividadpadre_model');
-                $this->data["actividades"] = $this->Actividadpadre_model->detailxplaid($this->input->post("pla_id"));
+                
+                $this->data["actividades"] = $this->Actividadpadre_model->detailxplaid($this->data['pla_id']);
+                if(!empty($this->data['tarea']->actPad_id)){
+                $this->load->model('Actividad_model');
+                $this->data["actividadhijo"] = $this->Actividad_model->consultaxActividad($this->data['tarea']->actPad_id);
+//                var_dump($this->data["actividadhijo"]);die;
+                }
             }
             $this->data['categoria'] = $this->Riesgoclasificacion_model->detail();
             $this->data['notificacion'] = $this->Notificacion_model->detail();
@@ -311,7 +321,8 @@ class Tareas extends My_Controller {
             $this->load->model('Tarea_model');
             if (!empty($this->input->post('id'))):
                 $data = array(
-                    "actHij_id" => $this->input->post("actividad"),
+                    "actPad_id" => $this->input->post("actividad"),
+                    "actHij_id" => $this->input->post("registro"),
                     "car_id" => $this->input->post("cargo"),
                     "claRie_id" => $this->input->post("clasificacionriesgo"),
                     "tar_costopresupuestado" => $this->input->post("costrospresupuestados"),
@@ -334,7 +345,8 @@ class Tareas extends My_Controller {
                 $consultaxid = $this->Tarea_model->detailxid($this->input->post('id'));
             else:
                 $data = array(
-                    "actHij_id" => $this->input->post("actividad"),
+                    "actPad_id" => $this->input->post("actividad"),
+                    "actHij_id" => $this->input->post("registro"),
                     "car_id" => $this->input->post("cargo"),
                     "claRie_id" => $this->input->post("clasificacionriesgo"),
                     "tar_costopresupuestado" => $this->input->post("costrospresupuestados"),
@@ -370,6 +382,13 @@ class Tareas extends My_Controller {
         } catch (Exception $e) {
             
         }
+    }
+    
+    function consultaactividad(){
+        
+        $this->load->model('Registro_model');
+        $data = $this->Registro_model->consultaxcarpeta($this->input->post("carpeta"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
     function listadotareas() {

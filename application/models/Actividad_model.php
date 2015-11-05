@@ -31,7 +31,12 @@ class Actividad_model extends CI_Model {
         $avance = $this->db->get("actividad_hijo");
         return $avance->result();
     }
-
+    function consultaxActividad($id){
+        
+        $this->db->where("actHij_padreid",$id);
+        $avance = $this->db->get("actividad_hijo");
+        return $avance->result();
+    }
 
 }
 

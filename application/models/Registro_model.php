@@ -2,7 +2,7 @@
 
 class Registro_model extends CI_Model {
 
-    function __construct() {
+    function __construct() { 
         parent::__construct();
     }
 
@@ -93,7 +93,12 @@ class Registro_model extends CI_Model {
 //        echo $this->db->last_query();die;
         return $datos->result();
     }
-
+    function consultaxcarpeta($car_id){
+        
+        $this->db->where("actHij_padreid",$car_id);
+        $registro = $this->db->get("actividad_hijo");
+        return $registro->result();
+    }
 
 }
 

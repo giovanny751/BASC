@@ -182,9 +182,9 @@
                                 <th>Nombre de la Tarea</th>
                                 <th>Fecha Inicio</th>
                                 <th>Fecha Fin</th>
-                                <th>Duraciòn presupuestada</th>
+                                <th>Duracio&acute; n presupuestada (Horas)</th>
                                 <th>Responsables</th>
-                                </thead>
+                                </thead> 
                                 <tbody>
                                     <?php if (empty($tareas)) { ?>
                                         <tr>
@@ -207,7 +207,7 @@
                                             <td><?php echo $tar->tar_nombre ?></td>
                                             <td><?php echo $tar->tar_fechaInicio ?></td>
                                             <td><?php echo $tar->tar_fechaFinalizacion ?></td>
-                                            <td><?php echo $tar->diferencia ?></td>
+                                            <td style="text-align:center"><?php echo $tar->diferencia ?></td>
                                             <td><?php echo $tar->Emp_Nombre ?></td>
                                         </tr>
                                         <?php
@@ -646,7 +646,7 @@
                                         <div class="row">
                                             <div class="form-group">
                                                 <label for="costoreal">Costo Real</label>
-                                                <input type="text" class="form-control number costoreal2" id="costoreal" name="costoreal" />
+                                                <input type="text" class="form-control number costoreal2" id="costoreal" readonly="readonly" name="costoreal" />
                                                 <input type="hidden" name="actHij_id" id="actHij_id" class="form-control" readonly="readonly" value=""/>
                                             </div>
                                         </div>

@@ -146,7 +146,8 @@ class Planes extends My_Controller {
             $this->load->model("Notificacion_model");
             $this->load->model("Actividad_padre__model");
             $this->load->model("Registrocarpeta_model");
-            $this->data['plan'] = array();
+            $this->load->model("Avancetarea_model"); 
+            $this->data['plan'] = array();  
             if (!empty($this->input->post('pla_id'))) {
                 $carpeta = $this->Registrocarpeta_model->detailxplan($this->input->post('pla_id'));
                 $this->data['carpetas'] = $this->Registrocarpeta_model->detailxplancarpetas($this->input->post('pla_id'));
@@ -184,8 +185,8 @@ class Planes extends My_Controller {
                 $this->data['tareas'] = $this->Planes_model->tareaxplan($this->input->post('pla_id'));
                 $this->data['tareasinactivas'] = $this->Planes_model->tareaxplaninactivas($this->input->post('pla_id'));
                 $this->data['plan_grant'] = $this->Planes_model->plan_grant($this->input->post('pla_id'));
-                $this->load->model("AvanceTarea_model");
-                $this->data['avances'] = $this->AvanceTarea_model->listadoAvancexPlan($this->input->post('pla_id'));
+                
+                $this->data['avances'] = $this->Avancetarea_model->listadoAvancexPlan($this->input->post('pla_id'));
             }
             $this->data['notificacion'] = $this->Notificacion_model->detail();
             $this->data['norma'] = $this->Norma_model->detail();

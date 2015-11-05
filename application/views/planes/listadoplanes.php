@@ -13,7 +13,7 @@
         <li class="devolver">
             <a href="#">Plan De Trabajo</a>
             <i class="fa fa-angle-right"></i>
-        </li>
+        </li> 
         <li class="devolver">
             <a href="#">Listado Planes</a>
         </li>
@@ -33,7 +33,7 @@
             <div class="form-actions top">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <a href="<?php echo base_url("index.php/planes/planes") ?>" class="btn btn-default">
+                        <a href="<?php echo base_url("index.php/planes/nuevoplan") ?>" class="btn btn-default">
                             Nuevo Plan
                         </a> 
                     </div>

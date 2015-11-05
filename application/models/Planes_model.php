@@ -115,7 +115,7 @@ class Planes_model extends CI_Model {
                     `avance_tarea`.`avaTar_progreso` as `progreso`, `tarea`.`car_id`, 
                     `tipo`.`tip_tipo`, `tar_nombre`, `tarea`.`tar_fechaInicio`, 
                     `tarea`.`tar_fechaFinalizacion`, 
-                    DATEDIFF((tar_fechaFinalizacion), (tar_fechaInicio)) as diferencia, 
+                    SUM(DATEDIFF((tar_fechaFinalizacion), (tar_fechaInicio))*24) as diferencia, 
                     `empleado`.`Emp_Nombre` 
                     FROM `planes` 
                     JOIN `tarea` ON `tarea`.`pla_id` = `planes`.`pla_id` 

@@ -6,7 +6,7 @@
     <h5>
         <i class="glyphicon glyphicon-ok"></i>NUEVA TAREA
     </h5>
-</div>
+</div> 
 <div class='well'>
     <form method="post" id="f8">
         <input type="hidden" value="<?php echo (!empty($tarea->tar_id)) ? $tarea->tar_id : ""; ?>" name="id" id="interno">
@@ -46,10 +46,27 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($planes as $p) { ?>
                                 <option  <?php
-                                echo (!empty($pla_id) && $pla_id == $p->pla_id ) ? "selected" : "";
-                                echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id) ? "selected" : "";
+                                echo (!empty($tarea->pla_id) && $tarea->pla_id == $p->pla_id || (!empty($pla_id) && $pla_id == $p->pla_id)) ? "selected" : "";
                                 ?> value="<?php echo $p->pla_id ?>"><?php echo $p->pla_nombre ?></option>
                                 <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label for="actividad">Actividad padre</label>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <select name="actividad" id="actividad" class="form-control" >
+                            <option value="">::Seleccionar::</option>
+                            <?php
+                                if(!empty($actividades))
+                                foreach ($actividades as $h):
+                                    ?>
+                                    <option <?php echo ((!empty($tarea->actPad_id)) && ($h->actPad_id == $tarea->actPad_id)) ? "selected" : ""; ?> value='<?php echo $h->actPad_id ?>'><?php echo $h->actPad_nombre." - ".$h->actPad_codigo ?></option>
+                                    <?php
+                                endforeach;
+                            ?>
                         </select>
                     </div>
                 </div>
@@ -58,16 +75,12 @@
                         <label for="actividad">Actividad</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <select name="actividad" id="actividad" class="form-control" >
+                        <select name="registro" id="registro" class="form-control" >
                             <option value="">::Seleccionar::</option>
-                            <?php
-                            if (!empty($actividades))
-                                foreach ($actividades as $h):
-                                    ?>
-                                    <option <?php echo ($h->actPad_id == $tarea->actHij_id) ? "selected" : ""; ?> value='<?php echo $h->actPad_id ?>'><?php echo $h->actPad_nombre." - ".$h->actPad_codigo ?></option>
-                                    <?php
-                                endforeach;
-                            ?>
+                            <?php if(!empty($actividadhijo))
+                            foreach ($actividadhijo as $ah) { ?>
+                            <option  <?php echo ((!empty($tarea->actHij_id)) && $tarea->actHij_id == $ah->actHij_id) ? "selected" : ""; ?> value="<?php echo $ah->actHij_id ?>"><?php echo $ah->actHij_nombre ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -79,7 +92,7 @@
                         <select name="dimensionuno" id="dimensionuno" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($dimension as $d1) { ?>
-                                <option  <?php echo ((!empty($tarea->dim_id)) && $tarea->dim_id == $d1->dim_id) ? "selected" : ""; ?> value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
+                            <option  <?php echo ((!empty($tarea->dim_id)) && $tarea->dim_id == $d1->dim_id) ? "selected" : ""; ?> value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
                             <?php } ?>
                         </select> 
                     </div>
@@ -124,7 +137,7 @@
                             $g[] = 0;
                         }
                         ?>
-                        <?php echo listaMultiple2("articulosnorma[]", "norma", "form-control", "norma", "nor_id", "nor_norma", $g, null, null) ?>
+                        <?php // echo listaMultiple2("articulosnorma[]", "norma", "form-control", "norma", "nor_id", "nor_norma", $g, null, null) ?>
                     </div>
                 </div>
                 <div class="row">
@@ -132,7 +145,7 @@
                         <label for="fechaIncio">Fecha Incio</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="fechaIncio" id="fechaIncio" class="form-control fecha"  value="<?php echo (!empty($tarea->tar_fechaInicio)) ? $tarea->tar_fechaInicio : ""; ?>" />
+                        <input type="text" name="fechaIncio" id="fechaIncio" class="form-control fecha obligatorio"  value="<?php echo (!empty($tarea->tar_fechaInicio)) ? $tarea->tar_fechaInicio : ""; ?>" />
                     </div> 
                 </div>
                 <div class="row">
@@ -140,7 +153,7 @@
                         <label for="fechafinalizacion">Fecha Finalización</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="fechafinalizacion" id="fechafinalizacion" class="form-control fecha"  value="<?php echo (!empty($tarea->tar_fechaFinalizacion)) ? $tarea->tar_fechaFinalizacion : ""; ?>"/>
+                        <input type="text" name="fechafinalizacion" id="fechafinalizacion" class="form-control fecha obligatorio"  value="<?php echo (!empty($tarea->tar_fechaFinalizacion)) ? $tarea->tar_fechaFinalizacion : ""; ?>"/>
                     </div> 
                 </div>
                 <div class="row">
@@ -297,7 +310,7 @@
                             <a data-toggle="tab" href="#tab1">Avance</a>
                         </li>
                         <li <?php  echo (!empty($avance))?"class='active'":""; ?>>
-                            <a data-toggle="tab" href="#tab2">Agragar Avance</a>
+                            <a data-toggle="tab" href="#tab2">Agregar Avance</a>
                         </li>
                         <li>
                             <a data-toggle="tab" href="#tab3">Registros</a>
@@ -590,6 +603,27 @@
 </div> 
 <div id='planes'></div>
 <script>
+    
+    $('body').delegate("#actividad","change",function(){ 
+        
+            $.post(
+                    "<?php echo base_url("index.php/tareas/consultaactividad") ?>",
+                    {carpeta : $(this).val()}
+                ).done(function(msg){
+                    $("#registro *").remove();
+                    var option = "<option value=''>::Seleccionar::</option>";
+                    $.each(msg,function(key,val){
+                        option += "<option value='"+val.regCar_id+"'>"+val.actHij_nombre+"</option>"
+                    })
+                    $("#registro").append(option);
+                    
+                    
+                })
+                .fail(function(msg){
+                    alerta("rojo","Error,Comunicarse con el administrador del sistema");
+                });
+        
+    });
     
     $('body').delegate(".eliminarregistro","click",function(){
         var puntero = $(this).attr("car_id");
