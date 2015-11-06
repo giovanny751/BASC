@@ -139,7 +139,8 @@
                         ?>
                         <?php // echo listaMultiple2("articulosnorma[]", "norma", "form-control", "norma", "nor_id", "nor_norma", $g, null, null) ?>
                     </div>
-                </div>
+                </div> 
+                
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <label for="fechaIncio"><span class="campoobligatorio">*</span>Fecha Incio</label>

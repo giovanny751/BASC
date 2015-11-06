@@ -2,7 +2,7 @@
 <script type="text/javascript">
     $(".menPLAN_DE_TRABAJO").addClass("active open");
     $(".subMenCREACIÓN_PLAN_DE_TRABAJO").addClass("active");
-</script>
+</script> 
 <div class="page-bar" style="background-color: transparent !important;">
     <ul class="page-breadcrumb">
         <li class="devolver">
@@ -19,6 +19,7 @@
         </li>
     </ul>
 </div>
+
 <div class="widgetTitle" >
     <h5>
         <i class="glyphicon glyphicon-ok"></i>PLANES

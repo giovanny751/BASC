@@ -17,7 +17,7 @@ class Planes extends My_Controller {
     }
     
     function guardarregistroempleado() {
-        try {
+        try { 
             $post = $this->input->post();
             $this->load->model('Registro_model');
             $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
@@ -418,8 +418,7 @@ class Planes extends My_Controller {
         $data = $this->Registrocarpeta_model->eliminarcarpeta($this->input->post("carpeta")); 
         
     }
-    function modificarpeta(){
-        
+    function modificarpeta(){         
         $this->load->model('Registrocarpeta_model');
         $this->Registrocarpeta_model->modificarpeta(
                 $this->input->post("nombrecarpeta"),
