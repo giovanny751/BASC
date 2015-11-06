@@ -300,7 +300,7 @@
                                                             <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id . 'c'; ?>" aria-expanded="false"> 
                                                                 <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombre ?>
                                                             </a>
-                                                            <i class="fa fa-file-o carpeta nuevo_hijo" data-toggle="modal" data-target="#myModal8" title='ACTIVIDAD HIJO'></i>
+                                                            <i class="fa fa-file-o carpeta nuevo_hijo" car_id="<?php echo $id ?>" data-toggle="modal" data-target="#myModal8" title='ACTIVIDAD HIJO'></i>
                                                             <i class="fa fa-edit editaractividad" car_id="<?php echo $id ?>"></i>
                                                             <i class="fa fa-times eliminarcarpeta" tipo="c" title="Eliminar" car_id="<?php echo $id ?>"></i>
                                                         </h4>
@@ -719,6 +719,7 @@
 
     $('body').delegate(".carpeta", "click", function () {
         var pla_id = $('#pla_id').val();
+        var car_id = $(this).attr('car_id');
         $("#idpadre *").remove();
         $.post(
                 "<?php echo base_url("index.php/planes/detailxplaid") ?>"
@@ -726,7 +727,7 @@
             ).done(function(msg){
                 var option = "<option value=''>::Seleccionar::</option>";
                 $.each(msg,function(key,val){
-                    option += "<option value='"+val.actPad_id+"'>"+val.actPad_nombre+" - "+val.actPad_codigo+"</option>"
+                    option += "<option "+((car_id == val.actPad_id) ? "selected" : "")+" value='"+val.actPad_id+"'>"+val.actPad_nombre+" - "+val.actPad_codigo+"</option>"
                 });
                 
                 $("#idpadre").append(option);
@@ -922,6 +923,7 @@
     $('body').delegate(".editarhistorial", "click", function () {
         $('#internotarea').val($(this).attr('tar_id'));
     });
+    
     $('#guardar').click(function () {
         $.post(
                 "<?php echo base_url("index.php/planes/guardaractividadhijo") ?>",
@@ -932,11 +934,11 @@
             $.each(msg, function (key, val) {
                 id = val.actHij_padreid;
                 body += "<tr>";
-                body += "<td>" + val.actHij_nombre + "</td>";
-                body += "<td>" + val.actHij_fechaInicio + "</td>";
-                body += "<td>" + val.actHij_fechaFinalizacion + "</td>";
-                body += "<td>" + val.actHij_presupuestoTotal + "</td>";
-                body += "<td>" + val.actHij_descripcion + "</td>";
+                body += "<td>" + ((val.actHij_nombre != null) ? val.actHij_nombre : "") + "</td>";
+                body += "<td>" + ((val.actHij_fechaInicio != null) ? val.actHij_fechaInicio : "") + "</td>";
+                body += "<td>" + ((val.actHij_fechaFinalizacion != null) ? val.actHij_fechaFinalizacion : "") + "</td>";
+                body += "<td>" + ((val.actHij_presupuestoTotal != null) ? val.actHij_presupuestoTotal : "") + "</td>";
+                body += "<td>" + ((val.actHij_descripcion != null) ? val.actHij_descripcion : "") + "</td>";
                 body += "<td>" +
                         '<i class="fa fa-times eliminar btn btn-danger" title="Eliminar" acthij_id="' + val.actHij_id + '"></i><i class="fa fa-pencil-square-o modificar btn btn-info" title="Modificar" acthij_id="' + val.actHij_id + '" data-toggle="modal" data-target="#myModal8"></i>'
                         + "</td>";

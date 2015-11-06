@@ -142,7 +142,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="fechaIncio">Fecha Incio</label>
+                        <label for="fechaIncio"><span class="campoobligatorio">*</span>Fecha Incio</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <input type="text" name="fechaIncio" id="fechaIncio" class="form-control fecha obligatorio"  value="<?php echo (!empty($tarea->tar_fechaInicio)) ? $tarea->tar_fechaInicio : ""; ?>" />
@@ -150,7 +150,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="fechafinalizacion">Fecha Finalización</label>
+                        <label for="fechafinalizacion"><span class="campoobligatorio">*</span>Fecha Finalización</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <input type="text" name="fechafinalizacion" id="fechafinalizacion" class="form-control fecha obligatorio"  value="<?php echo (!empty($tarea->tar_fechaFinalizacion)) ? $tarea->tar_fechaFinalizacion : ""; ?>"/>
@@ -225,7 +225,7 @@
                                 <select name="estado" id="estado" class="form-control" >
                                     <option value="">::Seleccionar::</option>
                                     <?php foreach ($estados as $e) { ?>
-                                        <option <?php echo (!empty($tarea->est_id) && $tarea->est_id == $e->est_id) ? "selected" : ""; ?>  value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
+                                        <option <?php echo ((!empty($tarea->est_id) && $tarea->est_id == $e->est_id) ? "selected" : ((empty($tarea->est_id) && $e->est_id == 1) ? "selected" : "" )); ?>  value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
