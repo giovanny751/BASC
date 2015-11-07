@@ -387,7 +387,7 @@
                                                 <label for="costo">Costo</label>
                                             </div>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input value="<?php echo (!empty($avance[0]->avaTar_costo))?$avance[0]->avaTar_costo:""; ?>" type="text" style="text-align:center" name="costo" id="costo" class="form-control avance">
+                                                <input value="<?php echo (!empty($avance[0]->avaTar_costo))?$avance[0]->avaTar_costo:""; ?>" type="text" style="text-align:center" name="costo" id="costo" class="form-control avance miles">
                                             </div>
                                         </div>
                                     </div>
@@ -427,7 +427,7 @@
                                     </div>
                                     <div class="tools">                                        
                                         <i class=" btn btn-default fa fa-folder-o carpeta" data-toggle="modal" data-target="#modalCarpeta" ></i>
-                                        <i class="fa fa-file-archive-o  btn btn-default"  id="nuevoregistro" data-toggle="modal" data-target="#myModal"></i>
+                                        
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -446,6 +446,7 @@
                                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false" id=""> 
                                                                         <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
                                                                     </a>
+                                                                    <i class="fa fa-file-archive-o nuevoregistro" car_id="<?php echo $idcar ?>" data-toggle="modal" data-target="#myModal"></i>
                                                                     <i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
                                                                     <i class="fa fa-times eliminarregistro" car_id="<?php echo $idcar ?>"></i>
                                                                 </h4>
@@ -557,7 +558,7 @@
                                     <select id="carpeta" name="tarCar_id" class="form-control tarRegObligatorio">
                                         <option value=""></option>
                                         <?php foreach ($carpetas as $carp): ?>
-                                            <option value="<?php echo $carp->tarCar_id ?>"><?php echo $carp->tarCar_nombre ?></option>
+                                            <option value="<?php echo $carp->tarCar_id ?>"><?php echo $carp->tarCar_nombre.' - '.$carp->tarCar_descripcion ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -711,7 +712,11 @@
                 .done(function (msg) {
                     $('.datatable_ajax12').html('');
                     var html = "";
+                    var totalhoras = 0;
+                    var costo = 0;
                     $.each(msg, function (key, val) {
+                        totalhoras += parseInt(val.avaTar_horasTrabajadas);
+                        costo += parseInt( val.avaTar_costo);
                         html += "<tr>"
                                 + "<td>"
                                 + "<a href='javascript:' class='avances_ fa fa-pencil-square-o fa-2x btn btn-info' avaTar_id='" + val.avaTar_id + "' ></a>"
@@ -724,6 +729,12 @@
                                 + "<td>" + val.avaTar_comentarios + "</td>"
                                 + "</tr>";
                     });
+                    html += "<tr>\n\
+                                        <td colspan='4' style='text-align:right;'><b>Total</b></td>\n\
+                                        <td>"+totalhoras+"</td>\n\
+                                        <td>"+costo+"</td>\n\
+                                        <td></td>\n\
+                                        </tr>"
                     $('.datatable_ajax12').html(html);
                 })
                 .fail(function () {
@@ -902,7 +913,7 @@
             $.post("<?php echo base_url("index.php/tareas/guardarcarpetatarea") ?>",
                     $('#frmcarpetaregistro').serialize()
                     ).done(function (msg) {
-                var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>"
+                var option = "<option value='" + msg.uno + "'>" + msg.dos + " - " + msg.tres+"</option>"
                 var contenido = "<table class='table table-hover table-bordered'>\n\
                                         <thead>\n\
                                             <th>Nombre de archivo</th>\n\
@@ -1000,6 +1011,7 @@
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - " + msg.tres + '\n\
                                                     </a>\n\
+                                                        <i class="fa fa-file-archive-o nuevoregistro" car_id="' + msg.uno + '" data-toggle="modal" data-target="#myModal"></i>\n\
                                                         <i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
                                                         <i class="fa fa-times eliminarregistro" car_id="' + msg.uno + '"></i>\n\
                                                 </h4>\n\
@@ -1012,4 +1024,9 @@
                                     </div>';
         $('#' + tabla).append(acordeon);
     }
+    $('body').delegate(".nuevoregistro","click",function(){
+        
+        $('#carpeta').val($(this).attr("car_id"));
+        
+    });
 </script>    
