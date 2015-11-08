@@ -146,7 +146,7 @@
                         <label for="fechaIncio"><span class="campoobligatorio">*</span>Fecha Incio</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="fechaIncio" id="fechaIncio" class="form-control fecha obligatorio"  value="<?php echo (!empty($tarea->tar_fechaInicio)) ? $tarea->tar_fechaInicio : ""; ?>" />
+                        <input type="text" name="fechaIncio"  id="fechaIncio" class="form-control fecha obligatorio compararfecha"  value="<?php echo (!empty($tarea->tar_fechaInicio)) ? $tarea->tar_fechaInicio : ""; ?>" />
                     </div> 
                 </div>
                 <div class="row">
@@ -154,7 +154,7 @@
                         <label for="fechafinalizacion"><span class="campoobligatorio">*</span>Fecha Finalización</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="fechafinalizacion" id="fechafinalizacion" class="form-control fecha obligatorio"  value="<?php echo (!empty($tarea->tar_fechaFinalizacion)) ? $tarea->tar_fechaFinalizacion : ""; ?>"/>
+                        <input type="text" name="fechafinalizacion" id="fechafinalizacion" class="form-control fecha obligatorio compararfecha"  value="<?php echo (!empty($tarea->tar_fechaFinalizacion)) ? $tarea->tar_fechaFinalizacion : ""; ?>"/>
                     </div> 
                 </div>
                 <div class="row">
@@ -885,19 +885,21 @@
         }
     });
     $('#guardartarea').click(function () {
-        if (obligatorio("obligatorio")) {
-            $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
-                    $('#f8').serialize()
-                    ).done(function (msg) {
-                        var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
-                            form += "<input type='hidden' value='"+msg.pla_id+"' name='pla_id'>";
-                            form += "</form>"
-                        $('#planes').append(form);
-                        $('#enviotarea').submit();
-                alerta("verde", "Datos guardados correctamente");
-            }).fail(function (msg) {
-                alerta("rojo", "Error por favor comunicarse con el administrador");
-            });
+        if(compararfecha($("#fechaIncio").val(),$("#fechafinalizacion").val(),"compararfecha")){
+            if (obligatorio("obligatorio")) {
+                $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
+                        $('#f8').serialize()
+                        ).done(function (msg) {
+                            var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
+                                form += "<input type='hidden' value='"+msg.pla_id+"' name='pla_id'>";
+                                form += "</form>"
+                            $('#planes').append(form);
+                            $('#enviotarea').submit();
+                    alerta("verde", "Datos guardados correctamente");
+                }).fail(function (msg) {
+                    alerta("rojo", "Error por favor comunicarse con el administrador");
+                });
+            }
         }
     });
 
@@ -1029,4 +1031,25 @@
         $('#carpeta').val($(this).attr("car_id"));
         
     });
+    
+    function compararfecha(fecha1 = null,fecha2 = null,claseCompararFecha = null){
+        if((fecha1 != "" && fecha2 != "") && ((fecha1 != null && fecha2 != null))){
+            var array_fecha1 = fecha1.split("-");
+            var array_fecha2 = fecha2.split("-");
+            var comFecha1 = new Date(array_fecha1[0],array_fecha1[1],array_fecha1[2]);
+            var comFecha2 = new Date(array_fecha2[0],array_fecha2[1],array_fecha2[2]);
+            if(comFecha1 < comFecha2){
+                $("."+claseCompararFecha).removeClass("obligado");
+                return true;
+            }else{
+                $("."+claseCompararFecha).addClass("obligado");
+                alerta("naranja","La fecha no concuerda");
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    
+    
 </script>    

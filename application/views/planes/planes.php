@@ -29,9 +29,7 @@
 
     <div class="row">
         <div class="col-lg-4 col-md-4 col-resm-4 col-xs-4">
-            <button type="button" id="guardarplan" class="guardar btn btn-success">
-                <?php echo (!empty($plan[0]->pla_id)) ? "Actualizar" : "Guardar"; ?>
-            </button>
+            <button type="button" id="guardarplan" metodo="<?php echo (!empty($plan[0]->pla_id)) ? "Actualizar" : "Guardar"; ?>" class="guardar btn btn-success"><?php echo (!empty($plan[0]->pla_id)) ? "Actualizar" : "Guardar"; ?></button>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <center>
@@ -1078,10 +1076,15 @@
     ?>",
                     $('#f7').serialize()
                     ).done(function (msg) {
-                if ($(this).text() == "Actualizar") {
-
-                } else {
-                    $('input,select,textarea').val("");
+                if ( $('#guardarplan').attr("metodo") == "Actualizar") {
+                    window.location = "<?php echo base_url("index.php/planes/listadoplanes"); ?>";
+                } else if( $('#guardarplan').attr("metodo") == "Guardar") {
+                    if(confirm("Desea guardar otro Plan ?")){
+                        $('input,select,textarea').val("");
+                    }else{
+                        window.location = "<?php echo base_url("index.php/planes/listadoplanes"); ?>";
+                    }
+                    
                 }
                 alerta("verde", "Datos guardados correctamente");
             }).fail(function (msg) {
@@ -1199,4 +1202,8 @@
                 
             })
     $('#cargo').trigger('change');
+    
+    
+
+    
 </script>
