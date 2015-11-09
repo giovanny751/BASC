@@ -202,13 +202,12 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-gift"></i>
-                    Tab drop
                 </div>
                 <div class="tools">
-                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
+<!--                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
                     <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
                     <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
-                    <a class="remove" href="javascript:;" data-original-title="" title=""> </a>
+                    <a class="remove" href="javascript:;" data-original-title="" title=""> </a>-->
                 </div>
             </div>
             <div class="portlet-body">
@@ -406,9 +405,9 @@
                 .done(function (msg) {
                     alerta("verde", "Guardado con exito");
                     if(confirm("Desea guardar otro indicador?")){
-                        $("#indicador").find("input").value("");
-                        $("#indicador").find("textarea").value("");
-                        $("#indicador").find("select").value("");
+                        $("#indicador").find("input").val("");
+                        $("#indicador").find("textarea").val("");
+                        $("#indicador").find("select").val("");
                         $("#indicador").find("#nombreempleado").html("<option>::Seleccionar::</option>");
                     }else{
                         window.location = "<?php echo base_url("index.php/indicador/verindicadores"); ?>";

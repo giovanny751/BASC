@@ -48,6 +48,7 @@ class Riesgo extends My_Controller {
     function guardarriesgo(){   
         try{
             $this->load->model('Riesgo_model');
+            $this->load->model('Riesgocargo_model');
             $this->load->model('Riesgoclasificaciontipo_model');
             $data = array(
                 "rie_descripcion"=>$this->input->post("descripcion"),

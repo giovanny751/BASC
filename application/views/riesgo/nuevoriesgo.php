@@ -449,9 +449,9 @@
                     ).done(function (msg) {
                          alerta("verde", "Guardado");  
                         if(confirm("Desea guardar otro riesgo?")){
-                            $("#riesgos").find("input").value("");
-                            $("#riesgos").find("textarea").value("");
-                            $("#riesgos").find("select").value("");
+                            $("#riesgos").find("input").val("");
+                            $("#riesgos").find("textarea").val("");
+                            $("#riesgos").find("select").val("");
                             $("#riesgos").find("#tipo").html("<option>::Seleccionar::</option>");
                         }else{
                             window.location = "<?php echo base_url("index.php/riesgo/listadoriesgo"); ?>";
