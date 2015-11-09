@@ -33,10 +33,10 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <center>
-                <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
-                <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
-                <div class="flecha flechaDerecha" metodo="flechaDerecha"></div>
-                <div class="flecha flechaDerechaDoble" metodo="flechaDerechaDoble"></div>
+                <div class="envio flecha flechaIzquierdaDoble" metodo="" nuevo="<?php echo (isset($todo_izq)?$todo_izq:'') ?>"></div>
+                <div class="envio flecha flechaIzquierda" metodo="" nuevo="<?php echo (isset($izq)?$izq:'') ?>"></div>
+                <div class="envio flecha flechaDerecha" metodo="" nuevo="<?php echo (isset($derecha)?$derecha:'') ?>"></div>
+                <div class="envio flecha flechaDerechaDoble" nuevo="<?php echo (isset($max_der)?$max_der:'') ?>"></div>
                 <div class="flecha documento" metodo="documento"></div>
             </center>
         </div>
@@ -1014,38 +1014,38 @@
         $('#' + tabla).append(acordeon);
     }
 
-    $(".flecha").click(function () {
-        var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
-        var idUsuarioCreado = $("#usuid").val();
-        var metodo = $(this).attr("metodo");
-        if (metodo != "documento") {
-            $.post(url, {idUsuarioCreado: idUsuarioCreado, metodo: metodo})
-                    .done(function (msg) {
-                        $("input[type='text'],select").val("");
-                        $("#usuid").val(msg.usu_id);
-                        $("#cedula").val(msg.usu_cedula);
-                        $("#nombres").val(msg.usu_nombre);
-                        $("#apellidos").val(msg.usu_apellido);
-                        $("#usuario").val(msg.usu_usuario);
-                        $("#contrasena").val(msg.usu_contrasena);
-                        $("#email").val(msg.usu_email);
-                        $("#genero").val(msg.sex_id);
-                        $("#estado").val(msg.est_id); //estado
-                        $("#cargo").val(msg.car_id); //cargo
-                        $("#empleado").val(msg.emp_id); //empleado
-                        if (msg.cambiocontrasena == "1") {
-                            $("#cambiocontrasena").is(":checked");
-                        }
-                    })
-                    .fail(function (msg) {
-                        alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-                        $("input[type='text'], select").val();
-                    })
-        } else {
-            window.location = "<?php echo base_url("index.php/planes/listadoplanes"); ?>";
-        }
-
-    });
+//    $(".flecha").click(function () {
+//        var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
+//        var idUsuarioCreado = $("#usuid").val();
+//        var metodo = $(this).attr("metodo");
+//        if (metodo != "documento") {
+//            $.post(url, {idUsuarioCreado: idUsuarioCreado, metodo: metodo})
+//                    .done(function (msg) {
+//                        $("input[type='text'],select").val("");
+//                        $("#usuid").val(msg.usu_id);
+//                        $("#cedula").val(msg.usu_cedula);
+//                        $("#nombres").val(msg.usu_nombre);
+//                        $("#apellidos").val(msg.usu_apellido);
+//                        $("#usuario").val(msg.usu_usuario);
+//                        $("#contrasena").val(msg.usu_contrasena);
+//                        $("#email").val(msg.usu_email);
+//                        $("#genero").val(msg.sex_id);
+//                        $("#estado").val(msg.est_id); //estado
+//                        $("#cargo").val(msg.car_id); //cargo
+//                        $("#empleado").val(msg.emp_id); //empleado
+//                        if (msg.cambiocontrasena == "1") {
+//                            $("#cambiocontrasena").is(":checked");
+//                        }
+//                    })
+//                    .fail(function (msg) {
+//                        alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
+//                        $("input[type='text'], select").val();
+//                    })
+//        } else {
+//            window.location = "<?php echo base_url("index.php/planes/listadoplanes"); ?>";
+//        }
+//
+//    });
     $('#cargo').change(function () {
     if($('#cargo').val()=='')
         return false;
@@ -1206,4 +1206,11 @@
     
 
     
+    $('.envio').click(function(){
+        $('#pla_id_3').val($(this).attr('nuevo'));
+        $('#formulario_siguiente').submit();
+    })
 </script>
+<form id="formulario_siguiente" action="<?php echo base_url('index.php/planes/nuevoplan') ?>" method="POST">
+    <input type="hidden" id="pla_id_3" name="pla_id">
+</form>

@@ -213,6 +213,43 @@ class Planes_model extends CI_Model {
         
         return array($datos->result(),$datos2->result());
     }
+        function max_id(){
+        $this->db->select_max('pla_id');
+        $datos=$this->db->get('planes');
+        $datos=$datos->result();
+        if(count($datos)>0)
+        return $datos[0]->pla_id;
+        else
+            return '';
+    }
+    function min_id(){
+        $this->db->select_min('pla_id');
+        $datos=$this->db->get('planes');
+        $datos=$datos->result();
+//        echo $this->db->last_query();
+        if(count($datos)>0)
+        return $datos[0]->pla_id;
+        else
+            return '';
+    }
+    function select_id(){
+        $this->db->select('pla_id');
+        $datos=$this->db->get('planes',1,1);
+        $datos=$datos->result();
+        if(count($datos)>0)
+        return $datos[0]->pla_id;
+        else
+            return '';
+    }
+    function max_id_next($id){
+        $this->db->select('pla_id');
+        $datos=$this->db->get('planes',1,1);
+        $datos=$datos->result();
+        if(count($datos)>0)
+        return $datos[0]->pla_id;
+        else
+            return '';
+    }
 
 }
 

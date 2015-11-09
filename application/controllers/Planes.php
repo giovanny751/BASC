@@ -150,6 +150,21 @@ class Planes extends My_Controller {
              
             $this->data['plan'] = array();  
             if (!empty($this->input->post('pla_id'))) {
+                $this->data['todo_izq']=$this->Planes_model->min_id();
+                $this->db->where('pla_id <',$this->input->post('pla_id'));
+                $this->data['izq']=$this->Planes_model->max_id();
+                if(empty($this->data['izq'])){
+                $this->data['izq']=$this->data['todo_izq'];
+                }
+                $this->db->where('pla_id >',$this->input->post('pla_id'));
+                $this->data['derecha']=$this->Planes_model->select_id();
+                $this->data['max_der']=$this->Planes_model->max_id();
+                
+                if(empty($this->data['derecha'])){
+                $this->data['derecha']=$this->data['max_der'];
+                }
+                
+                
                 $this->load->model("Tarea_model");
                 $carpeta = $this->Registrocarpeta_model->detailxplan($this->input->post('pla_id'));
                 $this->data['carpetas'] = $this->Registrocarpeta_model->detailxplancarpetas($this->input->post('pla_id'));
