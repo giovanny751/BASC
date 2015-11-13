@@ -391,7 +391,7 @@ $('.portlet').find('label,h4').css('color','black');
         if (tecla.charCode > 0 && tecla.charCode < 48 || tecla.charCode > 57)
             return false;
     });
-    $('body').delegate('.miles', 'keypress', function(tecla) {
+    $('body').delegate('.miles', 'keyup', function(tecla) {
         $(this).val(num_miles($(this).val()))
     });
     $('body').delegate('.float', 'keypress', function(tecla) {
