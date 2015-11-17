@@ -39,7 +39,7 @@ class Tipo_documento extends My_Controller {
     function save_tipo_documento() {
         $post = $this->input->post();
         $id = $this->Tipo_documento__model->save_tipo_documento($post);
-        redirect('index.php/Tipo_documento/consult_tipo_documento', 'location');
+        //redirect('index.php/Tipo_documento/consult_tipo_documento', 'location');
     }
 
     function delete_tipo_documento() {
@@ -55,7 +55,6 @@ class Tipo_documento extends My_Controller {
         $this->data['datos'] = $this->Tipo_documento__model->edit_tipo_documento($this->data['post']);
         $this->layout->view('tipo_documento/index', $this->data);
     }
-
     function autocomplete_tipDoc_Descripcion() {
         $info = auto("tipo_documento", "tipDoc_tipo", "tipDoc_Descripcion", $this->input->get('term'));
         $this->output->set_content_type('application/json')->set_output(json_encode($info));

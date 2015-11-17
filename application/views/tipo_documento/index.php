@@ -19,24 +19,16 @@
         </li>
     </ul>
 </div>
-<div class="col-md-12">
+<div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4 col-lg-4 col-md-4 col-sm-4 col-xs-4">
     <div class="portlet green-meadow box">
         <div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-cogs"></i>TIPOS DE DOCUMENTO
             </div>
             <div class="tools">
-                <!--                <a href="javascript:;" class="collapse" data-original-title="" title="">
-                                </a>-->
-                <!--                <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title="">
-                                </a>
-                                <a href="javascript:;" class="reload" data-original-title="" title="">
-                                </a>-->
-                <!--                <a href="javascript:;" class="remove" data-original-title="" title="">
-                                </a>-->
                 <span id="boton_guardar">
-                    <button class="btn btn-success" >Guardar</button> 
-                    <input class="btn btn-danger" type="reset" value="Limpiar">
+                    <button class="btn btn-success" id="btnguardar">Guardar</button> 
+                    <button class="btn btn-danger limpiar" type="reset" >Limpiar</button>
                     <a href="<?php echo base_url('index.php') . "/Tipo_documento/consult_tipo_documento" ?>" class="btn btn-default">Listado </a>
                 </span>
             </div>
@@ -52,6 +44,7 @@
                         <input type="text" value="<?php echo (isset($datos[0]->tipDoc_Descripcion) ? $datos[0]->tipDoc_Descripcion : '' ) ?>" class=" form-control obligatorio  " id="tipDoc_Descripcion" name="tipDoc_Descripcion">
                     </div>
                 </div>
+                <div class="col-md-12" style="color:black;text-align:right;"><b>Los campos en * son obligatorios</b></div>
                 <?php if (isset($post['campo'])) { ?>
                     <input type="hidden" name="<?php echo $post['campo'] ?>" value="<?php echo $post[$post['campo']] ?>">
                     <input type="hidden" name="campo" value="<?php echo $post['campo'] ?>">
@@ -61,12 +54,26 @@
                         <h2>Cargando ...</h2>
                     </span>
                 </div>
-                <div class="row"><div style="float: right"><b>Los campos en * son obligatorios</b></div></div>
             </form>
         </div>
     </div>
 </div>
 <script>
+    $('#btnguardar').click(function () {
+        var tipDoc_Descripcion = $('#tipDoc_Descripcion').val();
+        $.post("<?php echo base_url("index.php/tipo_documento/save_tipo_documento") ?>"
+                , {tipDoc_Descripcion: tipDoc_Descripcion}
+        )
+                .done(function (msg) {
+                        $('#tipDoc_Descripcion').val("");
+                        $('#tipDoc_Descripcion').focus();
+                        alerta("verde", "Tipo de contrato guardado correctamente")
+                })
+                .fail(function (msg) {
+                    return false
+                });
+    });
+
     function campos() {
         $('input[type="file"]').each(function (key, val) {
             var img = $(this).val();
@@ -90,6 +97,5 @@
         if (tecla.charCode > 0 && tecla.charCode < 48 || tecla.charCode > 57)
             return false;
     });
-
-
+    $('.fecha').datepicker({dateFormat: 'yy-mm-dd'});
 </script>

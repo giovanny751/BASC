@@ -46,6 +46,7 @@ class Actividad_padre__model extends CI_Model {
     function detail($id){
         
         $this->db->where("pla_id",$id);
+        $this->db->order_by("actPad_nombre");
         $datos = $this->db->get("actividad_padre");
         return $datos->result();
         

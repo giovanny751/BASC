@@ -30,8 +30,11 @@ class Riesgo extends My_Controller {
         $this->data['empresa'] = $this->Empresa_model->detail();
         $this->data['cargo'] = $this->Cargo_model->detail();
         if (!empty($this->data['empresa'][0]->Dim_id) && !empty($this->data['empresa'][0]->Dimdos_id)) {
+            $this->load->model("Tareas");
+            
             if (!empty($this->input->post("rie_id"))) {
                 $this->data['rie_id'] = $this->input->post("rie_id");
+                $this->Tareas->tareaxRiesgo($this->data['rie_id']);
                 $this->data['riesgo'] = $this->Riesgo_model->detailxid($this->input->post("rie_id"))[0];
                 $this->data['tipo'] = $this->Riesgoclasificaciontipo_model->tipoxcategoria($this->data['riesgo']->cat_id);
                 $this->data['color'] = $this->Color_model->colorxestado($this->data['riesgo']->estAce_id);

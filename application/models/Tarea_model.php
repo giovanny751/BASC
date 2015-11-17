@@ -14,10 +14,6 @@ class Tarea_model extends CI_Model {
         
         $this->db->insert_batch("norma_tarea",$data);
     }
-    //tarea_registro
-    //function guardar_tarea_registro($data){
-    //    $this->db->insert("tarea_registro",$data);
-    //}
     function traer_tarea_registro($data){
         $this->db->where("pla_id",$data['pla_id']);
         $this->db->where("tar_id",$data['tar_id']);
@@ -34,6 +30,7 @@ class Tarea_model extends CI_Model {
         $this->db->delete("tarea");
     }
     function detail(){
+        $this->db->order_by("tar_nombre");
         $tarea = $this->db->get("tarea");
         return $tarea->result();
     }
@@ -114,6 +111,34 @@ class Tarea_model extends CI_Model {
         $this->db->where("pla_id",$pla_id);
         $fecha = $this->db->get("tarea");
         return $fecha->result();
+    }
+    function tareaxRiesgo($id) {
+//    function tareaxplan($id, $cantidad = null, $orden,$inicia = null){
+
+        $planes = $this->db->query("select avaTar_id,tar_fechaInicio,Emp_Nombre,tip_tipo,tar_nombre,diferencia,tar_fechaFinalizacion,MAX(avaTar_fechaCreacion) as ultimafechacreacion,tar_id,progreso from (
+                    SELECT 
+                    avance_tarea.avaTar_fechaCreacion as avaTar_fechaCreacion,
+                    tarea.tar_id,
+                    avance_tarea.avaTar_id,
+                    `avance_tarea`.`avaTar_progreso` as `progreso`, `tarea`.`car_id`, 
+                    `tipo`.`tip_tipo`, `tar_nombre`, `tarea`.`tar_fechaInicio`, 
+                    `tarea`.`tar_fechaFinalizacion`, 
+                    timestampdiff(HOUR, (tar_fechaInicio),(tar_fechaFinalizacion)) as diferencia, 
+                    `empleado`.`Emp_Nombre` 
+                    FROM `planes` 
+                    JOIN `tarea` ON `tarea`.`pla_id` = `planes`.`pla_id` 
+                    LEFT JOIN `avance_tarea` ON `avance_tarea`.`tar_id` = `tarea`.`tar_id` 
+                    LEFT JOIN `empleado` ON `empleado`.`emp_id` = `tarea`.`emp_id` 
+                    LEFT JOIN `tipo` ON `tipo`.`tip_id` = `tarea`.`tip_id` 
+                    WHERE `planes`.`pla_id` = '".$id."' AND `tarea`.`est_id` = 1
+                    ORDER BY avance_tarea.avaTar_fechaCreacion desc
+                    ) tabla
+                    GROUP BY tar_id
+                    ");
+        
+//        echo $this->db->last_query();die;
+        
+        return $planes->result();
     }
 }
 

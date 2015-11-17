@@ -99,7 +99,31 @@ class Registro_model extends CI_Model {
         $registro = $this->db->get("actividad_hijo");
         return $registro->result();
     }
-
+    function consultaregistro($plan,$actividad,$tarea){
+        if(!empty($plan))$this->db->where("planes.pla_id",$plan);
+        if(!empty($actividad))$this->db->where("actividad_padre.actPad_id",$actividad);
+        if(!empty($tarea))$this->db->where("tarea.tar_id",$tarea);
+        
+         $this->db->select("registro.reg_id");
+         $this->db->select("tarea.tar_nombre");
+         $this->db->select("CONCAT(empleado.Emp_Nombre,' ',empleado.Emp_Apellidos)as responsable",false);
+        $this->db->select("registro.tar_id");
+        $this->db->select("registro.regCar_id");
+        $this->db->select("registro.reg_version");
+        $this->db->select("registro.reg_archivo");
+        $this->db->select("registro.reg_descripcion");
+        $this->db->select("registro.reg_ruta");
+        $this->db->select("registro.pla_id");
+        $this->db->select("registro.reg_fechaCreacion");
+        $this->db->select("registro.reg_fechaModificacion");
+        $this->db->select("registro.userCreator");
+        $this->db->join("tarea","tarea.tar_id = registro.tar_id","LEFT");
+        $this->db->join("planes","planes.pla_id = registro.pla_id","LEFT");
+        $this->db->join("actividad_padre","actividad_padre.pla_id = planes.pla_id","LEFT");
+        $this->db->join("empleado","empleado.emp_id = tarea.emp_id","LEFT");
+        $registro = $avance = $this->db->get("registro");
+        return $registro->result();
+    }
 }
 
 ?>

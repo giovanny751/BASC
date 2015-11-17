@@ -159,7 +159,7 @@
                             <a data-toggle="tab" href="#tab2">Tareas Inactivas</a>
                         </li>
                         <li>
-                            <a data-toggle="tab" href="#tab3">Histórico tareas</a>
+                            <a data-toggle="tab" href="#tab3">Avance tareas</a>
                         </li>
                         <li>
                             <a data-toggle="tab" href="#tab4">Actividades</a>
@@ -259,7 +259,13 @@
                                 <th>Acción</th>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($avances as $av): ?>
+                                    <?php 
+                                        $horas = 0;
+                                        $costo = 0;
+                                        foreach ($avances as $av): 
+                                        $horas += $av->avaTar_horasTrabajadas;
+                                        $costo += $av->avaTar_costo;
+                                        ?>
                                         <tr>
                                             <td><?php echo $av->avaTar_fecha ?></td>
                                             <td><?php echo $av->tar_nombre ?></td>
@@ -274,6 +280,15 @@
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
+                                <tfoot>
+                                    <tr style="color:black">
+                                        <td colspan="3" align="right"><b>Total</b></td>
+                                        <td><?php echo $horas ?></td>
+                                        <td><?php echo $costo ?></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
                             </table>   
 
                         </div>
@@ -379,7 +394,7 @@
                                     </div>
                                     <div class="tools">
                                         <i class=" btn btn-default fa fa-folder-o carpeta" data-toggle="modal" data-target="#myModal4" ></i>
-                                        <i class="fa fa-file-archive-o  btn btn-default"  id="nuevoregistro" data-toggle="modal" data-target="#myModal15"></i>
+                                        
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -398,6 +413,7 @@
                                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false" id=""> 
                                                                         <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
                                                                     </a>
+                                                                    <i class="fa fa-file-archive-o nuevoregistro"  data-toggle="modal" data-target="#myModal15" car_id="<?php echo $idcar ?>"></i>
                                                                     <i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
                                                                     <i class="fa fa-times eliminarcarpeta" tipo="r" title="Eliminar" car_id="<?php echo $idcar ?>"></i>
                                                                 </h4>
@@ -641,7 +657,7 @@
                                         <div class="row">
                                             <div class="form-group">
                                                 <label for="presupuestototal">Presupuesto Total</label>
-                                                <input type="text" class="form-control number" id="presupuestototal" name="presupuestototal" />
+                                                <input type="text" class="form-control number miles" id="presupuestototal" name="presupuestototal" />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -823,11 +839,12 @@
         });
     });
 
-    $('body').delegate("#nuevoregistro,.modificarregistro", "click", function () {
+    $('body').delegate(".nuevoregistro,.modificarregistro", "click", function () {
         $('#carpeta').val("");
         $('#version').val("");
         $('#reg_descripcion').val("");
         $("#archivoadescargar").remove();
+        $('#carpeta').val($(this).attr('car_id'));
     });
 
     $('body').delegate('.modificarregistro', 'click', function () {
@@ -999,9 +1016,11 @@
                                                 <h4 class="panel-title">\n\
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - " + msg.tres + '\n\
-                                                    </a>\n\
-                                                        <i class="fa fa-file-o carpeta nuevo_hijo" data-toggle="modal" data-target="#myModal8" title="ACTIVIDAD HIJO"></i>\n\
-                                                        <i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
+                                                    </a>';
+            if(destino == 'c')    acordeon += '<i class="fa fa-file-o carpeta nuevo_hijo" data-toggle="modal" data-target="#myModal8" title="ACTIVIDAD HIJO"></i> ';                                            
+            if(destino == 'r')    acordeon += '<i class="fa fa-file-archive-o nuevoregistro"   data-toggle="modal" data-target="#myModal15" car_id="'+msg.uno+'"></i> ';                                             
+            
+            acordeon += '<i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
                                                         <i class="fa fa-times eliminarcarpeta" title="Eliminar" tipo="' + destino + '" car_id="' + msg.uno + '"></i>\n\
                                                 </h4>\n\
                                             </div>\n\

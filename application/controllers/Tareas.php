@@ -30,7 +30,7 @@ class Tareas extends My_Controller {
             $this->load->model('Tipo_model');
             $this->load->model('Notificacion_model');
             $this->load->model("Riesgoclasificacion_model");
-
+            $this->data['tareas'] = $this->Tarea_model->detail();
             $this->load->model("Tareacarpeta_model");
 
             if (!empty($this->input->post("tar_id"))):
@@ -66,14 +66,11 @@ class Tareas extends My_Controller {
                 $this->data['empleado'] = $this->Empleado_model->empleadoxcargo($this->data['tarea']->car_id);
             endif;
             $this->data['pla_id'] = "";
-//            echo $this->data['tarea']->actPad_id;die;
-//            var_dump($this->input->post());die;
             if (!empty($this->input->post("pla_id")) || (!empty($this->data['tarea']->pla_id))) {
                 if(!empty($this->input->post("pla_id"))) $this->data['pla_id'] = $this->input->post("pla_id");
                 if(!empty($this->data['tarea']->pla_id)) $this->data['pla_id'] = $this->data['tarea']->pla_id;
-//                echo $this->data['pla_id'];die;
-                $this->load->model('Actividadpadre_model');
                 
+                $this->load->model('Actividadpadre_model');
                 $this->data["actividades"] = $this->Actividadpadre_model->detailxplaid($this->data['pla_id']);
                 if(!empty($this->data['tarea']->actPad_id)){
                 $this->load->model('Actividad_model');
@@ -343,6 +340,7 @@ class Tareas extends My_Controller {
                     "tar_peso" => $this->input->post("peso"),
                     "pla_id" => $this->input->post("plan"),
                     "tip_id" => $this->input->post("tipo"),
+                    "tar_idpadre" => $this->input->post("tareapadre"),
                     "tipRie_id" => $this->input->post("tiposriesgos")
                 );
                 $idtarea = $this->input->post('id');
@@ -367,6 +365,7 @@ class Tareas extends My_Controller {
                     "tar_peso" => $this->input->post("peso"),
                     "pla_id" => $this->input->post("plan"),
                     "tip_id" => $this->input->post("tipo"),
+                    "tar_idpadre" => $this->input->post("tareapadre"),
                     "tipRie_id" => $this->input->post("tiposriesgos")
                 );
                 $idtarea = $this->Tarea_model->create($data);
@@ -659,7 +658,21 @@ class Tareas extends My_Controller {
         $this->load->model("AvanceTarea_model");
         $this->AvanceTarea_model->eliminaravance($this->input->post("avaTar_id"));
     }
-
+    
+    function consultaregistro(){
+        $this->load->model("Registro_model");
+        $campos["Json"] = $this->Registro_model->consultaregistro(
+                    $this->input->post("plan"),
+                    $this->input->post("actividad"),
+                    $this->input->post("tarea")
+                );
+        $this->output->set_content_type('application/json')->set_output(json_encode($campos));
+    }
+    function eliminarregistro(){
+        
+        $this->load->model("Registro_model");
+        $this->Registro_model->eliminarregistro($this->input->post("registro"));
+    }
 }
 
 /* End of file welcome.php */

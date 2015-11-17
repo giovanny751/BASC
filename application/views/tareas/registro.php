@@ -24,16 +24,7 @@
                 <i class="fa fa-cogs"></i>REGISTRO
             </div>
             <div class="tools">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal3">Nueva carpeta</button>
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Nuevo registro</button>
-                <!--                <a href="javascript:;" class="collapse" data-original-title="" title="">
-                                </a>-->
-                <!--                <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title="">
-                                </a>
-                                <a href="javascript:;" class="reload" data-original-title="" title="">
-                                </a>-->
-                <!--                <a href="javascript:;" class="remove" data-original-title="" title="">
-                                </a>-->
             </div>
         </div>
         <div class="portlet-body">
@@ -59,7 +50,7 @@
             </div>    
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: right">
-                    <button type="button" class="btn btn-danger">Limpiar</button>
+                    <button type="button" class="btn btn-danger limpiar">Limpiar</button>
                     <button type="button" class="btn btn-success" id="consultar">Consultar</button>
                 </div>
             </div>
@@ -79,47 +70,13 @@
                         <th>Ver Versiones</th>
                         <th>Opciones</th>
                         </thead>
-                        <tbody>
+                        <tbody id="cuerpodatos">
                             <tr>
                                 <td colspan="10"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">AGREGAR CARPETA</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="formcarpeta">
-                    <div class="row">
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                            <label for="nombrecarpeta">Nombre:</label>
-                        </div>
-                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                            <input type="nombre" id="nombrecarpeta" name="nombrecarpeta" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                            <label for="descripcioncarpeta">Descripción:</label>
-                        </div>
-                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                            <textarea  id="descripcioncarpeta" name="descripcioncarpeta" class="form-control"></textarea>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="guardarcarpeta">Guardar</button>
             </div>
         </div>
     </div>
@@ -204,11 +161,6 @@
     </div>
 </div>
 <script>
-    jQuery(document).ready(function () {
-        TableAjax.init();
-
-    });
-
     $('#planregistro').change(function () {
 
         $.post(
@@ -227,106 +179,11 @@
 
     });
 
-    var TableAjax = function () {
-
-        var initPickers = function () {
-            //init date pickers
-            $('.date-picker').datepicker({
-                rtl: Metronic.isRTL(),
-                autoclose: true
-            });
-        }
-
-        var handleRecords = function () {
-
-            var grid = new Datatable();
-
-            grid.init({
-                src: $("#datatable_ajax"),
-                onSuccess: function (grid) {
-                    // execute some code after table records loaded
-                },
-                onError: function (grid) {
-                    // execute some code on network or other general error  
-                },
-                onDataLoad: function (grid) {
-                    // execute some code on ajax data load
-                },
-                loadingMessage: 'Cargando...',
-                dataTable: { // here you can define a typical datatable settings from http://datatables.net/usage/options 
-
-                    // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
-                    // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/scripts/datatable.js). 
-                    // So when dropdowns used the scrollable div should be removed. 
-                    //"dom": "<'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>t<'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'>>",
-
-                    "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
-
-                    "lengthMenu": [
-                        [10, 20, 50, 100, 150, -1],
-                        [10, 20, 50, 100, 150, "All"] // change per page values here
-                    ],
-                    "pageLength": 10, // default record count per page
-                    "ajax": {
-                        "url": "<?php echo base_url("index.php/tareas/listadoregistrotable") ?>", // ajax source
-                    },
-                    "order": [
-                        [1, "asc"]
-                    ]// set first column as a default sort by asc
-                }
-            });
-
-            // handle group actionsubmit button click
-            grid.getTableWrapper().on('click', '.table-group-action-submit', function (e) {
-                e.preventDefault();
-                var action = $(".table-group-action-input", grid.getTableWrapper());
-                if (action.val() != "" && grid.getSelectedRowsCount() > 0) {
-                    grid.setAjaxParam("customActionType", "group_action");
-                    grid.setAjaxParam("customActionName", action.val());
-                    grid.setAjaxParam("id", grid.getSelectedRows());
-                    grid.getDataTable().ajax.reload();
-                    grid.clearAjaxParams();
-                } else if (action.val() == "") {
-                    Metronic.alert({
-                        type: 'danger',
-                        icon: 'warning',
-                        message: 'Please select an action',
-                        container: grid.getTableWrapper(),
-                        place: 'prepend'
-                    });
-                } else if (grid.getSelectedRowsCount() === 0) {
-                    Metronic.alert({
-                        type: 'danger',
-                        icon: 'warning',
-                        message: 'No record selected',
-                        container: grid.getTableWrapper(),
-                        place: 'prepend'
-                    });
-                }
-            });
-        }
-
-        return {
-            //main function to initiate the module
-            init: function () {
-
-                initPickers();
-                handleRecords();
-            }
-
-        };
-
-    }();
-
     $('#guardarRegistro').click(function () {
-
         $('#formregistro').submit();
-
     });
 
-
     $('#guardarcarpeta').click(function () {
-
         $.post(
                 "<?php echo base_url("index.php/tareas/guardarcarpeta") ?>",
                 $('#formcarpeta').serialize()
@@ -338,22 +195,53 @@
                 .fail(function () {
                     alerta("rojo", "Error por favor comunicarse con el administrador del sistema")
                 });
-
     });
     $('#consultar').click(function () {
-
         $.post(
                 "<?php echo base_url("index.php/tareas/consultaregistro") ?>",
                 $('#frmregistro').serialize()
                 )
-                .done(function () {
-
+                .done(function (msg) {
+                    $('#cuerpodatos *').remove();
+                    var body = ""
+                    $.each(msg.Json, function (key, val) {
+                        body += "<tr>";
+                        body += "<td>" + val.reg_archivo + "</td>";
+                        body += "<td>" + val.reg_descripcion + "</td>";
+                        body += "<td>" + val.reg_version + "</td>";
+                        body += "<td></td>";
+                        body += "<td>" + val.tar_nombre + "</td>";
+                        body += "<td>" + val.responsable + "</td>";
+                        body += "<td>" + val.reg_tamano + "</td>";
+                        body += "<td></td>";
+                        body += "<td></td>";
+                        body += "<td>\n\
+                                    <i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='" + val.reg_id + "'></i>\n\
+                                    <i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='" + val.reg_id + "'  data-target='#myModal15' data-toggle='modal'></i>\n\
+                                </td>";
+                        body += "</tr>";
+                    })
+                    $('#cuerpodatos').append(body);
                 })
-                .fail(function () {
-
+                .fail(function (msg) {
+                    alerta("rojo", "Error por favor comunicarse con el administrador del sistema")
                 });
-
     });
+
+    $('body').delegate('.eliminarregistro', 'click', function () {
+        var registro = $(this);
+        if (confirm("esta seguro de eliminar el registro")) {
+            $.post(
+                    "<?php echo base_url("index.php/tareas/eliminarregistro") ?>",
+                    {registro: registro.attr("reg_id")}
+            ).done(function (msg) {
+                registro.parents('tr').remove();
+            }).fail(function (msg) {
+
+            });
+        }
+    });
+
     $('#tarea').autocomplete({
         source: "<?php echo base_url("index.php/tareas/autocompletetareas") ?>",
         minLength: 3

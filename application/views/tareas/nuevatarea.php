@@ -16,6 +16,9 @@
                     <?php echo (!empty($tarea->tar_id)) ? "Actualizar" : "Guardar"; ?>
                 </button>
                 <button type="button" id="" class="btn btn-danger">Eliminar</button>
+                <?php if(!empty($pla_id)):?>
+                <button type="button" id="cancelar" class="btn btn-default"  plan="<?php echo $pla_id ?>">Cancelar</button>
+                <?php endif;?>
             </div>   
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <center>
@@ -162,7 +165,7 @@
                         <label for="costrospresupuestados">Costos Presupuestados</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="costrospresupuestados" id="costrospresupuestados" class="form-control"  value="<?php echo (!empty($tarea->tar_costopresupuestado)) ? $tarea->tar_costopresupuestado : ""; ?>"/>
+                        <input type="text" name="costrospresupuestados" id="costrospresupuestados" class="form-control miles"  value="<?php echo (!empty($tarea->tar_costopresupuestado)) ? $tarea->tar_costopresupuestado : ""; ?>"/>
                     </div> 
                 </div>
                 <div class="row">
@@ -211,6 +214,9 @@
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="tareapadre" id="tareapadre" class="form-control">
                             <option value="">::Seleccionar::</option>
+                            <?php foreach($tareas as $t): ?>
+                            <option <?php echo (!empty($tarea->tar_idpadre) && $t->tar_id == $tarea->tar_idpadre)?"Selected":"";?> value="<?php echo $t->tar_id ?>"><?php echo $t->tar_nombre ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
@@ -298,10 +304,6 @@
                     <i class="fa fa-gift"></i>AVANCES
                 </div>
                 <div class="tools">
-                    <!--                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
-                                        <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
-                                        <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
-                                        <a class="remove" href="javascript:;" data-original-title="" title=""> </a>-->
                 </div>
             </div>
             <div class="portlet-body">
@@ -423,11 +425,9 @@
                             <div class="portlet box blue" style="margin-top: 30px;">
                                 <div class="portlet-title">
                                     <div class="caption">
-
                                     </div>
                                     <div class="tools">                                        
                                         <i class=" btn btn-default fa fa-folder-o carpeta" data-toggle="modal" data-target="#modalCarpeta" ></i>
-                                        
                                     </div>
                                 </div>
                                 <div class="portlet-body">
@@ -884,8 +884,17 @@
             window.location = "<?php echo base_url("index.php/tareas/listadotareas"); ?>";
         }
     });
+    $('#cancelar').click(function(){
+                var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
+                                form += "<input type='hidden' value='"+$(this).attr('plan')+"' name='pla_id'>";
+                                form += "</form>"
+                            $('#planes').append(form);
+                            $('#enviotarea').submit();
+    });
     $('#guardartarea').click(function () {
         if(compararfecha($("#fechaIncio").val(),$("#fechafinalizacion").val(),"compararfecha")){
+            $('#fechaIncio').addClass("obligado");
+            $('#fechafinalizacion').addClass("obligado");
             if (obligatorio("obligatorio")) {
                 $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
                         $('#f8').serialize()
@@ -900,6 +909,10 @@
                     alerta("rojo", "Error por favor comunicarse con el administrador");
                 });
             }
+        }else{
+            $('#fechaIncio').addClass("obligado");
+            $('#fechafinalizacion').addClass("obligado");
+            alerta("amarillo","Por favor validar las fechas")
         }
     });
 
@@ -1024,7 +1037,7 @@
                                                 </div>\n\
                                             </div>\n\
                                     </div>';
-        $('#' + tabla).append(acordeon);
+        $('#').append(acordeon);
     }
     $('body').delegate(".nuevoregistro","click",function(){
         
@@ -1043,7 +1056,7 @@
                 return true;
             }else{
                 $("."+claseCompararFecha).addClass("obligado");
-                alerta("naranja","La fecha no concuerda");
+                alerta("naranja","Fecha inicial mayor a la fecha final");
                 return false;
             }
         }else{

@@ -204,18 +204,11 @@
         <div class="portlet box blue">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>
-                    Tab drop
                 </div>
                 <div class="tools">
-                    <a class="collapse" href="javascript:;" data-original-title="" title=""> </a>
-                    <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title=""> </a>
-                    <a class="reload" href="javascript:;" data-original-title="" title=""> </a>
-                    <a class="remove" href="javascript:;" data-original-title="" title=""> </a>
                 </div>
             </div>
             <div class="portlet-body">
-                <p> Basic exemple. Resize the window to see how the tabs are moved into the dropdown </p>
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
                         <li class="active">
