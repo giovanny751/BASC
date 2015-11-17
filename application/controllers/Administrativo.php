@@ -14,6 +14,7 @@ class Administrativo extends My_Controller {
         $this->load->helper('miscellaneous');
         $this->data["usu_id"] = $this->session->userdata('usu_id');
         validate_login($this->data["usu_id"]);
+        $this->load->library('PHPExcel/Classes/PHPExcel.php');
     }
 
     function creacionempleados() {
@@ -50,7 +51,7 @@ class Administrativo extends My_Controller {
 
                 $i = array();
                 foreach ($registro as $campo) {
-                    $i[$campo->empCar_id][$campo->empCar_nombre." - ".$campo->empCar_descripcion][] = array($campo->nombreempleado, $campo->empReg_archivo, $campo->empReg_descripcion, $campo->empReg_version, $campo->empReg_id, $campo->empReg_tamano, $campo->empgReg_fecha);
+                    $i[$campo->empCar_id][$campo->empCar_nombre . " - " . $campo->empCar_descripcion][] = array($campo->nombreempleado, $campo->empReg_archivo, $campo->empReg_descripcion, $campo->empReg_version, $campo->empReg_id, $campo->empReg_tamano, $campo->empgReg_fecha);
                 }
                 $this->data['registro'] = $i;
                 $this->session->guardadoExitoIdEmpleado = null;
@@ -156,7 +157,7 @@ class Administrativo extends My_Controller {
                 $this->Empleadoregistro_model->empleado_registroactualizar($post, $this->input->post('empReg_id'));
                 $emp_id = $this->input->post('regEmp_id');
             }
-            
+
             //De la carpeta idRegistro, creamos carpeta con el id del empleado
             if (!file_exists($targetPath)) {
                 mkdir($targetPath, 0777, true);
@@ -170,7 +171,7 @@ class Administrativo extends My_Controller {
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
-            
+
 
             $detallecarpeta = $this->Empleadoregistro_model->detallexcarpeta($post['empReg_carpeta']);
             $this->output->set_content_type('application/json')->set_output(json_encode($detallecarpeta));
@@ -282,20 +283,20 @@ class Administrativo extends My_Controller {
         $this->load->model('Empleadotipoaseguradora_model');
         $tipoaseguradora = $this->input->post("tipoaseguradora");
         $data = array();
-        
+
 //        if (isset($tipoaseguradora)) 
         if ((!empty($this->input->post("tipoaseguradora")[0])) && (!empty($this->input->post("nombreaseguradora")[0]))) {
-                $nombreaseguradora = $this->input->post("nombreaseguradora");
-                for ($i = 0; $i < count($tipoaseguradora); $i++) {
-                    if ($nombreaseguradora[$i] != ""):
-                        $data[$i] = array(
-                            "emp_id" => $id,
-                            "ase_id" => $nombreaseguradora[$i],
-                            "tipAse_id" => $tipoaseguradora[$i]
-                        );
-                    endif;
-                }
-                $this->Empleadotipoaseguradora_model->actualizatipo($id, $data);
+            $nombreaseguradora = $this->input->post("nombreaseguradora");
+            for ($i = 0; $i < count($tipoaseguradora); $i++) {
+                if ($nombreaseguradora[$i] != ""):
+                    $data[$i] = array(
+                        "emp_id" => $id,
+                        "ase_id" => $nombreaseguradora[$i],
+                        "tipAse_id" => $tipoaseguradora[$i]
+                    );
+                endif;
+            }
+            $this->Empleadotipoaseguradora_model->actualizatipo($id, $data);
         }
     }
 
@@ -864,6 +865,65 @@ class Administrativo extends My_Controller {
         if ($this->consultaacceso($this->data["usu_id"])) {
             $this->layout->view("administrativo/clasificacionriesgo");
         }
+    }
+
+    function importar_empleados() {
+        $this->layout->view("administrativo/importar_empleados");
+    }
+
+    public function subir_archivo() {
+        ini_set('MAX_EXECUTION_TIME', -1);
+        ini_set('memory_limit', -1);
+        $uploaddir = './uploads';
+        if (isset($_FILES['file'])) {
+            $uploadfile = $uploaddir . '/' . basename($_FILES['file']['name']);
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+                $datos['archivo'] = "El archivo es válido y fue cargado exitosamente.\n";
+            } else {
+                echo "<br>-¡Error en el cargue del archivo!\n";
+                die();
+            }
+        } else {
+            echo "<br>-¡Error en el cargue del archivo !\n";
+            die();
+        }
+
+
+        $excel = PHPExcel_IOFactory::load($uploadfile)->setActiveSheetIndex(0);
+//        $myfile = fopen($uploaddir . "/" . $_FILES['file']['name'] . ".txt", "w"); //Log de errores
+        $lastRow = $excel->getHighestRow();
+
+$info=array();
+        for ($row = 2; $row <= $lastRow; $row++) {
+            $info[$row]['Emp_Cedula']=$excel->getCell('A' . $row)->getValue();
+            $info[$row]['Emp_Nombre']=$excel->getCell('B' . $row)->getValue();
+            $info[$row]['Emp_Apellidos']=$excel->getCell('C' . $row)->getValue();
+            $info[$row]['sex_Id']=$excel->getCell('D' . $row)->getValue();
+            $info[$row]['Emp_FechaNacimiento']=$excel->getCell('E' . $row)->getValue();
+            $info[$row]['Emp_Estatura']=$excel->getCell('F' . $row)->getValue();
+            $info[$row]['Emp_Peso']=$excel->getCell('G' . $row)->getValue();
+            $info[$row]['Emp_Telefono']=$excel->getCell('H' . $row)->getValue();
+            $info[$row]['Emp_Direccion']=$excel->getCell('I' . $row)->getValue();
+            $info[$row]['Emp_TelefonoContacto']=$excel->getCell('J' . $row)->getValue();
+            $info[$row]['Emp_Email']=$excel->getCell('K' . $row)->getValue();
+            $info[$row]['EstCiv_id']=$excel->getCell('L' . $row)->getValue();
+            $info[$row]['TipCon_Id']=$excel->getCell('M' . $row)->getValue();
+            $info[$row]['Emp_FechaInicioContrato']=$excel->getCell('N' . $row)->getValue();
+            $info[$row]['Emp_FechaFinContrato']=$excel->getCell('O' . $row)->getValue();
+            $info[$row]['Emp_PlanObligatorioSalud']=$excel->getCell('P' . $row)->getValue();
+            $info[$row]['Emp_FechaAfiliacionArl']=$excel->getCell('Q' . $row)->getValue();
+            $info[$row]['TipAse_Id']=$excel->getCell('R' . $row)->getValue();
+            $info[$row]['Ase_Id']=$excel->getCell('S' . $row)->getValue();
+            $info[$row]['Dim_id']=$excel->getCell('T' . $row)->getValue();
+            $info[$row]['Dim_IdDos']=$excel->getCell('U' . $row)->getValue();
+            $info[$row]['Car_id']=$excel->getCell('V' . $row)->getValue();
+            $info[$row]['Emp_codigo']=$excel->getCell('W' . $row)->getValue();
+            $info[$row]['TipDoc_id']=$excel->getCell('X' . $row)->getValue();
+            $info[$row]['Est_id']=$excel->getCell('Y' . $row)->getValue();
+            $info[$row]['emp_fondo']=$excel->getCell('Z' . $row)->getValue();
+            $info[$row]['Emp_contacto']=$excel->getCell('AA' . $row)->getValue();
+        }
+        $this->db->insert_batch('empleado',$info);
     }
 
 }

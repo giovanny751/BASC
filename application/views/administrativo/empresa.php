@@ -191,7 +191,7 @@
                                 Ver Empleados </a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url("index.php/administrativo/organigrama") ?>">
+                            <a href="<?php echo base_url("index.php/administrativo/importar_empleados") ?>">
                                 Importar empleados </a>
                         </li>
                     </ul>
