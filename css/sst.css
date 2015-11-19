@@ -1,0 +1,97 @@
+#contenido_pagina{
+    padding: 0 250px;
+    position: relative;
+    display: block;
+}
+
+.btn-headerImg{
+    width: 50px;
+    height: 50px;
+    background-color: #A2CC82;
+}
+.btn-headerTxt{
+    background-color: #6DAABF;
+    width: 100%;
+    color: white;
+}
+.btn-headerTxt:hover{
+    background-color: #4d8a9f;
+    color: white;
+}
+.btn-headerTxt:focus{
+    background-color: #4d8a9f;
+    color: white;
+}
+.logo_imagen{
+    width: 185px;
+    margin-top: 30px;
+}
+.header_position{
+    margin-top:85px;
+}
+.btn{
+    border-radius: 8px;
+}
+
+
+.circuloIcon{
+    width: 70px;
+    height: 70px;
+    background-color: #01567D;
+    border-radius: 50px;
+    margin-left: 10px;
+    display: inline-block;
+    position: relative;
+}
+#posicionFelcha{
+    text-align: right;
+}
+.flecha{
+    margin-top: 12px;
+    width: 50px;
+    height: 50px;
+    background-color: #A2CC82;
+    border-radius: 50px;
+    margin-left: 10px;
+    display: inline-block;
+    position: relative;
+}
+.cuerpoDescripcion{
+    margin-bottom: 10px;
+}
+.btn-cuerpoImg{
+    width: 50px;
+    height: 50px;
+    background-color: #A2CC82;
+}
+.btn-sst{
+    background-color: #01567D;
+    color: white;
+}
+.btn-sst:hover{
+    color: white;
+}
+.btn-sst:focus{
+    color: white;
+}
+
+.cuerpoContenido{ /* FF3.6-15 */ /* Chrome10-25,Safari5.1-6 */
+    background: -webkit-linear-gradient(rgba(165,209,248,1) 0%, rgba(255,255,255,0) 100%);
+    background: -o-linear-gradient(rgba(165,209,248,1) 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(rgba(165,209,248,1) 0%, rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a5d1f8', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+    padding-top: 20px;
+    padding-left:25px;
+    padding-right: 25px;
+}
+.form-horizontal .control-label{
+    text-align: left;
+}
+.form-control{
+    border-radius: 0px
+}
+.form-control[disabled],.form-control[readonly]{
+    background-color: transparent;
+}
+
+
