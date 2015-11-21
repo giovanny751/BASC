@@ -19,14 +19,12 @@
         </li>
     </ul>
 </div>
-
 <div class="widgetTitle" >
     <h5>
         <i class="glyphicon glyphicon-ok"></i>PLANES
     </h5>
 </div>
 <div class='well'>
-
     <div class="row">
         <div class="col-lg-4 col-md-4 col-resm-4 col-xs-4">
             <button type="button" id="guardarplan" metodo="<?php echo (!empty($plan[0]->pla_id)) ? "Actualizar" : "Guardar"; ?>" class="guardar btn btn-success"><?php echo (!empty($plan[0]->pla_id)) ? "Actualizar" : "Guardar"; ?></button>
@@ -175,15 +173,15 @@
                         <div id="tab1" class="tab-pane active">
                             <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                                 <thead >
-                                <th>Editar</th>
-                                <th>Nuevo Historial</th>
-                                <th>Avance</th>
-                                <th>Tipo</th>
-                                <th>Nombre de la Tarea</th>
-                                <th>Fecha Inicio</th>
-                                <th>Fecha Fin</th>
-                                <th>Duración presupuestada (Horas)</th>
-                                <th>Responsables</th>
+                                    <th>Editar</th>
+                                    <th>Nuevo avance</th>
+                                    <th>Avance</th>
+                                    <th>Tipo</th>
+                                    <th>Nombre de la Tarea</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin</th>
+                                    <th>Duración presupuestada (Horas)</th>
+                                    <th>Responsables</th>
                                 </thead> 
                                 <tbody>
                                     <?php if (empty($tareas)) { ?>

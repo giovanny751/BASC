@@ -51,7 +51,10 @@ class Tarea_model extends CI_Model {
     }
     
     function responsables(){
-        
+        $this->db->select("empleado.emp_id");
+        $this->db->select("empleado.Emp_Nombre");
+        $this->db->select("empleado.Emp_Apellidos");
+        $this->db->distinct("empleado.emp_id,empleado.Emp_Nombre,empleado.Emp_Apellidos");
         $this->db->join("empleado","empleado.Emp_id = tarea.emp_id");
         $tarea = $this->db->get("tarea");
         return $tarea->result();

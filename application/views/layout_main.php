@@ -186,63 +186,61 @@
         ?>
         <div class="page-container">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="row" style="text-align: center;">
-                            <img src="<?php echo base_url() ?>/img/sst.png" class="logo_imagen" alt="Logo">
-                            <h6>Seguridad y Salud en el Trabajo</h6>
-                        </div>
+                <div class="col-md-2">
+                    <div style="text-align: center;">
+                        <img src="<?php echo base_url() ?>/img/sst.png" class="logo_imagen" alt="Logo">
+                        <h6>Seguridad y Salud en el Trabajo</h6>
                     </div>
-                    <div class="col-md-10">
-                        <div class="row header_position">
-                            <div class="col-md-10">
-                                <div class="col-md-3">
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-headerImg" ><i class="fa fa-sitemap fa-2x" style="color:#FFF"></i></button>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <a href="<?php echo base_url("index.php/planes/listadoplanes") ?>" class="btn btn-headerTxt">
-                                            PLANES 
-                                        </a>
-                                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="header_position">
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-headerImg" ><i class="fa fa-sitemap fa-2x" style="color:#FFF"></i></button>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-headerImg"><i class="fa fa-pencil-square-o  fa-2x" style="color:#FFF"></i></button>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <a href="<?php echo base_url("index.php/tareas/listadotareas") ?>" class="btn btn-headerTxt">
-                                            TAREAS 
-                                        </a>
-                                    </div>
+                                <div class="col-md-8">
+                                    <a href="<?php echo base_url("index.php/planes/listadoplanes") ?>" class="btn btn-headerTxt">
+                                        PLANES 
+                                    </a>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-headerImg"><i class="fa fa-bar-chart fa-2x" style="color:#FFF"></i></button>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <a href="<?php echo base_url("index.php/indicador/verindicadores") ?>" class="btn btn-headerTxt">
-                                            INDICADORES 
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-headerImg"><i class="fa fa-exclamation-triangle fa-2x" style="color:#FFF"></i></button>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <a href="<?php echo base_url("index.php/riesgo/listadoriesgo") ?>" class="btn btn-headerTxt">
-                                            RIESGO <i class="m-icon-swapright m-icon-white"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <!--                                <div class="col-md-2">
-                                                                    <button type="button" class="btn btn-headerImg"><i class="fa fa-exclamation-triangle fa-2x" style="color:#FFF"></i></button>
-                                                                    <a href="<?php echo base_url("index.php/documento/documento") ?>" class="btn btn-headerTxt">
-                                                                        DOCUMENTOS<i class="m-icon-swapright m-icon-white"></i>
-                                                                    </a>
-                                                                </div>-->
                             </div>
+                            <div class="col-md-3">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-headerImg"><i class="fa fa-pencil-square-o  fa-2x" style="color:#FFF"></i></button>
+                                </div>
+                                <div class="col-md-8">
+                                    <a href="<?php echo base_url("index.php/tareas/listadotareas") ?>" class="btn btn-headerTxt">
+                                        TAREAS 
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-headerImg"><i class="fa fa-bar-chart fa-2x" style="color:#FFF"></i></button>
+                                </div>
+                                <div class="col-md-8">
+                                    <a href="<?php echo base_url("index.php/indicador/verindicadores") ?>" class="btn btn-headerTxt">
+                                        INDICADORES 
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-headerImg"><i class="fa fa-exclamation-triangle fa-2x" style="color:#FFF"></i></button>
+                                </div>
+                                <div class="col-md-8">
+                                    <a href="<?php echo base_url("index.php/riesgo/listadoriesgo") ?>" class="btn btn-headerTxt">
+                                        RIESGO <i class="m-icon-swapright m-icon-white"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--                                <div class="col-md-2">
+                                                                <button type="button" class="btn btn-headerImg"><i class="fa fa-exclamation-triangle fa-2x" style="color:#FFF"></i></button>
+                                                                <a href="<?php echo base_url("index.php/documento/documento") ?>" class="btn btn-headerTxt">
+                                                                    DOCUMENTOS<i class="m-icon-swapright m-icon-white"></i>
+                                                                </a>
+                                                            </div>-->
                         </div>
                     </div>
                 </div>

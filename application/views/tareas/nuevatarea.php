@@ -75,14 +75,14 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="actividad">Actividad</label>
+                        <label for="registro">Actividad</label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="registro" id="registro" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php if(!empty($actividadhijo))
                             foreach ($actividadhijo as $ah) { ?>
-                            <option  <?php echo ((!empty($tarea->actHij_id)) && $tarea->actHij_id == $ah->actHij_id) ? "selected" : ""; ?> value="<?php echo $ah->actHij_id ?>"><?php echo $ah->actHij_nombre ?></option>
+                            <option   <?php echo ((!empty($tarea->actHij_id)) && $tarea->actHij_id == $ah->actHij_id) ? "selected" : ""; ?> value="<?php echo $ah->actHij_id ?>"><?php echo $ah->actHij_nombre ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -108,7 +108,7 @@
                         <select  name="dimensiondos" id="dimensiondos" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($dimension2 as $d2) { ?>
-                                <option  <?php echo ((!empty($tarea->dim2_id)) && $tarea->dim2_id == $d2->dim_id) ? "selected" : ""; ?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
+                            <option  <?php echo ((!empty($tarea->dim2_id)) && $tarea->dim2_id == $d2->dim_id) ? "selected" : ""; ?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -615,7 +615,7 @@
                     $("#registro *").remove();
                     var option = "<option value=''>::Seleccionar::</option>";
                     $.each(msg,function(key,val){
-                        option += "<option value='"+val.regCar_id+"'>"+val.actHij_nombre+"</option>"
+                        option += "<option value='"+val.actHij_id+"'>"+val.actHij_nombre+"</option>"
                     })
                     $("#registro").append(option);
                     

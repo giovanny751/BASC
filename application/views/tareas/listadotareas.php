@@ -62,6 +62,16 @@
     $('.limpiar').click(function () {
         $('select,input').val("");
     });
+    
+    $('body').delegate(".nuevoavance","click",function(){
+        var form = "<form method='post' id='frmFormAvance' action='<?php echo base_url("index.php/tareas/nuevatarea")?>'>";
+            form += "<input type='hidden' name='tar_id' value='"+$(this).attr("tar_id")+"'>"
+            form += "<input type='hidden' name='nuevoavance' value='"+$(this).attr("tar_id")+"'>"
+            form += "</form>";
+            $("body").append(form);
+            $('#frmFormAvance').submit();
+    });
+    
     $('#consultar').click(function () {
         $.post("<?php echo base_url("index.php/tareas/consultatareas") ?>",
                 $('#f9').serialize()
@@ -73,7 +83,7 @@
                 $.each(nombreplan, function (nombre, tareaid) {
                     table += "<thead><tr><th colspan='9'>"+nombre+"</th></tr>";
                         table += "<tr>";
-                        table += "<th>AGREGAR HISTORIA</th>"
+                        table += "<th>AGREGAR AVANCE</th>"
                         table += "<th>AVANCE</th>"
                         table += "<th>TIPO</th>"
                         table += "<th>NOMBRE DE LA TAREA</th>"
@@ -90,13 +100,13 @@
                         $.each(detalle, function (nombre, numeracion) {
                             if (typeof numeracion != "string"){
                                     table += "<tr>";
-                                    table += "<td></td>";
+                                    table += '<td style="text-align:center"><i class="fa fa-bookmark-o btn btn-default nuevoavance" title="Nuevo avance" tar_id="'+ idtar+'" ></i></td>';
                                     table += "<td></td>";
                                     table += "<td>"+numeracion.tipo+"</td>";
                                     table += "<td>"+numeracion.nombretarea+"</td>";
                                     table += "<td>"+numeracion.fechainicio+"</td>";
                                     table += "<td>"+numeracion.fechafinalizacion+"</td>";
-                                    table += "<td>"+numeracion.diferencia+"</td>";
+                                    table += "<td style='text-align:center;'>"+numeracion.diferencia+"</td>";
                                     table += "<td>"+numeracion.nombre+"</td>";
                                     table += '<td>';
                                     table += '<i class="fa fa-times eliminar btn btn-danger" title="Eliminar" tar_id="'+ idtar+'" ></i>';
