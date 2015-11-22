@@ -141,8 +141,8 @@
                 body += "<td>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</td>";
                 body += "<td>" + val.pla_presupuesto + "</td>";
                 body += "<td>" + val.pla_descripcion + "</td>";
-                body += "<td></td>";
-                body += '<td><i class="fa fa-times eliminar btn btn-default" title="Eliminar" pla_id="' + val.pla_id + '"></i>\n\
+                body += "<td>" + val.num_tareas + "</td>";
+                body += '<td><i class="fa fa-times eliminar btn btn-default" title="Eliminar" coun="' + val.count_progreso + '" sum="' + val.sum_progreso + '" pla_id="' + val.pla_id + '"></i>\n\
             <i class="fa fa-pencil-square-o modificar btn  btn-default" title="Modificar"  pla_id="' + val.pla_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
                 body += "</tr>";
             })
@@ -154,6 +154,15 @@
                 })
     });
     $('body').delegate('.eliminar', 'click', function () {
+        var sum=$(this).attr('sum');
+        var coun=$(this).attr('coun');
+        if(coun!=0){
+            var result=(100*coun);
+            if(sum<result){
+                alerta('rojo','No se puede eliminar poque hay tareas pendientes');
+                return false;
+            }
+        }
         var objeto = $(this);
         if (confirm("Esta seguro de eliminar el plan")) {
             $.post("<?php echo base_url("index.php/planes/eliminarplan") ?>"

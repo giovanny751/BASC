@@ -43,6 +43,7 @@
 
                 <form method="post" id="frmdireccionar">
                     <input type="hidden" value="<?php echo $plan[0]->pla_id ?>" name="pla_id">
+                    <input type="hidden" name="fecha_inicio_plan" value="<?php echo (!empty($plan[0]->pla_fechaInicio) ) ? $plan[0]->pla_fechaInicio : ""; ?>"/>
                 </form>
                 <button type="button" class="btn btn-default direccionar" num="1">
                     Nueva tarea
@@ -1015,7 +1016,7 @@
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - " + msg.tres + '\n\
                                                     </a>';
-            if(destino == 'c')    acordeon += '<i class="fa fa-file-o carpeta nuevo_hijo" data-toggle="modal" data-target="#myModal8" title="ACTIVIDAD HIJO"></i> ';                                            
+            if(destino == 'c')    acordeon += '<i class="fa fa-file-o carpeta nuevo_hijo" data-toggle="modal" data-target="#myModal8" title="ACTIVIDAD HIJO" car_id="'+msg.uno+'"></i> ';                                            
             if(destino == 'r')    acordeon += '<i class="fa fa-file-archive-o nuevoregistro"   data-toggle="modal" data-target="#myModal15" car_id="'+msg.uno+'"></i> ';                                             
             
             acordeon += '<i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\

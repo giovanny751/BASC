@@ -30,8 +30,18 @@ class Planes_model extends CI_Model {
         $this->db->select("planes.*");
         $this->db->select("empleado.Emp_Nombre");
         $this->db->select("empleado.Emp_Apellidos");
+        $this->db->select("(select COUNT(emp_id) i
+                            from tarea
+                            where pla_id = planes.pla_id and emp_id=".$this->session->userdata('usu_id')."
+                            ) as num_tareas ");
+        $this->db->select("count(avance_tarea.avaTar_progreso) as count_progreso ,"
+                . "sum(avance_tarea.avaTar_progreso) as sum_progreso",false);
         $this->db->join("empleado", "empleado.Emp_id = planes.emp_id", "LEFT");
+        $this->db->join("tarea", "tarea.pla_id = planes.pla_id and tarea.est_id=1 ", "LEFT");
+        $this->db->join("avance_tarea", "avance_tarea.tar_id = tarea.tar_id ", "LEFT");
+        $this->db->group_by('planes.pla_id');
         $planes = $this->db->get("planes");
+//        echo $this->db->last_query();
         return $planes->result();
     }
 

@@ -198,7 +198,7 @@
                 body += "<td>" + val.Emp_FechaInicioContrato + "</td>";
                 body += "<td>" + val.Emp_FechaFinContrato + "</td>";
                 body += '<td>\n\
-                                <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" emp_id="' + val.Emp_Id + '"></i>\n\
+                                <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" tareas="' + val.tareas_emp + '" planes="' + val.planes_emp + '" emp_id="' + val.Emp_Id + '"></i>\n\
                                 <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  emp_id="' + val.Emp_Id + '"  data-toggle="modal" data-target="#myModal"></i>\n\
                                 </td>';
                 body += "</tr>";
@@ -209,6 +209,18 @@
         });
     });
     $('body').delegate('.eliminar', 'click', function () {
+        var tareas=$(this).attr('tareas');
+        var planes=$(this).attr('planes');
+        
+        if(planes>0){
+            alerta('rojo','El usuario tiene planes asignados');
+            return false;
+        }
+        if(tareas>0){
+            alerta('rojo','El usuario tiene tareas sin finalizar');
+            return false;
+        }
+        
         var boton = $(this);
         if (confirm("Esta seguro de eliminar el empleado?")) {
             $.post("<?php echo base_url("index.php/administrativo/eliminarempleado") ?>"
