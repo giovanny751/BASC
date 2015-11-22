@@ -206,13 +206,13 @@
                     var body = ""
                     $.each(msg.Json, function (key, val) {
                         body += "<tr>";
-                        body += "<td>" + val.reg_archivo + "</td>";
-                        body += "<td>" + val.reg_descripcion + "</td>";
-                        body += "<td>" + val.reg_version + "</td>";
+                        body += "<td>" + (val.reg_archivo==null?'':val.reg_archivo) + "</td>";
+                        body += "<td>" + (val.reg_descripcion==null?'':val.reg_descripcion) + "</td>";
+                        body += "<td>" + (val.reg_version==null?'':val.reg_version) + "</td>";
                         body += "<td></td>";
-                        body += "<td>" + val.tar_nombre + "</td>";
-                        body += "<td>" + val.responsable + "</td>";
-                        body += "<td>" + val.reg_tamano + "</td>";
+                        body += "<td>" + (val.tar_nombre==null?'':val.tar_nombre) + "</td>";
+                        body += "<td>" + (val.responsable==null?'':val.responsable) + "</td>";
+                        body += "<td>" + (val.reg_tamano==null?'':val.reg_tamano) + "</td>";
                         body += "<td></td>";
                         body += "<td></td>";
                         body += "<td>\n\

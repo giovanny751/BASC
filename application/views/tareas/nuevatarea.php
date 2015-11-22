@@ -1064,5 +1064,18 @@
         }
     }
     
+    $('#fechaIncio').change(function(){
+        <?php if(isset($post['fecha_inicio_plan'])){ ?>
+                var fecha_inicio_plan=new Date('<?php echo $post['fecha_inicio_plan'] ?>');
+                var fecha_inicio_tarea=new Date($(this).val());
+                if(fecha_inicio_plan>fecha_inicio_tarea){
+                    alerta('rojo','La fecha del plan es superior');
+                    $(this).val('');
+                }
+        <?php }?>
+        
+        
+    })
+    
     
 </script>    

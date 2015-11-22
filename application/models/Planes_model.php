@@ -117,8 +117,9 @@ class Planes_model extends CI_Model {
 
     function tareaxplan($id) {
 //    function tareaxplan($id, $cantidad = null, $orden,$inicia = null){
-
-        $planes = $this->db->query("select avaTar_id,tar_fechaInicio,Emp_Nombre,tip_tipo,tar_nombre,diferencia,tar_fechaFinalizacion,MAX(avaTar_fechaCreacion) as ultimafechacreacion,tar_id,progreso from (
+        $sql="
+            select avaTar_id,tar_fechaInicio,Emp_Nombre,tip_tipo,tar_nombre,diferencia,tar_fechaFinalizacion
+            ,MAX(avaTar_fechaCreacion) as ultimafechacreacion,tar_id,progreso from (
                     SELECT 
                     avance_tarea.avaTar_fechaCreacion as avaTar_fechaCreacion,
                     tarea.tar_id,
@@ -137,7 +138,8 @@ class Planes_model extends CI_Model {
                     ORDER BY avance_tarea.avaTar_fechaCreacion desc
                     ) tabla
                     GROUP BY tar_id
-                    ");
+                    ";
+        $planes = $this->db->query($sql);
         
 //        echo $this->db->last_query();die;
         

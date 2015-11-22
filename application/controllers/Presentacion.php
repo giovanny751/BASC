@@ -246,7 +246,6 @@ class Presentacion extends My_Controller {
             }
             $roles = $this->Roles_model->rolesall();
             echo json_encode($roles);
-//            $this->output->set_content_type('application/json')->set_output(json_encode($roles));
             die;
         } else {
             $id = $this->input->post('rol');

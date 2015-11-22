@@ -83,6 +83,7 @@ class Tareas extends My_Controller {
             $this->data['cargo'] = $this->Cargo_model->allcargos();
             $this->data['dimension'] = $this->Dimension_model->detail();
             $this->data['dimension2'] = $this->Dimension2_model->detail();
+            $this->data['post'] = $this->input->post();
             $this->layout->view("tareas/nuevatarea", $this->data);
         } else {
             $this->layout->view("permisos");
