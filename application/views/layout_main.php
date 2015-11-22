@@ -150,9 +150,10 @@
             </div>
             <div class="col-md-8">
                 <div class="row cuerpoDescripcion">
-                    <div class="row cuerpoContenido">
                         <?php echo $content_for_layout ?>
-                    </div>
+<!--                    <div class="cuerpoContenido">
+                       
+                    </div>-->
                 </div>
             </div>
         </div>
