@@ -80,28 +80,7 @@
             </div>
         </form>
     </div>
-    <div class="row">
-        <table class='table table-bordered table-hover'>
-            <thead>
-            <th>Tipo</th>
-            <th>Descripción</th>
-            <th>Dimensión 1</th>
-            <th>Dimensión 2</th>
-            <th>Lugar/Zona</th>
-            <th>Actividades</th>
-            <th>Cargo</th>
-            <th>Fecha Creación</th>
-            <th>Estado de aceptación</th>
-            <th>Tareas(activas)</th>
-            <th>Accion</th>
-            </thead>
-            <tbody id="inforiesgo">
-                <tr>
-                    <td colspan="10"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <div class="row" id="bodyRiesgo"></div>
     <form method="post" id="f13" action="<?php echo base_url("index.php/riesgo/nuevoriesgo") ?>">
         <input type="hidden" name="rie_id" id="rie_id">
     </form>
@@ -137,25 +116,45 @@
         $.post("<?php echo base_url("index.php/riesgo/busquedariesgo") ?>",
                 $('#busquedariesgo').serialize()
                 ).done(function (msg) {
-            var tbody = "";
-            $.each(msg, function (key, val) {
-                tbody += "<tr>";
-                tbody += "<td>" + val.rieClaTip_tipo + "</td>";
-                tbody += "<td>" + val.rie_descripcion + "</td>";
-                tbody += "<td>" + val.des1 + "</td>";
-                tbody += "<td>" + val.des2 + "</td>";
-                tbody += "<td>" + val.rie_zona + "</td>";
-                tbody += "<td></td>";
-                tbody += "<td></td>";
-                tbody += "<td>" + val.rie_fecha + "</td>";
-                tbody += "<td>" + val.estado + "</td>";
-                tbody += "<td></td>";
-                tbody += '<td><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" rie_id="'+ val.rie_id+'" ></i></td>'; 
-                tbody += "</tr>";
-            });
-            $('#inforiesgo *').remove();
-            $('#inforiesgo').append(tbody);
-            alerta("verde", "Datos cargados con exito");
+                    $('#bodyRiesgo *').remove();
+                    var tbody = "";
+                    $.each(msg.Json, function (id, tipos) {
+                        $.each(tipos, function (tipo, data) {
+                            tbody += "<table class='table table-bordered table-hover'>\n\
+                                        <thead style='text-align:center;'>\n\
+                                        <tr><th colspan='11'>" + tipo + "</th></tr>\n\
+                                        <th>Tipo</th>\n\
+                                        <th>Descripción</th>\n\
+                                        <th>Dimensión 1</th>\n\
+                                        <th>Dimensión 2</th>\n\
+                                        <th>Lugar/Zona</th>\n\
+                                        <th>Actividades</th>\n\
+                                        <th>Cargo</th>\n\
+                                        <th>Fecha Creación</th>\n\
+                                        <th>Estado de aceptación</th>\n\
+                                        <th>Tareas(activas)</th>\n\
+                                        <th>Accion</th>\n\
+                                    </thead>";
+                            $.each(data, function(key, val){
+                                tbody += "<tr>";
+                                tbody += "<td>" + val.rieClaTip_tipo + "</td>";
+                                tbody += "<td>" + val.rie_descripcion + "</td>";
+                                tbody += "<td>" + val.des1 + "</td>";
+                                tbody += "<td>" + val.des2 + "</td>";
+                                tbody += "<td>" + val.rie_zona + "</td>";
+                                tbody += "<td></td>";
+                                tbody += "<td></td>";
+                                tbody += "<td>" + val.rie_fecha + "</td>";
+                                tbody += "<td>" + val.estado + "</td>";
+                                tbody += "<td></td>";
+                                tbody += '<td><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" rie_id="'+ val.rie_id+'" ></i></td>'; 
+                                tbody += "</tr>";
+                            });
+                            tbody += "</table>";
+                        });
+                    });
+                    $('#bodyRiesgo').append(tbody);
+                    alerta("verde", "Consulta cargada con exito");
         }).fail(function (msg) {
             alerta("rojo", "Error en el sistema por favor comunicarse con el administrador");
         });

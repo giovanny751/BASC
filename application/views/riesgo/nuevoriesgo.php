@@ -53,13 +53,13 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                        <label for="categoria"><span class="campoobligatorio">*</span>Categoría</label>
+                        <label for="categoria"><span class="campoobligatorio">*</span>Clasificación</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">
                         <select name="categoria" id="categoria" class="form-control obligatorio">
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($categoria as $ca) { ?>
-                                <option <?php echo (!empty($riesgo->cat_id) && $riesgo->cat_id == $ca->rieCla_id) ? "selected" : ""; ?> value="<?php echo $ca->rieCla_id ?>"><?php echo $ca->rieCla_categoria ?></option>
+                                <option <?php echo (!empty($riesgo->rieCla_id) && $riesgo->rieCla_id == $ca->rieCla_id) ? "selected" : ""; ?> value="<?php echo $ca->rieCla_id ?>"><?php echo $ca->rieCla_categoria ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -229,72 +229,92 @@
                     </ul>
                     <div class="tab-content">
                         <div id="tab1" class="tab-pane active">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                <th>Fecha</th>
-                                <th>Comentario</th>
-                                <th>Valor</th>
-                                <th>Usuario</th>
-                                <th>Costo</th>
-                                </thead>
+                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                <thead >
+                                    <th>Editar</th>
+                                    <th>Nuevo avance</th>
+                                    <th>Avance</th>
+                                    <th>Tipo</th>
+                                    <th>Nombre de la Tarea</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin</th>
+                                    <th>Duración presupuestada (Horas)</th>
+                                    <th>Responsables</th>
+                                </thead> 
                                 <tbody>
-                                    <tr>
-                                        <td colspan="5" style="text-align:center">Ingresar Informaciòn</td> 
+                                    <?php if (empty($tareas)) { ?>
+                                        <tr>
+                                            <td colspan="9">
+                                    <center>
+                                        <b>
+                                            No hay tareas asociadas al plan
+                                        </b>
+                                    </center>
+                                    </td>
                                     </tr>
+                                    <?php
+                                } else {
+                                    foreach ($tareas as $tar) {
+                                        ?>
+                                        <tr>
+                                            <td style="text-align: center"><i class='fa fa-pencil btn btn-default editartarea' tar_id='<?php echo $tar->tar_id ?>' ></i></td>
+                                            <td style="text-align: center"><i class='fa fa-bookmark-o btn btn-default nuevoavance' tar_id='<?php echo $tar->tar_id ?>' ></i></td>
+                                            <td><?php echo $tar->progreso ?></td>
+                                            <td><?php echo $tar->tip_tipo ?></td>
+                                            <td><?php echo $tar->tar_nombre ?></td>
+                                            <td><?php echo $tar->tar_fechaInicio ?></td>
+                                            <td><?php echo $tar->tar_fechaFinalizacion ?></td>
+                                            <td style="text-align:center"><?php echo $tar->diferencia ?></td>
+                                            <td><?php echo $tar->Emp_Nombre ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
                                 </tbody>
                             </table>
                         </div>
                         <div id="tab2" class="tab-pane">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                            <label for="fecha">Fecha</label>
-                                        </div>
-                                        <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                            <input type="text" name="fecha" id="fecha" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                            <label for="valor">Valor</label>
-                                        </div>
-                                        <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                            <input type="text" name="valor" id="valor" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                            <label for="usuario">Usuario</label>
-                                        </div>
-                                        <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                            <input type="text" name="usuario" id="usuario" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
-                                    <label for="comentarios">Comentarios</label>
-                                    <textarea name="comentarios" id="comentarios" class="form-control"></textarea>
-                                </div>
-
-                            </div>
-                            <div class="row" style="text-align: center">
-                                <button type="button" class="btn btn-success">Guardar</button>
-                            </div>
+                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax2">
+                                <thead>
+                                <th>Nuevo Historial</th>
+                                <th>Avance</th>
+                                <th>Tipo</th>
+                                <th>Nombre de la tarea</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
+                                <th>Duración presupuestada</th>
+                                <th>Responsables</th>
+                                </thead>
+                                <tbody >
+                                    <?php foreach ($tareasinactivas as $ti): ?>
+                                        <tr>
+                                            <td><i class='fa fa-pencil btn btn-default editartarea' tar_id='<?php echo $ti->tar_id ?>' ></i></td>
+                                            <td></td>
+                                            <td><?php echo $ti->tip_tipo ?></td>
+                                            <td><?php echo $ti->tar_nombre ?></td>
+                                            <td><?php echo $ti->tar_fechaInicio ?></td>
+                                            <td><?php echo $ti->tar_fechaFinalizacion ?></td>
+                                            <td><?php echo $ti->diferencia ?>&nbsp;Días</td>
+                                            <td><?php echo $ti->nombre ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                         <div id="tab3" class="tab-pane">
 
                             <table class="table table-bordered table-hover">
                                 <thead>
+                                <th>Acción</th>
                                 <th>Fecha</th>
                                 <th>Resumen</th>
                                 <th>Usuario</th>
                                 <th>Horas</th>
                                 <th>Costo</th>
                                 <th>Comentarios</th>
-                                <th>Acción</th>
                                 </thead>
-                                <tbody>
+                                <tbody class="datatable_ajax12">
                                     <tr>
                                         <td colspan="7"></td>
                                     </tr>
@@ -354,8 +374,66 @@
     <?php endif; ?>
 </div>
 <script>
-
-
+$('document').ready(function(){
+        $('body').delegate(".editarhistorial","click",function(){
+        
+        var form = "<form method='post' id='frmFormAvance' action='<?php echo base_url("index.php/tareas/nuevatarea")?>'>";
+            form += "<input type='hidden' name='avaTar_id' value='"+$(this).attr("avaTar_id")+"'>"
+            form += "<input type='hidden' name='tar_id' value='"+$(this).attr("tar_id")+"'>"
+            form += "</form>";
+            $("body").append(form);
+            $('#frmFormAvance').submit();
+    })
+    $('body').delegate(".eliminaravance", "click", function () {
+        var puntero = $(this);
+        $.post(
+                "<?php echo base_url("index.php/tareas/eliminaravance") ?>",
+                {avaTar_id: $(this).attr("avaTar_id")}
+        ).done(function (msg) {
+            puntero.parents("tr").remove();
+            alerta("verde", "Avance eliminado correctamente");
+        }).fail(function (msg) {
+            alerta("rojo", "Error, por favor comunicarse con el administrador del sistema")
+        });
+    });
+    
+    function tabla() {
+        var url = '<?php echo base_url("index.php/riesgo/listadoavance2") ?>';
+        var clasificacionriesgo = $('#categoria').val();
+        $.post(url, {clasificacionriesgo: clasificacionriesgo})
+                .done(function (msg) {
+                    $('.datatable_ajax12').html('');
+                    var html = "";
+                    var totalhoras = 0;
+                    var costo = 0;
+                    $.each(msg, function (key, val) {
+                        totalhoras += parseInt(val.avaTar_horasTrabajadas);
+                        costo += parseInt( val.avaTar_costo);
+                        html += "<tr>"
+                                + "<td>"
+                                + "<a href='javascript:' class='editarhistorial fa fa-pencil-square-o fa-2x btn btn-info' avaTar_id='" + val.avaTar_id + "' tar_id='"+val.tar_id+"' ></a>"
+                                + "<i class='fa fa-times btn btn-danger eliminaravance'  avaTar_id='" + val.avaTar_id + "'></i></td>"
+                                + "<td>" + val.avaTar_fecha + "</td>"
+                                + "<td>" + val.tar_nombre + "</td>"
+                                + "<td>" + val.nombre + "</td>"
+                                + "<td>" + val.avaTar_horasTrabajadas + "</td>"
+                                + "<td>" + val.avaTar_costo + "</td>"
+                                + "<td>" + val.avaTar_comentarios + "</td>"
+                                + "</tr>";
+                    });
+                    html += "<tr>\n\
+                                        <td colspan='4' style='text-align:right;'><b>Total</b></td>\n\
+                                        <td>"+totalhoras+"</td>\n\
+                                        <td>"+costo+"</td>\n\
+                                        <td></td>\n\
+                                        </tr>"
+                    $('.datatable_ajax12').html(html);
+                })
+                .fail(function () {
+                    alerta("rojo","Error, comunicarse con el administrador del sistema")
+                })
+    }
+    tabla();
     $('#estado').change(function () {
 
         $.post(
@@ -390,6 +468,11 @@
         });
 
     });
+});
+
+    
+    
+    
 
     $(".flecha").click(function () {
         var url = "<?php echo base_url("index.php/riesgo/consultaRiesgoFlechas") ?>";

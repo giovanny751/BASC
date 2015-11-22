@@ -35,10 +35,7 @@ class Tareas extends My_Controller {
 
             if (!empty($this->input->post("tar_id"))):
                 if(!empty($this->input->post("nuevoavance")))
-                {
                     $this->data["nuevoavance"] = $this->input->post("nuevoavance");
-//                    echo $this->data["nuevoavance"];die;
-                }  
                 $this->load->model('Empleado_model');
                 $carpeta = $this->Tareacarpeta_model->detailxtareas($this->input->post('tar_id'));
                 $this->data['carpetas'] = $this->Tareacarpeta_model->detailxtareascarpetas($this->input->post('tar_id'));
@@ -326,7 +323,7 @@ class Tareas extends My_Controller {
                     "actPad_id" => $this->input->post("actividad"),
                     "actHij_id" => $this->input->post("registro"),
                     "car_id" => $this->input->post("cargo"),
-                    "claRie_id" => $this->input->post("clasificacionriesgo"),
+                    "rieCla_id" => $this->input->post("clasificacionriesgo"),
                     "tar_costopresupuestado" => $this->input->post("costrospresupuestados"),
                     "tar_descripcion" => $this->input->post("descripcion"),
                     "dim_id" => $this->input->post("dimensiondos"),

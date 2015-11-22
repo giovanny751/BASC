@@ -14,6 +14,7 @@ class Riesgo extends My_Controller {
     }
 
     function nuevoriesgo() {
+        $this->load->model('Tarea_model');
         $this->load->model('Dimension2_model');
         $this->load->model('Dimension_model');
         $this->load->model('Empresa_model');
@@ -29,16 +30,17 @@ class Riesgo extends My_Controller {
         $this->data['estadoaceptacionxcolor'] = $this->Estadoaceptacion_model->detail();
         $this->data['empresa'] = $this->Empresa_model->detail();
         $this->data['cargo'] = $this->Cargo_model->detail();
-        if (!empty($this->data['empresa'][0]->Dim_id) && !empty($this->data['empresa'][0]->Dimdos_id)) {
-            $this->load->model("Tareas");
-            
+        if (!empty($this->data['empresa'][0]->Dim_id) && !empty($this->data['empresa'][0]->Dimdos_id)) {            
             if (!empty($this->input->post("rie_id"))) {
+                $this->load->model("Planes_model");
                 $this->data['rie_id'] = $this->input->post("rie_id");
-                $this->Tareas->tareaxRiesgo($this->data['rie_id']);
+                $this->data['tarea'] =$this->Tarea_model->tareaxRiesgo($this->data['rie_id']);
                 $this->data['riesgo'] = $this->Riesgo_model->detailxid($this->input->post("rie_id"))[0];
-                $this->data['tipo'] = $this->Riesgoclasificaciontipo_model->tipoxcategoria($this->data['riesgo']->cat_id);
+                $this->data['tipo'] = $this->Riesgoclasificaciontipo_model->tipoxcategoria($this->data['riesgo']->rieCla_id);
                 $this->data['color'] = $this->Color_model->colorxestado($this->data['riesgo']->estAce_id);
                 $this->data['cargoId'] = $this->Riesgocargo_model->detailxid($this->input->post("rie_id"));
+                $this->data['tareas'] = $this->Planes_model->tareaxplanriesgo($this->data['riesgo']->rieCla_id);
+                $this->data['tareasinactivas'] = $this->Planes_model->tareaxplaninactivasriesgo($this->data['riesgo']->rieCla_id);
             }
             $this->data['dimension'] = $this->Dimension_model->detail();
             $this->data['dimension2'] = $this->Dimension2_model->detail();
@@ -55,7 +57,7 @@ class Riesgo extends My_Controller {
             $this->load->model('Riesgoclasificaciontipo_model');
             $data = array(
                 "rie_descripcion"=>$this->input->post("descripcion"),
-                "cat_id"=>$this->input->post("categoria"), 
+                "rieCla_id"=>$this->input->post("categoria"), 
                 "rieClaTip_id"=>$this->input->post("tipo"),
                 "dim1_id"=>$this->input->post("dimensionuno"),
                 "dim2_id"=>$this->input->post("dimensiondos"),
@@ -109,6 +111,12 @@ class Riesgo extends My_Controller {
         }catch (Exception $ex){
             
         }
+    }
+    
+    function listadoavance2() {
+        $this->load->model('AvanceTarea_model');
+        $clasificacion = $this->AvanceTarea_model->listado_avanceriesgo($this->input->post('clasificacionriesgo'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($clasificacion));
     }
     
     function consultaRiesgoFlechas() {
@@ -250,7 +258,20 @@ class Riesgo extends My_Controller {
         $planes = $this->Riesgo_model->filtrobusqueda(
             $this->input->post("cargo"),$this->input->post("categoria"), $this->input->post("dimensionuno"), $this->input->post("dimensiondos"), $this->input->post("tipo")
         );
-        $this->output->set_content_type('application/json')->set_output(json_encode($planes));
+        $i = array();
+        foreach($planes as $t){
+            $i["Json"][$t->cat_id][$t->cat_categoria][] = array(
+                    "rie_id"=>$t->rie_id,
+                    "des2"=>$t->des2,
+                    "des1"=>$t->des1,
+                    "estado"=>$t->estado,
+                    "rie_zona"=>$t->rie_zona,
+                    "rie_descripcion"=>$t->rie_descripcion,
+                    "rie_fecha"=>$t->rie_fecha,
+                    "rieClaTip_tipo"=>$t->rieClaTip_tipo
+            );
+        }
+        $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
 
 }

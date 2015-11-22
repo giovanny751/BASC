@@ -55,7 +55,7 @@ class Indicador extends My_Controller {
     }
 
     function verindicadores() {
-        $this->load->model('Tipo_model');
+        $this->load->model('Indicadortipo_model');
         $this->load->model('Dimension2_model');
         $this->load->model('Dimension_model');
         $this->load->model('Empresa_model');
@@ -63,7 +63,7 @@ class Indicador extends My_Controller {
         if (!empty($this->data['empresa'][0]->Dim_id) && !empty($this->data['empresa'][0]->Dimdos_id)) {
             $this->data['dimension'] = $this->Dimension_model->detail();
             $this->data['dimension2'] = $this->Dimension2_model->detail();
-            $this->data['tipo'] = $this->Tipo_model->detail();
+            $this->data['tipo'] = $this->Indicadortipo_model->detail();
             $this->layout->view("indicador/verindicadores", $this->data);
         }else {
             redirect('index.php/administrativo/empresa', 'location');
@@ -74,7 +74,7 @@ class Indicador extends My_Controller {
         $this->load->model("Indicador_model");
         $data = array(
             "ind_indicador" => $this->input->post("indicador"),
-            "tip_id" => $this->input->post("tipo"),
+            "indTip_id" => $this->input->post("tipo"),
             "ind_mide" => $this->input->post("mide"),
             "dim_id" => $this->input->post("dimensionuno"),
             "dimdos_id" => $this->input->post("dimensiondos"),
@@ -131,7 +131,21 @@ class Indicador extends My_Controller {
     function consultarindicador(){
         $this->load->model("Indicador_model");
         $tabla = $this->Indicador_model->search($this->input->post("tipo"),$this->input->post("dimensionUno"),$this->input->post("dimesionDos"));
-        $this->output->set_content_type('application/json')->set_output(json_encode($tabla));
+        $i = array();
+        foreach($tabla as $t){
+            $i["Json"][$t->indTip_id][$t->indTip_tipo][] = array(
+                    "ind_id"=>$t->ind_id,
+                    "ind_indicador"=>$t->ind_indicador,
+                    "dimuno"=>$t->dimuno,
+                    "dimdos"=>$t->dimdos,
+                    "ind_mide"=>$t->ind_mide,
+                    "ind_frecuencia"=>$t->ind_frecuencia,
+                    "ind_minimo"=>$t->ind_minimo,
+                    "ind_maximo"=>$t->ind_maximo,
+                    "nombre"=>$t->nombre
+            );
+        }
+        $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
     function guardarvalores(){
         $this->load->model("Indicadorvalores_model");

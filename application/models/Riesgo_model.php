@@ -39,7 +39,10 @@ class Riesgo_model extends CI_Model {
         $this->db->select("riesgo.rie_descripcion");
         $this->db->select("riesgo.rie_fecha");
         $this->db->select("riesgo_clasificacion_tipo.rieClaTip_tipo");
+        $this->db->select("categoria.cat_categoria");
+        $this->db->select("categoria.cat_id");
         
+        $this->db->join("categoria","categoria.cat_id  = riesgo.cat_id");
         $this->db->join("riesgo_clasificacion_tipo","riesgo_clasificacion_tipo.rieClaTip_id = riesgo.rieClaTip_id ","left");
         $this->db->join("dimension2","dimension2.dim_id = riesgo.dim2_id");
         $this->db->join("dimension","dimension.dim_id = riesgo.dim1_id");
