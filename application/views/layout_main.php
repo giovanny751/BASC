@@ -65,15 +65,7 @@
             $i = array();
             foreach ($menu as $modulo)
                 $i[$modulo['menu_id']][$modulo['menu_nombrepadre']][$modulo['menu_idpadre']] [] = array($modulo['menu_idhijo'], $modulo['menu_controlador'], $modulo['menu_accion'], $modulo['mod_icons']);
-            if ($datosmodulos == 'prueba') {
-                echo "<ul class=''>"
-                . "<li class=''>
-                        <div class='sidebar-toggler'>
-                        </div>
-                </li>";
-            } else {
-                echo"<ul class=''>";
-            }
+            echo"<ul class=''>";
             foreach ($i as $padre => $nombrepapa)
                 foreach ($nombrepapa as $nombrepapa => $menuidpadre)
                     foreach ($menuidpadre as $modulos => $menu)
@@ -95,14 +87,14 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2">
-                        <div class="row" style="text-align: center;">
+                        <div style="text-align: center;">
                             <img src="<?php echo base_url() ?>/img/sst.png" class="logo_imagen" alt="Logo">
                             <h6>Seguridad y Salud en el Trabajo</h6>
                         </div>
                     </div>
                     <div class="col-md-10">
-                        <div class="row header_position">
-                            <div class="col-md-10">
+                        <div class="header_position">
+                            <div class="col-md-12">
                                 <div class="col-md-3">
                                     <div class="col-md-4">
                                         <button type="button" class="btn btn-headerImg" ><i class="fa fa-sitemap fa-2x" style="color:#FFF"></i></button>
