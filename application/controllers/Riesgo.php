@@ -260,7 +260,7 @@ class Riesgo extends My_Controller {
         );
         $i = array();
         foreach($planes as $t){
-            $i["Json"][$t->cat_id][$t->cat_categoria][] = array(
+            $i["Json"][$t->rieCla_id][$t->rieCla_tipo][] = array(
                     "rie_id"=>$t->rie_id,
                     "des2"=>$t->des2,
                     "des1"=>$t->des1,

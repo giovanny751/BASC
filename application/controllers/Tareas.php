@@ -349,7 +349,7 @@ class Tareas extends My_Controller {
                     "actPad_id" => $this->input->post("actividad"),
                     "actHij_id" => $this->input->post("registro"),
                     "car_id" => $this->input->post("cargo"),
-                    "claRie_id" => $this->input->post("clasificacionriesgo"),
+                    "rieCla_id" => $this->input->post("clasificacionriesgo"),
                     "tar_costopresupuestado" => $this->input->post("costrospresupuestados"),
                     "tar_descripcion" => $this->input->post("descripcion"),
                     "dim_id" => $this->input->post("dimensiondos"),
