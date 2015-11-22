@@ -1,34 +1,17 @@
-<script type="text/javascript">
-    $(".menORGANIZACIÓN").addClass("active open");
-    $(".subMenCARGOS").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Organización</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">Empresa</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        
-        <li class="devolver">
-            <a href="#">Cargos</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="circuloIcon" id="guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
+<!--    <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>
+    <div class="circuloIcon" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
+    <div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
 </div>
-<div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>CARGOS
-    </h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">Cargos</span>
+        </div>
+    </div>
 </div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <div class="row">
         <div class="form-inline">
             <form method="post" id="formcargos">
@@ -48,7 +31,6 @@
             </form>
         </div>
     </div>
-    <hr>
     <div class="row">
         <table class="table table-bordered table-hover">
             <thead>
