@@ -72,34 +72,6 @@
 }
 
 
-/* .flechaDerecha{
-    width:0px;
-    height:0px;
-    border-bottom:45px solid transparent;  
-    border-top:45px solid transparent;
-    border-left:25px solid #0000FF; 
-    font-size:0px;
-    line-height:0px;
-} */
-
-
-/* #cssmenu ul > li.has-sub > a:after {
-  position: absolute;
-  right: 26px;
-  top: 19px;
-  z-index: 5;
-  display: block;
-  height: 10px;
-  width: 2px;
-  background: #000000;
-  content: "";
-  -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
-  -ms-transition: all 0.1s ease-out;
-  -o-transition: all 0.1s ease-out;
-  transition: all 0.1s ease-out;
-} */
-
 #cssmenu ul > li.has-sub.open > a:after {
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
@@ -109,7 +81,7 @@
 }
 
 #cssmenu ul ul li a {
-    padding: 14px 30px;
+    padding: 7px 30px;
     cursor: pointer;
     z-index: 2;
     font-size: 14px;

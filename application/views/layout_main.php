@@ -72,9 +72,9 @@
                         foreach ($menu as $submenus):
                             if ($submenus[1] == "" && $submenus[2] == "") {
 //                                (!empty($submenus[3])) ? $icon = $submenus[3] : $icon = "icon-folder";
-                                echo "<li class=' men" . str_replace(" ", "_", strtoupper($nombrepapa)) . "'><a href='#'><span class='title'>" . strtoupper($nombrepapa) . "</span><span class='arrow'></span></a>";
+                                echo "<li class='has-sub'><a href='#'>" . strtoupper($nombrepapa) . "</span></a>";
                             } else {
-                                echo "<li class='subMen" . str_replace(" ", "_", strtoupper($nombrepapa)) . "'><a href='" . base_url("index.php/" . $submenus[1] . "/" . $submenus[2]) . "'>" . strtoupper($nombrepapa) . "</a>";
+                                echo "<li class=''><a href='" . base_url("index.php/" . $submenus[1] . "/" . $submenus[2]) . "'>" . strtoupper($nombrepapa) . "</a>";
                             }
                             if (!empty($submenus[0]))
                                 modulos($submenus[0], $idusuario);
@@ -360,4 +360,22 @@
                             num.substring(num.length - (4 * i + 3));
                 return (((sign) ? '' : '-') + num);
             }
+            
+        $('#cssmenu li.active').addClass('open').children('ul').show();
+        $('#cssmenu li.has-sub>a').on('click', function () {
+            $(this).removeAttr('href');
+            var element = $(this).parent('li');
+            if (element.hasClass('open')) {
+                element.removeClass('open');
+                element.find('li').removeClass('open');
+                element.find('ul').slideUp(200);
+            } else {
+                element.addClass('open');
+                element.children('ul').slideDown(200);
+                element.siblings('li').children('ul').slideUp(200);
+                element.siblings('li').removeClass('open');
+                element.siblings('li').find('li').removeClass('open');
+                element.siblings('li').find('ul').slideUp(200);
+            }
+        });
         </script>
