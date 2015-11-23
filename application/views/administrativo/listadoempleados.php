@@ -1,38 +1,24 @@
-<!-- Colorear Menu -->
-<script type="text/javascript">
-        $(".menORGANIZACIÓN").addClass("active open");
-        $(".subMenEMPLEADOS").addClass("active");
-        $(".subMenLISTADO_EMPLEADOS").addClass("active");
-</script>
-
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Organización</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">Empresa</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Listado Empleados</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="circuloIcon guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
+<!--    <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>
+    <div class="circuloIcon" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
+    <div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
 </div>
-<div class="widgetTitle" >
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">Listado Empleados</span>
+        </div>
+    </div>
+</div>
+<!-- <div class="widgetTitle" >
     <a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>">
         <button type="button" class="btn btn-default">Nuevo empleado</button>
     </a> 
     <h5>
         &nbsp;&nbsp;&nbsp;&nbsp;LISTADO EMPLEADOS
     </h5> 
-</div>
+</div>-->
 <div class='well'>
     <form method="post" id="f2">
         <div class="row">

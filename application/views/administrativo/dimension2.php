@@ -1,46 +1,28 @@
-<!-- Colorear Menu -->
-<script type="text/javascript">
-        $(".menORGANIZACIÓN").addClass("active open");
-        $(".subMenDIMENSIÓN_2").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Organización</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">Empresa</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Dimensión 2</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="circuloIcon guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
+<!--    <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>
+    <div class="circuloIcon" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
+    <div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
 </div>
-<div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i><?php echo $empresa[0]->Dimdos_id ?>
-    </h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo"><?php echo $empresa[0]->Dimdos_id ?></span>
+        </div>
+    </div>
 </div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <div class="row">
         <div class="form-inline">
             <div class="form-group">
                 <label for="descripcion"><span class="campoobligatorio">*</span>Descripción</label>
                 <input type="text" name="descripcion" id="descripcion" class="form-control obligatorio"/>
-                <button type="button" class="btn btn-success guardar">Guardar</button>
             </div>
         </div>
     </div>
     <hr>
     <div class="row">
-        <table class="table table-bordered table-hover">
+        <table class="tablesst">
             <thead>
             <th>Descripción</th>
              <th>Riesgos</th> 

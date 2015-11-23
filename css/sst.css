@@ -119,5 +119,15 @@
 .form-control[disabled],.form-control[readonly]{
     background-color: transparent !important;
 }
-
-
+.tablesst{
+    border-collapse: separate;
+    border-spacing: 5px;
+    width: 100%;
+}
+.tablesst thead > tr > th{
+    background-color: #90C2E5;
+}
+.tablesst td{
+    background-color: #ffffff;
+    padding-left: 3px;
+}

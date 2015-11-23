@@ -500,8 +500,10 @@ class Administrativo extends My_Controller {
 
     function cargos() {
         if ($this->consultaacceso($this->data["usu_id"])) :
+            $this->load->model("Empresa_model");
             $this->load->model('Cargo_model');
             $this->data["cargo"] = $this->Cargo_model->detail();
+            $this->data['informacion'] = $this->Empresa_model->detail();
             $this->layout->view("administrativo/cargos", $this->data);
         else:
             $this->layout->view("permisos");

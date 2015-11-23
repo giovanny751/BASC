@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="circuloIcon" id="guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
+    <div class="circuloIcon guardarcargo"><i class="fa fa-floppy-o fa-3x"></i></div>
 <!--    <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>
     <div class="circuloIcon" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
     <div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
@@ -7,118 +7,131 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
-            <span class="txtTitulo">Cargos</span>
+            <span class="txtTitulo">CARGOS</span>
         </div>
     </div>
 </div>
 <div class='cuerpoContenido'>
+
     <div class="row">
-        <div class="form-inline">
-            <form method="post" id="formcargos">
-                <div class="form-group">
-                    <label for="cargo"><span class="campoobligatorio">*</span>Cargo</label><input type="text" name="cargo[]" id="cargo" class="form-control obligatorio" />
-                    <label for="cargojefe">Cargo jefe directo</label>
+        <div class="col-md-8">
+            <table class="tablesst">
+                <thead>
+                <th>Cargo</th>
+                <th>Cargo Jefe Directo</th>
+                <th>% Cotización ARL</th>
+                <th>Riesgos</th>
+                <th>Opciones</th>
+                </thead>
+                <tbody id="bodycargo">
+                    <?php foreach ($cargo as $c) { ?>
+                        <tr>
+                            <td><?php echo $c->car_nombre ?></td> 
+                            <td><?php echo $c->jefe ?></td> 
+                            <td><?php echo $c->car_porcentajearl ?></td> 
+                            <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="<?php echo $c->car_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
+                            <td>
+                                <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="<?php echo $c->car_id ?>"></i>
+                                <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="<?php echo $c->car_id ?>"  data-toggle="modal" data-target="#myModal"></i>
+                            </td> 
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <tiv class="col-md 4">
+            <center>
+                <img  style="width: 350;height: 155px;border-radius: 15px" src="<?php echo base_url('uploads') . '/empresa/' . $informacion[0]->emp_id . "/" . $informacion[0]->emp_logo; ?>">
+            </center>
+        </tiv>
+    </div>
+    <div class="row">
+        <form method="post" id="formcargos" class="form-horizontal">
+            <div class="form-group">
+                <label for="id" class="col-md-1 control-label"><span class="campoobligatorio">*</span>Cargo</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control obligatorio" name="cargo[]" id="cargo" />
+                </div>
+                <label for="id" class="col-md-1 control-label">Cargo jefe directo</label>
+                <div class="col-md-3">
                     <select name="cargojefe[]" id="cargojefe" class="form-control" >
                         <option value="">::Seleccionar::</option>
                         <?php foreach ($cargo as $d) { ?>
                             <option value="<?php echo $d->car_id ?>"><?php echo $d->car_nombre ?></option>
                         <?php } ?>
                     </select>
-                    <label for="porcentaje"><span class="campoobligatorio">*</span>%Cotizacion ARL</label><input type="text" name="porcentaje[]" id="porcentaje" class="form-control obligatorio number" />
-                    <!--<i class="fa fa-plus-circle fa-2x mas btn btn-info"></i>-->
-                    <button type="button" class="btn btn-success guardarcargo">Guardar</button>
                 </div>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <table class="table table-bordered table-hover">
-            <thead>
-            <th>Cargo</th>
-            <th>Cargo Jefe Directo</th>
-            <th>% Cotización ARL</th>
-            <th>Riesgos</th>
-            <th>Opciones</th>
-            </thead>
-            <tbody id="bodycargo">
-                <?php foreach ($cargo as $c) { ?>
-                    <tr>
-                        <td><?php echo $c->car_nombre ?></td> 
-                        <td><?php echo $c->jefe ?></td> 
-                        <td><?php echo $c->car_porcentajearl ?></td> 
-                        <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="<?php echo $c->car_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
-                        <td>
-                            <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="<?php echo $c->car_id ?>"></i>
-                            <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="<?php echo $c->car_id ?>"  data-toggle="modal" data-target="#myModal"></i>
-                        </td> 
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modificación de Cargo</h4>
+                <label for="id" class="col-md-1 control-label"><span class="campoobligatorio">*</span>%Cotizacion ARL</label>
+                <div class="col-md-3">
+                    <input type="text" name="porcentaje[]" id="porcentaje" class="form-control obligatorio number" />
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-offset-2 col-sm-8">
-                            <center>
-                                <input type="hidden" value="" name="car_id" id="idcargo">
-                                <label for="cargo2">Cargo</label>
-                                <input type="text" name="cargo" id="cargo2" class="form-control" />
-                                <label for="cargojefedir">Cargo Jefe Directo</label>
-                                <select name="cargojefedir" id="cargojefedir" class="form-control" >
-                                    <option value="">Sin Jefe</option>
-                                    <?php foreach ($cargo as $d) { ?>
-                                        <option value="<?php echo $d->car_id ?>"><?php echo $d->car_nombre ?></option>
-                                    <?php } ?>
-                                </select>
-                                <label for="cotizacion">%Cotizacion ARL</label>
-                                <input type="text" name="cotizacion" id="cotizacion" class="form-control" />
-                            </center>
-                        </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modificación de Cargo</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-8">
+                        <center>
+                            <input type="hidden" value="" name="car_id" id="idcargo">
+                            <label for="cargo2">Cargo</label>
+                            <input type="text" name="cargo" id="cargo2" class="form-control" />
+                            <label for="cargojefedir">Cargo Jefe Directo</label>
+                            <select name="cargojefedir" id="cargojefedir" class="form-control" >
+                                <option value="">Sin Jefe</option>
+                                <?php foreach ($cargo as $d) { ?>
+                                    <option value="<?php echo $d->car_id ?>"><?php echo $d->car_nombre ?></option>
+                                <?php } ?>
+                            </select>
+                            <label for="cotizacion">%Cotizacion ARL</label>
+                            <input type="text" name="cotizacion" id="cotizacion" class="form-control" />
+                        </center>
+                    </div>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-success guardarmodificacion">Guardar</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success guardarmodificacion">Guardar</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="riesgo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content ">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">RIESGOS ASOCIADOS AL CARGO</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-offset-2 col-sx-offset-2 col-md-8 col-sx-8">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                <th>RIESGOS</th>
-                                </thead>
-                                <tbody id="riesgocargo">
+</div>
+<div class="modal fade" id="riesgo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">RIESGOS ASOCIADOS AL CARGO</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-offset-2 col-sx-offset-2 col-md-8 col-sx-8">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <th>RIESGOS</th>
+                            </thead>
+                            <tbody id="riesgocargo">
 
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <script>
     $('body').delegate(".riesgo", "click", function () {
