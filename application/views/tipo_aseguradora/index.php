@@ -1,30 +1,11 @@
-<!-- Colorear Menu -->
-<script type="text/javascript">
-        $(".menORGANIZACIÓN").addClass("active open");
-        $(".menTIPO_ASEGURADORAS").addClass("active open");
-        $(".subMenCREACIÓN_TIPOS_DE_ASEGURADORA").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Organización</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Tipo Aseguradora</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">CREAR TIPO DE ASEGURADORA</span>
+        </div>
+    </div>
 </div>
-<div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i> CREAR TIPO DE ASEGURADORA    </h5>
-</div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <form action="<?php echo base_url('index.php/')."/Tipo_aseguradora/save_tipo_aseguradora"; ?>" method="post" onsubmit="return campos()"  enctype="multipart/form-data">
         <div class="row">
                     <div class="col-md-6">

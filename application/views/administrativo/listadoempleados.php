@@ -1,10 +1,4 @@
 <div class="row">
-    <div class="circuloIcon guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
-<!--    <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>
-    <div class="circuloIcon" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
-    <div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
-</div>
-<div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
             <span class="txtTitulo">Listado Empleados</span>
@@ -19,7 +13,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;LISTADO EMPLEADOS
     </h5> 
 </div>-->
-<div class='well'>
+<div class='cuerpoContenido'>
     <form method="post" id="f2">
         <div class="row">
             <div class="form-group">
@@ -116,7 +110,7 @@
     </form>   
     <hr>
     <div class="row">
-        <table class="table table-bordered table-hover">
+        <table class="tablesst">
             <thead>
             <th>Cédula</th>
             <th>Nombres</th>

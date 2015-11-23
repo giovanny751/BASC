@@ -1,64 +1,33 @@
-<!-- Colorear Menu -->
-<script type="text/javascript">
-    $(".menORGANIZACIÓN").addClass("active open");
-    $(".subMenROL").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Organización</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Roles</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">ADMINISTRACIÓN DE ROLES</span>
+        </div>
+    </div>
 </div>
-<div class="col-md-12">
-    <div class="portlet blue box">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-cogs"></i>ADMINISTRACIÓN DE ROLES
-            </div>
-            <div class="tools">
-                <a href="javascript:;" class="collapse" data-original-title="" title="">
-                </a>
-                <!--                <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title="">
-                                </a>
-                                <a href="javascript:;" class="reload" data-original-title="" title="">
-                                </a>-->
-                <a href="javascript:;" class="remove" data-original-title="" title="">
-                </a>
-            </div>
-        </div>
-        <div class="portlet-body">
-            <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-info opciones">Nuevo Rol</button>
-            <table class="table table-responsive table-striped table-bordered">
-                <thead>
-                <th>Nombre</th>
-                <th>Fecha de creación</th>
-                <th>Fecha de modificación</th>
-                <th>Opciones</th>
-                <th>Eliminar</th>
-                </thead>
-                <tbody id="cuerporol">
-                    <?php foreach ($roles as $datos) { ?>
-                        <tr>
-                            <td><?php echo $datos['rol_nombre']; ?></td>
-                            <td><?php echo $datos['rol_fechaCreacion']; ?></td>
-                            <td><?php echo $datos['rol_fechaModificacion']; ?></td>
-                            <td align="center"><button type="button" rol="<?php echo $datos['rol_id']; ?>"  data-toggle="modal" data-target="#myModal"  class="btn btn-info modificar">Opciones</button></td>
-                            <td align="center"><button type="button" rol="<?php echo $datos['rol_id']; ?>" class="btn btn-danger eliminar">Eliminar</button></td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>	
-        </div>
+<div class="cuerpoContenido">
+    <div class="row">
+        <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-info opciones">Nuevo Rol</button>
+        <table class="tablesst">
+            <thead>
+            <th>Nombre</th>
+            <th>Fecha de creación</th>
+            <th>Fecha de modificación</th>
+            <th>Opciones</th>
+            <th>Eliminar</th>
+            </thead>
+            <tbody id="cuerporol">
+                <?php foreach ($roles as $datos) { ?>
+                    <tr>
+                        <td><?php echo $datos['rol_nombre']; ?></td>
+                        <td><?php echo $datos['rol_fechaCreacion']; ?></td>
+                        <td><?php echo $datos['rol_fechaModificacion']; ?></td>
+                        <td align="center"><button type="button" rol="<?php echo $datos['rol_id']; ?>"  data-toggle="modal" data-target="#myModal"  class="btn btn-info modificar">Opciones</button></td>
+                        <td align="center"><button type="button" rol="<?php echo $datos['rol_id']; ?>" class="btn btn-danger eliminar">Eliminar</button></td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>	
     </div>
 </div>
 

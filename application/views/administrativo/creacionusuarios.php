@@ -1,31 +1,28 @@
-<!-- Colorear Menu -->
-<script type="text/javascript">
-        $(".menORGANIZACIÓN").addClass("active open");
-        $(".subMenUSUARIOS").addClass("active open");
-        $(".subMenCREACIÓN_USUARIO").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-                <i class="fa fa-home"></i>
-                <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-                <i class="fa fa-angle-right"></i>
-            </li>
-        <li class="devolver">
-            <a href="#">Organización</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Creación Usuarios</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-md-6">
+        <div class="circuloIcon"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
+        <div class="circuloIcon" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
+        <!--<div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
+    </div>
+    <div class="col-md-6">
+        <div id="posicionFlecha">
+            <div class="flechaHeader IzquierdaDoble" metodo="flechaIzquierdaDoble"><i class="fa fa-step-backward fa-2x"></i></div>
+            <div class="flechaHeader Izquierda" metodo="flechaIzquierda"><i class="fa fa-arrow-left fa-2x"></i></div>
+            <div class="flechaHeader Derecha" metodo="flechaDerecha"><i class="fa fa-arrow-right fa-2x"></i></div>
+            <div class="flechaHeader DerechaDoble" metodo="flechaDerechaDoble"><i class="fa fa-step-forward fa-2x"></i></div>
+            <div class="flechaHeader Archivo" metodo="documento"><i class="fa fa-sticky-note fa-2x"></i></div>
+        </div>
+    </div>
 </div>
-<div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>CREACIÓN USUARIOS
-    </h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">CREACIÓN USUARIOS</span>
+        </div>
+    </div>
 </div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <form id="f3" method="post">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -33,7 +30,7 @@
                 <a href="<?php echo base_url('index.php/presentacion/roles')?>"><button type="button" class="btn btn-default">Crear Rol</button></a>
                 <a href="<?php echo base_url('index.php/administrativo/creacionusuarios')?>"><button type="button" class="btn btn-default">Nuevo</button></a>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <center>
                     <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
                     <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
@@ -41,7 +38,7 @@
                     <div class="flecha flechaDerechaDoble" metodo="flechaDerechaDoble"></div>
                     <div class="flecha documento" metodo="documento"></div>
                 </center>
-            </div>
+            </div>-->
         </div>
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -160,7 +157,7 @@
  
 </div>    
 <script>
-    $(".flecha").click(function(){
+    $(".flechaHeader").click(function(){
         var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
         var idUsuarioCreado = $("#usuid").val();
         var metodo = $(this).attr("metodo");
