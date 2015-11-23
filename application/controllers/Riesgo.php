@@ -258,9 +258,11 @@ class Riesgo extends My_Controller {
         $planes = $this->Riesgo_model->filtrobusqueda(
             $this->input->post("cargo"),$this->input->post("categoria"), $this->input->post("dimensionuno"), $this->input->post("dimensiondos"), $this->input->post("tipo")
         );
+//        echo "<pre>";
+//        var_dump($planes);die;
         $i = array();
         foreach($planes as $t){
-            $i["Json"][$t->rieCla_id][$t->rieCla_tipo][] = array(
+            $i["Json"][$t->rieCla_id][$t->rieCla_categoria][] = array(
                     "rie_id"=>$t->rie_id,
                     "des2"=>$t->des2,
                     "des1"=>$t->des1,
@@ -271,6 +273,8 @@ class Riesgo extends My_Controller {
                     "rieClaTip_tipo"=>$t->rieClaTip_tipo
             );
         }
+//        echo "<pre>";
+//        var_dump($i);die;
         $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
 
