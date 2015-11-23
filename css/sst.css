@@ -62,10 +62,10 @@
 .circuloIcon:active i{
     color: #A2CC82;
 }
-#posicionFelcha{
+#posicionFlecha{ 
     text-align: right;
 }
-.flecha{
+.flechaHeader{
     margin-top: 12px;
     width: 50px;
     height: 50px;
@@ -74,6 +74,12 @@
     margin-left: 10px;
     display: inline-block;
     position: relative;
+    color: white;
+}
+.flechaHeader i {
+    position: relative;
+    left: -15px;
+    top: 11px;
 }
 .cuerpoDescripcion{
     margin-bottom: 10px;
