@@ -23,7 +23,7 @@ class Tareas extends My_Controller {
             $this->load->model('Tarea_model');
             $this->load->model('Cargo_model');
             $this->load->model('Planes_model');
-            $this->load->model('AvanceTarea_model');
+            $this->load->model('Avancetarea_model');
             $this->load->model('Actividad_model');
             $this->load->model('Dimension2_model');
             $this->load->model('Dimension_model');
@@ -53,8 +53,8 @@ class Tareas extends My_Controller {
                 }
                 $this->data["avance"] = "";
                 if(!empty($this->input->post('avaTar_id'))):
-                    $this->load->model("AvanceTarea_model");
-                    $this->data["avance"] = $this->AvanceTarea_model->avancexTarea($this->input->post("avaTar_id"));
+                    $this->load->model("Avancetarea_model");
+                    $this->data["avance"] = $this->Avancetarea_model->avancexTarea($this->input->post("avaTar_id"));
                 endif;
                 $this->data['carpeta'] = $d;
                 $this->data['tarea'] = $this->Tarea_model->detailxid($this->input->post("tar_id"))[0];
@@ -216,8 +216,8 @@ class Tareas extends My_Controller {
     }
 
     function listadoavance2() {
-        $this->load->model('AvanceTarea_model');
-        $datos = $this->AvanceTarea_model->listado_avance($this->input->post('tar_id'));
+        $this->load->model('Avancetarea_model');
+        $datos = $this->Avancetarea_model->listado_avance($this->input->post('tar_id'));
         $this->output->set_content_type('application/json')->set_output(json_encode($datos));
     }
 
@@ -653,8 +653,8 @@ class Tareas extends My_Controller {
 
     function eliminaravance() {
 
-        $this->load->model("AvanceTarea_model");
-        $this->AvanceTarea_model->eliminaravance($this->input->post("avaTar_id"));
+        $this->load->model("Avancetarea_model");
+        $this->Avancetarea_model->eliminaravance($this->input->post("avaTar_id"));
     }
     
     function consultaregistro(){

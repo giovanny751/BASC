@@ -1054,7 +1054,7 @@
         
     });
     
-    function compararfecha(fecha1 = null,fecha2 = null,claseCompararFecha = null){
+    function compararfecha(fecha1,fecha2,claseCompararFecha){
         if((fecha1 != "" && fecha2 != "") && ((fecha1 != null && fecha2 != null))){
             var array_fecha1 = fecha1.split("-");
             var array_fecha2 = fecha2.split("-");

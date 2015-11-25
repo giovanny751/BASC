@@ -114,8 +114,8 @@ class Riesgo extends My_Controller {
     }
     
     function listadoavance2() {
-        $this->load->model('AvanceTarea_model');
-        $clasificacion = $this->AvanceTarea_model->listado_avanceriesgo($this->input->post('clasificacionriesgo'));
+        $this->load->model('Avancetarea_model');
+        $clasificacion = $this->Avancetarea_model->listado_avanceriesgo($this->input->post('clasificacionriesgo'));
         $this->output->set_content_type('application/json')->set_output(json_encode($clasificacion));
     }
     

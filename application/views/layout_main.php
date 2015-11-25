@@ -39,6 +39,8 @@
         <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/estilos.css'); ?>"/>
 
         <!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
+        <script type="text/javascript" src="<?php echo base_url() ?>/js/jquery_1.11.3.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>/js/jquery_ui_1.11.4.min.js"></script>
         <script src="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.js') ?>" type="text/javascript"></script>
         <script src="<?= base_url('assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js') ?>" type="text/javascript"></script>
         <script src="<?= base_url('assets/global/plugins/jquery.sparkline.min.js') ?>" type="text/javascript"></script>
@@ -49,8 +51,7 @@
         <link rel="stylesheet" href="<?php echo base_url() ?>/css/bootstrap_theme_3.3.5.min.css" />
         <link rel="stylesheet" href="<?php echo base_url() ?>/css/sst.css">
         <link rel="stylesheet" href="<?php echo base_url() ?>/css/sstmenu.css">
-        <script type="text/javascript" src="<?php echo base_url() ?>/js/jquery_1.11.3.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() ?>/js/jquery_ui_1.11.4.min.js"></script>
+        
         
     </head>
     <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
@@ -80,6 +81,17 @@
                                 modulos($submenus[0], $idusuario);
                             echo "</li>";
                         endforeach;
+                        if($datosmodulos == 'prueba'){
+            echo "<li class='has-sub'>";
+                echo "<a href='#'>OPCIONES</a>";
+                echo "<ul>";
+            echo "<li><a href='". base_url('index.php/presentacion/recordarcontrasena') ."' >Cambiar Contraseña</a></li>";
+                    echo "<li><a href='". base_url('index.php/presentacion/rol')."'>Cambiar de Rol</a></li>";
+                echo "</ul>";
+            echo "</li>";
+            echo "<li><a href='". base_url('index.php/login/logout')."'>CERRAR SESION</a></li>";
+//            echo "<li><a href='#'> strtoupper($nombre) </a></li>";
+    }
             echo "</ul>";
         }
         ?>
@@ -232,7 +244,7 @@
         </style>
         <script>
             jQuery(document).ready(function() {
-                Metronic.init(); // init metronic core componets
+//                Metronic.init(); // init metronic core componets
                 Layout.init(); // init layout
 //                QuickSidebar.init(); // init quick sidebar
 //                Demo.init(); // init demo features

@@ -100,7 +100,8 @@ class Registro_model extends CI_Model {
         return $registro->result();
     }
     function consultaregistro($plan,$actividad,$tarea){
-        if(!empty($plan))$this->db->where("planes.pla_id",$plan);
+        
+        if(!empty($plan))$this->db->like("planes.pla_nombre",$plan);
         if(!empty($actividad))$this->db->where("actividad_padre.actPad_id",$actividad);
         if(!empty($tarea))$this->db->where("tarea.tar_id",$tarea);
         
@@ -122,6 +123,7 @@ class Registro_model extends CI_Model {
         $this->db->join("actividad_padre","actividad_padre.pla_id = planes.pla_id","LEFT");
         $this->db->join("empleado","empleado.emp_id = tarea.emp_id","LEFT");
         $registro = $avance = $this->db->get("registro");
+        $this->db->last_query();
         return $registro->result();
     }
 }
