@@ -1,6 +1,6 @@
 <?php
 
-class AvanceTarea_model extends CI_Model {
+class Avancetarea_model extends CI_Model {
 
     function __construct() {
         parent::__construct();
