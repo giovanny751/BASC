@@ -1,12 +1,18 @@
-<div class="widgetTitle" >
-    <a href="<?php echo base_url("index.php/tareas/nuevatarea") ?>">
-        <button type="button" class="btn btn-default">Nueva tarea</button>
-    </a>
-    <h5>
-        - LISTADO TAREAS
-    </h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">LISTADO TAREAS</span>
+        </div>
+    </div>
 </div>
-<div class='well'>
+<div class='cuerpoContenido'>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a href="<?php echo base_url("index.php/tareas/nuevatarea") ?>">
+                <button type="button" class="btn btn-default">Nueva tarea</button>
+            </a>
+        </div>
+    </div>
     <div class="row">
         <form method="post" id="f9">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -79,7 +85,7 @@
                     $('#filtroconsulta *').remove();
             var table = "";        
             $.each(msg, function (idplan, nombreplan) {
-                table += "<table class='table table-hover table-bordered'>";
+                table += "<table class='tablesst'>";
                 $.each(nombreplan, function (nombre, tareaid) {
                     table += "<thead><tr><th colspan='9'>"+nombre+"</th></tr>";
                         table += "<tr>";

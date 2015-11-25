@@ -1,34 +1,43 @@
-<script type="text/javascript">
-    $(".menNUEVA_TAREA").addClass("active open");
-    $(".subMenCREACIÓN_TAREAS").addClass("active");
-</script>
-<div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>NUEVA TAREA
-    </h5>
-</div> 
-<div class='well'>
+<div class="row">
+    <div class="col-md-6">
+        <?php if(empty($tarea->tar_id)){ ?>
+        <div class="circuloIcon" id="guardartarea"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <?php }else{ ?>
+        <div class="circuloIcon" id="guardartarea" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
+        <?php }?>
+        <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
+        <!--<div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
+    </div>
+    <div class="col-md-6">
+        <div id="posicionFlecha">
+            <div class="flechaHeader IzquierdaDoble" metodo="flechaIzquierdaDoble"><i class="fa fa-step-backward fa-2x"></i></div>
+            <div class="flechaHeader Izquierda" metodo="flechaIzquierda"><i class="fa fa-arrow-left fa-2x"></i></div>
+            <div class="flechaHeader Derecha" metodo="flechaDerecha"><i class="fa fa-arrow-right fa-2x"></i></div>
+            <div class="flechaHeader DerechaDoble" metodo="flechaDerechaDoble"><i class="fa fa-step-forward fa-2x"></i></div>
+            <div class="flechaHeader Archivo" metodo="documento"><i class="fa fa-sticky-note fa-2x"></i></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">NUEVA TAREA</span>
+        </div>
+    </div>
+</div>
+<div class='cuerpoContenido'>
     <form method="post" id="f8">
         <input type="hidden" value="<?php echo (!empty($tarea->tar_id)) ? $tarea->tar_id : ""; ?>" name="id" id="interno">
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <button type="button" id="guardartarea" class="btn btn-success">
+                <!-- <button type="button" id="guardartarea" class="btn btn-success">
                     <?php echo (!empty($tarea->tar_id)) ? "Actualizar" : "Guardar"; ?>
-                </button>
+                </button> -->
                 <button type="button" id="" class="btn btn-danger">Eliminar</button>
                 <?php if(!empty($pla_id)):?>
                 <button type="button" id="cancelar" class="btn btn-default"  plan="<?php echo $pla_id ?>">Cancelar</button>
                 <?php endif;?>
             </div>   
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <center>
-                    <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
-                    <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
-                    <div class="flecha flechaDerecha" metodo="flechaDerecha"></div>
-                    <div class="flecha flechaDerechaDoble" metodo="flechaDerechaDoble"></div>
-                    <div class="flecha documento" metodo="documento"></div>
-                </center>
-            </div>
         </div>
         <div class="row" style="margin-bottom: 30px">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -866,7 +875,7 @@
     });
     });
 
-    $(".flecha").click(function () {
+    $(".flechaHeader").click(function () {
         var url = "<?php echo base_url("index.php/tareas/consultaTareasFlechas") ?>";
         var idTarea = $("#tareid").val();
         var metodo = $(this).attr("metodo");
