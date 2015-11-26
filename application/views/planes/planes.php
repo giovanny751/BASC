@@ -256,7 +256,7 @@
                                     $costo = 0;
                                     foreach ($avances as $av):
                                         $horas += $av->avaTar_horasTrabajadas;
-                                        $costo += $av->avaTar_costo;
+                                        $costo += str_replace(",","",str_replace(".", "", $av->avaTar_costo));
                                         ?>
                                         <tr>
                                             <td><?php echo $av->avaTar_fecha ?></td>
@@ -276,7 +276,7 @@
                                     <tr style="color:black">
                                         <td colspan="3" align="right"><b>Total</b></td>
                                         <td><?php echo $horas ?></td>
-                                        <td><?php echo $costo ?></td>
+                                        <td id="costo"><?php echo $costo ?></td>
                                         <td></td>
                                         <td></td>
                                     </tr>
@@ -684,6 +684,12 @@
     <?php endif; ?>
 </div>
 <script>
+
+    $('document').ready(function(){
+        
+        $('#costo').text(num_miles($('#costo').text()));
+        
+    });
 
     $('body').delegate(".editartarea", "click", function() {
         var form = "<form method='post' id='frmFormAvance' action='<?php echo base_url("index.php/tareas/nuevatarea") ?>'>";
@@ -1133,7 +1139,7 @@ echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base
                     filas += "<td>" + val.reg_archivo + "</td>";
                     filas += "<td>" + val.reg_descripcion + "</td>";
                     filas += "<td>" + val.reg_version + "</td>";
-                    filas += "<td></td>";
+                    filas += "<td>" +val.usu_nombre +" "+val.usu_apellido +"</td>";
                     filas += "<td>" + val.reg_tamano + "</td>";
                     filas += "<td>" + val.reg_fechaCreacion + "</td>";
                     filas += "<td>";

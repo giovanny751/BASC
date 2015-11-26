@@ -23,7 +23,10 @@ class Registrocarpeta_model extends CI_Model {
         $this->db->select("registro.reg_id");
         $this->db->select("registro.reg_archivo");
         $this->db->select("registro.reg_tamano");
+        $this->db->select("user.usu_nombre");
+        $this->db->select("user.usu_apellido");
         $this->db->join("registro","registro.regCar_id = registro_carpeta.regCar_id","LEFT");
+        $this->db->join("user","user.usu_id = registro.userCreator");
         $carpeta = $this->db->get("registro_carpeta");
         return $carpeta->result();
     }

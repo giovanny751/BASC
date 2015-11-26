@@ -564,7 +564,7 @@
                                     <label for="carpeta">Carpeta:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <select id="carpeta" name="tarCar_id" class="form-control tarRegObligatorio">
+                                    <select id="carpeta" name="regCar_id" class="form-control tarRegObligatorio">
                                         <option value=""></option>
                                         <?php foreach ($carpetas as $carp): ?>
                                             <option value="<?php echo $carp->tarCar_id ?>"><?php echo $carp->tarCar_nombre.' - '.$carp->tarCar_descripcion ?></option>
@@ -577,7 +577,7 @@
                                     <label for="version">Versión:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <input type="text" id="version" name="tarReg_version" class="form-control tarRegObligatorio">
+                                    <input type="text" id="version" name="reg_version" class="form-control tarRegObligatorio">
                                 </div>
                             </div>
                             <div class="row">
@@ -585,7 +585,7 @@
                                     <label for="descripcion">Descripción:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <textarea id="descripcion_tarea" name="tarReg_descripcion" class="form-control tarRegObligatorio"></textarea>
+                                    <textarea id="descripcion_tarea" name="reg_descripcion" class="form-control tarRegObligatorio"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -978,10 +978,10 @@
             //Agregamos Datos a enviar
             form_data.append('pla_id', $('#plan').val());
             //        form_data.append('tarea', $('#tarea').val());
-            form_data.append('tarCar_id', $('#carpeta').val());
-            form_data.append('tarReg_version', $('#version').val());
-            form_data.append('tar_id', $('#interno').val());
-            form_data.append('tarReg_descripcion', $('#descripcion_tarea').val());
+            form_data.append('regCar_id', $('#carpeta').val());
+            form_data.append('reg_version', $('#version').val());
+            form_data.append('tar_id', $('#tar_id_registro').val());
+            form_data.append('reg_descripcion', $('#descripcion_tarea').val());
             $.ajax({
                 url: '<?php echo base_url("index.php/tareas/guardar_registro_tarea") ?>',
                 dataType: 'text', // what to expect back from the PHP script, if anything
@@ -999,10 +999,10 @@
                     $.each(result, function (key, val) {
                         filas += "<tr>";
                         filas += "<td>" + val.tarReg_archivo + "</td>";
-                        filas += "<td>" + val.tarReg_descripcion + "</td>";
-                        filas += "<td>" + val.tarReg_version + "</td>";
+                        filas += "<td>" + val.reg_descripcion + "</td>";
+                        filas += "<td>" + val.reg_version + "</td>";
                         filas += "<td></td>";
-                        filas += "<td>" + val.tarReg_tamano + "</td>";
+                        filas += "<td>" + val.reg_tamano + "</td>";
                         filas += "<td>" + val.tarReg_fechaCreacion + "</td>";
                         filas += "<td>";
                         filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='" + val.tarReg_id + "'></i>";

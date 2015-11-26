@@ -47,6 +47,7 @@ class Planes extends My_Controller {
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
                 
             }
+            $post['userCreator'] = $this->data["usu_id"];
             $this->Registro_model->guardar_registro($post);
             $data = $this->Registro_model->registroxcarpeta($post['regCar_id']);
             $this->output->set_content_type('application/json')->set_output(json_encode($data));
@@ -174,7 +175,7 @@ class Planes extends My_Controller {
                         $c->reg_archivo, 
                         $c->reg_descripcion, 
                         $c->reg_version, 
-                        "", 
+                        $c->usu_nombre." ".$c->usu_apellido, 
                         $c->reg_tamano, 
                         $c->reg_fechaCreacion,
                         $c->reg_id

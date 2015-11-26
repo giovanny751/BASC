@@ -6,19 +6,6 @@ class Tarearegistro_model extends CI_Model {
         parent::__construct();
     }
     
-    function guardar_registro($data){
-        $this->db->insert("tarea_registro",$data);
-    }
-    function registroxcarpeta($carpeta){
-         $this->db->where("tarCar_id",$carpeta);
-        $registro = $this->db->get("tarea_registro");
-        return $registro->result();
-    }
-    
-    
-    
-    
-    
     function create($data) {
 
         $this->db->insert("registro", $data);
