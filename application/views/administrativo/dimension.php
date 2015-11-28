@@ -7,7 +7,11 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
-            <span class="txtTitulo"><?php echo $empresa[0]->Dim_id ?></span>
+            <span class="txtTitulo">
+               <a href="<?php echo base_url("index.php/presentacion/principal") ?>">HOME</a>/
+                <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">EMPRESA</a>/
+                <?php echo $empresa[0]->Dim_id ?>
+            </span>
         </div>
     </div>
 </div>
@@ -57,6 +61,7 @@
                                 <input type="hidden" name="dimid" id="dimid">
                                 <label for="descripcion2">Descripción</label>
                                 <input type="text" name="descripcion2" id="descripcion2" class="form-control" />
+                                <br>
                             </center>
                         </div>
                     </div>

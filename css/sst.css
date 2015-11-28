@@ -102,7 +102,7 @@
 .tituloCuerpo{
     
 }
-.tituloCuerpo .txtTitulo{
+.tituloCuerpo .txtTitulo,.tituloCuerpo .txtTitulo a{
     font-family: "roboto-bold";
     font-size: 26px;
     color: #0A7194;
@@ -136,4 +136,7 @@
 .tablesst td{
     background-color: #ffffff;
     padding-left: 3px;
+}
+.modal {
+    color: #000 !important;
 }

@@ -137,4 +137,11 @@ class User_model extends CI_Model {
         $this->db->set("est_id","3");
         $this->db->update("user");
     }
+    function buscar_rol_usuario($post){
+        $this->db->select('count(usu_id) as usu_id ');
+        $this->db->where('rol_id',$post['id']);
+        $datos=$this->db->get('user');
+        $datos=$datos->result();
+        return $datos[0]->usu_id;
+    }
 }

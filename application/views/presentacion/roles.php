@@ -96,13 +96,30 @@
 //                      ELIMINAR ROL    
 //------------------------------------------------------------------------------ 
     $('body').delegate('.eliminar', 'click', function() {
-        $(this).parents('tr').remove();
-        $.post("<?php echo base_url('index.php/presentacion/eliminarrol'); ?>", {id: $(this).attr('rol')})
+        var r = confirm('Desea eliminar este Rol');
+        if (r == false) {
+            return false;
+        }
+        var url = "<?php echo base_url('index.php/presentacion/buscar_rol_usuario'); ?>";
+        $.post(url, {id: $(this).attr('rol')})
                 .done(function(msg) {
-                    alerta("verde", "Eliminado con exito");
-                }).fail(function(msg) {
-            alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
-        });
+                    if (msg == 0) {
+                        $.post("<?php echo base_url('index.php/presentacion/eliminarrol'); ?>", {id: $(this).attr('rol')})
+                                .done(function(msg) {
+                                    $(this).parents('tr').remove();
+                                    alerta("verde", "Eliminado con exito");
+                                }).fail(function(msg) {
+                            alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
+                        });
+                    } else {
+                        alerta('azul', 'No se puede eliminar porque hay usuarios asignados');
+                    }
+                })
+                .fail(function() {
+                    alerta('rojo', 'Error al Consultar usuarios')
+                })
+
+
     });
 //------------------------------------------------------------------------------
 //                      NUEVO ROL    
@@ -166,15 +183,15 @@
     });
 </script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
   $(function() {
-    $('body').tooltip();
+      $('body').tooltip();
   });
-  </script>
-  <style>
-  label {
-    display: inline-block;
-    width: 5em;
-  }
-  </style>
+</script>
+<style>
+    label {
+        display: inline-block;
+        width: 5em;
+    }
+</style>

@@ -396,6 +396,10 @@ class Presentacion extends My_Controller {
         $usu_id = $this->session->userdata('usu_id');
         $this->User_model->rolxdefecto($rol, $usu_id);
     }
+    function buscar_rol_usuario(){
+        $this->load->model("User_model");
+        echo $dato=$this->User_model->buscar_rol_usuario($this->input->post());
+    }
 
 }
 
