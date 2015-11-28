@@ -187,7 +187,11 @@
             .blockOverlay{
                 z-index:10000 !important;
             }
-
+            
+            .tab-pane{
+                color: black;
+            }
+            
             tbody{
                 color: black;
             }

@@ -666,6 +666,8 @@
                 $('#frmcarpetaregistro').serialize()
                 ).done(function(msg){
                     $("a[href='#collapse_"+msg.uno+"r']").text(msg.dos+" - "+msg.tres);
+                    $("#modalCarpeta").modal("hide")
+                    alerta("verde","Se actualizaron los datos correctamente")
                 }).fail(function(msg){
                     alerta("rojo","Error, por favor comunicarse con el administrador del sistema");
                 });
@@ -725,7 +727,7 @@
                     var costo = 0;
                     $.each(msg, function (key, val) {
                         totalhoras += parseInt(val.avaTar_horasTrabajadas);
-                        costo += parseInt( val.avaTar_costo);
+                        costo += parseInt( val.avaTar_costo.replace(".","").replace(",",""));
                         html += "<tr>"
                                 + "<td>"
                                 + "<a href='javascript:' class='avances_ fa fa-pencil-square-o fa-2x btn btn-info' avaTar_id='" + val.avaTar_id + "' ></a>"
@@ -741,7 +743,7 @@
                     html += "<tr>\n\
                                         <td colspan='4' style='text-align:right;'><b>Total</b></td>\n\
                                         <td>"+totalhoras+"</td>\n\
-                                        <td>"+costo+"</td>\n\
+                                        <td>"+num_miles(costo)+"</td>\n\
                                         <td></td>\n\
                                         </tr>"
                     $('.datatable_ajax12').html(html);
@@ -1029,24 +1031,24 @@
     //                          FUNCIONES
     //--------------------------------------------------------------------------
     function agregarregistro(tabla, msg, contenido, destino, clase) {
-        var acordeon = '<div class="panel panel-default" id="' + msg.uno + '">\n\
+        var acordeon = '<div class="panel panel-default" id="' + msg.regCar_id + '">\n\
                                             <div class="panel-heading">\n\
                                                 <h4 class="panel-title">\n\
-                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
-                                                        <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - " + msg.tres + '\n\
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.regCar_id + destino + '" aria-expanded="false">\n\
+                                                        <i class="fa fa-folder-o carpeta"></i> ' + msg.regCar_nombre + " - " + msg.regCar_descripcion + '\n\
                                                     </a>\n\
-                                                        <i class="fa fa-file-archive-o nuevoregistro" car_id="' + msg.uno + '" data-toggle="modal" data-target="#myModal"></i>\n\
-                                                        <i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
-                                                        <i class="fa fa-times eliminarregistro" car_id="' + msg.uno + '"></i>\n\
+                                                        <i class="fa fa-file-archive-o nuevoregistro" car_id="' + msg.regCar_id + '" data-toggle="modal" data-target="#myModal"></i>\n\
+                                                        <i class="fa fa-edit ' + clase + '" car_id="' + msg.regCar_id + '"></i>\n\
+                                                        <i class="fa fa-times eliminarregistro" car_id="' + msg.regCar_id + '"></i>\n\
                                                 </h4>\n\
                                             </div>\n\
-                                            <div id="collapse_' + msg.uno + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
+                                            <div id="collapse_' + msg.regCar_id + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
                                                 <div class="panel-body">\n\
                                                     ' + contenido + '\n\
                                                 </div>\n\
                                             </div>\n\
                                     </div>';
-        $('#').append(acordeon);
+        $('#accordion5').append(acordeon);
     }
     $('body').delegate(".nuevoregistro","click",function(){
         

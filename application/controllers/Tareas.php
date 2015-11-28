@@ -31,24 +31,24 @@ class Tareas extends My_Controller {
             $this->load->model('Notificacion_model');
             $this->load->model("Riesgoclasificacion_model");
             $this->data['tareas'] = $this->Tarea_model->detail();
-            $this->load->model("Tareacarpeta_model");
+            $this->load->model("Registrocarpeta_model");
 
             if (!empty($this->input->post("tar_id"))):
                 if(!empty($this->input->post("nuevoavance")))
                     $this->data["nuevoavance"] = $this->input->post("nuevoavance");
                 $this->load->model('Empleado_model');
-                $carpeta = $this->Tareacarpeta_model->detailxtareas($this->input->post('tar_id'));
-                $this->data['carpetas'] = $this->Tareacarpeta_model->detailxtareascarpetas($this->input->post('tar_id'));
+                $carpeta = $this->Registrocarpeta_model->detailxtareas($this->input->post('tar_id'));
+                $this->data['carpetas'] = $this->Registrocarpeta_model->detailxtareascarpetas($this->input->post('tar_id'));
                 $d = array();
                 foreach ($carpeta as $c) {
-                    $d[$c->tarCar_id][$c->tarCar_nombre." - ".$c->tarCar_descripcion][] = array(
-                        $c->tarReg_archivo,
-                        $c->tarReg_descripcion,
-                        $c->tarReg_version,
-                        "",
-                        $c->tarReg_tamano,
-                        $c->tarReg_fecha_creacion,
-                        $c->tarReg_id
+                    $d[$c->regCar_id][$c->regCar_nombre." - ".$c->regCar_descripcion][] = array(
+                        $c->reg_archivo,
+                        $c->reg_descripcion,
+                        $c->reg_version,
+                        $c->usu_nombre." ".$c->usu_apellido,
+                        $c->reg_tamano,
+                        $c->reg_fechaCreacion,
+                        $c->regCar_id
                     );
                 }
                 $this->data["avance"] = "";
@@ -91,26 +91,26 @@ class Tareas extends My_Controller {
     }
     function consultacarpeta(){
         
-        $this->load->model("Tareacarpeta_model");
-        $data = $this->Tareacarpeta_model->detailxid($this->input->post("carpeta"));
+        $this->load->model("Registrocarpeta_model");
+        $data = $this->Registrocarpeta_model->detailxid($this->input->post("carpeta"));
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
     
     function actualizarcarpeta(){
         
-        $this->load->model("Tareacarpeta_model");
-        $this->Tareacarpeta_model->modificarpeta(
+        $this->load->model("Registrocarpeta_model");
+        $this->Registrocarpeta_model->modificarpeta(
                 $this->input->post("nombrecarpeta")
                 ,$this->input->post("descripcioncarpeta")
                 ,$this->input->post("tarCar_id"));
-        $data = $this->Tareacarpeta_model->detailxid($this->input->post("tarCar_id"));
+        $data = $this->Registrocarpeta_model->detailxid($this->input->post("tarCar_id"));
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
     
     function eliminarregistrocarpeta(){
         
-        $this->load->model("Tareacarpeta_model");
-        $this->Tareacarpeta_model->eliminarcarpeta($this->input->post("carpeta"));
+        $this->load->model("Registrocarpeta_model");
+        $this->Registrocarpeta_model->eliminarcarpeta($this->input->post("carpeta"));
     }
     
     function eliminartarea(){
@@ -471,11 +471,14 @@ class Tareas extends My_Controller {
     }
 
     function guardarcarpetatarea() {
-        $this->load->model("Tareacarpeta_model");
-        $id = $this->Tareacarpeta_model->create(
-                $this->input->post("nombrecarpeta"), $this->input->post("descripcioncarpeta"), $this->input->post("tar_id")
+        $this->load->model("Registrocarpeta_model");
+        $id = $this->Registrocarpeta_model->createtarea(
+                $this->input->post("nombrecarpeta"), 
+                $this->input->post("descripcioncarpeta"), 
+                $this->input->post("tar_id"),
+                $this->data["usu_id"]
         );
-        $data = $this->Tareacarpeta_model->detailxid($id);
+        $data = $this->Registrocarpeta_model->detailxtarea($this->input->post("tar_id"),$id);
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
 
