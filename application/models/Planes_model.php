@@ -17,7 +17,7 @@ class Planes_model extends CI_Model {
     }
 
 //    function filtrobusqueda($codigo,$nombre,$fecha,$estado,$responsable){
-    function filtrobusqueda($nombre, $responsable, $estado) {
+    function filtrobusqueda($nombre, $responsable, $estado, $tareaspropias) {
 //        $this->db->where('planes.est_id !=',3);
 //        if(!empty($nombre))$this->db->where('pla_nombre',$nombre);
 //        if(!empty($fecha))$this->db->where('pla_fechaInicio',$fecha);
@@ -27,6 +27,8 @@ class Planes_model extends CI_Model {
             $this->db->where('planes.emp_id', $responsable);
         if (!empty($estado))
             $this->db->where("planes.est_id", $estado);
+        if (!empty($tareaspropias))
+            $this->db->where("planes.emp_id", $tareaspropias);
         $this->db->select("planes.*");
         $this->db->select("empleado.Emp_Nombre");
         $this->db->select("empleado.Emp_Apellidos");

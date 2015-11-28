@@ -19,9 +19,9 @@
     <form method="post" id="f9">
         <div class="row">
             <div class="form-group">
-                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="nombre">Nombre</label>
+                <label class="col-lg-1 col-md-1 col-sm-1 col-xs-1" for="nombre">Nombre</label>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><input type="text" id="nombre" name="nombre" class="form-control"></div>
-                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="estado">Estado</label>
+                <label class="col-lg-1 col-md-1 col-sm-1 col-xs-1" for="estado">Estado</label>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     <select id="estado" name="estado" class="form-control">
                         <option value="">::Seleccionar::</option>
@@ -30,8 +30,7 @@
                         <option value="3">Finalizados</option>
                     </select> 
                 </div>
-
-                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="responsable">Responsable</label>
+                <label class="col-lg-1 col-md-1 col-sm-1 col-xs-1" for="responsable">Responsable</label>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     <select id="responsable" name="responsable" class="form-control">
                         <option value="">::Seleccionar::</option>
@@ -39,6 +38,10 @@
                             <option value="<?php echo $re->Emp_Id ?>"><?php echo $re->Emp_Nombre . " " . $re->Emp_Apellidos ?></option>
                         <?php } ?>
                     </select> 
+                </div>
+                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="responsable">Tareas propias</label>
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <input type="checkbox" name="tareapropia" id="tareapropia" class="form-control">
                 </div>
             </div>
         </div>
