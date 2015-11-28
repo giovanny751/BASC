@@ -23,6 +23,22 @@
         <link href="<?php echo base_url('/assets/admin/layout/css/layout.css') ?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo base_url('/assets/admin/layout/css/themes/default.css') ?>" id="style_color" rel="stylesheet" type="text/css"/>
         <link href="<?php echo base_url('/assets/admin/layout/css/custom.css') ?>" rel="stylesheet" type="text/css"/>
+        <style type="text/css">
+            html{
+                background-image: url("../img/login.png");
+                background-size: 100%;
+               /* background-repeat: no-repeat;*/
+            }
+            body{
+                background-color: transparent;
+            }
+            .login{
+                background-color: transparent !important;
+            }
+            .login .content{
+                margin: 0 65%;
+            }
+        </style>
     </head>
     <body class="login">
         <!-- BEGIN LOGO -->
