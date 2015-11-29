@@ -1,4 +1,12 @@
 <div class="row">
+    <div class="col-md-6">
+        <!-- <div class="circuloIcon" id="guardartarea"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon" id="guardartarea" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
+        <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div> -->
+        <a href="<?php echo base_url()."/index.php/planes/nuevoplan" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
             <span class="txtTitulo">LISTADO PLANES</span>
@@ -9,13 +17,6 @@
     <input type="hidden" name="pla_id" id="pla_id">
 </form>
 <div class="cuerpoContenido">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <a href="<?php echo base_url("index.php/planes/nuevoplan") ?>" class="btn btn-default">
-                Nuevo Plan
-            </a> 
-        </div>
-    </div>
     <form method="post" id="f9">
         <div class="row">
             <div class="form-group">
@@ -47,7 +48,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:right">
-                <button id="consultar" class="btn btn-success" type="button">Consultar</button>
+                <button id="consultar" class="btn-sst" type="button">Consultar</button>
             </div>
         </div>   
     </form>

@@ -87,8 +87,8 @@
                 echo "<li class='has-sub'>";
                 echo "<a href='#'>OPCIONES</a>";
                 echo "<ul>";
-                echo "<li><a href='" . base_url('index.php/presentacion/recordarcontrasena') . "' >Cambiar Contraseña</a></li>";
-                echo "<li><a href='" . base_url('index.php/presentacion/rol') . "'>Cambiar de Rol</a></li>";
+                echo "<li><a href='" . base_url('index.php/presentacion/recordarcontrasena') . "' >CAMBIAR CONTRASEÑA</a></li>";
+                echo "<li><a href='" . base_url('index.php/presentacion/rol') . "'>CAMBIAR ROL</a></li>";
                 echo "</ul>";
                 echo "</li>";
                 echo "<li><a href='" . base_url('index.php/login/logout') . "'>CERRAR SESION</a></li>";

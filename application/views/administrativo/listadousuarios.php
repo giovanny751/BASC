@@ -1,31 +1,19 @@
-<!-- Colorear Menu -->
-<script type="text/javascript">
-        $(".menORGANIZACIÓN").addClass("active open");
-        $(".subMenUSUARIOS").addClass("active open");
-        $(".subMenLISTADO_USUARIOS").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Organización</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Listado Usuarios</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-md-6">
+        <!-- <div class="circuloIcon" id="guardartarea"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon" id="guardartarea" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
+        <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div> -->
+        <a href="<?php echo base_url()."index.php/administrativo/creacionusuarios" ?>"><div class="circuloIcon" title="Nuevo Usuario" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+    </div>
 </div>
-<div class="widgetTitle" >
-    <a href="<?php echo base_url("index.php/administrativo/creacionusuarios") ?>"><button type="button" class="btn btn-default">Crear usuario</button></a><h5>
-        - LISTADO USUARIOS
-    </h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">LISTADO USUARIOS</span>
+        </div>
+    </div>
 </div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <form method="post" id="f4">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -60,15 +48,15 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="text-align: center">
                 <div class="form-group">
-                    <label>&nbsp;</label><button type="button" class="btn btn-danger limpiar">Limpiar</button>
-                    <label>&nbsp;</label><button type="button" class="btn btn-success consultar">Consultar</button>
+                    <label>&nbsp;</label><button type="button" class="btn-sst limpiar">Limpiar</button>
+                    <label>&nbsp;</label><button type="button" class="btn-sst consultar">Consultar</button>
                 </div>
             </div>
         </div>
     </form>
     <hr>
     <div class="row">
-        <table class="table table-bordered table-hover">
+        <table class="tablesst">
             <thead>
             <th>Cédula</th>
             <th>Usuario</th>
@@ -109,7 +97,7 @@
                             <div class="form-group has-success has-feedback">
                                 <form method="post" id="f15">
                                     <input type="hidden" value="" id="idusuario" name="idusuario" />
-                                    <table class="table table-hover table-bordered"> 
+                                    <table class="tablesst"> 
                                         <thead>
                                         <th>Rol</th><th>Asignación</th>
                                         </thead>

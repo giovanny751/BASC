@@ -34,9 +34,6 @@
 .header_position{
     margin-top: 13px;
 }
-.btn{
-    border-radius: 8px;
-}
 
 
 .circuloIcon{
@@ -54,6 +51,9 @@
 }
 .circuloIcon:active{
     background-color: #A7D2F8;
+}
+.circuloIcon.none{
+    display: none;
 }
 .circuloIcon i {
     color:white;
@@ -96,7 +96,7 @@
     background-image: none;
     background-color: #01567D;
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: 8px;
     color: #ffffff;
     cursor: pointer;
     display: inline-block;
@@ -111,11 +111,11 @@
 }
 
 .btn-sst:hover{
-    background-color: #3399FF;
+    background-color: #2983AA !important;
     color: white !important;
 }
 .btn-sst:focus{
-    background-color: #3399FF;
+    background-color: #2983AA !important;
     color: white;
 }
 .tituloCuerpo{

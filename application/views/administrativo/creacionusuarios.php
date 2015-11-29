@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="circuloIcon"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon <?php echo (!empty($usuario[0]->usu_id)) ? "none":"" ?> guardar" metodo="guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon <?php echo (!empty($usuario[0]->usu_id)) ? "":"none" ?> guardar" metodo="actualizar"><i class="fa fa-pencil-square-o fa-3x"></i></div>
         <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
-        <div class="circuloIcon" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
-        <!--<div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
+        <a href="<?php echo base_url()."/index.php/administrativo/creacionusuarios" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
     <div class="col-md-6">
         <div id="posicionFlecha">
@@ -26,9 +26,7 @@
     <form id="f3" method="post">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <button type="button" class="btn btn-success" id="guardar"><?php echo (!empty($usuario[0]->usu_id)) ? "Actualizar" : "Guardar"; ?></button>
-                <a href="<?php echo base_url('index.php/presentacion/roles')?>"><button type="button" class="btn btn-default">Crear Rol</button></a>
-                <a href="<?php echo base_url('index.php/administrativo/creacionusuarios')?>"><button type="button" class="btn btn-default">Nuevo</button></a>
+                <a href="<?php echo base_url('index.php/presentacion/roles')?>"><button type="button" class="btn-sst">Crear Rol</button></a>
             </div>
             <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <center>
@@ -220,7 +218,7 @@
         })
     });
 
-    $('#guardar').click(function () {
+    $('.guardar').click(function () {
         var campousuid = $("#usuid").val();
         if(campousuid == ""){
             var url = "<?php echo base_url('index.php/administrativo/guardarusuario'); ?>";
@@ -232,6 +230,8 @@
                 done(function (msg) {
                     alerta("verde", "Datos guardados correctamente");
                     if (confirm("¿Desea Guardar otro usuario?")) {
+                        $(".guardar").addClass("none");
+                        $(".guardar[metodo=guardar]").removeClass("none");
                         $('select,input').val('');
                         $('input[type="checkbox"]').attr("checked", false)
                         $('#empleado *').remove();
