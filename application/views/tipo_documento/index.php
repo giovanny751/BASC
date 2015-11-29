@@ -3,28 +3,16 @@
         $(".menDOCUMENTOS").addClass("active open");
         $(".subMenTIPOS_DE_DOCUMENTOS").addClass("active");
 </script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Documentos</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Tipos Documento</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">TIPOS DE DOCUMENTO</span>
+        </div>
+    </div>
 </div>
-<div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+<div class="cuerpoContenido">
     <div class="portlet green-meadow box">
         <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-cogs"></i>TIPOS DE DOCUMENTO
-            </div>
             <div class="tools">
                 <span id="boton_guardar">
                     <button class="btn btn-success" id="btnguardar">Guardar</button> 
@@ -38,7 +26,7 @@
                 <div class="row">
 
                     <div class="col-md-12">
-                        <label for="tipDoc_Descripcion" >
+                        <label for="tipDoc_Descripcion" style="color: black" >
                             * Tipo de documento                        
                         </label>
                         <input type="text" value="<?php echo (isset($datos[0]->tipDoc_Descripcion) ? $datos[0]->tipDoc_Descripcion : '' ) ?>" class=" form-control obligatorio  " id="tipDoc_Descripcion" name="tipDoc_Descripcion">

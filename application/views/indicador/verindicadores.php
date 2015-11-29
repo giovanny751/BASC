@@ -2,28 +2,14 @@
     $(".menINDICADORES").addClass("active open");
     $(".subMenLISTADO_INDICADORES").addClass("active");
 </script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Indicadores</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Listado Indicadores</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">VER INDICADORES</span>
+        </div>
+    </div>
 </div>
-<div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>VER INDICADORES
-    </h5>
-</div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <form method="post" id="f4">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -98,7 +84,7 @@
                     var tbody = "";
                     $.each(msg.Json, function (id, tipos) {
                         $.each(tipos, function (tipo, data) {
-                            tbody += "<table class='table table-bordered table-hover'>\n\
+                            tbody += "<table class='tablesst'>\n\
                                         <thead style='text-align:center;'>\n\
                                         <tr><th colspan='10'>" + tipo + "</th></tr>\n\
                                         <th>Indicador</th>\n\
