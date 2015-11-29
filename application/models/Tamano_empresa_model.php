@@ -7,21 +7,37 @@ class Tamano_empresa_model extends CI_Model {
     }
 
     function create($data) {
-        $this->db->insert_batch("tamano_empresa", $data);
+        try {
+            $this->db->insert_batch("tamano_empresa", $data);
+        } catch (exception $e) {
+            
+        }
     }
 
     function update($data) {
-        $this->db->update("tamano_empresa", $data);
+        try {
+            $this->db->update("tamano_empresa", $data);
+        } catch (exception $e) {
+            
+        }
     }
 
     function detail() {
-        $cargo = $this->db->get("tamano_empresa");
-        return $cargo->result();
+        try {
+            $cargo = $this->db->get("tamano_empresa");
+            return $cargo->result();
+        } catch (exception $e) {
+            
+        }
     }
 
     function delete($id) {
-        $this->db->where("tamEmp_tamano", $id);
-        $this->db->delete("tamano_empresa");
+        try {
+            $this->db->where("tamEmp_tamano", $id);
+            $this->db->delete("tamano_empresa");
+        } catch (exception $e) {
+            
+        }
     }
 
 }

@@ -6,13 +6,14 @@ class Estadocivil_model extends CI_Model {
         parent::__construct();
     }
 
-
     function detail() {
-
-        $estadoCivil = $this->db->get("estado_civil");
-        return $estadoCivil->result();
+        try {
+            $estadoCivil = $this->db->get("estado_civil");
+            return $estadoCivil->result();
+        } catch (exception $e) {
+            
+        }
     }
-
 
 }
 

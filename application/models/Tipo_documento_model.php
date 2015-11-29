@@ -7,9 +7,12 @@ class Tipo_documento_model extends CI_Model {
     }
 
     function detail() {
-
-        $tipodocumento = $this->db->get("tipo_documento");
-        return $tipodocumento->result();
+        try {
+            $tipodocumento = $this->db->get("tipo_documento");
+            return $tipodocumento->result();
+        } catch (exception $e) {
+            
+        }
     }
 
 }

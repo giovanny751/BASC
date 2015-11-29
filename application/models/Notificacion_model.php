@@ -6,13 +6,14 @@ class Notificacion_model extends CI_Model {
         parent::__construct();
     }
 
-
     function detail() {
-
-        $notificacion = $this->db->get("notificacion");
-        return $notificacion->result();
+        try {
+            $notificacion = $this->db->get("notificacion");
+            return $notificacion->result();
+        } catch (exception $e) {
+            
+        }
     }
-
 
 }
 

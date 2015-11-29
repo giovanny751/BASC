@@ -6,17 +6,24 @@ class Tipo_model extends CI_Model {
         parent::__construct();
     }
 
-
     function detail() {
-        $tipo = $this->db->get("tipo");
-        return $tipo->result();
-    }
-    function detailxid($id){
-        $this->db->where("tip_id",$id);
-        $tipo = $this->db->get("tipo");
-        return $tipo->result();
+        try {
+            $tipo = $this->db->get("tipo");
+            return $tipo->result();
+        } catch (exception $e) {
+            
+        }
     }
 
+    function detailxid($id) {
+        try {
+            $this->db->where("tip_id", $id);
+            $tipo = $this->db->get("tipo");
+            return $tipo->result();
+        } catch (exception $e) {
+            
+        }
+    }
 
 }
 

@@ -7,51 +7,86 @@ class Dimension_model extends CI_Model {
     }
 
     function create($data) {
-        $this->db->insert_batch("dimension", $data);
+        try {
+            $this->db->insert_batch("dimension", $data);
+        } catch (exception $e) {
+            
+        }
     }
 
     function update($data) {
-        $this->db->update("dimension", $data);
+        try {
+            $this->db->update("dimension", $data);
+        } catch (exception $e) {
+            
+        }
     }
 
     function detail() {
-        $this->db->where("est_id",1);
-        $cargo = $this->db->get("dimension");
-        return $cargo->result();
+        try {
+            $this->db->where("est_id", 1);
+            $cargo = $this->db->get("dimension");
+            return $cargo->result();
+        } catch (exception $e) {
+            
+        }
     }
-    
-        function consultxname($name) {
-        $this->db->where("dim_descripcion",$name);
-        $this->db->where("est_id", 1);
-        $cargo = $this->db->get("dimension");
-        return $cargo->result();
+
+    function consultxname($name) {
+        try {
+            $this->db->where("dim_descripcion", $name);
+            $this->db->where("est_id", 1);
+            $cargo = $this->db->get("dimension");
+            return $cargo->result();
+        } catch (exception $e) {
+            
+        }
     }
 
     function delete($id) {
-        $this->db->where("dim_id", $id);
-        $this->db->set("est_id",3);
-        $this->db->update("dimension");
+        try {
+            $this->db->where("dim_id", $id);
+            $this->db->set("est_id", 3);
+            $this->db->update("dimension");
+        } catch (exception $e) {
+            
+        }
     }
-    function consultadimensionxid($dimid){
-        $this->db->where("dim_id",$dimid);
-        $this->db->where("est_id",1);
-        $dim = $this->db->get("dimension");
-        return $dim->result();
+
+    function consultadimensionxid($dimid) {
+        try {
+            $this->db->where("dim_id", $dimid);
+            $this->db->where("est_id", 1);
+            $dim = $this->db->get("dimension");
+            return $dim->result();
+        } catch (exception $e) {
+            
+        }
     }
-    function guardarmodificaciondimension($descripcion,$id){
-        $this->db->where("dim_id",$id);
-        $this->db->set("dim_descripcion",$descripcion);
-        $this->db->update("dimension");
+
+    function guardarmodificaciondimension($descripcion, $id) {
+        try {
+            $this->db->where("dim_id", $id);
+            $this->db->set("dim_descripcion", $descripcion);
+            $this->db->update("dimension");
+        } catch (exception $e) {
+            
+        }
     }
-    function dimensionunoriesgo($dimriesgo){
-        $this->db->where("dimension.dim_id",$dimriesgo);
-        $this->db->select("riesgo.rie_descripcion");
-        $this->db->distinct("riesgo.rie_descripcion");
-        $this->db->join("riesgo","riesgo.dim1_id = dimension.dim_id");
-        $cargo = $this->db->get("dimension");
-//        echo $this->db->last_query();die;
-        return $cargo->result();
+
+    function dimensionunoriesgo($dimriesgo) {
+        try {
+            $this->db->where("dimension.dim_id", $dimriesgo);
+            $this->db->select("riesgo.rie_descripcion");
+            $this->db->distinct("riesgo.rie_descripcion");
+            $this->db->join("riesgo", "riesgo.dim1_id = dimension.dim_id");
+            $cargo = $this->db->get("dimension");
+            return $cargo->result();
+        } catch (exception $e) {
+            
+        }
     }
+
 }
 
 ?>

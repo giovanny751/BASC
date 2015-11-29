@@ -6,10 +6,14 @@ class Documentos_model extends CI_Model {
         parent::__construct();
     }
 
-    function guardardocumento($data){
-        
-        $this->db->insert("documentos",$data);
+    function guardardocumento($data) {
+        try {
+            $this->db->insert("documentos", $data);
+        } catch (exception $e) {
+            
+        }
     }
+
 }
 
 ?>

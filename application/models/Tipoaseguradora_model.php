@@ -6,19 +6,25 @@ class Tipoaseguradora_model extends CI_Model {
         parent::__construct();
     }
 
-
     function detail() {
-        $this->db->where("activo","S");
-        $tipoaseguradora = $this->db->get("tipo_aseguradora");
-        return $tipoaseguradora->result();
+        try {
+            $this->db->where("activo", "S");
+            $tipoaseguradora = $this->db->get("tipo_aseguradora");
+            return $tipoaseguradora->result();
+        } catch (exception $e) {
+            
+        }
     }
+
     function consultatipoaseguradora($id) {
-
-        $this->db->where("TipAse_Id",$id);
-        $tipoaseguradora = $this->db->get("tipo_aseguradora");
-        return $tipoaseguradora->result();
+        try {
+            $this->db->where("TipAse_Id", $id);
+            $tipoaseguradora = $this->db->get("tipo_aseguradora");
+            return $tipoaseguradora->result();
+        } catch (exception $e) {
+            
+        }
     }
-
 
 }
 

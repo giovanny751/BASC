@@ -7,20 +7,30 @@ class Crea_formularios_model extends CI_Model {
     }
 
     public function tablas() {
-        $datos = $this->db->query('show tables');
-        return $datos->result();
+        try {
+            $datos = $this->db->query('show tables');
+            return $datos->result();
+        } catch (exception $e) {
+            
+        }
     }
 
     public function info_table($post) {
-        $datos = $this->db->query('describe ' . $post['tabla']);
-        return $datos->result();
+        try {
+            $datos = $this->db->query('describe ' . $post['tabla']);
+            return $datos->result();
+        } catch (exception $e) {
+            
+        }
     }
 
     public function info_input() {
-        
-        $tipo = $this->db->get('tipo_inputs');
-//        $datos = $this->db->query('select * from ');
-        return $tipo->result();
+        try {
+            $tipo = $this->db->get('tipo_inputs');
+            return $tipo->result();
+        } catch (exception $e) {
+            
+        }
     }
 
 }

@@ -6,13 +6,14 @@ class Sexo_model extends CI_Model {
         parent::__construct();
     }
 
-
     function detail() {
-
-        $sexo = $this->db->get("sexo");
-        return $sexo->result();
+        try {
+            $sexo = $this->db->get("sexo");
+            return $sexo->result();
+        } catch (exception $e) {
+            
+        }
     }
-
 
 }
 

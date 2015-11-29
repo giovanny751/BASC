@@ -7,33 +7,56 @@ class Estadoaceptacion_model extends CI_Model {
     }
 
     function search($estado) {
-        $this->db->where("estAce_estado",$estado);
-        $aceptacion =$this->db->get("estado_aceptacion");
-        return $aceptacion->result();
+        try {
+            $this->db->where("estAce_estado", $estado);
+            $aceptacion = $this->db->get("estado_aceptacion");
+            return $aceptacion->result();
+        } catch (exception $e) {
+            
+        }
     }
+
     function insert($estado) {
-        $this->db->set("estAce_estado",$estado);
-        $this->db->insert("estado_aceptacion");
+        try {
+            $this->db->set("estAce_estado", $estado);
+            $this->db->insert("estado_aceptacion");
+        } catch (exception $e) {
+            
+        }
     }
-    function detail(){
-        $aceptacion =$this->db->get("estado_aceptacion");
-        return $aceptacion->result();
+
+    function detail() {
+        try {
+            $aceptacion = $this->db->get("estado_aceptacion");
+            return $aceptacion->result();
+        } catch (exception $e) {
+            
+        }
     }
-    function detailandcolor(){
-        $this->db->select("estado_aceptacion.estAce_id");
-        $this->db->select("estado_aceptacion.estAce_estado");
-        $this->db->select("color.col_color");
-        $this->db->join("color","color.estAce_id = estado_aceptacion.estAce_id","LEFT");
-        $aceptacion = $this->db->get("estado_aceptacion");
-        return $aceptacion->result();
+
+    function detailandcolor() {
+        try {
+            $this->db->select("estado_aceptacion.estAce_id");
+            $this->db->select("estado_aceptacion.estAce_estado");
+            $this->db->select("color.col_color");
+            $this->db->join("color", "color.estAce_id = estado_aceptacion.estAce_id", "LEFT");
+            $aceptacion = $this->db->get("estado_aceptacion");
+            return $aceptacion->result();
+        } catch (exception $e) {
+            
+        }
     }
-    function consultxname($name){
-        
-        $this->db->where("estAce_estado",$name);
-        $data = $this->db->get("estado_aceptacion");
-        return $data->result();
-        
+
+    function consultxname($name) {
+        try {
+            $this->db->where("estAce_estado", $name);
+            $data = $this->db->get("estado_aceptacion");
+            return $data->result();
+        } catch (exception $e) {
+            
+        }
     }
+
 }
 
 ?>
