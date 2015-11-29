@@ -1,6 +1,11 @@
-<a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>">
-<img src="<?php echo base_url('img/nueva_carpeta.png')?>" width="50px" title="Nuevo Empleado">
-</a>
+<div class="row">
+    <div class="col-md-6">
+        <div class="circuloIcon <?php echo (!empty($usuario[0]->usu_id)) ? "none":"" ?> guardar" metodo="guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon <?php echo (!empty($usuario[0]->usu_id)) ? "":"none" ?> guardar" metodo="actualizar"><i class="fa fa-pencil-square-o fa-3x"></i></div>
+        <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
+        <a href="<?php echo base_url()."index.php/administrativo/creacionempleados" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
@@ -110,7 +115,8 @@
             <th>Cargo</th>
             <th>Fecha inicio</th>
             <th>Fecha fin</th>
-            <th>Opciones</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
             </thead>
             <tbody id="bodyempleados">
                 <tr>
@@ -166,9 +172,11 @@
                 body += "<td>" + val.car_nombre + "</td>";
                 body += "<td>" + val.Emp_FechaInicioContrato + "</td>";
                 body += "<td>" + val.Emp_FechaFinContrato + "</td>";
-                body += '<td>\n\
-                                <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" tareas="' + val.tareas_emp + '" planes="' + val.planes_emp + '" emp_id="' + val.Emp_Id + '"></i>\n\
-                                <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  emp_id="' + val.Emp_Id + '"  data-toggle="modal" data-target="#myModal"></i>\n\
+                body += '<td class="transparent">\n\
+                                <i class="fa fa-pencil-square-o fa-2x  modificar" aria-hidden="true" title="Modificar"  emp_id="' + val.Emp_Id + '"  data-toggle="modal" data-target="#myModal"></i>\n\
+                                </td>';
+                body += '<td class="transparent">\n\
+                                <i class="fa fa-trash-o fa-2x   eliminar" aria-hidden="true" title="Eliminar" tareas="' + val.tareas_emp + '" planes="' + val.planes_emp + '" emp_id="' + val.Emp_Id + '"></i>   \n\
                                 </td>';
                 body += "</tr>";
             });

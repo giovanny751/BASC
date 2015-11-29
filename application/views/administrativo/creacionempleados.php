@@ -3,7 +3,7 @@
     <div class="col-md-6">
         <?php if (!empty($empleado[0]->Emp_Id)) { ?>
         <div class="circuloIcon" id="actualizar" title="Actualizar"><i class="fa fa-floppy-o fa-3x"></i></div>
-        <div class="circuloIcon eliminar_usuario" title="Eliminar" emp_id="<?php echo $empleado[0]->Emp_Id?>" planes="<?php echo $empleado[0]->planes_emp?>" tareas="<?php echo $empleado[0]->tareas_emp?>"><i class="fa fa-times fa-3x"></i></div>
+        <div class="circuloIcon eliminar_usuario" title="Eliminar" emp_id="<?php echo $empleado[0]->Emp_Id?>" planes="<?php echo $empleado[0]->planes_emp?>" tareas="<?php echo $empleado[0]->tareas_emp?>"><i class="fa fa-trash-o fa-3x"></i></div>
          <?php } else { ?>
         <div class="circuloIcon" id="guardar" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
         <?php } ?>

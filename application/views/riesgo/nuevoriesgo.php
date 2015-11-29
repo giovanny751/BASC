@@ -1,47 +1,33 @@
-<script type="text/javascript">
-    $(".menRIESGOS").addClass("active open");
-    $(".subMenNUEVO_RIESGO").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Riesgos</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Nuevo Riesgo</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-md-6">
+        <?php if(empty($rie_id)){ ?>
+        <div class="circuloIcon" id="guardar" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <?php }else{ ?>
+        <div class="circuloIcon" id="actualizar" title="Actualizar "><i class="fa fa-pencil-square-o fa-3x"></i></div>
+        <?php }?>
+        <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
+        <a href="<?php echo base_url()."/index.php/planes/nuevoplan" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+    </div>
+    <div class="col-md-6">
+        <div id="posicionFlecha">
+            <div class="flechaHeader IzquierdaDoble" metodo="flechaIzquierdaDoble"><i class="fa fa-step-backward fa-2x"></i></div>
+            <div class="flechaHeader Izquierda" metodo="flechaIzquierda"><i class="fa fa-arrow-left fa-2x"></i></div>
+            <div class="flechaHeader Derecha" metodo="flechaDerecha"><i class="fa fa-arrow-right fa-2x"></i></div>
+            <div class="flechaHeader DerechaDoble" metodo="flechaDerechaDoble"><i class="fa fa-step-forward fa-2x"></i></div>
+            <a href="<?php echo base_url('index.php/Planes/listadoplanes') ?>"><div class="flechaHeader Archivo" metodo="documento"><i class="fa fa-sticky-note fa-2x"></i></div></a>
+        </div>
+    </div>
 </div>
-<div class="widgetTitle">
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>RIESGO
-    </h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">RIESGO</span>
+        </div>
+    </div>
 </div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <div class="row">
         <form method="post" id="riesgos">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    <button type="button" class="btn btn-success" id="<?php echo(!empty($rie_id)) ? "actualizar" : "guardar"; ?>">
-                        <?php echo(!empty($rie_id)) ? "Actualizar" : "Guardar"; ?> 
-                    </button>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    <center>
-                        <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
-                        <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
-                        <div class="flecha flechaDerecha" metodo="flechaDerecha"></div>
-                        <div class="flecha flechaDerechaDoble" metodo="flechaDerechaDoble"></div>
-                        <div class="flecha documento" metodo="documento"></div>
-                    </center>
-                </div>
-            </div>
             <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6 ">
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
@@ -229,7 +215,7 @@
                     </ul>
                     <div class="tab-content">
                         <div id="tab1" class="tab-pane active">
-                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                            <table class="tablesst" id="datatable_ajax">
                                 <thead >
                                     <th>Editar</th>
                                     <th>Nuevo avance</th>
@@ -275,7 +261,7 @@
                             </table>
                         </div>
                         <div id="tab2" class="tab-pane">
-                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax2">
+                            <table class="tablesst" id="datatable_ajax2">
                                 <thead>
                                 <th>Nuevo Historial</th>
                                 <th>Avance</th>
@@ -304,7 +290,7 @@
                         </div>
                         <div id="tab3" class="tab-pane">
 
-                            <table class="table table-bordered table-hover">
+                            <table class="tablesst">
                                 <thead>
                                 <th>Acción</th>
                                 <th>Fecha</th>
@@ -324,7 +310,7 @@
                         </div>
                         <div id="tab4" class="tab-pane">
 
-                            <table class="table table-bordered table-hover">
+                            <table class="tablesst">
                                 <thead>
                                 <th>Nombre Archivo</th>
                                 <th>Descripción</th>
@@ -346,7 +332,7 @@
 
                         </div>
                         <div id="tab6" class="tab-pane">
-                            <table class="table table-bordered table-hover">
+                            <table class="tablesst">
                                 <thead>
                                 <th>Nombre archivo</th>
                                 <th>Descripción</th>
@@ -474,7 +460,7 @@ $('document').ready(function(){
     
     
 
-    $(".flecha").click(function () {
+    $(".flechaHeader").click(function () {
         var url = "<?php echo base_url("index.php/riesgo/consultaRiesgoFlechas") ?>";
         var idRiesgo = $("#rie_id").val();
         var metodo = $(this).attr("metodo");

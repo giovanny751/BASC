@@ -17,7 +17,7 @@
 
 #cssmenu {
     height: 100%;
-    width: 220px;
+    width: 100%;
     font-family: Raleway, sans-serif;
     color: #000000;
 }
@@ -91,6 +91,7 @@
     -webkit-transition: color .2s ease;
     -o-transition: color .2s ease;
     transition: color .2s ease;
+    white-space: nowrap;
 }
 
 #cssmenu ul ul ul li a {

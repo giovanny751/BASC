@@ -156,6 +156,10 @@
     background-color: #ffffff;
     padding-left: 3px;
 }
+.tablesst td.transparent{
+    background-color: transparent;
+    text-align: center;
+}
 .modal {
     color: #000 !important;
 }

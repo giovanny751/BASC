@@ -1,29 +1,19 @@
-<script type="text/javascript">
-    $(".menRIESGOS").addClass("active open");
-    $(".subMenLISTADO_RIESGOS").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Riesgos</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Listado Riesgo</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-md-6">
+        <!-- <div class="circuloIcon" id="guardartarea"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon" id="guardartarea" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
+        <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div> -->
+        <a href="<?php echo base_url()."/index.php/riesgo/nuevoriesgo" ?>"><div class="circuloIcon" title="Nuevo Riesgo" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+    </div>
 </div>
-<div class="widgetTitle">
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>VER RIESGOS
-    </h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">LISTADO RIESGO</span>
+        </div>
+    </div>
 </div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <div class="row">
         <form method="post" id="busquedariesgo">
             <div class="col-lg-3 col-sm-3 col-md-3">
@@ -74,8 +64,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-danger limpiar" style="margin-top: 28px">Limpiar</button>
-                    <button type="button" class="btn btn-success buscar" style="margin-top: 28px">Buscar</button>
+                    <button type="button" class="btn-sst limpiar" style="margin-top: 28px">Limpiar</button>
+                    <button type="button" class="btn-sst buscar" style="margin-top: 28px">Buscar</button>
                 </div>
             </div>
         </form>
@@ -120,7 +110,7 @@
                     var tbody = "";
                     $.each(msg.Json, function (id, tipos) {
                         $.each(tipos, function (tipo, data) {
-                            tbody += "<table class='table table-bordered table-hover'>\n\
+                            tbody += "<table class='tablesst'>\n\
                                         <thead style='text-align:center;'>\n\
                                         <tr><th colspan='11'>" + tipo + "</th></tr>\n\
                                         <th>Tipo</th>\n\
@@ -147,7 +137,9 @@
                                 tbody += "<td>" + val.rie_fecha + "</td>";
                                 tbody += "<td>" + val.estado + "</td>";
                                 tbody += "<td></td>";
-                                tbody += '<td><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" rie_id="'+ val.rie_id+'" ></i></td>'; 
+                                tbody += '<td class="transparent">\n\
+                                            <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" rie_id="'+ val.rie_id+'" ></i>\n\
+                                        </td>'; 
                                 tbody += "</tr>";
                             });
                             tbody += "</table>";

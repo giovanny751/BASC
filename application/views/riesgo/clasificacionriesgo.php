@@ -1,39 +1,25 @@
-<!-- Colorear Menu -->
-<script type="text/javascript">
-    $(".menRIESGOS").addClass("active open");
-    $(".subMenCLASIFICACIÓN_RIESGOS").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Riesgos</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Clasificación De Riesgo</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-md-6">
+        <div class="circuloIcon categoria" ><i class="fa fa-floppy-o fa-3x"></i></div>
+        <a href="<?php echo base_url()."/index.php/riesgo/nuevoriesgo" ?>"><div class="circuloIcon" title="Nuevo Riesgo" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+    </div>
 </div>
-<div class="widgetTitle">
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>CLASIFICACIÓN DE RIESGO
-    </h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">CLASIFICACIÓN DE RIESGO</span>
+        </div>
+    </div>
 </div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <div class="row">
         <div class="form-group">
             <label>Categoria</label>
             <input type="text" name="categoria" id="cat">
-            <button type="button" class="btn btn-success categoria">Agregar</button>
         </div>
     </div>
     <div class="row">
-        <table class="table table-bordered table-hover">
+        <table class="tablesst">
             <thead>
             <th>Categoría</th>
             <th>Tipo</th>
@@ -51,7 +37,7 @@
         </table>
     </div>
     <div class="row">
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Nuevo</button>
+        <button type="button" class="btn-sst" data-toggle="modal" data-target="#myModal">Nuevo</button>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -59,7 +45,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">NUEVO TIPO DE RIESGO</h4>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center;"> <div class="circuloIcon" id="guardartipo" ><i class="fa fa-floppy-o fa-3x"></i></div> NUEVO TIPO DE RIESGO</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -80,10 +66,6 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary " id="guardartipo">Guardar</button>
                     </div>
                 </div>
             </div>

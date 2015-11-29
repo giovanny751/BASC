@@ -64,7 +64,8 @@
                 <th style="width: 5%">Presupuesto</th>
                 <th style="width: 10%">Descripción</th>
                 <th style="width: 5%">Tareas propias</th>
-                <th style="width: 10%">Opciones</th>
+                <th style="width: 10%">Editar</th>
+                <th style="width: 10%">Eliminar</th>
                 </thead>
                 <tbody id="cargaplanes">
                     <tr class="odd gradeX">
@@ -120,8 +121,12 @@
                 body += "<td style='text-align:right'>" + val.pla_presupuesto + "</td>";
                 body += "<td>" + val.pla_descripcion + "</td>";
                 body += "<td style='text-align:center'>" + val.num_tareas + "</td>";
-                body += '<td><i class="fa fa-times eliminar btn btn-default" title="Eliminar" coun="' + val.count_progreso + '" sum="' + val.sum_progreso + '" pla_id="' + val.pla_id + '"></i>\n\
-            <i class="fa fa-pencil-square-o modificar btn  btn-default" title="Modificar"  pla_id="' + val.pla_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
+                body += '<td class="transparent" align="center">\n\
+                        <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar"  pla_id="' + val.pla_id + '"  data-toggle="modal" data-target="#myModal"></i>\n\
+                    </td>';
+                body += '<td class="transparent" align="center">\n\
+                        <i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" coun="' + val.count_progreso + '" sum="' + val.sum_progreso + '" pla_id="' + val.pla_id + '"></i>\n\
+                    </td>';
                 body += "</tr>";
             })
             $('#cargaplanes').append(body)

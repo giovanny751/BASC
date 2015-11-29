@@ -67,7 +67,8 @@
             <th>Fecha creación</th>
             <th>Último Ingreso</th>
             <th>Roles</th>
-            <th>Opciones</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
             </thead>
             <tbody id="bodyuser">
                     <tr>
@@ -240,8 +241,12 @@
                 body += "<td>" + val.usu_fechaCreacion + "</td>";
                 body += "<td>" + val.ing_fechaIngreso + "</td>";
                 body += '<td><button type="button"  data-toggle="modal" data-target="#myModal3"   class="btn btn-info permiso" usuarioid="' + val.usu_id + '">Roles</button></td>';
-                body += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" usu_id="'+val.usu_id+'"></i>\n\
-                            <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" usu_id="'+ val.usu_id+'"  data-toggle="modal" data-target="#myModal"></i></td>';
+                body += '<td class="transparent">\n\
+                            <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" usu_id="'+ val.usu_id+'"  data-toggle="modal" data-target="#myModal"></i>\n\
+                        </td>';
+                body += '<td class="transparent">\n\
+                            <i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" usu_id="'+val.usu_id+'"></i>\n\
+                        </td>';
                 body += "</tr>";
             });
             $('#bodyuser').append(body);

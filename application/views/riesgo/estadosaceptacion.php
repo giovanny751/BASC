@@ -1,41 +1,27 @@
-<!-- Colorear Menu -->
-<script type="text/javascript">
-    $(".menRIESGOS").addClass("active open");
-    $(".subMenESTADOS_DE_ACEPTACIÓN").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Riesgos</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Estado De Aceptación</a>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-md-6">
+        <div class="circuloIcon estado" ><i class="fa fa-floppy-o fa-3x"></i></div>
+        <a href="<?php echo base_url()."/index.php/riesgo/nuevoriesgo" ?>"><div class="circuloIcon" title="Nuevo Riesgo" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+    </div>
 </div>
-<div class="widgetTitle">
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>ESTADOS DE ACEPTACIÓN
-    </h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">CLASIFICACIÓN DE ACEPTACIÓN</span>
+        </div>
+    </div>
 </div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <div class="row">
         <div class="form-inline">
             <div class="form-group">
                 <label for="estadoaceptacion">Estado de aceptación</label>
                 <input type="text" name="estadoaceptacion" id="estadoaceptacion" class="form-control">
-                <button type="button" class="btn btn-success estado">Agregar</button>
             </div>
         </div>
     </div>
     <div class="row">
-        <table class="table table-bordered table-hover">
+        <table class="tablesst">
             <thead>
             <th>Estados</th>
             <th>Color</th>
@@ -61,9 +47,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">NUEVO TIPO DE RIESGO</h4>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center"><div class="circuloIcon" id="guardarmodificacion" ><i class="fa fa-floppy-o fa-3x"></i></div> NUEVO TIPO DE RIESGO</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            
+                        </div>
+                    </div>
                     <div class="row">
                         <form method="post" id="frmestadocolor">
                         <div class="col-sm-offset-2 col-sm-8">
@@ -82,10 +73,6 @@
                             </div>
                         </div>
                             </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary " id="guardarmodificacion">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -115,6 +102,7 @@
                         fila += "</tr>";
                     })
                     $('#bodyestado').append(fila);
+                    alerta("verde", "Estado guardada con exito");
                 }).fail(function(msg){
                     alerta("rojo","error en el sistema por favor comunicarse con el administrador");
                 });
