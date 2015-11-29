@@ -102,7 +102,7 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div style="text-align: center;">
-                            <img src="<?php echo base_url() ?>/img/sst.png" class="logo_imagen" alt="Logo">
+                            <a href="<?php echo base_url("/index.php/presentacion/principal") ?>"><img src="<?php echo base_url() ?>/img/sst.png" class="logo_imagen" alt="Logo"></a>
                             <h6>Seguridad y Salud en el Trabajo</h6>
                         </div>
                     </div>
