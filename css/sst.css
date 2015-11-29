@@ -40,8 +40,8 @@
 
 
 .circuloIcon{
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     background-color: #01567D;
     border-radius: 50px;
     margin-left: 10px;
@@ -57,7 +57,10 @@
 }
 .circuloIcon i {
     color:white;
-    margin: 12px 15px;
+    margin: 8px 10px;
+}
+.fa-3x {
+    font-size: 25px !important;
 }
 .circuloIcon:active i{
     color: #A2CC82;
@@ -67,8 +70,8 @@
 }
 .flechaHeader{
     margin-top: 12px;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background-color: #A2CC82;
     border-radius: 50px;
     margin-left: 10px;
@@ -78,11 +81,12 @@
 }
 .flechaHeader i {
     position: relative;
-    left: -15px;
-    top: 11px;
+    left: -11px;
+    top: 8px;
 }
 .cuerpoDescripcion{
     margin-bottom: 10px;
+    margin-top: -50px !important;
 }
 .btn-cuerpoImg{
     width: 50px;
