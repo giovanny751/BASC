@@ -1,11 +1,4 @@
 <form method="post" id="f1">
-    
-    
-    
-    
-    
-    
-    
 <div class="row">
     <div class="col-md-6">
         <?php if (!empty($empleado[0]->Emp_Id)) { ?>
@@ -14,12 +7,9 @@
          <?php } else { ?>
         <div class="circuloIcon" id="guardar" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
         <?php } ?>
-        
-        <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
         <a href="<?php base_url('index.php/administrativo/creacionempleados')?>">
             <div class="circuloIcon" title="Nuevo Registro"><i class="fa fa-pencil-square-o fa-3x"></i></div>
         </a>
-        <!--<div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
     </div>
     <div class="col-md-6">
         <div id="posicionFlecha">
@@ -38,16 +28,7 @@
         </div>
     </div>
 </div>
-<!-- <div class="widgetTitle" >
-    <h5>
-        <a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>" class="btn btn-default">NUEVO</a>CREACIÓN EMPLEADO
-    </h5>
-</div> -->
-
-    
 <div class='cuerpoContenido'>
-    
-        
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                 <label for="cedula"><span class="campoobligatorio">*</span>Cédula</label>

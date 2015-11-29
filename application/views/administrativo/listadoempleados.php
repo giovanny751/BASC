@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
-            <span class="txtTitulo">Listado Empleados</span>
+            <span class="txtTitulo">LISTADO EMPLEADOS</span>
         </div>
     </div>
 </div>
