@@ -5,12 +5,8 @@
         <?php }else{ ?>
         <div class="circuloIcon" id="guardarplan" title="Actualizar "><i class="fa fa-pencil-square-o fa-3x"></i></div>
         <?php }?>
-        &nbsp;&nbsp;
-        <a href="<?php echo base_url()."/index.php/planes/nuevoplan" ?>">
-        <img src="<?php echo base_url('img/nueva_carpeta.png')?>" width="60px" title="Nuevo Plan" style="margin-top: -20px">
-        </a>
         <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
-        <!--<div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
+        <a href="<?php echo base_url()."/index.php/planes/nuevoplan" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
     <div class="col-md-6">
         <div id="posicionFlecha">

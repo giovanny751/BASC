@@ -308,13 +308,6 @@
     </form>
     <?php if (!empty($tarea->tar_id)): ?>
         <div class="portlet box blue">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-gift"></i>AVANCES
-                </div>
-                <div class="tools">
-                </div>
-            </div>
             <div class="portlet-body">
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">

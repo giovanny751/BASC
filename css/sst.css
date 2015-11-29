@@ -90,14 +90,32 @@
     height: 50px;
     background-color: #A2CC82;
 }
-.btn-sst{
+
+.btn-sst {
+    -moz-user-select: none;
+    background-image: none;
     background-color: #01567D;
-    color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
 }
+
 .btn-sst:hover{
-    color: white;
+    background-color: #3399FF;
+    color: white !important;
 }
 .btn-sst:focus{
+    background-color: #3399FF;
     color: white;
 }
 .tituloCuerpo{
@@ -140,4 +158,24 @@
 }
 .modal {
     color: #000 !important;
+}
+/* MODIFICACIONES LIBRERIAS */
+
+/*----------------------------------------------------------------------------*/
+/*                                     TABS                                   */
+/*----------------------------------------------------------------------------*/
+.nav > li > a {
+    padding: 5px 15px !important;
+}
+.nav-tabs > li > a {
+    background-color: #01567d;
+    color: white;
+}
+.nav-tabs > li > a:hover {
+    background-color: #2983AA !important;
+    color: white !important;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    background-color: #3399ff !important;
+    color: #fff !important;
 }

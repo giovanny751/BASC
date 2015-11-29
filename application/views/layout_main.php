@@ -162,7 +162,7 @@
                     <?php echo modulos('prueba', $id, null); ?>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="row cuerpoDescripcion">
                     <?php echo $content_for_layout ?>
                     <!--                    <div class="cuerpoContenido">

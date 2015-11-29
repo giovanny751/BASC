@@ -17,23 +17,15 @@
     </h5> 
 </div>-->
 <div class='cuerpoContenido'>
-    <form method="post" id="f2">
-        <div class="row">
+    <form method="post" id="f2" class="form-horizontal">
             <div class="form-group">
                 <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="cedula">Cédula</label>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><input type="text" name="cedula" id="cedula" class="form-control"></div>
-            </div>
-            <div class="form-group">
                 <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="nombre">Nombre</label>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><input type="text" name="nombre" id="nombre" class="form-control"></div>
-            </div>
-            <div class="form-group">
                 <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="apellido">Apellido</label>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"><input type="text" name="apellido" id="apellido" class="form-control"></div>
             </div>
-            
-        </div>
-        <div class="row">
             <div class="form-group">
                 <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="dim1">
                     <?php echo $empresa[0]->Dim_id ?>
@@ -64,9 +56,7 @@
                     <input type="checkbox" value="1" name="contratosvencidos" class="form-control">
                 </div>
             </div>    
-        </div>    
-        <div class="row">
-            <div class="form-group">
+        <div class="form-group">
             <label class="col-lg-2 col-md-2 col-sm-2 col-xs-2" for="tipocontrato">
                     Tipo Contrato
                 </label>
@@ -100,18 +90,14 @@
                         <?php } ?>
                     </select>
                 </div>
-            </div>
-            </div>
-            <div class="row">
+        </div>
+        <div class="form-group">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: right">
-                <div class="form-group" style="margin-top: 29px">
-                    <label>&nbsp;</label><button type="button" class="btn btn-danger limpiar">Limpiar</button>
-                    <label>&nbsp;</label><button type="button" class="btn btn-success consultar">Consultar</button>
-                </div>
+                <label>&nbsp;</label><button type="button" class="btn-sst limpiar">Limpiar</button>
+                <label>&nbsp;</label><button type="button" class="btn-sst consultar">Consultar</button>
             </div>
         </div>
     </form>   
-    <hr>
     <div class="row">
         <table class="tablesst">
             <thead>
