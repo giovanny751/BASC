@@ -654,10 +654,8 @@
             $(".eliminaraseguradora").each(function() {
                 i++;
             })
-            if (i == 1) {
-                return false;
-            }
-            $(this).parents('.row').remove();
+            if (i == 1) return false;
+            $(this).parent().parent().remove();
         });
         var option = "<?php echo (!empty($option)) ? $option : ""; ?>";
 

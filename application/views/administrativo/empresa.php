@@ -150,11 +150,11 @@
                 <ul class="dropdown-menu pull-right" role="menu">
                     <li>
                         <a href="<?php echo base_url("index.php/administrativo/cargos") ?>">
-                            Ver cargos </a>
+                            Ver Cargos </a>
                     </li>
                     <li>
                         <a href="<?php echo base_url("index.php/administrativo/organigrama") ?>">
-                            Ver organigrama </a>
+                            Ver Organigrama </a>
                     </li>
                 </ul>
             </div>
@@ -169,7 +169,7 @@
                     </li>
                     <li>
                         <a href="<?php echo base_url("index.php/administrativo/importar_empleados") ?>">
-                            Importar empleados </a>
+                            Importar Empleados </a>
                     </li>
                 </ul>
             </div>

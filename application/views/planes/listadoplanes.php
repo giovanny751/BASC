@@ -55,15 +55,15 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <table class="tablesst" id="sample_2">
                 <thead>
-                <th>Nombre</th>
-                <th>Fecha inicio</th>
-                <th>Fecha fin</th>
-                <th>Fecha real</th>
-                <th>Responsable</th>
-                <th>Presupuesto</th>
-                <th>Descripción</th>
-                <th>Tareas propias</th>
-                <th>Opciones</th>
+                <th style="width: 20%">Nombre</th>
+                <th style="width: 10%">Fecha inicio</th>
+                <th style="width: 10%">Fecha fin</th>
+                <th style="width: 10%">Fecha real</th>
+                <th style="width: 20%">Responsable</th>
+                <th style="width: 5%">Presupuesto</th>
+                <th style="width: 10%">Descripción</th>
+                <th style="width: 5%">Tareas propias</th>
+                <th style="width: 10%">Opciones</th>
                 </thead>
                 <tbody id="cargaplanes">
                     <tr class="odd gradeX">
@@ -112,13 +112,13 @@
             $.each(msg, function (key, val) {
                 body += "<tr class='odd gradeX'>";
                 body += "<td>" + val.pla_nombre + "</td>";
-                body += "<td>" + val.pla_fechaInicio + "</td>";
-                body += "<td>" + val.pla_fechaFin + "</td>";
+                body += "<td style='text-align:center'>" + val.pla_fechaInicio + "</td>";
+                body += "<td style='text-align:center'>" + val.pla_fechaFin + "</td>";
                 body += "<td></td>";
                 body += "<td>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</td>";
-                body += "<td>" + val.pla_presupuesto + "</td>";
+                body += "<td style='text-align:right'>" + val.pla_presupuesto + "</td>";
                 body += "<td>" + val.pla_descripcion + "</td>";
-                body += "<td>" + val.num_tareas + "</td>";
+                body += "<td style='text-align:center'>" + val.num_tareas + "</td>";
                 body += '<td><i class="fa fa-times eliminar btn btn-default" title="Eliminar" coun="' + val.count_progreso + '" sum="' + val.sum_progreso + '" pla_id="' + val.pla_id + '"></i>\n\
             <i class="fa fa-pencil-square-o modificar btn  btn-default" title="Modificar"  pla_id="' + val.pla_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
                 body += "</tr>";
