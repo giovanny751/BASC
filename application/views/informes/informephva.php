@@ -15,12 +15,20 @@
         <th>Costo Real</th>
         </thead>
         <tbody>
-            <?php    
+            <?php
             $costopresupuestado = 0;
             $numerotareas = 0;
-             foreach ($tipo as $t): 
+            $tipo_t="";
+            $valores_t="";
+            foreach ($tipo as $t):
+                //datos para la grafiaca
+            $tipo_t.='"'.$t->tip_tipo.'",';
+            $valores_t.=''.$t->numerotareas.',';
+                    // fin de datos para la grafica 
+                    
                 $costopresupuestado += $t->tar_costopresupuestado;
-                $numerotareas += $t->numerotareas; ?>
+                $numerotareas += $t->numerotareas;
+                ?>
                 <tr>
                     <td><?php echo $t->tip_tipo; ?></td>
                     <td style="text-align: center"><?php echo $t->numerotareas; ?></td>
@@ -28,7 +36,7 @@
                     <td style="text-align:right"><?php echo $t->tar_costopresupuestado; ?></td>
                     <td></td>
                 </tr>
-            <?php endforeach; ?>
+<?php endforeach; ?>
         </tbody>
         <tfoot>
             <tr>
@@ -41,8 +49,45 @@
         </tfoot>
     </table>
 </div>
+<script type="text/javascript" src="<?php echo base_url('js/graficas/Chart.min.js') ?>"></script>
+<div class="grafica"></div>
+<center>
+    <div style="width:35%">
+        <canvas id="canvas" height="450" width="450"></canvas>
+    </div>    
+</center>
+
 <script>
-    $('document').ready(function(){
-        
-    });
+
+    var radarChartData = {
+        labels: [<?php echo $tipo_t; ?>],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [<?php echo $valores_t; ?>]
+            },
+//            {
+//                label: "My Second dataset",
+//                fillColor: "rgba(151,187,205,0.2)",
+//                strokeColor: "rgba(151,187,205,1)",
+//                pointColor: "rgba(151,187,205,1)",
+//                pointStrokeColor: "#fff",
+//                pointHighlightFill: "#fff",
+//                pointHighlightStroke: "rgba(151,187,205,1)",
+//                data: [28, 48, 40, 19]
+//            }
+        ]
+    };
+    window.onload = function() {
+        window.myRadar = new Chart(document.getElementById("canvas").getContext("2d")).Radar(radarChartData, {
+            responsive: true
+        });
+    }
+
 </script>    

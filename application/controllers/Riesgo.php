@@ -277,6 +277,12 @@ class Riesgo extends My_Controller {
 //        var_dump($i);die;
         $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
+    function eliminar(){
+        $this->load->model("Riesgoclasificacion_model");
+        $this->Riesgoclasificacion_model->eliminar($this->input->post('id'));
+        $data = $this->Riesgoclasificacion_model->detailandtipo();
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
 
 }
 

@@ -17,11 +17,13 @@ class Riesgoclasificacion_model extends CI_Model {
 
     function detailandtipo() {
         try {
+            $this->db->select("riesgo_clasificacion_tipo.rieClaTip_id");
             $this->db->select("riesgo_clasificacion.rieCla_id");
             $this->db->select("riesgo_clasificacion.rieCla_categoria");
             $this->db->select("riesgo_clasificacion_tipo.rieClaTip_tipo");
             $this->db->join("riesgo_clasificacion_tipo", "riesgo_clasificacion_tipo.rieCla_id = riesgo_clasificacion.rieCla_id", "LEFT");
             $datos = $this->db->get("riesgo_clasificacion");
+            echo $this->db->last_query();
             return $datos->result();
         } catch (exception $e) {
             
@@ -42,6 +44,14 @@ class Riesgoclasificacion_model extends CI_Model {
         try {
             $this->db->set("rieCla_categoria", $categoria);
             $this->db->insert("riesgo_clasificacion");
+        } catch (exception $e) {
+            
+        }
+    }
+    function eliminar($id) {
+        try {
+            $this->db->where("rieClaTip_id", $id);
+            $this->db->delete("riesgo_clasificacion_tipo");
         } catch (exception $e) {
             
         }
