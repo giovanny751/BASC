@@ -1,83 +1,56 @@
-<script type="text/javascript">
-    $(".subMenREGISTROS").addClass("active");
-</script>
-<div class="page-bar" style="background-color: transparent !important;">
-    <ul class="page-breadcrumb">
-        <li class="devolver">
-            <i class="fa fa-home"></i>
-            <a href="<?php echo base_url("index.php/presentacion/principal") ?>">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Registros</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li class="devolver">
-            <a href="#">Index</a>
-        </li>
-    </ul>
-</div>
-<div class="col-md-12">
-    <div class="portlet green-meadow box">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-cogs"></i>REGISTRO
+
+<div class="cuerpoContenido">
+    <div class="row">
+        <button type="button" class="btn-sst" data-toggle="modal" data-target="#myModal2">Nuevo registro</button>
+    </div>
+    <div class="row">
+        <form method="post" id="frmregistro">
+            <label for="plan" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Plan</label>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
+                <input type="text" class="form-control" name="plan" id="plan"/>
             </div>
-            <div class="tools">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Nuevo registro</button>
+            <label for="actividad" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Actividad</label>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
+                <input type="text" class="form-control" name="actividad" id="actividad"/>
             </div>
+            <label for="tarea" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Tarea</label>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <input type="text" class="form-control" name="tarea" id="tarea"/>
+            </div>
+
+        </form>
+
+    </div>    
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: right">
+            <button type="button" class="btn-sst limpiar">Limpiar</button>
+            <button type="button" class="btn-sst" id="consultar">Consultar</button>
         </div>
-        <div class="portlet-body">
-            <div class="row">
-                <form method="post" id="frmregistro">
-                    <label for="plan" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Plan</label>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-
-                        <input type="text" class="form-control" name="plan" id="plan"/>
-                    </div>
-                    <label for="actividad" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Actividad</label>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-
-                        <input type="text" class="form-control" name="actividad" id="actividad"/>
-                    </div>
-                    <label for="tarea" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Tarea</label>
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <input type="text" class="form-control" name="tarea" id="tarea"/>
-                    </div>
-
-                </form>
-
-            </div>    
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: right">
-                    <button type="button" class="btn btn-danger limpiar">Limpiar</button>
-                    <button type="button" class="btn btn-success" id="consultar">Consultar</button>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <table class="table table-bordered table-hover" id="datatable_ajax">
-                        <thead>
-                        <th>Nombre archivo</th>
-                        <th>Descripciòn</th>
-                        <th>Versiòn</th>
-                        <th>Categorìa</th>
-                        <th>Tarea</th>
-                        <th>Responsable</th>
-                        <th>Tamaño</th>
-                        <th>Fecha</th>
-                        <th>Ver Versiones</th>
-                        <th>Opciones</th>
-                        </thead>
-                        <tbody id="cuerpodatos">
-                            <tr>
-                                <td colspan="10"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <table class="tablesst" id="datatable_ajax">
+                <thead>
+                <th>Nombre archivo</th>
+                <th>Descripciòn</th>
+                <th>Versiòn</th>
+                <th>Categorìa</th>
+                <th>Tarea</th>
+                <th>Responsable</th>
+                <th>Tamaño</th>
+                <th>Fecha</th>
+                <th>Ver Versiones</th>
+                <th>Opciones</th>
+                </thead>
+                <tbody id="cuerpodatos">
+                    <tr>
+                        <td colspan="10"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
