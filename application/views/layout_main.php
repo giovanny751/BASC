@@ -249,7 +249,7 @@
             }
         </style>
         <script>
-            jQuery(document).ready(function() {
+            jQuery(document).ready(function () {
 //                Metronic.init(); // init metronic core componets
 //                Layout.init(); // init layout
 //                QuickSidebar.init(); // init quick sidebar
@@ -267,7 +267,7 @@
             });
 
 
-            $('.limpiar').click(function() {
+            $('.limpiar').click(function () {
                 $('select,input').val('');
             });
             //    --------------------------------------------------------------------------
@@ -304,14 +304,14 @@
                     heading: texto
                 });
             }
-            $('body').delegate('.number', 'keypress', function(tecla) {
+            $('body').delegate('.number', 'keypress', function (tecla) {
                 if (tecla.charCode > 0 && tecla.charCode < 48 || tecla.charCode > 57)
                     return false;
             });
-            $('body').delegate('.miles', 'keyup', function(tecla) {
+            $('body').delegate('.miles', 'keyup', function (tecla) {
                 $(this).val(num_miles($(this).val()))
             });
-            $('body').delegate('.float', 'keypress', function(tecla) {
+            $('body').delegate('.float', 'keypress', function (tecla) {
                 if (tecla.charCode == 46)
                     return true;
                 if ((tecla.charCode > 0 && tecla.charCode < 48) || (tecla.charCode > 57))
@@ -319,7 +319,7 @@
             });
             function obligatorio(clase) {
                 var i = 0;
-                $('.' + clase).each(function(key, val) {
+                $('.' + clase).each(function (key, val) {
                     if ($(this).val() != "")
                         $(this).removeClass('obligado');
                     else {
@@ -349,12 +349,21 @@
                 }
             }
 
-            $(".email").change(function() {
+            ;(function($){
+                $.fn.datepicker.dates['es'] = {
+                        days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
+                        daysShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
+                        daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
+                        months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                        monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+                };
+        }(jQuery));
+
+            $(".email").change(function () {
                 email("email");
             });
-
-
             $('.fecha').datepicker({
+                language: "es",
                 format: "yyyy-mm-dd",
                 autoclose: true
             });
@@ -377,7 +386,7 @@
             }
 
             $('#cssmenu li.active').addClass('open').children('ul').show();
-            $('#cssmenu li.has-sub>a').on('click', function() {
+            $('#cssmenu li.has-sub>a').on('click', function () {
                 $(this).removeAttr('href');
                 var element = $(this).parent('li');
                 if (element.hasClass('open')) {
@@ -393,7 +402,7 @@
                     element.siblings('li').find('ul').slideUp(200);
                 }
             });
-            $(function() {
+            $(function () {
                 //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
                 $.blockUI.defaults.message = 'Procesando...';
                 $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
