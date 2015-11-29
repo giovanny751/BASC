@@ -39,6 +39,7 @@ class Tipo_contrato extends My_Controller {
     function save_tipo_contrato() {
         $post = $this->input->post();
         $id = $this->Tipo_contrato__model->save_tipo_contrato($post);
+//        echo $this->db->last_query();
         redirect('index.php/Tipo_contrato/consult_tipo_contrato', 'location');
     }
 

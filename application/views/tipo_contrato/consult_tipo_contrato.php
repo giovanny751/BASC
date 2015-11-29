@@ -1,3 +1,6 @@
+<a href="<?php echo base_url()."/index.php/Tipo_contrato/index" ?>">
+<img src="<?php echo base_url('img/nueva_carpeta.png')?>" width="50px" title="Nuevo Tipo de Contrato">
+</a>
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
@@ -34,6 +37,7 @@
     <div class="col-md-12">
         <table class="tablesst">
             <thead>
+                                    <th>N°</th>
                                     <th>Tipo de contrato</th>
                             <th>Acción</th>
             </thead>
@@ -64,11 +68,11 @@
     </div>
 </div>
 </div>
-<div class="row">
+<!--<div class="row">
     <div class="col-md-12" style="float:right">
         <a href="<?php echo base_url()."/index.php/Tipo_contrato/index" ?>" class="btn btn-success" >Nuevo</a>
     </div>
-</div>
+</div>-->
 <?php  if(isset($campo)){ ?>
 <form action="<?php echo base_url('index.php/')."/Tipo_contrato/edit_tipo_contrato"; ?>" method="post" id="editar">
     <input type="hidden" name="<?php echo $campo ?>" id="<?php echo $campo ?>2">

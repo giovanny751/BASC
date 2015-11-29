@@ -7,7 +7,10 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
-            <span class="txtTitulo">CARGOS</span>
+            <span class="txtTitulo">
+                <a href="<?php echo base_url("index.php/presentacion/principal") ?>">HOME</a>/
+                <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">EMPRESA</a>/
+                CARGOS</span>
         </div>
     </div>
 </div>

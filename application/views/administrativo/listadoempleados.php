@@ -1,3 +1,6 @@
+<a href="<?php echo base_url("index.php/administrativo/creacionempleados") ?>">
+<img src="<?php echo base_url('img/nueva_carpeta.png')?>" width="50px" title="Nuevo Empleado">
+</a>
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
