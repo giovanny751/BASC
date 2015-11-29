@@ -17,11 +17,11 @@
             <div class="form-group">
                 <label for="id" class="col-md-1 control-label"><span class="campoobligatorio">*</span>Cargo</label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control obligatorio" name="cargo[]" id="cargo" />
+                    <input type="text" class="form-control obligatorio texto" name="cargo[]" id="cargo" />
                 </div>
                 <label for="id" class="col-md-1 control-label">Cargo jefe directo</label>
                 <div class="col-md-3">
-                    <select name="cargojefe[]" id="cargojefe" class="form-control" >
+                    <select name="cargojefe[]" id="cargojefe" class="form-control texto" >
                         <option value="">::Seleccionar::</option>
                         <?php foreach ($cargo as $d) { ?>
                             <option value="<?php echo $d->car_id ?>"><?php echo $d->car_nombre ?></option>
@@ -30,7 +30,7 @@
                 </div>
                 <label for="id" class="col-md-1 control-label"><span class="campoobligatorio">*</span>%Cotizacion ARL</label>
                 <div class="col-md-3">
-                    <input type="text" name="porcentaje[]" id="porcentaje" class="form-control obligatorio number" />
+                    <input type="text" name="porcentaje[]" id="porcentaje" class="form-control obligatorio number texto" />
                 </div>
             </div>
         </form>
@@ -70,7 +70,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modificación de Cargo</h4>
+                <h4 class="modal-title" id="myModalLabel">Editar Cargo</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -243,6 +243,7 @@
                             });
                             $('#bodycargo').append(body);
                             $('#cargojefe').append(option);
+                            $('.texto').val("");
                             alerta("verde", "Guardado Correctamente");
                         } else {
                             alerta("amarillo", "Cargo ya existente");
