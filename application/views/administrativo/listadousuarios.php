@@ -164,7 +164,7 @@
         $.post("<?= base_url('index.php/presentacion/guardarpermisos') ?>",
                 $('#f15').serialize()
                 ).done(function () {
-                   $('#myModal3').hide(); 
+                   $('#myModal3').modal('hide'); 
         }).fail(function () {
             alerta("rojo","Error, por favor comunicarse con el administrador del sistema");
         })

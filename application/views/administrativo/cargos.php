@@ -12,40 +12,7 @@
     </div>
 </div>
 <div class='cuerpoContenido'>
-
-    <div class="row">
-        <div class="col-md-8">
-            <table class="tablesst">
-                <thead>
-                <th>Cargo</th>
-                <th>Cargo Jefe Directo</th>
-                <th>% Cotización ARL</th>
-                <th>Riesgos</th>
-                <th>Opciones</th>
-                </thead>
-                <tbody id="bodycargo">
-                    <?php foreach ($cargo as $c) { ?>
-                        <tr>
-                            <td><?php echo $c->car_nombre ?></td> 
-                            <td><?php echo $c->jefe ?></td> 
-                            <td><?php echo $c->car_porcentajearl ?></td> 
-                            <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="<?php echo $c->car_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
-                            <td>
-                                <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="<?php echo $c->car_id ?>"></i>
-                                <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="<?php echo $c->car_id ?>"  data-toggle="modal" data-target="#myModal"></i>
-                            </td> 
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-        <tiv class="col-md 4">
-            <center>
-                <img  style="width: 350;height: 155px;border-radius: 15px" src="<?php echo base_url('uploads') . '/empresa/' . $informacion[0]->emp_id . "/" . $informacion[0]->emp_logo; ?>">
-            </center>
-        </tiv>
-    </div>
-    <div class="row">
+<div class="row">
         <form method="post" id="formcargos" class="form-horizontal">
             <div class="form-group">
                 <label for="id" class="col-md-1 control-label"><span class="campoobligatorio">*</span>Cargo</label>
@@ -68,6 +35,34 @@
             </div>
         </form>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="tablesst">
+                <thead>
+                <th>Cargo</th>
+                <th>Cargo Jefe Directo</th>
+                <th>% Cotización ARL</th>
+                <th>Riesgos</th>
+                <th>Opciones</th>
+                </thead>
+                <tbody id="bodycargo">
+                    <?php foreach ($cargo as $c) { ?>
+                        <tr>
+                            <td><?php echo $c->car_nombre ?></td> 
+                            <td><?php echo $c->jefe ?></td> 
+                            <td style="text-align:center;"><?php echo $c->car_porcentajearl ?></td> 
+                            <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="<?php echo $c->car_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
+                            <td style="text-align: center">
+                                <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="<?php echo $c->car_id ?>"></i>
+                                <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="<?php echo $c->car_id ?>"  data-toggle="modal" data-target="#myModal"></i>
+                            </td> 
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
 </div>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -240,9 +235,9 @@
                                 body += "<tr>";
                                 body += "<td>" + val.car_nombre + "</td>";
                                 body += "<td>" + val.jefe + "</td>";
-                                body += "<td>" + val.car_porcentajearl + "</td>";
+                                body += "<td style='text-align: center'>" + val.car_porcentajearl + "</td>";
                                 body += '<td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="' + val.car_id + '" data-toggle="modal" data-target="#riesgo"></i></td>';
-                                body += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="' + val.car_id + '"></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="' + val.car_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
+                                body += '<td style="text-align: center"><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="' + val.car_id + '"></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="' + val.car_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
                                 body += "</tr>";
                                 option += "<option value='" + val.car_id + "'>" + val.car_nombre + "</option>";
                             });
