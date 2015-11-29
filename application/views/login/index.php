@@ -27,7 +27,7 @@
             html{
                 background-image: url("<?php echo base_url("/img/principal.png") ?>");
                 background-size: 100%;
-               /* background-repeat: no-repeat;*/
+                background-repeat: no-repeat;
             }
             body{
                 background-color: transparent;
@@ -40,7 +40,19 @@
                 background-color: rgba(150, 208, 222, 0.15);
             }
             .login .content h3 {
-                color: #000;
+                color: #0C7093;
+            }
+            .login .content h4 {
+                color: #0C7093;
+            }
+            .login .content p, .login .content label {
+                color: #0C7093;
+            }
+            a {
+                color: #0C7093;
+                cursor: pointer;
+                text-decoration: underline;
+                text-shadow: none;
             }
         </style>
     </head>
