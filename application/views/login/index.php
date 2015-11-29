@@ -25,7 +25,7 @@
         <link href="<?php echo base_url('/assets/admin/layout/css/custom.css') ?>" rel="stylesheet" type="text/css"/>
         <style type="text/css">
             html{
-                background-image: url("../img/login.png");
+                background-image: url("<?php echo base_url("/img/principal.png") ?>");
                 background-size: 100%;
                /* background-repeat: no-repeat;*/
             }
@@ -37,6 +37,10 @@
             }
             .login .content{
                 margin: 0 65%;
+                background-color: rgba(150, 208, 222, 0.15);
+            }
+            .login .content h3 {
+                color: #000;
             }
         </style>
     </head>
