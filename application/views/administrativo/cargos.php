@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="circuloIcon guardarcargo"><i class="fa fa-floppy-o fa-3x"></i></div>
+    <div class="circuloIcon guardarcargo" tittle="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
 <!--    <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>
     <div class="circuloIcon" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
     <div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
@@ -46,7 +46,8 @@
                 <th>Cargo Jefe Directo</th>
                 <th>% Cotización ARL</th>
                 <th>Riesgos</th>
-                <th>Opciones</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
                 </thead>
                 <tbody id="bodycargo">
                     <?php foreach ($cargo as $c) { ?>
@@ -55,9 +56,11 @@
                             <td><?php echo $c->jefe ?></td> 
                             <td style="text-align:center;"><?php echo $c->car_porcentajearl ?></td> 
                             <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="<?php echo $c->car_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
-                            <td style="text-align: center">
-                                <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="<?php echo $c->car_id ?>"></i>
-                                <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="<?php echo $c->car_id ?>"  data-toggle="modal" data-target="#myModal"></i>
+                            <td class="transparent">
+                                <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" car_id="<?php echo $c->car_id ?>"  data-toggle="modal" data-target="#myModal"></i>
+                            </td> 
+                            <td class="transparent">
+                                <i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" car_id="<?php echo $c->car_id ?>"></i>
                             </td> 
                         </tr>
                     <?php } ?>
@@ -73,31 +76,35 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Editar Cargo</h4>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;"> <div class="circuloIcon guardarmodificacion" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div> Editar Cargo</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body form-horizontal">
                 <div class="row">
-                    <div class="col-sm-offset-2 col-sm-8">
-                        <center>
-                            <input type="hidden" value="" name="car_id" id="idcargo">
-                            <label for="cargo2">Cargo</label>
-                            <input type="text" name="cargo" id="cargo2" class="form-control" />
-                            <label for="cargojefedir">Cargo Jefe Directo</label>
+                    <input type="hidden" value="" name="car_id" id="idcargo">
+                    
+                    <div class="form-group">
+                        <label for="cargo2" class="col-sm-offset-1 col-sm-3 control-label">Cargo</label>
+                        <div class="col-sm-7">
+                            <input type="text"  class="form-control" id="cargo2" name="cargo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cargojefedir" class="col-sm-offset-1 col-sm-3 control-label">Cargo Jefe Directo</label>
+                        <div class="col-sm-7">
                             <select name="cargojefedir" id="cargojefedir" class="form-control" >
                                 <option value="">Sin Jefe</option>
                                 <?php foreach ($cargo as $d) { ?>
                                     <option value="<?php echo $d->car_id ?>"><?php echo $d->car_nombre ?></option>
                                 <?php } ?>
                             </select>
-                            <label for="cotizacion">%Cotizacion ARL</label>
-                            <input type="text" name="cotizacion" id="cotizacion" class="form-control" />
-                        </center>
+                        </div>
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success guardarmodificacion">Guardar</button>
+                    <div class="form-group">
+                        <label for="cotizacion" class="col-sm-offset-1 col-sm-3 control-label">Cargo</label>
+                        <div class="col-sm-7">
+                            <input type="text"  class="form-control" id="cotizacion" name="cotizacion">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -240,7 +247,12 @@
                                 body += "<td>" + val.jefe + "</td>";
                                 body += "<td style='text-align: center'>" + val.car_porcentajearl + "</td>";
                                 body += '<td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="' + val.car_id + '" data-toggle="modal" data-target="#riesgo"></i></td>';
-                                body += '<td style="text-align: center"><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" car_id="' + val.car_id + '"></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" car_id="' + val.car_id + '"  data-toggle="modal" data-target="#myModal"></i></td>';
+                                body += '<td class="transparent">\n\
+                                            <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" car_id="' + val.car_id + '"  data-toggle="modal" data-target="#myModal"></i>\n\
+                                        </td>';
+                                body += '<td class="transparent">\n\
+                                            <i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" car_id="' + val.car_id + '"></i>\n\
+                                        </td>'; 
                                 body += "</tr>";
                                 option += "<option value='" + val.car_id + "'>" + val.car_nombre + "</option>";
                             });

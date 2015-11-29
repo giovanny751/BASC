@@ -28,20 +28,23 @@
     <div class="row">
         <table class="tablesst">
             <thead>
-            <th>Descripción</th>
+            <th style="width: 75%">Descripción</th>
             <th>Riesgos</th> 
-            <th>Opciones</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
             </thead>
             <tbody id="bodydimension">
                 <?php foreach ($dimension as $d) { ?>
                     <tr>
                         <td><?php echo $d->dim_descripcion ?></td>
-                        <td style="text-align: center">
-                            <i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#riesgo"></i>
+                        <td class="transparent">
+                            <i class="fa fa-child fa-2x riesgo btn btn-default" title="Riesgos" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#riesgo"></i>
                         </td>
-                        <td style="text-align: center">
-                            <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" ></i>
-                            <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#myModal"></i>
+                        <td class="transparent">
+                            <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" dim_id="<?php echo $d->dim_id ?>" data-toggle="modal" data-target="#myModal"></i>
+                        </td>
+                        <td class="transparent">
+                            <i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" dim_id="<?php echo $d->dim_id ?>" ></i>
                         </td>
                     </tr>
                 <?php } ?>
@@ -182,8 +185,13 @@
                             $.each(msg, function(key, val) {
                                 bodydimension += "<tr>";
                                 bodydimension += "<td>" + val.dim_descripcion + "</td>";
-                                bodydimension += "<td><i class='fa fa-child fa-2x riesgo btn btn-default' title='Eliminar' dim_id='" + val.dim_id + "' data-toggle='modal' data-target='#riesgo'></i></td>";
-                                bodydimension += '<td><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="' + val.dim_id + '" ></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  dim_id="' + val.dim_id + '" data-toggle="modal" data-target="#myModal"></i></td>';
+                                bodydimension += "<td class='transparent'><i class='fa fa-child fa-2x riesgo btn btn-default' title='Riesgos' dim_id='" + val.dim_id + "' data-toggle='modal' data-target='#riesgo'></i></td>";
+                                bodydimension += '<td class="transparent">\n\
+                                                        <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar"  dim_id="' + val.dim_id + '" data-toggle="modal" data-target="#myModal"></i>\n\
+                                                    </td>';
+                                bodydimension += '<td class="transparent">\n\
+                                                        <i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" dim_id="' + val.dim_id + '" ></i>\n\
+                                                    </td>';
                                 bodydimension += "</tr>";
                             });
                             $('#bodydimension').append(bodydimension);
