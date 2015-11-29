@@ -91,6 +91,39 @@
             $(this).prop('checked', r);
         });
     })
+    $('.crear2').click(function() {
+        var atr = $(this).attr('atr')
+        var marcado = $(this).is(":checked");
+        if (marcado == true)
+            var r = true;
+        else
+            var r = false;
+        $("." + atr+'_c').each(function() {
+            $(this).prop('checked', r);
+        });
+    })
+    $('.modificar2').click(function() {
+        var atr = $(this).attr('atr')
+        var marcado = $(this).is(":checked");
+        if (marcado == true)
+            var r = true;
+        else
+            var r = false;
+        $("." + atr+'_m').each(function() {
+            $(this).prop('checked', r);
+        });
+    })
+    $('.eliminar2').click(function() {
+        var atr = $(this).attr('atr')
+        var marcado = $(this).is(":checked");
+        if (marcado == true)
+            var r = true;
+        else
+            var r = false;
+        $("." + atr+'_e').each(function() {
+            $(this).prop('checked', r);
+        });
+    })
 //    
 //------------------------------------------------------------------------------
 //                      ELIMINAR ROL    
