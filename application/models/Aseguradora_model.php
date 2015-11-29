@@ -6,6 +6,7 @@ class Aseguradora_model extends CI_Model {
     }
 
     function consulta_aseguradora($post){
+        try{
         $this->db->select("aseguradoras.ase_id");
         $this->db->select("aseguradoras.ase_nombre");
         $this->db->where("tipAse_Id",$post);
@@ -13,6 +14,9 @@ class Aseguradora_model extends CI_Model {
         $datos=$this->db->get('aseguradoras'); 
         $datos=$datos->result();
         return $datos;
+        }catch(exception $e){
+            
+        }
     }
 
 }

@@ -7,8 +7,12 @@ class AvanceNotificacion_model extends CI_Model {
     }
 
     function create($notificar) {
+        try{
         $this->db->insert_batch("avance_notificacion", $notificar);
         return $this->db->insert_id();
+        }catch(exception $e){
+            
+        }
     }
 
 }
