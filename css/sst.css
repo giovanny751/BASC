@@ -53,7 +53,7 @@
     background-color: #2983AA;
 }
 .circuloIcon:active{
-    background-color: transparent;
+    background-color: #A7D2F8;
 }
 .circuloIcon i {
     color:white;
@@ -61,9 +61,6 @@
 }
 .fa-3x {
     font-size: 25px !important;
-}
-.circuloIcon:active i{
-    color: #A2CC82;
 }
 #posicionFlecha{ 
     text-align: right;
