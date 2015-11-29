@@ -7,7 +7,7 @@
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
         <meta content="" name="description"/>
         <meta content="" name="author"/>
-         
+
 
         <link href="<?= base_url('assets/global/plugins/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css"/> 
 
@@ -16,10 +16,10 @@
         <!-- END PAGE LEVEL PLUGIN STYLES -->
         <!-- BEGIN PAGE STYLES -->
         <link href="<?= base_url('assets/admin/pages/css/tasks.css') ?>" rel="stylesheet" type="text/css"/>
-        
+
 
         <!-- BEGIN PAGE LEVEL STYLES -->
-        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/clockface/css/clockface.css') ?>"/>
+        <!--<link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/clockface/css/clockface.css') ?>"/>-->
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-datepicker/css/datepicker3.css') ?>"/>
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') ?>"/>
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css') ?>"/>
@@ -29,7 +29,7 @@
         <!-- BEGIN PAGE LEVEL STYLES -->
         <link rel="stylesheet" type="text/css" href="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.css') ?>"/>
 
-        <script type="text/javascript" src="<?= base_url('assets/global/plugins/clockface/js/clockface.js') ?>"></script>
+        <!--<script type="text/javascript" src="<?= base_url('assets/global/plugins/clockface/js/clockface.js') ?>"></script>-->
         <!-- END THEME STYLES -->
         <link rel="shortcut icon" href="favicon.ico"/>
 
@@ -47,12 +47,14 @@
         <!-- END PAGE LEVEL PLUGINS -->
 
         <link rel="stylesheet" href="<?php echo base_url() ?>/css/jquery_ui_1.11.4.css" />
-        
+
         <link rel="stylesheet" href="<?php echo base_url() ?>/css/bootstrap_theme_3.3.5.min.css" />
         <link rel="stylesheet" href="<?php echo base_url() ?>/css/sst.css">
         <link rel="stylesheet" href="<?php echo base_url() ?>/css/sstmenu.css">
-        
-        
+
+<!--        <script src="<?= base_url('js/jquery.blockUI.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/global/plugins/jquery.blockui.min.js') ?>" type="text/javascript"></script>-->
+        <script src="<?= base_url('js/jquery.blockUI.js') ?>" type="text/javascript"></script>
     </head>
     <body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
         <?php
@@ -81,17 +83,17 @@
                                 modulos($submenus[0], $idusuario);
                             echo "</li>";
                         endforeach;
-                        if($datosmodulos == 'prueba'){
-            echo "<li class='has-sub'>";
+            if ($datosmodulos == 'prueba') {
+                echo "<li class='has-sub'>";
                 echo "<a href='#'>OPCIONES</a>";
                 echo "<ul>";
-            echo "<li><a href='". base_url('index.php/presentacion/recordarcontrasena') ."' >Cambiar Contraseña</a></li>";
-                    echo "<li><a href='". base_url('index.php/presentacion/rol')."'>Cambiar de Rol</a></li>";
+                echo "<li><a href='" . base_url('index.php/presentacion/recordarcontrasena') . "' >Cambiar Contraseña</a></li>";
+                echo "<li><a href='" . base_url('index.php/presentacion/rol') . "'>Cambiar de Rol</a></li>";
                 echo "</ul>";
-            echo "</li>";
-            echo "<li><a href='". base_url('index.php/login/logout')."'>CERRAR SESION</a></li>";
+                echo "</li>";
+                echo "<li><a href='" . base_url('index.php/login/logout') . "'>CERRAR SESION</a></li>";
 //            echo "<li><a href='#'> strtoupper($nombre) </a></li>";
-    }
+            }
             echo "</ul>";
         }
         ?>
@@ -162,10 +164,10 @@
             </div>
             <div class="col-md-8">
                 <div class="row cuerpoDescripcion">
-                        <?php echo $content_for_layout ?>
-<!--                    <div class="cuerpoContenido">
-                       
-                    </div>-->
+                    <?php echo $content_for_layout ?>
+                    <!--                    <div class="cuerpoContenido">
+                                           
+                                        </div>-->
                 </div>
             </div>
         </div>
@@ -178,7 +180,7 @@
         <!-- BEGIN PAGE LEVEL SCRIPTS -->
         <script src="<?= base_url('assets/global/plugins/jquery-notific8/jquery.notific8.min.js') ?>"></script>
         <script src="<?= base_url('assets/admin/pages/scripts/ui-notific8.js') ?>"></script>
-        
+
         <link rel="stylesheet" href="<?php echo base_url() ?>/css/bootstrap_3.3.5.min.css" />
         <script type="text/javascript" src="<?php echo base_url() ?>/js/bootstrap_3.3.5.min.js"></script>
 
@@ -187,11 +189,11 @@
             .blockOverlay{
                 z-index:10000 !important;
             }
-            
+
             .tab-pane{
                 color: black;
             }
-            
+
             tbody{
                 color: black;
             }
@@ -249,7 +251,7 @@
         <script>
             jQuery(document).ready(function() {
 //                Metronic.init(); // init metronic core componets
-                Layout.init(); // init layout
+//                Layout.init(); // init layout
 //                QuickSidebar.init(); // init quick sidebar
 //                Demo.init(); // init demo features
 //                Index.init();
@@ -264,7 +266,7 @@
 
             });
 
-            
+
             $('.limpiar').click(function() {
                 $('select,input').val('');
             });
@@ -357,11 +359,7 @@
                 autoclose: true
             });
 
-            $(function() {
-                //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
-                $.blockUI.defaults.message = 'Procesando...';
-                $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
-            });
+
             function num_miles(num) {
                 num = num.toString().replace(/\$|\,/g, '');
                 if (isNaN(num))
@@ -377,22 +375,27 @@
                             num.substring(num.length - (4 * i + 3));
                 return (((sign) ? '' : '-') + num);
             }
-            
-        $('#cssmenu li.active').addClass('open').children('ul').show();
-        $('#cssmenu li.has-sub>a').on('click', function () {
-            $(this).removeAttr('href');
-            var element = $(this).parent('li');
-            if (element.hasClass('open')) {
-                element.removeClass('open');
-                element.find('li').removeClass('open');
-                element.find('ul').slideUp(200);
-            } else {
-                element.addClass('open');
-                element.children('ul').slideDown(200);
-                element.siblings('li').children('ul').slideUp(200);
-                element.siblings('li').removeClass('open');
-                element.siblings('li').find('li').removeClass('open');
-                element.siblings('li').find('ul').slideUp(200);
-            }
-        });
+
+            $('#cssmenu li.active').addClass('open').children('ul').show();
+            $('#cssmenu li.has-sub>a').on('click', function() {
+                $(this).removeAttr('href');
+                var element = $(this).parent('li');
+                if (element.hasClass('open')) {
+                    element.removeClass('open');
+                    element.find('li').removeClass('open');
+                    element.find('ul').slideUp(200);
+                } else {
+                    element.addClass('open');
+                    element.children('ul').slideDown(200);
+                    element.siblings('li').children('ul').slideUp(200);
+                    element.siblings('li').removeClass('open');
+                    element.siblings('li').find('li').removeClass('open');
+                    element.siblings('li').find('ul').slideUp(200);
+                }
+            });
+            $(function() {
+                //Se pone para que en todos los llamados ajax se bloquee la pantalla mostrando el mensaje Procesando...
+                $.blockUI.defaults.message = 'Procesando...';
+                $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+            });
         </script>

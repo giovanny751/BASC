@@ -57,6 +57,22 @@ class Empleado_model extends CI_Model {
             $this->db->where('estados.Est_id', $estado);
         if (!empty($contratosvencidos))
             $this->db->where("Emp_FechaFinContrato <", date('Y-m-d'));
+        $this->db->select("(
+            select count(tarea.tar_id)  
+            from tarea
+            join avance_tarea on avance_tarea.tar_id=tarea.tar_id
+            where	avance_tarea.avaTar_progreso<100 and tarea.emp_id=empleado.Emp_Id 
+            ) as tareas_emp,",false);
+        $this->db->select("(
+            select count(planes.pla_id)  
+            from planes
+            where	planes.emp_id=empleado.Emp_Id 
+            ) as planes_emp,",false);
+        $this->db->select("empleado.*");
+        $this->db->select("estados.*");
+        $this->db->select("tipo_contrato.*");
+        $this->db->select("cargo.*");
+            
         $this->db->join("estados", "estados.est_id = empleado.est_id");
         $this->db->join("cargo", "cargo.car_id = empleado.car_id");
         $this->db->join("tipo_contrato", "tipo_contrato.TipCon_Id = empleado.TipCon_Id");
@@ -82,6 +98,18 @@ class Empleado_model extends CI_Model {
     }
 
     function consultaempleadoxid($id) {
+         $this->db->select("(
+            select count(tarea.tar_id)  
+            from tarea
+            join avance_tarea on avance_tarea.tar_id=tarea.tar_id
+            where	avance_tarea.avaTar_progreso<100 and tarea.emp_id=empleado.Emp_Id 
+            ) as tareas_emp,",false);
+        $this->db->select("(
+            select count(planes.pla_id)  
+            from planes
+            where	planes.emp_id=empleado.Emp_Id 
+            ) as planes_emp,",false);
+        $this->db->select("empleado.*");
         $this->db->where("emp_id", $id);
         $empleado = $this->db->get("empleado");
         return $empleado->result();
