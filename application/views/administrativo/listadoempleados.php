@@ -1,9 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="circuloIcon <?php echo (!empty($usuario[0]->usu_id)) ? "none":"" ?> guardar" metodo="guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
-        <div class="circuloIcon <?php echo (!empty($usuario[0]->usu_id)) ? "":"none" ?> guardar" metodo="actualizar"><i class="fa fa-pencil-square-o fa-3x"></i></div>
-        <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
-        <a href="<?php echo base_url()."index.php/administrativo/creacionempleados" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+        <a href="<?php echo base_url()."index.php/administrativo/creacionempleados" ?>"><div class="circuloIcon" title="Nuevo Empleado" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
 </div>
 <div class="row">
