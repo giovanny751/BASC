@@ -1,10 +1,11 @@
-<br />
-<br />
-<br />
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
-            <span class="txtTitulo">ORGANIGRAMA</span>
+            <span class="txtTitulo">
+                <a href="<?php echo base_url("index.php/presentacion/principal") ?>">HOME</a>/
+                <a href="<?php echo base_url("index.php/administrativo/empresa") ?>">EMPRESA</a>/
+                ORGANIGRAMA
+            </span>
         </div>
     </div>
 </div>

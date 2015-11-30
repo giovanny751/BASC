@@ -143,8 +143,8 @@
             </div>
         </form>
         <div class="row" style="text-align: center">
-            <div class="btn-group dropup">
-                <button class="btn green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+            <div class="btn-group dropup" >
+                <button class="btn-sst dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                     Empresa <i class="fa fa-angle-up"></i>
                 </button>
                 <ul class="dropdown-menu pull-right" role="menu">
@@ -159,7 +159,7 @@
                 </ul>
             </div>
             <div class="btn-group dropup">
-                <button class="btn green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                <button class="btn-sst" type="button" data-toggle="dropdown" aria-expanded="false">
                     Empleados <i class="fa fa-angle-up"></i>
                 </button>
                 <ul class="dropdown-menu pull-right" role="menu">
@@ -173,9 +173,9 @@
                     </li>
                 </ul>
             </div>
-            <a href="<?php echo base_url("index.php/Tipo_contrato/index") ?>" class="btn btn-primary" >Tipos de Contrato</a> 
-            <a href="<?php echo base_url("index.php/administrativo/dimension") ?>" class="btn btn-info">Dimensión 1</a>
-            <a href="<?php echo base_url("index.php/administrativo/dimension2") ?>" class="btn btn-info">Dimensión 2</a>
+            <a href="<?php echo base_url("index.php/Tipo_contrato/index") ?>" class="btn-sst" >Tipos de Contrato</a> 
+            <a href="<?php echo base_url("index.php/administrativo/dimension") ?>" class="btn-sst">Dimensión 1</a>
+            <a href="<?php echo base_url("index.php/administrativo/dimension2") ?>" class="btn-sst">Dimensión 2</a>
         </div>
 </div>
 <script>

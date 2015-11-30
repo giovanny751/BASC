@@ -56,8 +56,8 @@
                             }
                             $i++;
                         }
-                        echo "<td class='transparent'> <a href='javascript:' onclick='editar(" . $valor . ")'><i class='fa fa-pencil-square-o fa-2x'></i></a> </td>";
-                        echo "<td class='transparent'> <a href='javascript:' onclick='delete_(" . $valor . ")'><i class='fa fa-trash-o fa-2x'></i></a> </td>";
+                        echo "<td class='transparent'> <a href=\"javascript:\" onclick=\"editar(" . $valor . ")\"><i class='fa fa-pencil-square-o fa-2x'></i></a> </td>";
+                        echo "<td class='transparent'> <a href=\"javascript:\" onclick=\"delete_(" . $valor . ")\"><i class='fa fa-trash-o fa-2x'></i></a> </td>";
                         echo "</tr>";
                     }
                     ?>

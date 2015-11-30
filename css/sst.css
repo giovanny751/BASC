@@ -13,6 +13,9 @@
     height: 50px;
     background-color: #A2CC82;
 }
+.headerTxt{
+    padding: 0 !important;
+}
 .btn-headerTxt{
     background-color: #6DAABF;
     width: 100%;
@@ -121,7 +124,7 @@
 .tituloCuerpo{
     
 }
-.tituloCuerpo .txtTitulo,.tituloCuerpo .txtTitulo a{
+.txtTitulo, .txtTitulo a{
     font-family: "roboto-bold";
     font-size: 26px;
     color: #0A7194;

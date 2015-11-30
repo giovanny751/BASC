@@ -54,7 +54,7 @@ class Tipo_aseguradora__model extends CI_Model {
             if (isset($post['activo']))
                 if ($post['activo'] != "")
                     $this->db->like('activo', $post['activo']);
-            $this->db->select('TipAse_Nombre');
+            $this->db->select('TipAse_Id,TipAse_Nombre');
             $this->db->where('ACTIVO', 'S');
             $datos = $this->db->get('tipo_aseguradora');
             $datos = $datos->result();

@@ -113,7 +113,7 @@
                                     <div class="col-md-4">
                                         <button type="button" class="btn btn-headerImg" ><i class="fa fa-sitemap fa-2x" style="color:#FFF"></i></button>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-8 headerTxt">
                                         <a href="<?php echo base_url("index.php/planes/listadoplanes") ?>" class="btn btn-headerTxt">
                                             PLANES 
                                         </a>
@@ -123,7 +123,7 @@
                                     <div class="col-md-4">
                                         <button type="button" class="btn btn-headerImg"><i class="fa fa-pencil-square-o  fa-2x" style="color:#FFF"></i></button>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-8 headerTxt">
                                         <a href="<?php echo base_url("index.php/tareas/listadotareas") ?>" class="btn btn-headerTxt">
                                             TAREAS 
                                         </a>
@@ -133,7 +133,7 @@
                                     <div class="col-md-4">
                                         <button type="button" class="btn btn-headerImg"><i class="fa fa-bar-chart fa-2x" style="color:#FFF"></i></button>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-8 headerTxt">
                                         <a href="<?php echo base_url("index.php/indicador/verindicadores") ?>" class="btn btn-headerTxt">
                                             INDICADORES 
                                         </a>
@@ -143,7 +143,7 @@
                                     <div class="col-md-4">
                                         <button type="button" class="btn btn-headerImg"><i class="fa fa-exclamation-triangle fa-2x" style="color:#FFF"></i></button>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-8 headerTxt">
                                         <a href="<?php echo base_url("index.php/riesgo/listadoriesgo") ?>" class="btn btn-headerTxt">
                                             RIESGO <i class="m-icon-swapright m-icon-white"></i>
                                         </a>

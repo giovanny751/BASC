@@ -7,8 +7,8 @@
          <?php } else { ?>
         <div class="circuloIcon" id="guardar" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
         <?php } ?>
-        <a href="<?php base_url('index.php/administrativo/creacionempleados')?>">
-            <div class="circuloIcon" title="Nuevo Registro"><i class="fa fa-pencil-square-o fa-3x"></i></div>
+        <a href="<?php echo base_url()."index.php/administrativo/creacionempleados" ?>">
+            <div class="circuloIcon" title="Nuevo Usuario" ><i class="fa fa-folder-open fa-3x"></i></div>
         </a>
     </div>
     <div class="col-md-6">
@@ -132,7 +132,7 @@
                 <input type="text" id="peso" name="peso" class="form-control float"  value="<?php echo (!empty($empleado[0]->Emp_Peso)) ? $empleado[0]->Emp_Peso : ""; ?>" />
             </div> 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <center><button type="button" id="aseguradora" class="btn btn-success" data-toggle="modal" data-target="#myModal3" style="background-color: #a2cc82;border-color:#a2cc82">Registrar aseguradoras del empleado</button></center>
+                <center><button type="button" id="aseguradora" class="btn-sst" data-toggle="modal" data-target="#myModal3">Registrar aseguradoras del empleado</button></center>
             </div>  
         </div>
         <div class="row">
@@ -313,8 +313,8 @@
     <?php if (!empty($empleado[0]->Emp_Id)) { ?>
         <div class="portlet box blue" style="margin-top: 30px;">
             <div class="portlet-title">
-                <div class="caption">
-                    <span class="" style="color:#000;">Registro</span>
+                <div class="caption" style="padding:0;">
+                    <span style="color: #0A7194;font-size: 20px" >Registro</span>
                 </div>
                 <div class="tools">
                     <!--<img width="50px" src="<?php echo base_url('img/nueva_carpeta.png') ?>" class="" >-->
