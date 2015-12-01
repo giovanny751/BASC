@@ -1,8 +1,8 @@
-<!-- Colorear Menu -->
-<script type="text/javascript">
-    $(".menINDICADORES").addClass("active open");
-    $(".menTIPOS_DE_INDICADORES").addClass("active");
-</script>
+<div class="row">
+    <div class="col-md-6">
+        <div class="circuloIcon guardar" title="Agregar"><i class="fa fa-floppy-o fa-3x"></i></div> 
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
@@ -16,7 +16,6 @@
             <div class="form-group">
                 <label for="descripcion"><span class="campoobligatorio">*</span>Tipo Indicador</label>
                 <input type="text" name="descripcion" id="descripcion" class="form-control obligatorio"/>
-                <button type="button" class="btn btn-success guardar">Agregar</button>
             </div>
         </div>
     </div>
@@ -25,15 +24,18 @@
         <table class="tablesst">
             <thead>
             <th style="width: 80%">Tipo</th>
-            <th style="width: 20%">Opciones</th>
+            <th style="width: 10%">Editar</th>
+            <th style="width: 10%">Eliminar</th>
             </thead>
             <tbody id="bodytipoindicador">
                 <?php foreach ($tipoindicadores as $d) { ?>
                     <tr id="<?php echo $d->indTip_id ?>">
                         <td class='tipo'><?php echo $d->indTip_tipo ?></td>
-                        <td style="text-align: center">
-                            <i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="<?php echo $d->indTip_id ?>" ></i>
-                            <i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" dim_id="<?php echo $d->indTip_id ?>" data-toggle="modal" data-target="#myModal"></i>
+                        <td class="transparent">
+                            <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" dim_id="<?php echo $d->indTip_id ?>" data-toggle="modal" data-target="#myModal"></i>
+                        </td>
+                        <td class="transparent">
+                            <i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" dim_id="<?php echo $d->indTip_id ?>" ></i>
                         </td>
                     </tr>
                 <?php } ?>
@@ -46,21 +48,17 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Tipo indicador</h4>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center"> <div class="circuloIcon guardarmodificacion" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>  Tipo indicador</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-offset-2 col-sm-8">
-                            <center>
-                                <input type="hidden" name="dimid" id="dimid">
-                                <label for="descripcion2">Tipo indicador</label>
+                    <div class="row form-horizontal">
+                        <div class="form-group">
+                            <input type="hidden" name="dimid" id="dimid">
+                            <label class="col-sm-offset-1 col-sm-3" for="descripcion2">Tipo Indicador</label>
+                            <div class="col-sm-6">
                                 <input type="text" name="descripcion2" id="descripcion2" class="form-control" />
-                            </center>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary guardarmodificacion">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -124,7 +122,8 @@
                             $.each(msg, function (key, val) {
                                 bodytipoIndicador += "<tr id='" + val.indTip_id + "'>";
                                 bodytipoIndicador += "<td class='tipo'>" + val.indTip_tipo + "</td>";
-                                bodytipoIndicador += '<td style="text-align:center"><i class="fa fa-times fa-2x eliminar btn btn-danger" title="Eliminar" dim_id="' + val.indTip_id + '" ></i><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar"  dim_id="' + val.indTip_id + '" data-toggle="modal" data-target="#myModal"></i></td>';
+                                bodytipoIndicador += '<td class="transparent"><i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar"  dim_id="' + val.indTip_id + '" data-toggle="modal" data-target="#myModal"></i></td>';
+                                bodytipoIndicador += '<td class="transparent"><i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" dim_id="' + val.indTip_id + '" ></i></td>'
                                 bodytipoIndicador += "</tr>";
                             });
                             $('#bodytipoindicador').append(bodytipoIndicador);

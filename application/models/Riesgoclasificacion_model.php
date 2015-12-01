@@ -23,7 +23,6 @@ class Riesgoclasificacion_model extends CI_Model {
             $this->db->select("riesgo_clasificacion_tipo.rieClaTip_tipo");
             $this->db->join("riesgo_clasificacion_tipo", "riesgo_clasificacion_tipo.rieCla_id = riesgo_clasificacion.rieCla_id", "LEFT");
             $datos = $this->db->get("riesgo_clasificacion");
-            echo $this->db->last_query();
             return $datos->result();
         } catch (exception $e) {
             

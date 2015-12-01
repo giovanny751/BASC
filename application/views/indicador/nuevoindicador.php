@@ -1,12 +1,23 @@
-<style>
-    label{
-        color: black;
-    }
-</style>   
-<script type="text/javascript">
-    $(".menINDICADORES").addClass("active open");
-    $(".subMenNUEVO_INDICADOR").addClass("active");
-</script>
+<div class="row">
+    <div class="col-md-6">
+        <?php if(empty($ind_id)){ ?>
+        <div class="circuloIcon" id="guardar" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <?php }else{ ?>
+        <div class="circuloIcon" id="actualizar" title="Actualizar"><i class="fa fa-pencil-square-o fa-3x"></i></div>
+        <?php }?>
+        <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div> /* ELIMINAR */  -->
+        <a href="<?php echo base_url()."/index.php/indicador/nuevoindicador" ?>"><div class="circuloIcon" title="Nuevo Indicador" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+    </div>
+    <div class="col-md-6">
+        <div id="posicionFlecha">
+            <div class="flechaHeader IzquierdaDoble" metodo="flechaIzquierdaDoble"><i class="fa fa-step-backward fa-2x"></i></div>
+            <div class="flechaHeader Izquierda" metodo="flechaIzquierda"><i class="fa fa-arrow-left fa-2x"></i></div>
+            <div class="flechaHeader Derecha" metodo="flechaDerecha"><i class="fa fa-arrow-right fa-2x"></i></div>
+            <div class="flechaHeader DerechaDoble" metodo="flechaDerechaDoble"><i class="fa fa-step-forward fa-2x"></i></div>
+            <div class="flechaHeader Archivo" metodo="documento"><i class="fa fa-sticky-note fa-2x"></i></div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
@@ -16,171 +27,153 @@
 </div>
 <div class="cuerpoContenido">
     <div class="row">
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <button type="button" class="btn btn-success" id="<?php echo (!empty($ind_id)) ? "actualizar" : "guardar"; ?>">
-                    <?php echo (!empty($ind_id)) ? "Actualizar" : "Guardar"; ?>
-                </button>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <center>
-                    <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
-                    <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
-                    <div class="flecha flechaDerecha" metodo="flechaDerecha"></div>
-                    <div class="flecha flechaDerechaDoble" metodo="flechaDerechaDoble"></div>
-                    <div class="flecha documento" metodo="documento"></div>
-                </center>
-            </div>
-        </div>
-        <div class="row">
-            <form method="post" id="indicador">
-                <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6 ">
-                    <div class="row">
-                        <label for="indicador" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            <span class="campoobligatorio">*</span>Indicador
-                        </label>
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">    
-                            <input type="text" name="indicador" id="indicador" class="form-control obligatorio" value="<?php echo (isset($indicador->ind_indicador)) ? $indicador->ind_indicador : "" ?>">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label for="tipo" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            Tipo
-                        </label>
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">       
-                            <select name="tipo" id="tipo" class="form-control" >
-                                <option value="">::Seleccionar::</option>
-                                <?php foreach ($indicadortipo as $t) { ?>
-                                    <option <?php echo (isset($indicador->tip_id) && ($t->indTip_id == $indicador->tip_id)) ? "Selected" : ""; ?> value="<?php echo $t->indTip_id ?>"><?php echo $t->indTip_tipo ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label for="mide" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            <span class="campoobligatorio">*</span>Que Mide
-                        </label>   
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <textarea name="mide" id="mide" class="form-control obligatorio"><?php echo (isset($indicador->ind_mide)) ? $indicador->ind_mide : "" ?></textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label for="dimensionuno" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            <?php echo $empresa[0]->Dim_id ?>
-                        </label>  
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 "> 
-                            <select name="dimensionuno" id="dimensionuno" class="form-control" >
-                                <option value="">::Seleccionar::</option>
-                                <?php foreach ($dimension as $d1) { ?>
-                                    <option <?php echo (isset($indicador->dim_id) && ($d1->dim_id == $indicador->dim_id)) ? "Selected" : ""; ?> value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
-                                <?php } ?>
-                            </select> 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label for="dimensiondos" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            <?php echo $empresa[0]->Dimdos_id ?>
-                        </label>  
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <select  name="dimensiondos" id="dimensiondos" class="form-control" >
-                                <option value="">::Seleccionar::</option>
-                                <?php foreach ($dimension2 as $d2) { ?>
-                                    <option <?php echo (isset($indicador->dimdos_id) && ($d2->dim_id == $indicador->dimdos_id)) ? "Selected" : ""; ?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">    
-                        <label for="frecuencia" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            <span class="campoobligatorio">*</span>Frecuencia
-                        </label>   
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <input type="text" name="frecuencia" id="frecuencia" class="form-control obligatorio" value="<?php echo (isset($indicador->ind_frecuencia)) ? $indicador->ind_frecuencia : "" ?>">
-                        </div>
-                    </div>
-                    <div class="row">    
-                        <label for="cargo" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            <span class="campoobligatorio">*</span>Cargo
-                        </label>   
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <select name="cargo" id="cargo" class="form-control obligatorio">
-                                <option value="">::Seleccionar::</option>
-                                <?php foreach ($cargo as $c) { ?>
-                                    <option <?php echo (isset($indicador->car_id) && ($c->car_id == $indicador->car_id)) ? "Selected" : ""; ?> value="<?php echo $c->car_id ?>"><?php echo $c->car_nombre ?></option> 
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row"> 
-                        <label for="nombreempleado" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            <span class="campoobligatorio">*</span>Empleado
-                        </label>   
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <select name="nombreempleado" id="nombreempleado" class="form-control obligatorio">
-                                <option value="">::Seleccionar::</option>
-                                <?php
-                                if (!empty($ind_id)):
-                                    foreach ($empleado as $em):
-                                        ?>
-                                        <option <?php echo (isset($indicador->emp_id) && ($em->Emp_Id == $indicador->emp_id)) ? "Selected" : ""; ?> value="<?php echo $em->Emp_Id ?>"><?php echo $em->Emp_Nombre . " " . $em->Emp_Apellidos ?></option>
-                                        <?php
-                                    endforeach;
-                                endif;
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">    
-                        <label for="minimo" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            Valor mínimo
-                        </label>
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <input type="text" name="minimo" id="minimo" class="form-control" value="<?php echo (isset($indicador->ind_minimo)) ? $indicador->ind_minimo : "" ?>">
-                        </div>
-                    </div>
-                    <div class="row">    
-                        <label for="maximo" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            Valor máximo
-                        </label> 
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <input type="text" name="maximo" id="maximo" class="form-control" value="<?php echo (isset($indicador->ind_maximo)) ? $indicador->ind_maximo : "" ?>">
-                        </div>
+        <form method="post" id="indicador">
+            <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6 ">
+                <div class="row">
+                    <label for="indicador" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        <span class="campoobligatorio">*</span>Indicador
+                    </label>
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">    
+                        <input type="text" name="indicador" id="indicador" class="form-control obligatorio" value="<?php echo (isset($indicador->ind_indicador)) ? $indicador->ind_indicador : "" ?>">
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6 ">
-                    <div class="row">
-                        <label for="estado" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            <span class="campoobligatorio">*</span>Estado
-                        </label> 
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <select name="estado" id="estado" class="form-control obligatorio" >
-                                <option value="">::Seleccionar::</option>
-                                <?php foreach ($estados as $e) { ?>
-                                    <option <?php echo ((isset($indicador->est_id) && ($e->est_id == $indicador->est_id)) || (empty($indicador->est_id) && $e->est_id == 1)) ? "Selected" : ""; ?> value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label for="objetivo" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            <span class="campoobligatorio">*</span>Objetivo
-                        </label>
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <textarea id="objetivo" name="objetivo" class="form-control obligatorio"><?php echo (isset($indicador->ind_objetivo)) ? $indicador->ind_objetivo : "" ?></textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label for="observaciones" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
-                            Observaciones
-                        </label>
-                        <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                            <textarea id="observaciones" name="observaciones" class="form-control"><?php echo (isset($indicador->ind_observaciones)) ? $indicador->ind_observaciones : "" ?></textarea>
-                        </div>
+                <div class="row">
+                    <label for="tipo" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        Tipo
+                    </label>
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">       
+                        <select name="tipo" id="tipo" class="form-control" >
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach ($indicadortipo as $t) { ?>
+                                <option <?php echo (isset($indicador->tip_id) && ($t->indTip_id == $indicador->tip_id)) ? "Selected" : ""; ?> value="<?php echo $t->indTip_id ?>"><?php echo $t->indTip_tipo ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                 </div>
-                <input type="hidden" id="ind_id" name="ind_id" value="<?php echo (!empty($ind_id)) ? $ind_id : ""; ?>" />
-            </form>
-        </div>
+                <div class="row">
+                    <label for="mide" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        <span class="campoobligatorio">*</span>Que Mide
+                    </label>   
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <textarea name="mide" id="mide" class="form-control obligatorio"><?php echo (isset($indicador->ind_mide)) ? $indicador->ind_mide : "" ?></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="dimensionuno" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        <?php echo $empresa[0]->Dim_id ?>
+                    </label>  
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 "> 
+                        <select name="dimensionuno" id="dimensionuno" class="form-control" >
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach ($dimension as $d1) { ?>
+                                <option <?php echo (isset($indicador->dim_id) && ($d1->dim_id == $indicador->dim_id)) ? "Selected" : ""; ?> value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
+                            <?php } ?>
+                        </select> 
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="dimensiondos" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        <?php echo $empresa[0]->Dimdos_id ?>
+                    </label>  
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <select  name="dimensiondos" id="dimensiondos" class="form-control" >
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach ($dimension2 as $d2) { ?>
+                                <option <?php echo (isset($indicador->dimdos_id) && ($d2->dim_id == $indicador->dimdos_id)) ? "Selected" : ""; ?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">    
+                    <label for="frecuencia" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        <span class="campoobligatorio">*</span>Frecuencia
+                    </label>   
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <input type="text" name="frecuencia" id="frecuencia" class="form-control obligatorio" value="<?php echo (isset($indicador->ind_frecuencia)) ? $indicador->ind_frecuencia : "" ?>">
+                    </div>
+                </div>
+                <div class="row">    
+                    <label for="cargo" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        <span class="campoobligatorio">*</span>Cargo
+                    </label>   
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <select name="cargo" id="cargo" class="form-control obligatorio">
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach ($cargo as $c) { ?>
+                                <option <?php echo (isset($indicador->car_id) && ($c->car_id == $indicador->car_id)) ? "Selected" : ""; ?> value="<?php echo $c->car_id ?>"><?php echo $c->car_nombre ?></option> 
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row"> 
+                    <label for="nombreempleado" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        <span class="campoobligatorio">*</span>Empleado
+                    </label>   
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <select name="nombreempleado" id="nombreempleado" class="form-control obligatorio">
+                            <option value="">::Seleccionar::</option>
+                            <?php
+                            if (!empty($ind_id)):
+                                foreach ($empleado as $em):
+                                    ?>
+                                    <option <?php echo (isset($indicador->emp_id) && ($em->Emp_Id == $indicador->emp_id)) ? "Selected" : ""; ?> value="<?php echo $em->Emp_Id ?>"><?php echo $em->Emp_Nombre . " " . $em->Emp_Apellidos ?></option>
+                                    <?php
+                                endforeach;
+                            endif;
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">    
+                    <label for="minimo" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        Valor mínimo
+                    </label>
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <input type="text" name="minimo" id="minimo" class="form-control" value="<?php echo (isset($indicador->ind_minimo)) ? $indicador->ind_minimo : "" ?>">
+                    </div>
+                </div>
+                <div class="row">    
+                    <label for="maximo" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        Valor máximo
+                    </label> 
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <input type="text" name="maximo" id="maximo" class="form-control" value="<?php echo (isset($indicador->ind_maximo)) ? $indicador->ind_maximo : "" ?>">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6 ">
+                <div class="row">
+                    <label for="estado" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        <span class="campoobligatorio">*</span>Estado
+                    </label> 
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <select name="estado" id="estado" class="form-control obligatorio" >
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach ($estados as $e) { ?>
+                                <option <?php echo ((isset($indicador->est_id) && ($e->est_id == $indicador->est_id)) || (empty($indicador->est_id) && $e->est_id == 1)) ? "Selected" : ""; ?> value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="objetivo" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        <span class="campoobligatorio">*</span>Objetivo
+                    </label>
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <textarea id="objetivo" name="objetivo" class="form-control obligatorio"><?php echo (isset($indicador->ind_objetivo)) ? $indicador->ind_objetivo : "" ?></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="observaciones" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        Observaciones
+                    </label>
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <textarea id="observaciones" name="observaciones" class="form-control"><?php echo (isset($indicador->ind_observaciones)) ? $indicador->ind_observaciones : "" ?></textarea>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="ind_id" name="ind_id" value="<?php echo (!empty($ind_id)) ? $ind_id : ""; ?>" />
+        </form>
     </div>
     <?php if (!empty($ind_id)): ?>
         <div class="portlet box blue">
@@ -437,7 +430,7 @@
 </div>
 </div>
 <script>
-    $(".flecha").click(function () {
+    $(".flechaHeader").click(function () {
         var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
         var idUsuarioCreado = $("#usuid").val();
         var metodo = $(this).attr("metodo");

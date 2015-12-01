@@ -69,7 +69,6 @@
     text-align: right;
 }
 .flechaHeader{
-    margin-top: 12px;
     width: 40px;
     height: 40px;
     background-color: #A2CC82;
@@ -78,6 +77,7 @@
     display: inline-block;
     position: relative;
     color: white;
+    cursor: pointer;
 }
 .flechaHeader i {
     position: relative;
@@ -185,4 +185,13 @@
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
     background-color: #3399ff !important;
     color: #fff !important;
+}
+
+/*----------------------------------------------------------------------------*/
+/*                          PLANES -> Actividad Padre                         */
+/*----------------------------------------------------------------------------*/
+
+.posicionIconoActividad{
+    display:inline-block;
+    float: right;
 }

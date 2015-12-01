@@ -1,11 +1,13 @@
-<div class="widgetTitle" >
-    <h5>
-        <i class="glyphicon glyphicon-ok"></i>ROLES
-    </h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">ROLES</span>
+        </div>
+    </div>
 </div>
-<div class='well'>
+<div class='cuerpoContenido'>
     <form method="post" id="f20">
-    <table class="table table-hover table-bordered">
+    <table class="tablesst">
         <thead>
         <th>Rol</th><th>Seleccionar</th>
         </thead>
@@ -20,7 +22,7 @@
     </table>
     <div class="row" style="text-align:center">
         <!--<button type="button" class="btn btn-success ingresar">Ingresar</button>-->
-        <button type="button" class="btn btn-success defecto">Rol por defecto</button>
+        <button type="button" class="btn-sst">Rol por defecto</button>
     </div>
     </form>   
 </div>

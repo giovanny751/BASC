@@ -1,25 +1,27 @@
 <div class="row">
-    <div class="col-sm-4 col-xs-2 col-lg-4 col-md-4"></div>
-    <div class="col-sm-4 col-xs-8 col-lg-4 col-md-4">
-        <div class="widgetTitle" style="margin-top: 20px;">
-            <h5><i class="glyphicon glyphicon-ok"></i> CAMBIAR CONTRASEÑA </h5>
-        </div>
-        <div class="well">
-            <div class="row">
-                <label for="password">Contraseña</label><input type="password" id="password" class="form-control obligatorio" />
-            </div>
-            <div class="row">
-                <label for="rpassword">Repetir Contraseña</label><input type="password" id="rpassword" class="form-control obligatorio" />
-            </div>
-            <div class="row alerta">
-
-            </div>
-            <div class="row" align="right">
-                <button type="text" id="guardar" class="btn btn-success guardar">Guardar</button>
-            </div>
-        </div>
-    </div> 
+    <div class="col-md-6">
+        <div class="circuloIcon" id="guardar" title="Guardar" ><i class="fa fa-floppy-o fa-3x"></i></div>
+    </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">CAMBIAR CONTRASEÑA</span>
+        </div>
+    </div>
+</div>
+<div class="cuerpoContenido">
+    <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" class="form-control obligatorio" />
+    </div>
+    <div class="form-group">
+        <label for="rpassword">Repetir Contraseña</label>
+        <input type="rpassword" id="rpassword" class="form-control obligatorio" />
+    </div>
+    <div class="row alerta">
+
+    </div>
 </div>
 <script>
     $('body').delegate('.guardar', 'click', function () {

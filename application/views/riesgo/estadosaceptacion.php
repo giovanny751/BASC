@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="circuloIcon estado" ><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon estado" title="Guardar" ><i class="fa fa-floppy-o fa-3x"></i></div>
         <a href="<?php echo base_url()."/index.php/riesgo/nuevoriesgo" ?>"><div class="circuloIcon" title="Nuevo Riesgo" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
 </div>
@@ -39,7 +39,7 @@
         </table>
     </div>
     <div class="row">
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Nuevo</button>
+        <button type="button" class="btn-sst" data-toggle="modal" data-target="#myModal">Nuevo</button>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -56,23 +56,25 @@
                         </div>
                     </div>
                     <div class="row">
-                        <form method="post" id="frmestadocolor">
-                        <div class="col-sm-offset-2 col-sm-8">
+                        <form class="form-horizontal" method="post" id="frmestadocolor">
                             <div class="form-group">
-                                <label for="estados">Estados</label>
-                                <select name="estados" id="estados" class="form-control">
-                                    <option value="">::Seleccionar::</option>
-                                    <?php foreach ($estadoaceptacionxcolor as $ec): ?>
-                                        <option value="<?php echo $ec->estAce_id ?>"><?php echo $ec->estAce_estado ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <label for="estados" class="col-sm-offset-2 col-sm-2">Estados</label>
+                                <div class="col-sm-6">
+                                    <select name="estados" id="estados" class="form-control">
+                                        <option value="">::Seleccionar::</option>
+                                        <?php foreach ($estadoaceptacionxcolor as $ec): ?>
+                                            <option value="<?php echo $ec->estAce_id ?>"><?php echo $ec->estAce_estado ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="color">Color</label>
-                                <input type="text" name="color" id="color" class="form-control">
+                                <label for="color" class="col-sm-offset-2 col-sm-2">Color</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="color" id="color" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                            </form>
+                        </form>
                     </div>
                 </div>
             </div>

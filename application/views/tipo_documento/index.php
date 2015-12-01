@@ -1,52 +1,55 @@
-<!-- Colorear Menu -->
-<script type="text/javascript">
-        $(".menDOCUMENTOS").addClass("active open");
-        $(".subMenTIPOS_DE_DOCUMENTOS").addClass("active");
-</script>
+<div class="row">
+    <span id="boton_guardar">
+        <div class="col-md-6">
+            <?php if (isset($post['campo'])) { ?>
+                <div class="circuloIcon" id="btnguardar" title="Actualizar"><i class="fa fa-pencil-square-o fa-3x"></i></div>
+            <?php } else { ?>
+                <div class="circuloIcon" id="btnguardar" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
+            <?php } ?>
+            <div class="circuloIcon limpiar"  title="Limpiar"><i class="fa fa-eraser fa-3x"></i></div>
+            <a href="<?php echo base_url('index.php') . "/Tipo_documento/consult_tipo_documento" ?>">
+                <div class="circuloIcon"  title="Listado"><i class="fa fa-sticky-note fa-3x"></i></div>
+            </a>
+        </div>
+    </span>
+</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
-            <span class="txtTitulo">TIPOS DE DOCUMENTO</span>
+            <span class="txtTitulo">
+                TIPO DE DOCUMENTO
+            </span>
         </div>
     </div>
 </div>
 <div class="cuerpoContenido">
-    <div class="portlet green-meadow box">
-        <div class="portlet-title">
-            <div class="tools">
-                <span id="boton_guardar">
-                    <button class="btn btn-success" id="btnguardar">Guardar</button> 
-                    <button class="btn btn-danger limpiar" type="reset" >Limpiar</button>
-                    <a href="<?php echo base_url('index.php') . "/Tipo_documento/consult_tipo_documento" ?>" class="btn btn-default">Listado </a>
-                </span>
+    <form action="<?php echo base_url('index.php/') . "/Tipo_documento/save_tipo_documento"; ?>" method="post" onsubmit="return campos()"  enctype="multipart/form-data">
+        <div class="row">
+
+            <div class="col-md-12">
+                <label for="tipDoc_Descripcion" style="color: black" >
+                    * Tipo de documento                        
+                </label>
+                <input type="text" value="<?php echo (isset($datos[0]->tipDoc_Descripcion) ? $datos[0]->tipDoc_Descripcion : '' ) ?>" class=" form-control obligatorio  " id="tipDoc_Descripcion" name="tipDoc_Descripcion">
             </div>
         </div>
-        <div class="portlet-body">
-            <form action="<?php echo base_url('index.php/') . "/Tipo_documento/save_tipo_documento"; ?>" method="post" onsubmit="return campos()"  enctype="multipart/form-data">
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <label for="tipDoc_Descripcion" style="color: black" >
-                            * Tipo de documento                        
-                        </label>
-                        <input type="text" value="<?php echo (isset($datos[0]->tipDoc_Descripcion) ? $datos[0]->tipDoc_Descripcion : '' ) ?>" class=" form-control obligatorio  " id="tipDoc_Descripcion" name="tipDoc_Descripcion">
-                    </div>
-                </div>
-                <div class="col-md-12" style="color:black;text-align:right;"><b>Los campos en * son obligatorios</b></div>
-                <?php if (isset($post['campo'])) { ?>
-                    <input type="hidden" name="<?php echo $post['campo'] ?>" value="<?php echo $post[$post['campo']] ?>">
-                    <input type="hidden" name="campo" value="<?php echo $post['campo'] ?>">
-                <?php } ?>
-                <div class="row">
-                    <span id="boton_cargar" style="display: none">
-                        <h2>Cargando ...</h2>
-                    </span>
-                </div>
-            </form>
+        <div class="col-md-12" style="color:black;text-align:right;"><b>Los campos en * son obligatorios</b></div>
+        <?php if (isset($post['campo'])) { ?>
+            <input type="hidden" name="<?php echo $post['campo'] ?>" value="<?php echo $post[$post['campo']] ?>">
+            <input type="hidden" name="campo" value="<?php echo $post['campo'] ?>">
+        <?php } ?>
+        <div class="row">
+            <span id="boton_cargar" style="display: none">
+                <h2>Cargando ...</h2>
+            </span>
         </div>
-    </div>
+    </form>
 </div>
 <script>
+    $('.limpiar').click(function () {
+        $('#tipDoc_Descripcion').val('')
+    })
     $('#btnguardar').click(function () {
         var tipDoc_Descripcion = $('#tipDoc_Descripcion').val();
         $.post("<?php echo base_url("index.php/tipo_documento/save_tipo_documento") ?>"

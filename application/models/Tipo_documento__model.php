@@ -54,7 +54,7 @@ class Tipo_documento__model extends CI_Model {
             if (isset($post['ACTIVO']))
                 if ($post['ACTIVO'] != "")
                     $this->db->like('ACTIVO', $post['ACTIVO']);
-            $this->db->select('tipDoc_Descripcion');
+            $this->db->select('tipDoc_Id,tipDoc_Descripcion');
             $this->db->where('ACTIVO', 'S');
             $datos = $this->db->get('tipo_documento');
             $datos = $datos->result();

@@ -1,13 +1,22 @@
-
-<div class="cuerpoContenido">
-    <div class="row">
-        <button type="button" class="btn-sst" data-toggle="modal" data-target="#myModal2">Nuevo registro</button>
+<div class="row">
+    <div class="col-md-6">
+        <div class="circuloIcon" title="Nuevo Registro" data-toggle="modal" data-target="#myModal2" ><i class="fa fa-folder-open fa-3x"></i></div>
     </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tituloCuerpo">
+            <span class="txtTitulo">
+                REGISTRO
+            </span>
+        </div>
+    </div>
+</div>
+<div class="cuerpoContenido">
     <div class="row">
         <form method="post" id="frmregistro">
             <label for="plan" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Plan</label>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-
                 <input type="text" class="form-control" name="plan" id="plan"/>
             </div>
             <label for="actividad" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Actividad</label>
@@ -19,9 +28,7 @@
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <input type="text" class="form-control" name="tarea" id="tarea"/>
             </div>
-
         </form>
-
     </div>    
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: right">
@@ -43,7 +50,8 @@
                 <th>Tamaño</th>
                 <th>Fecha</th>
                 <th>Ver Versiones</th>
-                <th>Opciones</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
                 </thead>
                 <tbody id="cuerpodatos">
                     <tr>
@@ -188,9 +196,11 @@
                         body += "<td>" + (val.reg_tamano==null?'':val.reg_tamano) + "</td>";
                         body += "<td></td>";
                         body += "<td></td>";
-                        body += "<td>\n\
-                                    <i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='" + val.reg_id + "'></i>\n\
-                                    <i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='" + val.reg_id + "'  data-target='#myModal15' data-toggle='modal'></i>\n\
+                        body += "<td class='transparent'>\n\
+                                    <i class='fa fa-pencil-square-o fa-2x modificarregistro' title='Modificar' reg_id='" + val.reg_id + "'  data-target='#myModal15' data-toggle='modal'></i>\n\
+                                </td>";
+                        body += "<td class='transparent'>\n\
+                                    <i class='fa fa-trash-o fa-2x eliminarregistro' title='Eliminar' reg_id='" + val.reg_id + "'></i>\n\
                                 </td>";
                         body += "</tr>";
                     })

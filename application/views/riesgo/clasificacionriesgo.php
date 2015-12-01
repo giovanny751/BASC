@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="circuloIcon categoria" ><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon categoria" title="Agregar" ><i class="fa fa-floppy-o fa-3x"></i></div>
         <a href="<?php echo base_url() . "/index.php/riesgo/nuevoriesgo" ?>"><div class="circuloIcon" title="Nuevo Riesgo" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
 </div>
@@ -31,14 +31,10 @@
                     <tr>
                         <td><?php echo $c->rieCla_categoria ?></td>
                         <td><?php echo $c->rieClaTip_tipo ?></td>
-                        <td>
-                <center><i class="fa fa-pencil-square-o fa-2x modificar" rieClaTip_tipo="<?= $c->rieClaTip_tipo ?>" rieCla_categoria="<?= $c->rieCla_id ?>" rieClaTip_id="<?= $c->rieClaTip_id ?>" title="Modificar" data-target="#myModal" data-toggle="modal"></i></center>
-                </td>
-                <td>
-                <center><i class="fa fa-trash-o fa-2x eliminar" rieClaTip_id="<?= $c->rieClaTip_id ?>" title="Eliminar"></i></center>
-                </td>
-                </tr>
-            <?php endforeach; ?>
+                        <td class="transparent"><i class="fa fa-pencil-square-o fa-2x modificar" rieClaTip_tipo="<?= $c->rieClaTip_tipo ?>" rieCla_categoria="<?= $c->rieCla_id ?>" rieClaTip_id="<?= $c->rieClaTip_id ?>" title="Modificar" data-target="#myModal" data-toggle="modal"></i></td>
+                        <td class="transparent"><i class="fa fa-trash-o fa-2x eliminar" rieClaTip_id="<?= $c->rieClaTip_id ?>" title="Eliminar"></i></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
@@ -112,7 +108,7 @@
                 })
     })
     $('#guardartipo').click(function() {
-        if ($('#cat').val() == "") {
+        if ($('#ct').val() == "") {
             alerta('rojo', 'Campo Categoria Obligatorio')
             return false;
         }

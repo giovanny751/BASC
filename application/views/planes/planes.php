@@ -306,9 +306,11 @@
                                                             <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $id . 'c'; ?>" aria-expanded="false"> 
                                                                 <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombre ?>
                                                             </a>
-                                                            <i class="fa fa-file-o carpeta nuevo_hijo" car_id="<?php echo $id ?>" data-toggle="modal" data-target="#myModal8" title='ACTIVIDAD HIJO'></i>
-                                                            <i class="fa fa-edit editaractividad" car_id="<?php echo $id ?>"></i>
-                                                            <i class="fa fa-times eliminarcarpeta" tipo="c" title="Eliminar" car_id="<?php echo $id ?>"></i>
+                                                            <div class="posicionIconoActividad">
+                                                                <i class="fa fa-file-o carpeta nuevo_hijo" car_id="<?php echo $id ?>" data-toggle="modal" data-target="#myModal8" title='ACTIVIDAD HIJO'></i>
+                                                                <i class="fa fa-edit editaractividad" car_id="<?php echo $id ?>"></i>
+                                                                <i class="fa fa-times eliminarcarpeta" tipo="c" title="Eliminar" car_id="<?php echo $id ?>"></i>
+                                                            </div>
                                                         </h4>
                                                     </div>
                                                     <div id="collapse_<?php echo $id . 'c'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -1014,7 +1016,8 @@
                                                 <h4 class="panel-title">\n\
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - " + msg.tres + '\n\
-                                                    </a>';
+                                                    </a>\n\
+                                                    <div class="posicionIconoActividad">';
         if (destino == 'c')
             acordeon += '<i class="fa fa-file-o carpeta nuevo_hijo" data-toggle="modal" data-target="#myModal8" title="ACTIVIDAD HIJO" car_id="' + msg.uno + '"></i> ';
         if (destino == 'r')
@@ -1022,6 +1025,7 @@
 
         acordeon += '<i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
                                                         <i class="fa fa-times eliminarcarpeta" title="Eliminar" tipo="' + destino + '" car_id="' + msg.uno + '"></i>\n\
+                                                    </div>\n\
                                                 </h4>\n\
                                             </div>\n\
                                             <div id="collapse_' + msg.uno + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\

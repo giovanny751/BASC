@@ -1,7 +1,8 @@
-<script type="text/javascript">
-    $(".menINDICADORES").addClass("active open");
-    $(".subMenLISTADO_INDICADORES").addClass("active");
-</script>
+<div class="row">
+    <div class="col-md-6">
+        <a href="<?php echo base_url()."/index.php/indicador/nuevoindicador" ?>"><div class="circuloIcon" title="Nuevo Indicador" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
@@ -53,8 +54,8 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="text-align: center">
                 <div class="form-group">
-                    <label>&nbsp;</label><button type="button" class="btn btn-danger" id="limpiar">Limpiar</button>
-                    <label>&nbsp;</label><button type="button" class="btn btn-success" id="consultar">Consultar</button>
+                    <label>&nbsp;</label><button type="button" class="btn-sst" id="limpiar">Limpiar</button>
+                    <label>&nbsp;</label><button type="button" class="btn-sst" id="consultar">Consultar</button>
                 </div>
             </div>
         </div>
@@ -95,7 +96,7 @@
                                         <th>Valor Mínimo</th>\n\
                                         <th>Valor Máximo</th>\n\
                                         <th>Responsable</th>\n\
-                                        <th>Opciones</th></tr>\n\
+                                        <th>Editar</th></tr>\n\
                                     </thead>";
                             $.each(data, function(key, val){
                                 tbody += "<tr>";
@@ -107,7 +108,7 @@
                                     tbody += "<td>" + val.ind_minimo + "</td>";
                                     tbody += "<td>" + val.ind_maximo + "</td>";
                                     tbody += "<td>" + val.nombre + "</td>";
-                                    tbody += '<td><i class="fa fa-pencil-square-o fa-2x modificar btn btn-info" title="Modificar" ind_id="' + val.ind_id + '"></i></td>';
+                                    tbody += '<td class="transparent"><i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" ind_id="' + val.ind_id + '"></i></td>';
                                 tbody += "</tr>";
                             });
                             tbody += "</table>";
