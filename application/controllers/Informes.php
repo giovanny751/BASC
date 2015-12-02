@@ -21,8 +21,7 @@ class Informes extends My_Controller {
         
         $this->layout->view("informes/informeactividades");
     }
-    function informephva(){
-        
+    function phva(){
         $this->load->model('Tipo_model');
         $this->data['tipo'] = $this->Tipo_model->avanceciclophva();
         $this->layout->view("informes/informephva",$this->data);
