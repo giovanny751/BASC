@@ -19,11 +19,11 @@
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <input type="text" class="form-control" name="plan" id="plan"/>
             </div>
-            <label for="actividad" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Actividad</label>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+<!--            <label for="actividad" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Actividad</label>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">-->
 
-                <input type="text" class="form-control" name="actividad" id="actividad"/>
-            </div>
+                <input type="hidden" class="form-control" name="actividad" id="actividad"/>
+            <!--</div>-->
             <label for="tarea" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Tarea</label>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <input type="text" class="form-control" name="tarea" id="tarea"/>
@@ -189,12 +189,12 @@
                         body += "<tr>";
                         body += "<td>" + (val.reg_archivo==null?'':val.reg_archivo) + "</td>";
                         body += "<td>" + (val.reg_descripcion==null?'':val.reg_descripcion) + "</td>";
-                        body += "<td>" + (val.reg_version==null?'':val.reg_version) + "</td>";
+                        body += "<td>" + val.reg_version + "</td>";
                         body += "<td></td>";
                         body += "<td>" + (val.tar_nombre==null?'':val.tar_nombre) + "</td>";
                         body += "<td>" + (val.responsable==null?'':val.responsable) + "</td>";
-                        body += "<td>" + (val.reg_tamano==null?'':val.reg_tamano) + "</td>";
-                        body += "<td></td>";
+                        body += "<td>" + val.reg_tamano + "</td>";
+                        body += "<td>"+val.reg_fechaCreacion+"</td>";
                         body += "<td></td>";
                         body += "<td class='transparent'>\n\
                                     <i class='fa fa-pencil-square-o fa-2x modificarregistro' title='Modificar' reg_id='" + val.reg_id + "'  data-target='#myModal15' data-toggle='modal'></i>\n\

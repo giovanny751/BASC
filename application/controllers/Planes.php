@@ -293,7 +293,7 @@ class Planes extends My_Controller {
     function guardarplan() {
         try {
             $this->load->model("Planes_model");
-            $data[] = array(
+            $data = array(
                 'est_id' => $this->input->post('estado'),
                 'pla_nombre' => $this->input->post('nombre'),
                 'pla_descripcion' => $this->input->post('descripcion'),
@@ -308,7 +308,7 @@ class Planes extends My_Controller {
                 'car_id' => $this->input->post('cargo'),
                 'nor_id' => $this->input->post('norma')
             );
-            $this->Planes_model->create($data);
+            echo $this->Planes_model->create($data);
         } catch (exception $e) {
             
         }

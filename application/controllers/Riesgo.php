@@ -206,8 +206,8 @@ class Riesgo extends My_Controller {
         $this->load->model("Estadoaceptacion_model");
         if (empty($this->Estadoaceptacion_model->consultxname($this->input->post("estadoaceptacion")))) {
             $this->Estadoaceptacion_model->insert($this->input->post("estadoaceptacion"));
-            $data = $this->Estadoaceptacion_model->detail();
-            $this->output->set_content_type('application/json')->set_output(json_encode($data));
+            $this->data['estadoaceptacionxcolor'] = $this->Estadoaceptacion_model->detail();
+            $this->output->set_content_type('application/json')->set_output(json_encode($this->data['estadoaceptacionxcolor']));
         } else {
             echo 1;
         }

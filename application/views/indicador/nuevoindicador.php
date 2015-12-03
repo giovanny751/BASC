@@ -41,7 +41,7 @@
                         <select name="tipo" id="tipo" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($indicadortipo as $t) { ?>
-                                <option <?php echo (isset($indicador->tip_id) && ($t->indTip_id == $indicador->tip_id)) ? "Selected" : ""; ?> value="<?php echo $t->indTip_id ?>"><?php echo $t->indTip_tipo ?></option>
+                                <option <?php echo (isset($indicador->indTip_id) && ($t->indTip_id == $indicador->indTip_id)) ? "Selected" : ""; ?> value="<?php echo $t->indTip_id ?>"><?php echo $t->indTip_tipo ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -149,6 +149,14 @@
                                 <option <?php echo ((isset($indicador->est_id) && ($e->est_id == $indicador->est_id)) || (empty($indicador->est_id) && $e->est_id == 1)) ? "Selected" : ""; ?> value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
                             <?php } ?>
                         </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="estado" class="col-lg-4 col-md-4 col-sx-4 col-sm-4 ">
+                        <span class="campoobligatorio">*</span>Fecha
+                    </label> 
+                    <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
+                        <input type="text" name="fecha" id="fecha" value="<?php echo (isset($indicador->ind_fecha)) ? $indicador->ind_fecha : date("Y-m-d") ?>" class="form-control fecha" />
                     </div>
                 </div>
                 <div class="row">
@@ -271,7 +279,7 @@
                                                         <div class="panel panel-default" id="<?php echo $idcar ?>">
                                                             <div class="panel-heading">
                                                                 <h4 class="panel-title">
-                                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false" id=""> 
+                                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar ; ?>" aria-expanded="false" id=""> 
                                                                         <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
                                                                     </a>
                                                                     <div class="posicionIconoAcordeon">
@@ -281,7 +289,7 @@
                                                                     </div>
                                                                 </h4>
                                                             </div>
-                                                            <div id="collapse_<?php echo $idcar . 'r'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                            <div id="collapse_<?php echo $idcar; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                                                 <div class="panel-body">
                                                                     <table class="table table-hover table-bordered">
                                                                         <thead style="background-color: blue">
@@ -296,11 +304,11 @@
                                                                         <tbody>
                                                                             <?php foreach ($numcar as $numerocar => $campocar): ?>
                                                                                 <tr>
-                                                                                    <td><?php echo $campocar[0] ?></td>
-                                                                                    <td><?php echo $campocar[1] ?></td>
-                                                                                    <td><?php echo $campocar[2] ?></td>
-                                                                                    <td><?php echo $campocar[3] ?></td>
                                                                                     <td><?php echo $campocar[4] ?></td>
+                                                                                    <td><?php echo $campocar[2] ?></td>
+                                                                                    <td><?php echo $campocar[1] ?></td>
+                                                                                    <td><?php echo $campocar[6] ?></td>
+                                                                                    <td><?php echo $campocar[5] ?></td>
                                                                                     <td><?php echo $campocar[5] ?></td>
                                                                                     <td>
                                                                                         <i class="fa fa-times fa-2x eliminarregistro btn btn-danger" title="Eliminar" reg_id="<?php echo $campocar[6] ?>"></i>
@@ -441,7 +449,7 @@
             form_data.append('ind_id', $('#ind_id').val());
             form_data.append('reg_descripcion', $('#descripcion').val());
             $.ajax({
-                url: '<?php echo base_url("index.php/tareas/guardar_registro_indicador") ?>',
+                url: '<?php echo base_url("index.php/tareas/guardarregistroindicador") ?>',
                 dataType: 'text', // what to expect back from the PHP script, if anything
                 cache: false,
                 contentType: false,
@@ -452,23 +460,23 @@
                     $('#myModal').modal('hide')
                     result = jQuery.parseJSON(result);
                     var idcarpeta = $('#carpeta').val()
-                    $('#collapse_' + idcarpeta + 'r').find('table tbody *').remove();
+                    $('#collapse_' + idcarpeta).find('table tbody *').remove();
                     var filas = "";
                     $.each(result, function (key, val) {
                         filas += "<tr>";
-                        filas += "<td>" + val.tarReg_archivo + "</td>";
+                        filas += "<td>" + val.reg_archivo + "</td>";
                         filas += "<td>" + val.reg_descripcion + "</td>";
                         filas += "<td>" + val.reg_version + "</td>";
-                        filas += "<td></td>";
+                        filas += "<td>" +val.usu_nombre+" "+val.usu_apellido+"</td>";
                         filas += "<td>" + val.reg_tamano + "</td>";
-                        filas += "<td>" + val.tarReg_fechaCreacion + "</td>";
+                        filas += "<td>" + val.reg_fechaCreacion + "</td>";
                         filas += "<td>";
                         filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='" + val.tarReg_id + "'></i>";
                         filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='" + val.tarReg_id + "'  data-target='#myModal15' data-toggle='modal'></i>";
                         filas += "</td>";
                         filas += "</tr>";
                     });
-                    $('#collapse_' + idcarpeta + 'r').find('table tbody').append(filas)
+                    $('#collapse_' + idcarpeta).find('table tbody').append(filas)
                     $('#carpeta').val('');
                     $('#version').val('');
                     $('#reg_descripcion').val('');
@@ -534,7 +542,11 @@
                             $("#indicador").find("select").val("");
                             $("#indicador").find("#nombreempleado").html("<option>::Seleccionar::</option>");
                         } else {
-                            window.location = "<?php echo base_url("index.php/indicador/verindicadores"); ?>";
+                            var form = "<form method='post' id='frmindicador'>";
+                            form += "<input type='hidden' value='"+msg+"' name='ind_id'>";
+                            form += "</form>";
+                            $('body').append(form);
+                            $('#frmindicador').submit();
                         }
                     })
                     .fail(function (msg) {
@@ -610,7 +622,7 @@
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.regCar_nombre + " - " + msg.regCar_descripcion + '\n\
                                                     </a>\n\
                                                     <div class="posicionIconoAcordeon">\n\
-                                                        <i class="fa fa-file-archive-o nuevoregistro" car_id="' + msg.indCar_id + '" data-toggle="modal" data-target="#myModal"></i>\n\
+                                                        <i class="fa fa-file-archive-o nuevoregistro" car_id="' + msg.regCar_id + '" data-toggle="modal" data-target="#myModal"></i>\n\
                                                         <i class="fa fa-edit" car_id="' + msg.regCar_id + '"></i>\n\
                                                         <i class="fa fa-times eliminarregistro" car_id="' + msg.regCar_id + '"></i>\n\
                                                     </div>\n\

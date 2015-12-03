@@ -18,7 +18,8 @@ class Planes_model extends CI_Model {
 
     function create($data) {
         try {
-            $this->db->insert_batch("planes", $data);
+            $this->db->insert("planes", $data);
+            return $this->db->insert_id();
         } catch (exception $e) {
             
         }
@@ -65,11 +66,15 @@ class Planes_model extends CI_Model {
 
     function planxid($pla_id) {
         try {
-            $this->db->select("planes.*,sum(tar_costopresupuestado) as tar_costopresupuestado");
-            $this->db->where('planes.pla_id', $pla_id);
-            $this->db->group_by("pla_id");
-            $this->db->join("tarea","tarea.pla_id = planes.pla_id","LEFT");
-            $planes = $this->db->get("planes");
+            $query = "SELECT `planes` . * , sum( replace( tar_costopresupuestado, ',', '' ) ) AS tar_costopresupuestado
+                    FROM `planes`
+                    LEFT JOIN `tarea` ON `tarea`.`pla_id` = `planes`.`pla_id`
+                    WHERE `planes`.`pla_id` = '28'";
+//            $this->db->select("planes.*,sum(replace(tar_costopresupuestado,',','')) as tar_costopresupuestado",false);
+//            $this->db->where('planes.pla_id', $pla_id);
+//            $this->db->join("tarea","tarea.pla_id = planes.pla_id","LEFT");
+            $planes = $this->db->query($query);
+//            echo $this->db->last_query();die;
             return $planes->result();
         } catch (exception $e) {
             

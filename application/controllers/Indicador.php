@@ -40,10 +40,18 @@ class Indicador extends My_Controller {
                 $carpeta = $this->Registrocarpeta_model->consultaIndicadoryRegistroxInd($this->input->post("ind_id"));
                 $i = array();
                 foreach($carpeta as $c){
-                    $i[$c->regCar_id][$c->regCar_nombre." - ".$c->regCar_descripcion] = array(1,1,1,1,1);
+                    $i[$c->regCar_id][$c->regCar_nombre." - ".$c->regCar_descripcion][] = 
+                            array(
+                                $c->reg_tamano
+                                ,$c->reg_version
+                                ,$c->reg_descripcion
+                                ,$c->reg_ruta
+                                ,$c->reg_archivo
+                                ,$c->reg_fechaCreacion
+                                ,$c->usu_nombre." ".$c->usu_apellido
+                            );
                 }
                 $this->data['carpeta'] = $i;
-//                var_dump($this->data['carpeta']);die;
                 $this->data['valores'] = $this->Indicadorvalores_model->consultaIndicadorxId($this->input->post("ind_id"));
                 $this->data["ind_id"] = $this->input->post("ind_id");
                 $this->data["indicador"] = $this->Indicador_model->detailxid($this->input->post("ind_id"))[0];
@@ -72,6 +80,34 @@ class Indicador extends My_Controller {
     }
     
     function guardarindicador(){
+        try{
+            $this->load->model("Indicador_model");
+            $data = array(
+                "ind_indicador" => $this->input->post("indicador"),
+                "indTip_id" => $this->input->post("tipo"),
+                "ind_mide" => $this->input->post("mide"),
+                "dim_id" => $this->input->post("dimensionuno"),
+                "dimdos_id" => $this->input->post("dimensiondos"),
+                "ind_frecuencia" => $this->input->post("frecuencia"),
+                "car_id" => $this->input->post("cargo"),
+                "emp_id" => $this->input->post("nombreempleado"), 
+                "ind_minimo" => $this->input->post("minimo"), 
+                "ind_maximo" => $this->input->post("maximo"), 
+                "est_id" => $this->input->post("estado"), 
+                "ind_objetivo" => $this->input->post("objetivo"), 
+                "ind_fecha" => $this->input->post("fecha"), 
+                "ind_observaciones" => $this->input->post("observaciones"), 
+                "ind_fechaCreacion" => date('Y-m-d H:i:s'), 
+                "userCreator"=>$this->data["usu_id"]
+            );
+            $id = $this->Indicador_model->create($data);
+            echo $id;
+        }catch(exception $e){
+            
+        }
+    }
+    
+    function actualizarindicador(){
         $this->load->model("Indicador_model");
         $data = array(
             "ind_indicador" => $this->input->post("indicador"),
@@ -86,28 +122,8 @@ class Indicador extends My_Controller {
             "ind_maximo" => $this->input->post("maximo"), 
             "est_id" => $this->input->post("estado"), 
             "ind_objetivo" => $this->input->post("objetivo"), 
-            "ind_observaciones" => $this->input->post("observaciones"), 
-            "userCreator"=>$this->data["usu_id"]
-        );
-        $this->Indicador_model->create($data);
-    }
-    
-    function actualizarindicador(){
-        $this->load->model("Indicador_model");
-        $data = array(
-            "ind_indicador" => $this->input->post("indicador"),
-            "tip_id" => $this->input->post("tipo"),
-            "ind_mide" => $this->input->post("mide"),
-            "dim_id" => $this->input->post("dimensionuno"),
-            "dimdos_id" => $this->input->post("dimensiondos"),
-            "ind_frecuencia" => $this->input->post("frecuencia"),
-            "car_id" => $this->input->post("cargo"),
-            "emp_id" => $this->input->post("nombreempleado"), 
-            "ind_minimo" => $this->input->post("minimo"), 
-            "ind_maximo" => $this->input->post("maximo"), 
-            "est_id" => $this->input->post("estado"), 
-            "ind_objetivo" => $this->input->post("objetivo"), 
-            "ind_observaciones" => $this->input->post("observaciones"), 
+            "ind_observaciones" => $this->input->post("observaciones"),
+            "ind_fechaModificacion" => date('Y-m-d H:i:s')
         );
         $this->Indicador_model->actualizar($this->input->post("ind_id"),$data);
     }

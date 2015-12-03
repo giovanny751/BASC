@@ -25,14 +25,22 @@
             <thead>
             <th>Estados</th>
             <th>Color</th>
-            <th>Acción</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
             </thead>
             <tbody id="bodyestado">
                 <?php foreach ($estadoaceptacion as $ea): ?>
                     <tr>
+                        <?php if(!empty($ea->col_id)){ ?>
                         <td><?php echo $ea->estAce_estado ?></td>
                         <td><?php echo $ea->col_color ?></td>
                         <td></td>
+                        <td></td>
+                        <?php }else{ ?>
+                        <thead>
+                        <th colspan="4" style='text-align:center;font:bold;'><?php echo $ea->estAce_estado ?> </th>
+                        </thead>
+                        <?php } ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -101,6 +109,7 @@
                         fila += "<td>"+val.estAce_estado+"</td>";
                         fila += "<td>"+val.col_color+"</td>";
                         fila += "<td></td>";
+                        fila += "<td></td>";
                         fila += "</tr>";
                     })
                     $('#bodyestado').append(fila);
@@ -121,14 +130,28 @@
             if (msg != 1) {
                 $('#bodyestado *').remove();
                 var body = "";
-                $.each(msg, function (key, val) {
-                    body += "<tr>";
-                    body += "<td>" + val.estAce_estado + "</td>";
-                    body += "<td></td>";
-                    body += "<td></td>";
-                    body += "</tr>";
+                $.each(msg, function (key, val) { 
+                    $('#bodyestado').remove();
+                    if(val.col_id == null || val.col_id == '' ){
+                        if(val.estAce_estado != ""){
+                            body += "<thead>";  
+                            body += "<tr>";
+                            body += "<th colspan='4' style='text-align:center'>" + val.estAce_estado + "</th>";
+                            body += "</tr>";
+                            body += "</thead>"; 
+                        }
+                    }else{
+                        body += "<tr>";
+                        body += "<td>"+val.estAce_estado+"</td>";
+                        body += "<td>" + val.col_color+"</td>";
+                        body += "<td></td>";
+                        body += "<td></td>";
+                        body += "</tr>";
+                    }
+                    
                 });
-                $('#bodyestado').append(body);
+                $('.tablesst').append(body);
+                $('#estadoaceptacion').val(''); 
                 alerta("verde", "Estado guardado con exito")
             } else {
                 alerta("amarillo","Estado ya existe en el sistema")

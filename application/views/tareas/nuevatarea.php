@@ -1,10 +1,7 @@
 <div class="row">
     <div class="col-md-6">
-        <?php if(empty($tarea->tar_id)){ ?>
-        <div class="circuloIcon" id="guardartarea"><i class="fa fa-floppy-o fa-3x"></i></div>
-        <?php }else{ ?>
-        <div class="circuloIcon" id="guardartarea" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
-        <?php }?>
+        <div class="circuloIcon" id="guardartarea" title="<?php echo (empty($tarea->tar_id)) ? "Guardar":"Actualizar" ?>"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <!--<div class="circuloIcon" ><i class="fa fa-pencil-square-o fa-3x"></i></div>-->
         <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
         <!--<div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
     </div>

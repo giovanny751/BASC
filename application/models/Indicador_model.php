@@ -9,6 +9,7 @@ class Indicador_model extends CI_Model {
     function create($data) {
         try {
             $this->db->insert("indicador", $data);
+            return $this->db->insert_id();
         } catch (exception $e) {
             
         }

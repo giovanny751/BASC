@@ -57,7 +57,21 @@ class Registrocarpeta_model extends CI_Model {
     
     function consultaIndicadoryRegistroxInd($id) {
         try {
-            $this->db->where("ind_id", $id);
+            $this->db->select("registro_carpeta.regCar_id");
+            $this->db->select("registro_carpeta.ind_id");
+            $this->db->select("registro_carpeta.regCar_nombre");
+            $this->db->select("registro_carpeta.regCar_descripcion");
+            $this->db->select("registro.reg_tamano");
+            $this->db->select("registro.reg_version");
+            $this->db->select("registro.reg_descripcion");
+            $this->db->select("registro.reg_ruta");
+            $this->db->select("registro.reg_archivo");
+            $this->db->select("registro.reg_fechaCreacion");
+            $this->db->select("user.usu_nombre");
+            $this->db->select("user.usu_apellido");
+            $this->db->where("registro_carpeta.ind_id", $id);
+            $this->db->join("registro","registro.regCar_id = registro_carpeta.regCar_id");
+            $this->db->join("user","user.usu_id = registro.userCreator","Left");
             $valor = $this->db->get("registro_carpeta");
             return $valor->result();
         } catch (exception $e) {

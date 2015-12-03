@@ -78,7 +78,7 @@ class Registro_model extends CI_Model {
     function registroxcarpeta($carpeta) {
         try {
             $this->db->where("regCar_id", $carpeta);
-            $this->db->join("user", "user.usu_id = registro.userCreator");
+            $this->db->join("user", "user.usu_id = registro.userCreator","left");
             $registro = $this->db->get("registro");
             return $registro->result();
         } catch (exception $e) {
@@ -155,6 +155,8 @@ class Registro_model extends CI_Model {
             $this->db->select("registro.reg_version");
             $this->db->select("registro.reg_archivo");
             $this->db->select("registro.reg_descripcion");
+            $this->db->select("registro.reg_fechaCreacion");
+            $this->db->select("registro.reg_tamano");
             $this->db->select("registro.reg_ruta");
             $this->db->select("registro.pla_id");
             $this->db->select("registro.reg_fechaCreacion");
@@ -162,7 +164,6 @@ class Registro_model extends CI_Model {
             $this->db->select("registro.userCreator");
             $this->db->join("planes", "planes.pla_id = registro.pla_id", "LEFT");
             $this->db->join("tarea", "tarea.tar_id = registro.tar_id", "LEFT");
-            $this->db->join("actividad_padre", "actividad_padre.pla_id = planes.pla_id", "LEFT");
             $this->db->join("empleado", "empleado.emp_id = tarea.emp_id", "LEFT");
             $registro = $avance = $this->db->get("registro");
             return $registro->result();

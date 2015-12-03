@@ -39,6 +39,7 @@ class Estadoaceptacion_model extends CI_Model {
             $this->db->select("estado_aceptacion.estAce_id");
             $this->db->select("estado_aceptacion.estAce_estado");
             $this->db->select("color.col_color");
+            $this->db->select("color.col_id");
             $this->db->join("color", "color.estAce_id = estado_aceptacion.estAce_id", "LEFT");
             $aceptacion = $this->db->get("estado_aceptacion");
             return $aceptacion->result();

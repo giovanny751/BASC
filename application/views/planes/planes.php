@@ -1022,38 +1022,6 @@
         $('#' + tabla).append(acordeon);
     }
 
-//    $(".flechaHeader").click(function () {
-//        var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
-//        var idUsuarioCreado = $("#usuid").val();
-//        var metodo = $(this).attr("metodo");
-//        if (metodo != "documento") {
-//            $.post(url, {idUsuarioCreado: idUsuarioCreado, metodo: metodo})
-//                    .done(function (msg) {
-//                        $("input[type='text'],select").val("");
-//                        $("#usuid").val(msg.usu_id);
-//                        $("#cedula").val(msg.usu_cedula);
-//                        $("#nombres").val(msg.usu_nombre);
-//                        $("#apellidos").val(msg.usu_apellido);
-//                        $("#usuario").val(msg.usu_usuario);
-//                        $("#contrasena").val(msg.usu_contrasena);
-//                        $("#email").val(msg.usu_email);
-//                        $("#genero").val(msg.sex_id);
-//                        $("#estado").val(msg.est_id); //estado
-//                        $("#cargo").val(msg.car_id); //cargo
-//                        $("#empleado").val(msg.emp_id); //empleado
-//                        if (msg.cambiocontrasena == "1") {
-//                            $("#cambiocontrasena").is(":checked");
-//                        }
-//                    })
-//                    .fail(function (msg) {
-//                        alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-//                        $("input[type='text'], select").val();
-//                    })
-//        } else {
-//            window.location = "<?php echo base_url("index.php/planes/listadoplanes"); ?>";
-//        }
-//
-//    });
     $('#cargo').change(function() {
         if ($('#cargo').val() == '')
             return false;
@@ -1077,6 +1045,7 @@
         });
     });
     $('#guardarplan').click(function() {
+//    alert($('#guardarplan').attr("metodo")); 
         if (obligatorio('obligatorio') == true) {
             $.post(
                     "<?php
@@ -1084,13 +1053,17 @@ echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base
 ?>",
                     $('#f7').serialize()
                     ).done(function(msg) {
-                if ($('#guardarplan').attr("metodo") == "Actualizar") {
+                if ($('#guardarplan').attr("title") == "Actualizar") {
                     window.location = "<?php echo base_url("index.php/planes/listadoplanes"); ?>";
-                } else if ($('#guardarplan').attr("metodo") == "Guardar") {
+                } else if ($('#guardarplan').attr("title") == "Guardar") {
                     if (confirm("Desea guardar otro Plan ?")) {
                         $('input,select,textarea').val("");
                     } else {
-                        window.location = "<?php echo base_url("index.php/planes/listadoplanes"); ?>";
+                        var form = "<form method='post' id='frmEditarPlan'>";
+                            form += "<input type='hidden' value='"+msg+"' name='pla_id'>";
+                            form += "</form>";
+                            $('body').append(form);
+                            $('#frmEditarPlan').submit();
                     }
 
                 }
