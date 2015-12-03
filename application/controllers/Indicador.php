@@ -35,11 +35,12 @@ class Indicador extends My_Controller {
             if (!empty($this->input->post("ind_id"))) {
                 $this->load->model("Indicadorvalores_model");
                 $this->load->model("Indicadorcarpeta_model");
-                
-                $carpeta = $this->Indicadorcarpeta_model->consultaIndicadoryRegistroxInd($this->input->post("ind_id"));
+                $this->load->model("Registrocarpeta_model");
+                $this->data['registrocarpeta'] = $this->Registrocarpeta_model->detailxindicador($this->input->post("ind_id"));
+                $carpeta = $this->Registrocarpeta_model->consultaIndicadoryRegistroxInd($this->input->post("ind_id"));
                 $i = array();
                 foreach($carpeta as $c){
-                    $i[$c->indCar_id][$c->indCar_nombre." - ".$c->indCar_descripcion] = array(1,1,1,1,1);
+                    $i[$c->regCar_id][$c->regCar_nombre." - ".$c->regCar_descripcion] = array(1,1,1,1,1);
                 }
                 $this->data['carpeta'] = $i;
 //                var_dump($this->data['carpeta']);die;
@@ -86,6 +87,7 @@ class Indicador extends My_Controller {
             "est_id" => $this->input->post("estado"), 
             "ind_objetivo" => $this->input->post("objetivo"), 
             "ind_observaciones" => $this->input->post("observaciones"), 
+            "userCreator"=>$this->data["usu_id"]
         );
         $this->Indicador_model->create($data);
     }
@@ -128,6 +130,35 @@ class Indicador extends My_Controller {
         }
     }
     
+    function guardar_registro_tarea() {
+        try {
+            $this->load->model('Registro_model');
+            $post = $this->input->post();
+            $post["reg_tamano"] = round($_FILES["archivo"]["size"] / 1024, 1) . " KB";
+            $fecha = new DateTime();
+            $post["reg_fechaCreacion"] = $fecha->format('Y-m-d H:i:s');
+            $post["userCreator"] = $this->data["usu_id"];
+            $post["ind_id"] = $this->input->post("ind_id");
+            //Creamos carpeta con el ID del registro
+//            if (isset($_FILES['archivo']['name']))
+//                if (!empty($_FILES['archivo']['name']))
+//                    $post['tarReg_archivo'] = basename($_FILES['archivo']['name']);
+//            $tar_id = $post['tar_id'];
+            $targetPath = "./uploads/tareas_registro/";
+            //De la carpeta idRegistro, creamos carpeta con el id del empleado
+            if (!file_exists($targetPath)) mkdir($targetPath, 0777, true);
+            $targetPath = "./uploads/tareas_registro/" . $post["tar_id"];
+            if (!file_exists($targetPath))  mkdir($targetPath, 0777, true);
+            $post['reg_ruta'] = $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) { }
+            $this->Registro_model->guardar_registro($post);
+            $data = $this->Registro_model->registroxcarpeta($this->input->post('regCar_id'));
+            $this->output->set_content_type('application/json')->set_output(json_encode($data));
+        } catch (exception $e) {
+            
+        }
+    }
+    
     function consultarindicador(){
         $this->load->model("Indicador_model");
         $tabla = $this->Indicador_model->search($this->input->post("tipo"),$this->input->post("dimensionUno"),$this->input->post("dimesionDos"));
@@ -145,6 +176,7 @@ class Indicador extends My_Controller {
                     "nombre"=>$t->nombre
             );
         }
+        if(empty($i)) $i = 1;
         $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
     function guardarvalores(){
@@ -163,14 +195,14 @@ class Indicador extends My_Controller {
     }
     function guardarcarpetatarea(){
         
-        $this->load->model("Indicadorcarpeta_model");
+        $this->load->model("Registrocarpeta_model");
         $data = array(
-                    "indCar_nombre"=>$this->input->post("nombrecarpeta"),
-                    "indCar_descripcion"=>$this->input->post("descripcioncarpeta"),
+                    "regCar_nombre"=>$this->input->post("nombrecarpeta"),
+                    "regCar_descripcion"=>$this->input->post("descripcioncarpeta"),
                     "ind_id"=>$this->input->post("ind_id")
                 );
-        $id = $this->Indicadorcarpeta_model->guardarCarpeta($data);
-        $data = $this->Indicadorcarpeta_model->consultaCarpetaxId($id);
+        $id = $this->Registrocarpeta_model->guardarCarpeta($data);
+        $data = $this->Registrocarpeta_model->consultaCarpetaxIdIndicador($id);
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
     function tipoindicador(){

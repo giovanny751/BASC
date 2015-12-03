@@ -164,8 +164,6 @@ class Planes extends My_Controller {
                 if(empty($this->data['derecha'])){
                 $this->data['derecha']=$this->data['max_der'];
                 }
-                
-                
                 $this->load->model("Tarea_model");
                 $carpeta = $this->Registrocarpeta_model->detailxplan($this->input->post('pla_id'));
                 $this->data['carpetas'] = $this->Registrocarpeta_model->detailxplancarpetas($this->input->post('pla_id'));

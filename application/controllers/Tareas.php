@@ -32,7 +32,9 @@ class Tareas extends My_Controller {
             $this->load->model("Riesgoclasificacion_model");
             $this->data['tareas'] = $this->Tarea_model->detail();
             $this->load->model("Registrocarpeta_model");
-
+            $this->load->model('Empresa_model');
+            $this->data['empresa'] = $this->Empresa_model->detail();
+            if ((!empty($this->data['empresa'][0]->Dim_id)) && (!empty($this->data['empresa'][0]->Dimdos_id))) {
             if (!empty($this->input->post("tar_id"))):
                 if(!empty($this->input->post("nuevoavance")))
                     $this->data["nuevoavance"] = $this->input->post("nuevoavance");
@@ -85,6 +87,9 @@ class Tareas extends My_Controller {
             $this->data['dimension2'] = $this->Dimension2_model->detail();
             $this->data['post'] = $this->input->post();
             $this->layout->view("tareas/nuevatarea", $this->data);
+            }else{
+                redirect('index.php/administrativo/empresa', 'location');
+            }
         } else {
             $this->layout->view("permisos");
         }

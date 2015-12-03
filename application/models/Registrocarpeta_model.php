@@ -36,6 +36,35 @@ class Registrocarpeta_model extends CI_Model {
             
         }
     }
+    function consultaCarpetaxIdIndicador($regCar_id){
+        try {
+        $this->db->where("registro_carpeta.regCar_id",$regCar_id);
+        $carpeta = $this->db->get("registro_carpeta");
+        return $carpeta->result();
+        } catch (exception $e) {
+            
+        }
+    }
+    function detailxindicador($ind_id){
+        try {
+        $this->db->where("registro_carpeta.ind_id",$ind_id);
+        $carpeta = $this->db->get("registro_carpeta");
+        return $carpeta->result();
+        } catch (exception $e) {
+            
+        }
+    }
+    
+    function consultaIndicadoryRegistroxInd($id) {
+        try {
+            $this->db->where("ind_id", $id);
+            $valor = $this->db->get("registro_carpeta");
+            return $valor->result();
+        } catch (exception $e) {
+            
+        }
+    }
+    
     function detailxtarea($tar_id,$regCar_id = null){
         try {
         if(!empty($regCar_id))$this->db->where("registro_carpeta.regCar_id",$regCar_id);
@@ -131,6 +160,14 @@ class Registrocarpeta_model extends CI_Model {
           "regCar_fechaCreacion"=>date('Y-m-d H:i:s'),
           "pla_id"=> $pla_id 
         );
+        $this->db->insert("registro_carpeta",$data);
+        return $this->db->insert_id();
+        } catch (exception $e) {
+            
+        }
+    }
+    function guardarCarpeta($data) {
+        try {
         $this->db->insert("registro_carpeta",$data);
         return $this->db->insert_id();
         } catch (exception $e) {

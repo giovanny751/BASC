@@ -18,24 +18,39 @@
             <input type="text" name="categoria" id="cat">
         </div>
     </div>
-    <div class="row">
+    <div class="row informacion">
         <table class="tablesst">
-            <thead>
-            <th>Categoría</th>
-            <th>Tipo</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
-            </thead>
-            <tbody id="datoscategoria">
-                <?php foreach ($categoria as $c): ?>
-                    <tr>
-                        <td><?php echo $c->rieCla_categoria ?></td>
-                        <td><?php echo $c->rieClaTip_tipo ?></td>
-                        <td class="transparent"><i class="fa fa-pencil-square-o fa-2x modificar" rieClaTip_tipo="<?= $c->rieClaTip_tipo ?>" rieCla_categoria="<?= $c->rieCla_id ?>" rieClaTip_id="<?= $c->rieClaTip_id ?>" title="Modificar" data-target="#myModal" data-toggle="modal"></i></td>
-                        <td class="transparent"><i class="fa fa-trash-o fa-2x eliminar" rieClaTip_id="<?= $c->rieClaTip_id ?>" title="Eliminar"></i></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
+            <?php
+            foreach ($categoria as $id => $cat):
+                foreach ($cat as $categoria => $num):
+                    ?>
+                    <thead>
+                        <tr>
+                            <th style="text-align:center"><b><?= $categoria ?></b></th>  
+                            <th><i class="fa fa-pencil-square-o fa-2x modificar" rieCla_id="<?php echo $id ?>" title="Modificar" data-target="#myModal" data-toggle="modal"></i></th>
+                            <th><i class="fa fa-trash-o fa-2x eliminarcategoria"  title="Eliminar" rieCla_id="<?php echo $id ?>"></i></th>
+                        </tr>
+                        <tr>
+                            <th style='width:70%'>Tipo</th>
+                            <th style='width:15%'>Editar</th>
+                            <th style='width:15%'>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    foreach ($num as $numero => $tipo):
+                        if (!empty($tipo[1])):
+                            ?>
+                            <tr>
+                                <td><?php echo $tipo[1] ?></td>
+                                <td class="transparent"><i class="fa fa-pencil-square-o fa-2x modificar" rieCla_id="<?= $id ?>" rieClaTip_tipo="<?php echo $tipo[1] ?>" rieCla_categoria="<?= $id ?>" rieClaTip_id="<?php echo $tipo[0] ?>" title="Modificar" data-target="#myModal" data-toggle="modal"></i></td>
+                                <td class="transparent"><i class="fa fa-trash-o fa-2x eliminar" rieClaTip_id="<?php echo $tipo[0] ?>" rieCla_id="<?= $id ?>" rieClaTip_id="<?php echo $tipo[1] ?>" title="Eliminar"></i></td>
+                            </tr>
+                            <?php
+                        endif;
+                    endforeach;
+                endforeach;
+            endforeach;
+            ?>
         </table>
     </div>
     <div class="row">
@@ -53,6 +68,7 @@
                     <div class="row">
                         <form method="post" id="frmtipocategoria">
                             <input type="hidden" name="rieClaTip_id" id="rieClaTip_id">
+                            <input type="hidden" name="rieCla_id" id="rieCla_id">
                             <div class="col-sm-offset-2 col-sm-8">
                                 <div class="form-group">
                                     <label for="ct">Categoría</label>
@@ -76,38 +92,82 @@
     </div>
 </div>
 <script>
-    
-    $('.modal_nuevo').click(function(){
+
+    $('.modal_nuevo').click(function () {
         $('#ct').val('');
         $('#tipo').val('');
-    })
-    $('body').delegate('.modificar', 'click', function() {
+    });
+    $('body').delegate('.modificar', 'click', function () {
+        $('#rieCla_id').val($('#modificar').attr("riecla_id"));
         $('#ct').val($(this).attr('rieCla_categoria'));
         $('#tipo').val($(this).attr('rieClaTip_tipo'));
     })
-    $('body').delegate('.eliminar', 'click', function() {
+    $('body').delegate('.eliminar', 'click', function () {
         var r = confirm('¿Desea Eliminarla?');
         if (r == false)
             return false;
         var url = "<?php echo base_url("index.php/Riesgo/eliminar") ?>";
-        $.post(url, {id: $(this).attr('rieClaTip_id')})
-                .done(function(msg) {
-                    $('#datoscategoria *').remove();
-                    var body = "";
-                    $.each(msg, function(key, val) {
-                        body += "<tr>";
-                        body += "<td>" + val.rieCla_categoria + "</td>";
-                        body += "<td>" + val.rieClaTip_tipo + "</td>";
-                        body += "<td></td>";
-                        body += "</tr>";
-                    });
-                    $('#datoscategoria').append(body);
+        $.post(url, {
+            id: $(this).attr('rieClaTip_id')
+        })
+                .done(function (msg) {
+                    agregarTabla(msg);
                 })
-                .fail(function() {
+                .fail(function () {
 
                 })
+    });
+
+    $('body').delegate(".eliminarcategoria", "click", function (key, val) {
+        var url = "<?php echo base_url("index.php/Riesgo/eliminarCategoria") ?>";
+        $.post(url, {
+            rieCla_id: $(this).attr('rieCla_id')
+        })
+                .done(function (msg) {
+                    agregarTabla(msg);
+                    alerta("verde", "Eliminado correctamente");
+                })
+                .fail(function (msg) {
+                    alerta("rojo", "Error por favor comunicarse con el administrador del sistema")
+                })
     })
-    $('#guardartipo').click(function() {
+
+    function agregarTabla(msg) {
+        $('.informacion *').remove();
+        var cuerpo = "";
+        $.each(msg, function (key, val) {
+            $.each(val, function (indice, campo) {
+                cuerpo += "<table class='tablesst'>";
+                cuerpo += "<thead>";
+                cuerpo += "<tr>";
+                cuerpo += "<th   style='text-align:center'>" + indice + "</th>";
+                cuerpo += "<th  style='text-align:center'> <i class='fa fa-pencil-square-o fa-2x modificarcategoria' rieCla_id='" + key + "'  title='Modificar'></i></th>";
+                cuerpo += "<th><i class='fa fa-trash-o fa-2x eliminarcategoria' rieCla_id='" + key + "'  title='Eliminar'></i></th>";
+                cuerpo += "</tr>";
+                cuerpo += "<tr>";
+                cuerpo += "<th style='width:70%'>Tipo</th>";
+                cuerpo += "<th style='width:15%'>Editar</th>";
+                cuerpo += "<th style='width:15%'>Eliminar</th>";
+                cuerpo += "</tr>";
+                cuerpo += "</thead>";
+                cuerpo += "<tbody>";
+                $.each(campo, function (numero, campo) {
+                    if (campo[0] != null) {
+                        cuerpo += "<tr>";
+                        cuerpo += "<td><b>" + campo[1] + "</b   ></td>";
+                        cuerpo += "<td class='transparent'><i class='fa fa-pencil-square-o fa-2x modificar' rieClaTip_tipo='" + campo[1] + "' rieCla_categoria='" + indice + "' rieClaTip_id='" + campo[0] + "' title='Modificar' data-target='#myModal' data-toggle='modal'></i></td>";
+                        cuerpo += "<td class='transparent'><i class='fa fa-trash-o fa-2x eliminar' rieCla_id='" + key + "' rieClaTip_id='" + campo[0] + "' title='Eliminar'></i></td>";
+                        cuerpo += "</tr>";
+                    }
+                });
+                cuerpo += "</tbody>";
+                cuerpo += "</table>";
+            })
+        });
+        $('.informacion').append(cuerpo);
+    }
+
+    $('#guardartipo').click(function () {
         if ($('#ct').val() == "") {
             alerta('rojo', 'Campo Categoria Obligatorio')
             return false;
@@ -116,56 +176,38 @@
                 "<?php echo base_url("index.php/Riesgo/guardartipocategoria") ?>",
                 $("#frmtipocategoria").serialize()
                 )
-                .done(function(msg) {
-                    if (msg != 1) {
-                        $('#datoscategoria *').remove();
-                        var body = "";
-                        $.each(msg, function(key, val) {
-                            body += "<tr>";
-                            body += "<td>" + val.rieCla_categoria + "</td>";
-                            body += "<td>" + val.rieClaTip_tipo + "</td>";
-                            body += "<td></td>";
-                            body += "</tr>";
-                        });
-                        $('#datoscategoria').append(body);
-                        alerta("verde", "Categoria guardada con exito");
-                    } else {
+                .done(function (msg) {
+                    if (msg != 1)
+                        agregarTabla(msg);
+                    else
                         alerta("amarillo", "Datos ya existentes en el sistema");
-                    }
+                    $('#myModal').modal("hide");
                 })
-                .fail(function(msg) {
+                .fail(function (msg) {
                     alerta("rojo", "Error al guardar el tipo por favor comunicarse con el administrador");
                 });
 
     });
 
-    $('.categoria').click(function() {
-
+    $('.categoria').click(function () {
         var categoria = $('#cat').val();
-
         $.post("<?php echo base_url("index.php/riesgo/guardarclasificacionriesgo") ?>",
                 {categoria: categoria}
-        ).done(function(msg) {
+        ).done(function (msg) {
             if (msg != 1) {
-                $('#datoscategoria *').remove();
-                var body = "";
-                $.each(msg, function(key, val) {
-                    body += "<tr>";
-                    body += "<td>" + val.rieCla_categoria + "</td>";
-                    body += "<td>" + val.rieClaTip_tipo + "</td>";
-                    body += "<td></td>";
-                    body += "</tr>";
-                });
-                $('#datoscategoria').append(body);
+                $('#cat').val('');
+                agregarTabla(msg);
                 alerta("verde", "Categoria guardada con exito");
             } else {
                 alerta("amarillo", "Datos ya existentes en el sistema");
             }
         })
-                .fail(function(msg) {
+                .fail(function (msg) {
 
                 })
                 ;
     });
+    
+       
 
 </script>    

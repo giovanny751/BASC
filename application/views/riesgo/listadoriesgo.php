@@ -113,8 +113,8 @@
                                         <tr><th colspan='11'>" + tipo + "</th></tr>\n\
                                         <th>Tipo</th>\n\
                                         <th>Descripción</th>\n\
-                                        <th>Dimensión 1</th>\n\
-                                        <th>Dimensión 2</th>\n\
+                                        <th><?php echo $empresa[0]->Dim_id ?></th>\n\
+                                        <th><?php echo $empresa[0]->Dimdos_id ?></th>\n\
                                         <th>Lugar/Zona</th>\n\
                                         <th>Actividades</th>\n\
                                         <th>Cargo</th>\n\

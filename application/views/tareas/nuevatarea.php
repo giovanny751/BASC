@@ -98,7 +98,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="dimensionuno">Sucursal</label>
+                        <label for="dimensionuno"><?php echo $empresa[0]->Dim_id ?></label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="dimensionuno" id="dimensionuno" class="form-control" >
@@ -111,7 +111,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="dimensiondos">Area de Trabajo</label>
+                        <label for="dimensiondos"><?php echo $empresa[0]->Dimdos_id ?></label>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select  name="dimensiondos" id="dimensiondos" class="form-control" >

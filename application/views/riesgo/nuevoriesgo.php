@@ -179,7 +179,7 @@
                         <label for="fecha">Fecha</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 "> 
-                        <input type="text" name="fecha" id="fecha" class="form-control fecha" value="<?php echo ((!empty($riesgo->rie_fecha)) ? $riesgo->rie_fecha:""); ?>">
+                        <input type="text" name="fecha" id="fecha" class="form-control fecha" value="<?php echo ((!empty($riesgo->rie_fecha)) ? $riesgo->rie_fecha:date("Y-m-d")); ?>">
                     </div>
                 </div>
             </div>

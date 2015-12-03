@@ -83,6 +83,7 @@
                 .done(function (msg) {
                     $('#bodyIndicador *').remove();
                     var tbody = "";
+                    if(msg != 1){
                     $.each(msg.Json, function (id, tipos) {
                         $.each(tipos, function (tipo, data) {
                             tbody += "<table class='tablesst'>\n\
@@ -114,6 +115,7 @@
                             tbody += "</table>";
                         });
                     });
+                    }
                     $('#bodyIndicador').append(tbody);
 //                    
                     alerta("verde", "Exito al consultar");

@@ -65,7 +65,10 @@ class Planes_model extends CI_Model {
 
     function planxid($pla_id) {
         try {
-            $this->db->where('pla_id', $pla_id);
+            $this->db->select("planes.*,sum(tar_costopresupuestado) as tar_costopresupuestado");
+            $this->db->where('planes.pla_id', $pla_id);
+            $this->db->group_by("pla_id");
+            $this->db->join("tarea","tarea.pla_id = planes.pla_id","LEFT");
             $planes = $this->db->get("planes");
             return $planes->result();
         } catch (exception $e) {

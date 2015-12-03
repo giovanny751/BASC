@@ -1,10 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <?php if(empty($ind_id)){ ?>
-        <div class="circuloIcon" id="guardar" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
-        <?php }else{ ?>
-        <div class="circuloIcon" id="actualizar" title="Actualizar"><i class="fa fa-pencil-square-o fa-3x"></i></div>
-        <?php }?>
+        <div class="circuloIcon" id="<?php echo (empty($ind_id))?"guardar":"actualizar"; ?>" title="<?php echo (empty($ind_id))?"Guardar":"Actualizar"; ?>"><i class="fa fa-floppy-o fa-3x"></i></div>
         <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div> /* ELIMINAR */  -->
         <a href="<?php echo base_url()."/index.php/indicador/nuevoindicador" ?>"><div class="circuloIcon" title="Nuevo Indicador" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
@@ -21,7 +17,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
-            <span class="txtTitulo">CREACIÓN INDICADOR</span>
+            <span class="txtTitulo">NUEVO INDICADOR</span>
         </div>
     </div>
 </div>
@@ -278,9 +274,11 @@
                                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false" id=""> 
                                                                         <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
                                                                     </a>
-                                                                    <i class="fa fa-file-archive-o nuevoregistro" car_id="<?php echo $idcar ?>" data-toggle="modal" data-target="#myModal"></i>
-                                                                    <i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
-                                                                    <i class="fa fa-times eliminarregistro" car_id="<?php echo $idcar ?>"></i>
+                                                                    <div class="posicionIconoAcordeon">
+                                                                        <i class="fa fa-file-archive-o nuevoregistro" car_id="<?php echo $idcar ?>" data-toggle="modal" data-target="#myModal"></i>
+                                                                        <i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
+                                                                        <i class="fa fa-times eliminarregistro" car_id="<?php echo $idcar ?>"></i>
+                                                                    </div>
                                                                 </h4>
                                                             </div>
                                                             <div id="collapse_<?php echo $idcar . 'r'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -385,10 +383,10 @@
                                     <label for="carpeta">Carpeta:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <select id="carpeta" name="tarCar_id" class="form-control tarRegObligatorio">
-                                        <option value=""></option>
-                                        <?php foreach ($carpetas as $carp): ?>
-                                            <option value="<?php echo $carp->tarCar_id ?>"><?php echo $carp->tarCar_nombre . ' - ' . $carp->tarCar_descripcion ?></option>
+                                    <select id="carpeta" name="carpeta" class="form-control tarRegObligatorio">
+                                        <option value="">::Seleccionar::</option>
+                                        <?php foreach ($registrocarpeta as $carp): ?>
+                                            <option value="<?php echo $carp->regCar_id ?>"><?php echo $carp->regCar_nombre . ' - ' . $carp->regCar_descripcion ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -406,7 +404,7 @@
                                     <label for="descripcion">Descripción:</label>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                    <textarea id="descripcion_tarea" name="tarReg_descripcion" class="form-control tarRegObligatorio"></textarea>
+                                    <textarea id="descripcion" name="tarReg_descripcion" class="form-control tarRegObligatorio"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -430,6 +428,57 @@
 </div>
 </div>
 <script>
+     $('#guardarregistro').click(function () {
+        if (obligatorio("tarRegObligatorio")) {
+            //Capturamos el archivo
+            var file_data = $('#nombreactividad').prop('files')[0];
+            //Creamos formularios archivo
+            var form_data = new FormData();
+            //Agremamos Datos a enviar (Archivo)
+            form_data.append('archivo', file_data);
+            form_data.append('regCar_id', $('#carpeta').val());
+            form_data.append('reg_version', $('#version').val());
+            form_data.append('ind_id', $('#ind_id').val());
+            form_data.append('reg_descripcion', $('#descripcion').val());
+            $.ajax({
+                url: '<?php echo base_url("index.php/tareas/guardar_registro_indicador") ?>',
+                dataType: 'text', // what to expect back from the PHP script, if anything
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: 'post',
+                success: function (result) {
+                    $('#myModal').modal('hide')
+                    result = jQuery.parseJSON(result);
+                    var idcarpeta = $('#carpeta').val()
+                    $('#collapse_' + idcarpeta + 'r').find('table tbody *').remove();
+                    var filas = "";
+                    $.each(result, function (key, val) {
+                        filas += "<tr>";
+                        filas += "<td>" + val.tarReg_archivo + "</td>";
+                        filas += "<td>" + val.reg_descripcion + "</td>";
+                        filas += "<td>" + val.reg_version + "</td>";
+                        filas += "<td></td>";
+                        filas += "<td>" + val.reg_tamano + "</td>";
+                        filas += "<td>" + val.tarReg_fechaCreacion + "</td>";
+                        filas += "<td>";
+                        filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='" + val.tarReg_id + "'></i>";
+                        filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='" + val.tarReg_id + "'  data-target='#myModal15' data-toggle='modal'></i>";
+                        filas += "</td>";
+                        filas += "</tr>";
+                    });
+                    $('#collapse_' + idcarpeta + 'r').find('table tbody').append(filas)
+                    $('#carpeta').val('');
+                    $('#version').val('');
+                    $('#reg_descripcion').val('');
+                    $('#archivo').val('');
+                    alerta('verde', 'Registro guardado con exito.');
+                }
+            });
+        }
+    })
+    
     $(".flechaHeader").click(function () {
         var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
         var idUsuarioCreado = $("#usuid").val();
@@ -538,26 +587,36 @@
         });
 
     });
+    
+    $('body').delegate('.nuevoregistro','click',function(){
+    
+        $('#carpeta,#version,#descripcion,#nombreactividad').val('');
+        $('#carpeta').val($(this).attr('car_id'));
+    
+    })
+    
     $('body').delegate("#guardarcarpeta","click",function () {
         if (obligatorio("carbligatorio")) {
             $.post("<?php echo base_url("index.php/indicador/guardarcarpetatarea") ?>",
                     $('#frmcarpetaregistro').serialize()
                     ).done(function (msg) {
-                var option = "<option value='" + msg.indCar_id+ "'>" + msg.indCar_nombre + " - " + msg.indCar_descripcion+"</option>"
+                var option = "<option value='" + msg.regCar_id+ "'>" + msg.regCar_nombre + " - " + msg.regCar_descripcion+"</option>"
                 $('#carpeta').append(option);
                                 
                 var acordeon = '<div class="panel panel-default" id="' + msg.indCar_id + '">\n\
                                             <div class="panel-heading">\n\
                                                 <h4 class="panel-title">\n\
-                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.indCar_id  + '" aria-expanded="false">\n\
-                                                        <i class="fa fa-folder-o carpeta"></i> ' + msg.indCar_nombre + " - " + msg.indCar_descripcion + '\n\
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.regCar_id  + '" aria-expanded="false">\n\
+                                                        <i class="fa fa-folder-o carpeta"></i> ' + msg.regCar_nombre + " - " + msg.regCar_descripcion + '\n\
                                                     </a>\n\
+                                                    <div class="posicionIconoAcordeon">\n\
                                                         <i class="fa fa-file-archive-o nuevoregistro" car_id="' + msg.indCar_id + '" data-toggle="modal" data-target="#myModal"></i>\n\
-                                                        <i class="fa fa-edit" car_id="' + msg.indCar_id + '"></i>\n\
-                                                        <i class="fa fa-times eliminarregistro" car_id="' + msg.indCar_id + '"></i>\n\
+                                                        <i class="fa fa-edit" car_id="' + msg.regCar_id + '"></i>\n\
+                                                        <i class="fa fa-times eliminarregistro" car_id="' + msg.regCar_id + '"></i>\n\
+                                                    </div>\n\
                                                 </h4>\n\
                                             </div>\n\
-                                            <div id="collapse_' + msg.indCar_id + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
+                                            <div id="collapse_' + msg.regCar_id + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\
                                                 <div class="panel-body">\n\
                                                     <table class="table table-hover table-bordered">\n\
                                                         <thead>\n\

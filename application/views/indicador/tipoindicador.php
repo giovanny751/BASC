@@ -117,6 +117,7 @@
                     })
                     .done(function (msg) {
                         if (msg != 1) {
+                            $('#descripcion').val('');
                             $('#bodytipoindicador *').remove();
                             var bodytipoIndicador = "";
                             $.each(msg, function (key, val) {

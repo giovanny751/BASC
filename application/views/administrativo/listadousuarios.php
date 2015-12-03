@@ -160,9 +160,7 @@
                    $('#myModal3').modal('hide'); 
         }).fail(function () {
             alerta("rojo","Error, por favor comunicarse con el administrador del sistema");
-        })
-
-
+        });
     });
 
     $('.modificar').click(function () {
@@ -191,6 +189,7 @@
                     $.each(msg, function (key, val) {
                         $('input[rol="' + val.rol_id + '"]').parent("span").addClass('checked');
                         $('input[rol="' + val.rol_id + '"]').attr('checked', true);
+                        $('input[rol="' + val.rol_id + '"]').is(":checked");
                     });
                     
 //                    $('#myModal3').show(); 

@@ -1,10 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <?php if(empty($plan[0]->pla_id)){ ?>
-        <div class="circuloIcon" id="guardarplan" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
-        <?php }else{ ?>
-        <div class="circuloIcon" id="guardarplan" title="Actualizar "><i class="fa fa-pencil-square-o fa-3x"></i></div>
-        <?php }?>
+        <div class="circuloIcon" id="guardarplan" title="<?php echo (empty($plan[0]->pla_id)) ? "Guardar":"Actualizar"; ?>"><i class="fa fa-floppy-o fa-3x"></i></div>
         <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
         <a href="<?php echo base_url()."/index.php/planes/nuevoplan" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
@@ -27,18 +23,6 @@
 </div>
 <div class='cuerpoContenido'>
     <div class="row">
-        <!-- <div class="col-lg-4 col-md-4 col-resm-4 col-xs-4">
-            <button type="button" id="guardarplan" metodo="<?php echo (!empty($plan[0]->pla_id)) ? "Actualizar" : "Guardar"; ?>" class="guardar btn btn-success"><?php echo (!empty($plan[0]->pla_id)) ? "Actualizar" : "Guardar"; ?></button>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <center>
-                <div class="envio flecha flechaIzquierdaDoble" metodo="" nuevo="<?php echo (isset($todo_izq) ? $todo_izq : '') ?>"></div>
-                <div class="envio flecha flechaIzquierda" metodo="" nuevo="<?php echo (isset($izq) ? $izq : '') ?>"></div>
-                <div class="envio flecha flechaDerecha" metodo="" nuevo="<?php echo (isset($derecha) ? $derecha : '') ?>"></div>
-                <div class="envio flecha flechaDerechaDoble" nuevo="<?php echo (isset($max_der) ? $max_der : '') ?>"></div>
-                <div class="flecha documento" metodo="documento"></div>
-            </center>
-        </div> -->
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
             <?php if (!empty($plan[0]->pla_id)) { ?>
 
@@ -93,7 +77,7 @@
                 </div>
                 <div class="form-group">
                     <label for="presupuesto">Presupuesto</label>
-                    <input type="text" name="presupuesto" id="presupuesto" class="form-control number miles"  value="<?php echo (!empty($plan[0]->pla_presupuesto) ) ? $plan[0]->pla_presupuesto : ""; ?>"/>
+                    <input type="text" name="presupuesto" id="presupuesto" class="form-control number presupuesto"  value="<?php echo (!empty($plan[0]->tar_costopresupuestado) ) ? $plan[0]->tar_costopresupuestado : ""; ?>" disabled="disabled"/>
                 </div>
                 <div class="form-group">
                     <label for="costoreal">Costo Real</label>
@@ -476,7 +460,7 @@
                                 <input type="hidden" value="" name="actPad_id" id="actPad_id"/>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                        <label for="idactividad">Id:</label>
+                                        <label for="idactividad">Código:</label>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                         <input type="text" id="idactividad" name="idactividad" class="form-control acobligatorio">
@@ -603,7 +587,7 @@
                                     <input type="hidden" value="<?php echo $plan[0]->pla_id; ?>" name="pla_id">
                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><label for="idpadre">Id Padre</label></div>
                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                        <select id="idpadre" name="idpadre" class="form-control idpadre2">
+                                        <select id="idpadre" name="idpadre" class="form-control idpadre2 actividadobligatoria">
                                             <option value="">::Seleccionar::</option>
                                             <?php foreach ($actividadpadre as $ap): ?>
                                                 <option value="<?php echo $ap->actPad_id ?>"><?php echo $ap->actPad_nombre . " - " . $ap->actPad_codigo ?></option>
@@ -611,7 +595,7 @@
                                         </select>
                                     </div>
                                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><label for="nombre">Nombre</label></div>
-                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><input type="text" id="nombre" name="nombre" class="form-control nombre2"></div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><input type="text" id="nombre" name="nombre" class="form-control nombre2 actividadobligatoria"></div>
                                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                         <div class="row">
                                             <div class="form-group">
@@ -685,12 +669,11 @@
         </div>
     <?php endif; ?>
 </div>
-<script>
-
+<script>  
     $('document').ready(function(){
-        
-        $('#costo').text(num_miles($('#costo').text()));
-        
+        costo = $('#costo').text();
+        $('#costo').text(num_miles(costo.replace(",","").replace(".","")));
+        $('.presupuesto').val(num_miles($('.presupuesto').val()));
     });
 
     $('body').delegate(".editartarea", "click", function() {
@@ -724,7 +707,7 @@
         $.post(
                 "<?php echo base_url("index.php/tareas/eliminaravance") ?>",
                 {avaTar_id: $(this).attr("avaTar_id")}
-        ).done(function(msg) {
+        ).done(function(msg) { 
             puntero.parents("tr").remove();
             alerta("verde", "Avance eliminado correctamente");
         }).fail(function(msg) {
@@ -941,6 +924,7 @@
     });
 
     $('#guardar').click(function() {
+        if(obligatorio('actividadobligatoria')){
         $.post(
                 "<?php echo base_url("index.php/planes/guardaractividadhijo") ?>",
                 $('#f6').serialize()
@@ -968,6 +952,7 @@
         }).fail(function(msg) {
             alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
         });
+        }
     });
 
     $('body').delegate("#guardaractividadpadre", "click", function() {

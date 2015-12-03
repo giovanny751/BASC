@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
-            <span class="txtTitulo">CLASIFICACIÓN DE ACEPTACIÓN</span>
+            <span class="txtTitulo">ESTADOS DE ACEPTACIÓN</span> 
         </div>
     </div>
 </div>

@@ -25,15 +25,7 @@ class Indicadorcarpeta_model extends CI_Model {
         }
     }
 
-    function consultaIndicadoryRegistroxInd($id) {
-        try {
-            $this->db->where("ind_id", $id);
-            $valor = $this->db->get("indicador_carpeta");
-            return $valor->result();
-        } catch (exception $e) {
-            
-        }
-    }
+    
 
 }
 

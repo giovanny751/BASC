@@ -30,11 +30,11 @@ class Riesgo extends My_Controller {
         $this->data['estadoaceptacionxcolor'] = $this->Estadoaceptacion_model->detail();
         $this->data['empresa'] = $this->Empresa_model->detail();
         $this->data['cargo'] = $this->Cargo_model->detail();
-        if (!empty($this->data['empresa'][0]->Dim_id) && !empty($this->data['empresa'][0]->Dimdos_id)) {            
+        if (!empty($this->data['empresa'][0]->Dim_id) && !empty($this->data['empresa'][0]->Dimdos_id)) {
             if (!empty($this->input->post("rie_id"))) {
                 $this->load->model("Planes_model");
                 $this->data['rie_id'] = $this->input->post("rie_id");
-                $this->data['tarea'] =$this->Tarea_model->tareaxRiesgo($this->data['rie_id']);
+                $this->data['tarea'] = $this->Tarea_model->tareaxRiesgo($this->data['rie_id']);
                 $this->data['riesgo'] = $this->Riesgo_model->detailxid($this->input->post("rie_id"))[0];
                 $this->data['tipo'] = $this->Riesgoclasificaciontipo_model->tipoxcategoria($this->data['riesgo']->rieCla_id);
                 $this->data['color'] = $this->Color_model->colorxestado($this->data['riesgo']->estAce_id);
@@ -49,76 +49,77 @@ class Riesgo extends My_Controller {
             redirect('index.php/administrativo/empresa', 'location');
         }
     }
-    
-    function guardarriesgo(){   
-        try{
+
+    function guardarriesgo() {
+        try {
             $this->load->model('Riesgo_model');
             $this->load->model('Riesgocargo_model');
             $this->load->model('Riesgoclasificaciontipo_model');
             $data = array(
-                "rie_descripcion"=>$this->input->post("descripcion"),
-                "rieCla_id"=>$this->input->post("categoria"), 
-                "rieClaTip_id"=>$this->input->post("tipo"),
-                "dim1_id"=>$this->input->post("dimensionuno"),
-                "dim2_id"=>$this->input->post("dimensiondos"),
-                "rie_zona"=>$this->input->post("zona"),
-                "rie_requisito"=>$this->input->post("requisito"),
-                "rie_observaciones"=>$this->input->post("observaciones"),
-                "estAce_id"=>$this->input->post("estado"),
-                "col_id"=>$this->input->post("color"),
-                "rie_fecha"=>$this->input->post("fecha"),
-                "rie_fechaCreacion"=>date("Y-m-d H:i:s")
+                "rie_descripcion" => $this->input->post("descripcion"),
+                "rieCla_id" => $this->input->post("categoria"),
+                "rieClaTip_id" => $this->input->post("tipo"),
+                "dim1_id" => $this->input->post("dimensionuno"),
+                "dim2_id" => $this->input->post("dimensiondos"),
+                "rie_zona" => $this->input->post("zona"),
+                "rie_requisito" => $this->input->post("requisito"),
+                "rie_observaciones" => $this->input->post("observaciones"),
+                "estAce_id" => $this->input->post("estado"),
+                "col_id" => $this->input->post("color"),
+                "rie_fecha" => $this->input->post("fecha"),
+                "rie_fechaCreacion" => date("Y-m-d H:i:s")
             );
             $id = $this->Riesgo_model->create($data);
             if (!empty($this->input->post("cargo"))):
                 $cargo = $this->input->post("cargo");
-                for($i=0;$i<count($cargo);$i++):
-                   $dataCargo[] = array("car_id"=>$cargo[$i],"rie_id"=>$id);
+                for ($i = 0; $i < count($cargo); $i++):
+                    $dataCargo[] = array("car_id" => $cargo[$i], "rie_id" => $id);
                 endfor;
                 $this->Riesgocargo_model->guardarcargo($dataCargo);
             endif;
-        }catch (Exception $ex){
+        } catch (Exception $ex) {
             
         }
     }
-    function actualizarriesgo(){
-        try{
+
+    function actualizarriesgo() {
+        try {
             $this->load->model('Riesgo_model');
             $this->load->model('Riesgocargo_model');
             $data = array(
-                "rie_descripcion"=>$this->input->post("descripcion"),
-                "cat_id"=>$this->input->post("categoria"), 
-                "rieClaTip_id"=>$this->input->post("tipo"),
-                "dim1_id"=>$this->input->post("dimensionuno"),
-                "dim2_id"=>$this->input->post("dimensiondos"),
-                "rie_zona"=>$this->input->post("zona"),
-                "rie_requisito"=>$this->input->post("requisito"),
-                "rie_observaciones"=>$this->input->post("observaciones"),
-                "estAce_id"=>$this->input->post("estado"),
-                "col_id"=>$this->input->post("color"),
-                "rie_fecha"=>$this->input->post("fecha"),
-                "rie_fechaCreacion"=>date("Y-m-d H:i:s")
+                "rie_descripcion" => $this->input->post("descripcion"),
+                "rieCla_id" => $this->input->post("categoria"),
+                "rieClaTip_id" => $this->input->post("tipo"),
+                "dim1_id" => $this->input->post("dimensionuno"),
+                "dim2_id" => $this->input->post("dimensiondos"),
+                "rie_zona" => $this->input->post("zona"),
+                "rie_requisito" => $this->input->post("requisito"),
+                "rie_observaciones" => $this->input->post("observaciones"),
+                "estAce_id" => $this->input->post("estado"),
+                "col_id" => $this->input->post("color"),
+                "rie_fecha" => $this->input->post("fecha"),
+                "rie_fechaModificacion" => date("Y-m-d H:i:s")
             );
-            $this->Riesgo_model->atualizarriesgo($this->input->post("rie_id"),$data);
+            $this->Riesgo_model->atualizarriesgo($this->input->post("rie_id"), $data);
             $this->Riesgocargo_model->eliminarcargoriesgo($this->input->post("rie_id"));
             if (!empty($this->input->post("cargo"))):
                 $cargo = $this->input->post("cargo");
-                for($i=0;$i<count($cargo);$i++):
-                   $dataCargo[] = array("car_id"=>$cargo[$i],"rie_id"=>$this->input->post("rie_id"));
+                for ($i = 0; $i < count($cargo); $i++):
+                    $dataCargo[] = array("car_id" => $cargo[$i], "rie_id" => $this->input->post("rie_id"));
                 endfor;
                 $this->Riesgocargo_model->guardarcargo($dataCargo);
             endif;
-        }catch (Exception $ex){
+        } catch (Exception $ex) {
             
         }
     }
-    
+
     function listadoavance2() {
         $this->load->model('Avancetarea_model');
         $clasificacion = $this->Avancetarea_model->listado_avanceriesgo($this->input->post('clasificacionriesgo'));
         $this->output->set_content_type('application/json')->set_output(json_encode($clasificacion));
     }
-    
+
     function consultaRiesgoFlechas() {
         try {
             $this->load->model("Riesgo_model");
@@ -127,18 +128,21 @@ class Riesgo extends My_Controller {
             $this->load->model("Color_model");
             $idRiesgo = $this->input->post("idRiesgo");
             $metodo = $this->input->post("metodo");
-            $campos["campos"] = $this->Riesgo_model->consultaRiesgoFlechas($idRiesgo, $metodo)[0];die();
+            $campos["campos"] = $this->Riesgo_model->consultaRiesgoFlechas($idRiesgo, $metodo)[0];
+            die();
             if (!empty($campos)) {
-                $data["tipo"] =  $this->Riesgoclasificaciontipo_model->tipoxcategoria($campos["campos"]->cat_id);
-                $data["color"] =  $this->Color_model->colorxestado($campos["campos"]->estAce_id);;
-                $data["cargoId"] =  $this->Riesgocargo_model->detailxid($campos["campos"]->rie_id);
-                $campos = array_merge($campos,$data);
+                $data["tipo"] = $this->Riesgoclasificaciontipo_model->tipoxcategoria($campos["campos"]->cat_id);
+                $data["color"] = $this->Color_model->colorxestado($campos["campos"]->estAce_id);
+                ;
+                $data["cargoId"] = $this->Riesgocargo_model->detailxid($campos["campos"]->rie_id);
+                $campos = array_merge($campos, $data);
                 $this->output->set_content_type('application/json')->set_output(json_encode($campos));
-            }else{
+            } else {
                 $this->output->set_content_type('application/json')->set_output("vacio");
             }
         } catch (Exception $e) {
-            echo $e;die;
+            echo $e;
+            die;
         }
     }
 
@@ -158,8 +162,17 @@ class Riesgo extends My_Controller {
 
     function clasificacionriesgo() {
         $this->load->model("Riesgoclasificacion_model");
+        $categoria = $this->Riesgoclasificacion_model->detailandtipo();
 
-        $this->data['categoria'] = $this->Riesgoclasificacion_model->detailandtipo();
+        $i = array();
+        foreach ($categoria as $c) {
+            $i[$c->rieCla_id][$c->rieCla_categoria][] = array(
+                $c->rieClaTip_id,
+                $c->rieClaTip_tipo
+            );
+        }
+        $this->data['categoria'] = $i;
+
         $this->data['categoria2'] = $this->Riesgoclasificacion_model->detail();
         $this->layout->view("riesgo/clasificacionriesgo", $this->data);
     }
@@ -217,8 +230,16 @@ class Riesgo extends My_Controller {
             $this->load->model("Riesgoclasificacion_model");
             if (empty($this->Riesgoclasificacion_model->detailxcategoria($this->input->post('categoria')))) {
                 $this->Riesgoclasificacion_model->create($this->input->post('categoria'));
-                $data = $this->Riesgoclasificacion_model->detailandtipo();
-                $this->output->set_content_type('application/json')->set_output(json_encode($data));
+                $categoria = $this->Riesgoclasificacion_model->detailandtipo();
+        $i = array();
+        foreach ($categoria as $c) {
+            $i[$c->rieCla_id][$c->rieCla_categoria][] = array(
+                $c->rieClaTip_id,
+                $c->rieClaTip_tipo
+            );
+        }
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($i));
             } else {
                 echo 1;
             }
@@ -236,8 +257,15 @@ class Riesgo extends My_Controller {
                 $this->Riesgoclasificaciontipo_model->create(
                         $this->input->post("categoria"), $this->input->post("tipo")
                 );
-                $data = $this->Riesgoclasificacion_model->detailandtipo();
-                $this->output->set_content_type('application/json')->set_output(json_encode($data));
+                $categoria = $this->Riesgoclasificacion_model->detailandtipo();
+                $i = array();
+                foreach ($categoria as $c) {
+                    $i[$c->rieCla_id][$c->rieCla_categoria][] = array(
+                        $c->rieClaTip_id,
+                        $c->rieClaTip_tipo
+                    );
+                }
+                $this->output->set_content_type('application/json')->set_output(json_encode($i));
             } else {
                 echo 1;
             }
@@ -245,43 +273,70 @@ class Riesgo extends My_Controller {
             
         }
     }
-    function consultatiporiesgoxclasificacion(){
-        
+
+    function consultatiporiesgoxclasificacion() {
+
         $this->load->model("Riesgoclasificaciontipo_model");
         $data = $this->Riesgoclasificaciontipo_model->tipoxcategoria($this->input->post("categoria"));
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
-        
     }
-    
+
     function busquedariesgo() {
         $this->load->model("Riesgo_model");
         $planes = $this->Riesgo_model->filtrobusqueda(
-            $this->input->post("cargo"),$this->input->post("categoria"), $this->input->post("dimensionuno"), $this->input->post("dimensiondos"), $this->input->post("tipo")
+                $this->input->post("cargo"), $this->input->post("categoria"), $this->input->post("dimensionuno"), $this->input->post("dimensiondos"), $this->input->post("tipo")
         );
 //        echo "<pre>";
 //        var_dump($planes);die;
         $i = array();
-        foreach($planes as $t){
+        foreach ($planes as $t) {
             $i["Json"][$t->rieCla_id][$t->rieCla_categoria][] = array(
-                    "rie_id"=>$t->rie_id,
-                    "des2"=>$t->des2,
-                    "des1"=>$t->des1,
-                    "estado"=>$t->estado,
-                    "rie_zona"=>$t->rie_zona,
-                    "rie_descripcion"=>$t->rie_descripcion,
-                    "rie_fecha"=>$t->rie_fecha,
-                    "rieClaTip_tipo"=>$t->rieClaTip_tipo
+                "rie_id" => $t->rie_id,
+                "des2" => $t->des2,
+                "des1" => $t->des1,
+                "estado" => $t->estado,
+                "rie_zona" => $t->rie_zona,
+                "rie_descripcion" => $t->rie_descripcion,
+                "rie_fecha" => $t->rie_fecha,
+                "rieClaTip_tipo" => $t->rieClaTip_tipo
             );
         }
 //        echo "<pre>";
 //        var_dump($i);die;
         $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
-    function eliminar(){
+
+    function eliminar() {
         $this->load->model("Riesgoclasificacion_model");
-        $this->Riesgoclasificacion_model->eliminar($this->input->post('id'));
-        $data = $this->Riesgoclasificacion_model->detailandtipo();
-        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+        $this->Riesgoclasificacion_model->eliminar(
+                $this->input->post('id')
+        );
+        $categoria = $this->Riesgoclasificacion_model->detailandtipo();
+        $i = array();
+        foreach ($categoria as $c) {
+            $i[$c->rieCla_id][$c->rieCla_categoria][] = array(
+                $c->rieClaTip_id,
+                $c->rieClaTip_tipo
+            );
+        }
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($i));
+    }
+    function eliminarCategoria(){
+        $this->load->model("Riesgoclasificacion_model");
+        $this->Riesgoclasificacion_model->eliminarCategoria(
+                $this->input->post('rieCla_id')
+        );
+        $categoria = $this->Riesgoclasificacion_model->detailandtipo();
+        $i = array();
+        foreach ($categoria as $c) {
+            $i[$c->rieCla_id][$c->rieCla_categoria][] = array(
+                $c->rieClaTip_id,
+                $c->rieClaTip_tipo
+            );
+        }
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
 
 }
