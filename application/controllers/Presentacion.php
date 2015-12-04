@@ -25,6 +25,8 @@ class Presentacion extends My_Controller {
     }
 
     function principal() {
+        $this->load->model('Tipo_model');
+        $this->data['tipo'] = $this->Tipo_model->avanceciclophva();
         $id = $this->data['user']['emp_id'];
         $this->data['inicio'] = $this->Ingreso_model->admin_inicio();
         $this->data['content'] = $this->modulos('prueba', null, $this->data['user']['usu_id']);
