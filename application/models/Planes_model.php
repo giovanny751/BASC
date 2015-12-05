@@ -63,7 +63,16 @@ class Planes_model extends CI_Model {
             
         }
     }
-
+    function min_plan() {
+        try {
+            $this->db->select('min(pla_id) as pla_id',FALSE);
+            $datos=$this->db->get('planes');
+            $datos=$datos->result();
+            return $datos[0]->pla_id;
+        } catch (exception $e) {
+            
+        }
+    }    
     function planxid($pla_id) {
         try {
             $query = "SELECT `planes` . * , sum( replace( tar_costopresupuestado, ',', '' ) ) AS tar_costopresupuestado

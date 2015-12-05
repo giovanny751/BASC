@@ -5,6 +5,10 @@
                 <i class="fa fa-cogs"></i>Graficas 
             </div>
             <div class="tools">
+                <form action="<?php echo base_url('index.php/presentacion/principal'); ?>" method="post" id="form1">
+                    <?php echo lista("pla_id", "pla_id", "form-control ", "planes", "pla_id", "pla_nombre", $id_plan, array(), /* readOnly? */ false); ?> 
+                </form>
+
                 <?php
                 $tipo_t = "";
                 $valores_t = "";
@@ -16,7 +20,7 @@
             </div>
         </div>
         <div class="portlet-body">
-            
+
         </div>
     </div>
 </div> 
@@ -28,7 +32,40 @@
     </div>    
 </center>
 
+<div class="table-responsive">
+    <div id="grafica_granf">
+        <form id="formulario_grant">
+            <input type="text" id="fecha_maxima" name="fecha_maxima" value="<?php echo (isset($plan_grant[0][0]->fecha_maxima) ? $plan_grant[0][0]->fecha_maxima : '') ?>">
+            <input type="text" id="fecha_minima" name="fecha_minima" value="<?php echo (isset($plan_grant[0][0]->fecha_minima) ? $plan_grant[0][0]->fecha_minima : '') ?>">
+            <?php foreach ($plan_grant[1] as $value) { ?>
+                <input type="text" id="tar_fechaInicio" name="tar_fechaInicio[]" value="<?php echo $value->tar_fechaInicio ?>">        
+                <input type="text" id="tar_nombre" name="tar_nombre[]" value="<?php echo $value->tar_nombre ?>">        
+                <input type="text" id="diferencia" name="diferencia[]" value="<?php echo $value->diferencia ?>">        
+                <input type="text" id="tar_fechaFinalizacion" name="tar_fechaFinalizacion[]" value="<?php echo $value->tar_fechaFinalizacion ?>">        
+                <input type="text" id="ultimafechacreacion" name="ultimafechacreacion[]" value="<?php echo $value->ultimafechacreacion ?>">        
+                <input type="text" id="tar_id" name="tar_id[]" value="<?php echo $value->tar_id ?>">        
+                <input type="text" id="progreso" name="progreso[]" value="<?php echo $value->progreso ?>">        
+            <?php } ?>                                        
+        </form>
+    </div>
+</div>
+
+<div id="torta1">
+    <?php foreach ($tareas as $tar) { ?>
+    
+    <?php }?>
+</div>
+<div id="torta2">
+    
+</div>
+<div id="torta3">
+    
+</div>
+
 <script>
+    $('#pla_id').change(function(){
+        $('#form1').submit();
+    })
 
     var radarChartData = {
         labels: [<?php echo $tipo_t; ?>],
@@ -38,20 +75,20 @@
                 fillColor: "rgba(220,220,220,0.2)",
                 strokeColor: "rgba(220,220,220,1)",
                 pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
+            pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)",
                 data: [<?php echo $valores_t; ?>]
-            },
-//            {
-//                label: "My Second dataset",
-//                fillColor: "rgba(151,187,205,0.2)",
-//                strokeColor: "rgba(151,187,205,1)",
-//                pointColor: "rgba(151,187,205,1)",
-//                pointStrokeColor: "#fff",
+                        },
+                    //            {
+                    //                label: "My Second dataset",
+                    //                fillColor: "rgba(151,187,205,0.2)",
+                    //                strokeColor: "rgba(151,187,205,1)",
+                            //                pointColor: "rgba(151,187,205,1)",
+                                //                pointStrokeColor: "#fff",
 //                pointHighlightFill: "#fff",
-//                pointHighlightStroke: "rgba(151,187,205,1)",
-//                data: [28, 48, 40, 19]
+                            //                pointHighlightStroke: "rgba(151,187,205,1)",
+                            //                data: [28, 48, 40, 19]
 //            }
         ]
     };
@@ -60,5 +97,17 @@
             responsive: true
         });
     }
+    
+    
+    ///////////////////////////grant////////////////////
+    var url = '<?php echo base_url("grant/index.php") ?>';
+    $.post(url, $('#formulario_grant').serialize())
+            .done(function(msg) {
+                var imagen = '<img src="<?php echo base_url("grant") ?>/imagenprueba.jpg">';
+                $('#grafica_granf').html(imagen)
+            })
+            .fail(function() {
+
+            })
 
 </script>
