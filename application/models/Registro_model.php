@@ -74,6 +74,14 @@ class Registro_model extends CI_Model {
             
         }
     }
+    function actualizar_registro($post,$idregistro) {
+        try {
+            $this->db->where("reg_id",$idregistro);
+            $this->db->update("registro", $post);
+        } catch (exception $e) {
+            
+        }
+    }
 
     function registroxcarpeta($carpeta) {
         try {

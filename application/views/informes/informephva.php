@@ -18,6 +18,7 @@
             <?php
             $costopresupuestado = 0;
             $numerotareas = 0;
+            $costoreal = 0;
             $tipo_t="";
             $valores_t="";
             foreach ($tipo as $t):
@@ -28,13 +29,14 @@
                     
                 $costopresupuestado += $t->tar_costopresupuestado;
                 $numerotareas += $t->numerotareas;
+                $costoreal += $t->costo;
                 ?>
                 <tr>
                     <td><?php echo $t->tip_tipo; ?></td>
-                    <td style="text-align: center"><?php echo $t->numerotareas; ?></td>
-                    <td></td>
-                    <td style="text-align:right"><?php echo $t->tar_costopresupuestado; ?></td>
-                    <td></td>
+                    <td style="text-align: center"><?=  $t->numerotareas; ?></td>
+                    <td style="text-align: center"><?=  number_format($t->progreso,2); ?></td>
+                    <td style="text-align:right"><?=  $t->tar_costopresupuestado; ?></td>
+                    <td style="text-align:right"><?=  $t->costo; ?></td>
                 </tr>
 <?php endforeach; ?>
         </tbody>
@@ -44,7 +46,7 @@
                 <td style="text-align: center"><b><?= $numerotareas ?></b></td>
                 <td><b></b></td>
                 <td style="text-align:right"><b><?= $costopresupuestado; ?></b></td>
-                <td><b></b></td>
+                <td style="text-align:right"><b><?= $costoreal; ?></b></td>
             </tr>
         </tfoot>
     </table>

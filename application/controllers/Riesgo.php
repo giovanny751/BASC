@@ -293,9 +293,13 @@ class Riesgo extends My_Controller {
             $this->load->model("Riesgoclasificacion_model");
             $this->load->model("Riesgoclasificaciontipo_model");
             if (empty($this->Riesgoclasificaciontipo_model->exist($this->input->post("categoria"), $this->input->post("tipo")))) {
+                if($this->input->post("accion") == 1){
                 $this->Riesgoclasificaciontipo_model->create(
                         $this->input->post("categoria"), $this->input->post("tipo")
                 );
+                }else{
+                   $this->Riesgoclasificaciontipo_model->modificarClasificacionTipo($this->input->post("categoria"),$this->input->post("tip_id"),$this->input->post("tipo")); 
+                }
                 $categoria = $this->Riesgoclasificacion_model->detailandtipo();
                 $i = array();
                 foreach ($categoria as $c) {

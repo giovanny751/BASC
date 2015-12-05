@@ -48,7 +48,10 @@ class Planes extends My_Controller {
                 
             }
             $post['userCreator'] = $this->data["usu_id"];
-            $this->Registro_model->guardar_registro($post);
+            if(empty($this->input->post('reg_id')))
+                $this->Registro_model->guardar_registro($post);
+            else
+                $this->Registro_model->actualizar_registro($post,$this->input->post('reg_id'));
             $data = $this->Registro_model->registroxcarpeta($post['regCar_id']);
             $this->output->set_content_type('application/json')->set_output(json_encode($data));
         } catch (exception $e) {

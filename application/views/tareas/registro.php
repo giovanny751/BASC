@@ -62,7 +62,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!--<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -140,8 +140,143 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
+<div class="modal fade" id="myModal15" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">NUEVO REGISTRO</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="frmagregarregistro">
+                                <input type="hidden" value="<?php echo (!empty($plan[0]->pla_id)) ? $plan[0]->pla_id : ""; ?>" name="pla_id" id="pla_id"/>
+                                <input type="hidden" value="1" id="reg_id" name="reg_id">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="idactividad">Carpeta:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <select id="carpeta" name="carpeta" class="form-control ">
+                                            <option value="">::Seleccionar::</option>
+                                            <?php foreach ($carpetas as $carp): ?>
+                                                <option value="<?php echo $carp->regCar_id ?>"><?php echo $carp->regCar_nombre ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="version">Versión:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <input type="text" id="version" name="version" class="form-control ">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="reg_descripcion">Descripción:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <textarea id="reg_descripcion" name="reg_descripcion" class="form-control "></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label for="archivo">Adjuntar archivo:</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <input type="file" id="archivo" name="archivo" class="form-control ">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" id="btnguardarregistro">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 <script>
+    
+    $('body').delegate(".nuevoregistro,.modificarregistro", "click", function() {
+        $('#carpeta').val("");
+        $('#version').val("");
+        $('#reg_descripcion').val("");
+        $("#archivoadescargar").remove();
+        $('#reg_id').val($(this).attr('reg_id'));
+        $('#carpeta').val($(this).attr('car_id'));
+    });
+
+    $('body').delegate('.modificarregistro', 'click', function() {
+        $.post(
+                "<?php echo base_url("index.php/planes/modificarregistro") ?>",
+                {registro: $(this).attr('reg_id')}
+        ).done(function(msg) {
+            $('#carpeta').val(msg.regCar_id);
+            $('#version').val(msg.reg_version);
+            $('#reg_descripcion').val(msg.reg_descripcion);
+            var fila = "<div class='row' id='archivoadescargar' >\n\
+                                    <label style='color:black' class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>\n\
+                                        ARCHIVO\n\
+                                    </label>\n\
+                                    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>\n\
+                                        <a target='_blank' href='" + "<?php echo base_url() ?>" + msg.reg_ruta + "'>" + msg.reg_archivo + "</a>\n\
+                                    </div>\n\
+                                </div>"
+            $('#frmagregarregistro').append(fila);
+        }).fail(function(msg) {
+
+        });
+    });
+     $('#btnguardarregistro').click(function() {
+        var file_data = $('#archivo').prop('files')[0];
+        var form_data = new FormData();
+        form_data.append('archivo', file_data);
+        form_data.append('pla_id', $('#pla_id').val());
+        form_data.append('regCar_id', $('#carpeta').val());
+        form_data.append('reg_id', $('#reg_id').val());
+        form_data.append('reg_version', $('#version').val());
+        form_data.append('reg_descripcion', $('#reg_descripcion').val());
+        $.ajax({
+            url: '<?php echo base_url("index.php/planes/guardarregistroempleado") ?>',
+            dataType: 'text', // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(result) {
+                $('#datatable_ajax tbody *').remove();
+                $("#myModal15").modal("hide");
+                result = jQuery.parseJSON(result);
+                var idcarpeta = $('#carpeta').val()
+                var filas = "";
+                $.each(result, function(key, val) {
+                    filas += "<tr>";
+                    filas += "<td>" + val.reg_archivo + "</td>";
+                    filas += "<td>" + val.reg_descripcion + "</td>";
+                    filas += "<td>" + val.reg_version + "</td>";
+                    filas += "<td></td>";
+                    filas += "<td></td>";
+                    filas += "<td>" +val.usu_nombre +" "+val.usu_apellido +"</td>";
+                    filas += "<td>" + val.reg_tamano + "</td>";
+                    filas += "<td>" + val.reg_fechaCreacion + "</td>";
+                    filas += "<td></td>";
+                    filas += "<td><i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='" + val.reg_id + "'  data-target='#myModal15' data-toggle='modal'></i></td>";
+                    filas += "<td><i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='" + val.reg_id + "'></i></td>";
+                    filas += "</tr>";
+                });
+                $('#datatable_ajax tbody').append(filas);
+                $('#carpeta').val('');
+                $('#version').val('');
+                $('#reg_descripcion').val('');
+                $('#archivo').val('');
+                alerta('verde', 'Registro guardado con exito.');
+            }
+        });
+    })
     $('#planregistro').change(function () {
 
         $.post(

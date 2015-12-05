@@ -27,9 +27,12 @@ class Tipo_model extends CI_Model {
     function avanceciclophva(){
         try{
             $this->db->select("sum(tarea.tar_costopresupuestado) as tar_costopresupuestado");
+            $this->db->select("sum(avance_tarea.avaTar_costo) as costo");
+            $this->db->select("avg(avance_tarea.avaTar_progreso) as progreso");
             $this->db->select("tipo.tip_tipo as tip_tipo");
             $this->db->select("count(tarea.tar_id) as numerotareas");
             $this->db->join("tarea","tarea.tip_id =  tipo.tip_id","LEFT");
+            $this->db->join("avance_tarea","avance_tarea.tar_id = tarea.tar_id","LEFT");
             $this->db->group_by("tip_tipo");
             $tipo = $this->db->get("tipo");
 //            echo $this->db->last_query();die;

@@ -210,6 +210,7 @@ class Tareas extends My_Controller {
             $post["reg_fechaCreacion"] = $fecha->format('Y-m-d H:i:s');
             $post["userCreator"] = $this->data["usu_id"];
             $post["tar_id"] = $this->input->post("tar_id");
+             
             //Creamos carpeta con el ID del registro
 //            if (isset($_FILES['archivo']['name']))
 //                if (!empty($_FILES['archivo']['name']))
@@ -221,6 +222,7 @@ class Tareas extends My_Controller {
             $targetPath = "./uploads/tareas_registro/" . $post["tar_id"];
             if (!file_exists($targetPath))  mkdir($targetPath, 0777, true);
             $post['reg_ruta'] = $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            $post["reg_archivo"] = basename($_FILES['archivo']['name']);
             if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) { }
             $this->Registro_model->guardar_registro($post);
             $data = $this->Registro_model->registroxcarpeta($this->input->post('regCar_id'));
@@ -479,6 +481,8 @@ class Tareas extends My_Controller {
         $this->load->model('Planes_model');
         $this->data['carpeta'] = $this->Registrocarpeta_model->detail();
         $this->data['plan'] = $this->Planes_model->detail();
+        $this->load->model("Registrocarpeta_model");
+        $this->data['carpetas'] = $this->Registrocarpeta_model->allfolders($this->input->post('pla_id'));
         $this->layout->view("tareas/registro", $this->data);
     }
 

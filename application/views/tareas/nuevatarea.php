@@ -453,9 +453,11 @@
                                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false" id=""> 
                                                                         <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
                                                                     </a>
-                                                                    <i class="fa fa-file-archive-o nuevoregistro" car_id="<?php echo $idcar ?>" data-toggle="modal" data-target="#myModal"></i>
-                                                                    <i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
-                                                                    <i class="fa fa-times eliminarregistro" car_id="<?php echo $idcar ?>"></i>
+                                                                    <div class="posicionIconoAcordeon">
+                                                                        <i class="fa fa-file-archive-o nuevoregistro" car_id="<?php echo $idcar ?>" data-toggle="modal" data-target="#myModal"></i>
+                                                                        <i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
+                                                                        <i class="fa fa-times eliminarregistro" car_id="<?php echo $idcar ?>"></i>
+                                                                    </div>
                                                                 </h4>
                                                             </div>
                                                             <div id="collapse_<?php echo $idcar . 'r'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -565,7 +567,7 @@
                                     <select id="carpeta" name="regCar_id" class="form-control tarRegObligatorio">
                                         <option value=""></option>
                                         <?php foreach ($carpetas as $carp): ?>
-                                            <option value="<?php echo $carp->tarCar_id ?>"><?php echo $carp->tarCar_nombre.' - '.$carp->tarCar_descripcion ?></option>
+                                            <option value="<?php echo $carp->regCar_id ?>"><?php echo $carp->regCar_nombre.' - '.$carp->regCar_descripcion ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -937,7 +939,7 @@
             $.post("<?php echo base_url("index.php/tareas/guardarcarpetatarea") ?>",
                     $('#frmcarpetaregistro').serialize()
                     ).done(function (msg) {
-                var option = "<option value='" + msg.uno + "'>" + msg.dos + " - " + msg.tres+"</option>"
+                var option = "<option value='" + msg.regCar_id + "'>" + msg.regCar_nombre + " - " + msg.regCar_descripcion+"</option>"
                 var contenido = "<table class='table table-hover table-bordered'>\n\
                                         <thead>\n\
                                             <th>Nombre de archivo</th>\n\
@@ -998,12 +1000,12 @@
                     var filas = "";
                     $.each(result, function (key, val) {
                         filas += "<tr>";
-                        filas += "<td>" + val.tarReg_archivo + "</td>";
+                        filas += "<td>" + val.reg_archivo + "</td>";
                         filas += "<td>" + val.reg_descripcion + "</td>";
                         filas += "<td>" + val.reg_version + "</td>";
-                        filas += "<td></td>";
+                        filas += "<td>"+val.usu_nombre+" "+val.usu_apellido+"</td>";
                         filas += "<td>" + val.reg_tamano + "</td>";
-                        filas += "<td>" + val.tarReg_fechaCreacion + "</td>";
+                        filas += "<td>" + val.reg_fechaCreacion + "</td>";
                         filas += "<td>";
                         filas += "<i class='fa fa-times fa-2x eliminarregistro btn btn-danger' title='Eliminar' reg_id='" + val.tarReg_id + "'></i>";
                         filas += "<i class='fa fa-pencil-square-o fa-2x modificarregistro btn btn-info' title='Modificar' reg_id='" + val.tarReg_id + "'  data-target='#myModal15' data-toggle='modal'></i>";
@@ -1035,9 +1037,11 @@
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.regCar_id + destino + '" aria-expanded="false">\n\
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.regCar_nombre + " - " + msg.regCar_descripcion + '\n\
                                                     </a>\n\
+                                                    <div class="posicionIconoAcordeon">\n\
                                                         <i class="fa fa-file-archive-o nuevoregistro" car_id="' + msg.regCar_id + '" data-toggle="modal" data-target="#myModal"></i>\n\
                                                         <i class="fa fa-edit ' + clase + '" car_id="' + msg.regCar_id + '"></i>\n\
                                                         <i class="fa fa-times eliminarregistro" car_id="' + msg.regCar_id + '"></i>\n\
+                                                    </div>\n\
                                                 </h4>\n\
                                             </div>\n\
                                             <div id="collapse_' + msg.regCar_id + destino + '" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">\n\

@@ -143,6 +143,14 @@ class Registrocarpeta_model extends CI_Model {
             
         }
     }
+    function allfolders(){
+        try {
+        $carpeta = $this->db->get("registro_carpeta");
+        return $carpeta->result();
+        } catch (exception $e) {
+            
+        }
+    }
     function detailxid($regCar_id){
         try {
         $this->db->select("regCar_id as uno, regCar_nombre as dos,regCar_descripcion as tres");

@@ -36,6 +36,12 @@ class Riesgoclasificaciontipo_model extends CI_Model {
             
         }
     }
+    function modificarClasificacionTipo($categoria,$idtipo,$tipo){
+        $this->db->where("rieClaTip_id",$idtipo);
+        $this->db->where("rieCla_id",$categoria);
+        $this->db->set("rieClaTip_tipo",$tipo);
+        $this->db->update('riesgo_clasificacion_tipo');
+    }
 
 }
 

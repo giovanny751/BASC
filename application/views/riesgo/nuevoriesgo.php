@@ -1,10 +1,7 @@
 <div class="row">
     <div class="col-md-6">
-        <?php if(empty($rie_id)){ ?>
-        <div class="circuloIcon" id="guardar" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
-        <?php }else{ ?>
-        <div class="circuloIcon" id="actualizar" title="Actualizar "><i class="fa fa-pencil-square-o fa-3x"></i></div>
-        <?php }?>
+        <div class="circuloIcon" id="<?php echo (empty($rie_id))?"guardar":"actualizar"; ?>" title="<?php echo (empty($rie_id))?"Guardar":"Actualizar"; ?>"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <!-- <div class="circuloIcon" title="Actualizar "><i class="fa fa-pencil-square-o fa-3x"></i></div>-->
         <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
         <a href="<?php echo base_url()."/index.php/riesgo/nuevoriesgo" ?>"><div class="circuloIcon" title="Nuevo Riesgo" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>

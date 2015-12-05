@@ -67,7 +67,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <form method="post" id="frmtipocategoria">
-                            <input type="hidden" name="rieClaTip_id" id="rieClaTip_id">
+                            <input type="hidden" name="accion" id="accion" value="1">
+                            <input type="hidden" name="tip_id" id="tip_id">
                             <input type="hidden" name="rieCla_id" id="rieCla_id">
                             <div class="col-sm-offset-2 col-sm-8">
                                 <div class="form-group">
@@ -96,9 +97,12 @@
     $('.modal_nuevo').click(function () {
         $('#ct').val('');
         $('#tipo').val('');
+        $("#accion").val('1')
     });
     $('body').delegate('.modificar', 'click', function () {
-        $('#rieCla_id').val($('#modificar').attr("riecla_id"));
+        $("#accion").val('2')
+        $('#tip_id').val($(this).attr('rieclatip_id'))
+        $('#rieCla_id').val($(this).attr("riecla_id"));
         $('#ct').val($(this).attr('rieCla_categoria'));
         $('#tipo').val($(this).attr('rieClaTip_tipo'));
     })
@@ -140,7 +144,7 @@
                 cuerpo += "<table class='tablesst'>";
                 cuerpo += "<thead>";
                 cuerpo += "<tr>";
-                cuerpo += "<th   style='text-align:center'>" + indice + "</th>";
+                cuerpo += "<th   style='text-align:center'><b>" + indice + "</b></th>";
                 cuerpo += "<th  style='text-align:center'> <i class='fa fa-pencil-square-o fa-2x modificarcategoria' rieCla_id='" + key + "'  title='Modificar'></i></th>";
                 cuerpo += "<th><i class='fa fa-trash-o fa-2x eliminarcategoria' rieCla_id='" + key + "'  title='Eliminar'></i></th>";
                 cuerpo += "</tr>";
@@ -155,7 +159,7 @@
                     if (campo[0] != null) {
                         cuerpo += "<tr>";
                         cuerpo += "<td><b>" + campo[1] + "</b   ></td>";
-                        cuerpo += "<td class='transparent'><i class='fa fa-pencil-square-o fa-2x modificar' rieClaTip_tipo='" + campo[1] + "' rieCla_categoria='" + indice + "' rieClaTip_id='" + campo[0] + "' title='Modificar' data-target='#myModal' data-toggle='modal'></i></td>";
+                        cuerpo += "<td class='transparent'><i class='fa fa-pencil-square-o fa-2x modificar' rieClaTip_tipo='" + campo[1] + "' rieCla_categoria='" + key + "' rieClaTip_id='" + campo[0] + "' title='Modificar' data-target='#myModal' data-toggle='modal'></i></td>";
                         cuerpo += "<td class='transparent'><i class='fa fa-trash-o fa-2x eliminar' rieCla_id='" + key + "' rieClaTip_id='" + campo[0] + "' title='Eliminar'></i></td>";
                         cuerpo += "</tr>";
                     }
