@@ -139,13 +139,16 @@
     function agregarTabla(msg) {
         $('.informacion *').remove();
         var cuerpo = "";
+        var option = "";
+        $('#ct *').remove();
         $.each(msg, function (key, val) {
             $.each(val, function (indice, campo) {
+                option += "<option value='"+key+"'>"+indice+"</option>";
                 cuerpo += "<table class='tablesst'>";
                 cuerpo += "<thead>";
                 cuerpo += "<tr>";
                 cuerpo += "<th   style='text-align:center'><b>" + indice + "</b></th>";
-                cuerpo += "<th  style='text-align:center'> <i class='fa fa-pencil-square-o fa-2x modificarcategoria' rieCla_id='" + key + "'  title='Modificar'></i></th>";
+                cuerpo += "<th  style='text-align:center'> <i class='fa fa-pencil-square-o fa-2x modificarcategoria' riecla_id='" + key + "'  title='Modificar'></i></th>";
                 cuerpo += "<th><i class='fa fa-trash-o fa-2x eliminarcategoria' rieCla_id='" + key + "'  title='Eliminar'></i></th>";
                 cuerpo += "</tr>";
                 cuerpo += "<tr>";
@@ -159,7 +162,7 @@
                     if (campo[0] != null) {
                         cuerpo += "<tr>";
                         cuerpo += "<td><b>" + campo[1] + "</b   ></td>";
-                        cuerpo += "<td class='transparent'><i class='fa fa-pencil-square-o fa-2x modificar' rieClaTip_tipo='" + campo[1] + "' rieCla_categoria='" + key + "' rieClaTip_id='" + campo[0] + "' title='Modificar' data-target='#myModal' data-toggle='modal'></i></td>";
+                        cuerpo += "<td class='transparent'><i class='fa fa-pencil-square-o fa-2x modificar' data-toggle='modal' data-target='#myModal' title='Modificar' rieclatip_id='"+campo[0]+"' rieclatip_tipo='"+campo[1]+"' riecla_id='"+key+"' rieCla_categoria='"+key+"' title='Modificar'></i></td>";
                         cuerpo += "<td class='transparent'><i class='fa fa-trash-o fa-2x eliminar' rieCla_id='" + key + "' rieClaTip_id='" + campo[0] + "' title='Eliminar'></i></td>";
                         cuerpo += "</tr>";
                     }
@@ -169,6 +172,7 @@
             })
         });
         $('.informacion').append(cuerpo);
+        $('#ct').append(option);
     }
 
     $('#guardartipo').click(function () {

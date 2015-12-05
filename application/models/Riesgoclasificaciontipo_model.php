@@ -42,7 +42,14 @@ class Riesgoclasificaciontipo_model extends CI_Model {
         $this->db->set("rieClaTip_tipo",$tipo);
         $this->db->update('riesgo_clasificacion_tipo');
     }
-
+    function consultaClasificacionTipo(){
+        try {
+            $data = $this->db->get("riesgo_clasificacion_tipo");
+            return $data->result();
+        } catch (exception $e) {
+            
+        }
+    }
 }
 
 ?>

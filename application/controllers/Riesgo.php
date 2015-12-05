@@ -297,8 +297,12 @@ class Riesgo extends My_Controller {
                 $this->Riesgoclasificaciontipo_model->create(
                         $this->input->post("categoria"), $this->input->post("tipo")
                 );
+                
                 }else{
-                   $this->Riesgoclasificaciontipo_model->modificarClasificacionTipo($this->input->post("categoria"),$this->input->post("tip_id"),$this->input->post("tipo")); 
+                   $this->Riesgoclasificaciontipo_model->modificarClasificacionTipo(
+                           $this->input->post("categoria"),
+                           $this->input->post("tip_id"),
+                           $this->input->post("tipo")); 
                 }
                 $categoria = $this->Riesgoclasificacion_model->detailandtipo();
                 $i = array();
