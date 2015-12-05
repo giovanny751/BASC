@@ -51,54 +51,73 @@
 </div>
 
 <div id="torta1">
-    <?php foreach ($tareas as $tar) { ?>
-    
-    <?php }?>
+    <?php
+//    echo "<pre>";
+//    print_r($tareas);
+//    echo "</pre>";
+    $datos_tareas = array();
+    foreach ($tareas as $key => $tar) {
+        if (!isset($datos_tareas[$tar->tip_tipo]))
+            $datos_tareas[$tar->tip_tipo] = $tar->progreso . " ||| ";
+        else
+            $datos_tareas[$tar->tip_tipo].=$tar->progreso . " ||| ";
+    }
+    $tipo_t = "";
+    $valores_t = "";
+    foreach ($datos_tareas as $key => $value) {
+        $datos = explode(' ||| ', $value);
+        $cantidad = count($datos);
+        $datos_tareas[$key] = 0;
+        $j = 0;
+        for ($i = 0; $i < $cantidad; $i++) {
+            if ($datos[$i] == 100) {
+                $datos_tareas[$key]+=100;
+                $j++;
+            }
+        }
+        $datos_tareas[$key] = ($datos_tareas[$key] * 100) / ($cantidad * 100);
+        $tipo_t.='"' . $key . '",';
+        $valores_t.='' . $datos_tareas[$key] . ',';
+    }
+
+
+//    print_y($datos_tareas);
+    ?>
 </div>
 <div id="torta2">
-    
+
 </div>
 <div id="torta3">
-    
+
 </div>
 
 <script>
-    $('#pla_id').change(function(){
+    $('#pla_id').change(function() {
         $('#form1').submit();
     })
 
-    var radarChartData = {
-        labels: [<?php echo $tipo_t; ?>],
-        datasets: [
-            {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: [<?php echo $valores_t; ?>]
-                        },
-                    //            {
-                    //                label: "My Second dataset",
-                    //                fillColor: "rgba(151,187,205,0.2)",
-                    //                strokeColor: "rgba(151,187,205,1)",
-                            //                pointColor: "rgba(151,187,205,1)",
-                                //                pointStrokeColor: "#fff",
-//                pointHighlightFill: "#fff",
-                            //                pointHighlightStroke: "rgba(151,187,205,1)",
-                            //                data: [28, 48, 40, 19]
-//            }
-        ]
-    };
-    window.onload = function() {
-        window.myRadar = new Chart(document.getElementById("canvas").getContext("2d")).Radar(radarChartData, {
-            responsive: true
-        });
-    }
-    
-    
+<?php if (count($datos_tareas)) { ?>
+        var radarChartData = {
+            labels: [<?php echo $tipo_t; ?>],
+            datasets: [
+                {
+                    label: "General",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [<?php echo $valores_t; ?>]
+                },
+            ]
+        };
+        window.onload = function() {
+            window.myRadar = new Chart(document.getElementById("canvas").getContext("2d")).Radar(radarChartData, {
+                responsive: true
+            });
+        }
+<?php } ?>
     ///////////////////////////grant////////////////////
     var url = '<?php echo base_url("grant/index.php") ?>';
     $.post(url, $('#formulario_grant').serialize())
@@ -109,5 +128,4 @@
             .fail(function() {
 
             })
-
 </script>

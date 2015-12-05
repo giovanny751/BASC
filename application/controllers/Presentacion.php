@@ -34,7 +34,7 @@ class Presentacion extends My_Controller {
         
         
         $id_plan=$this->input->post('pla_id');
-        if(isset($id_plan)){
+        if(!isset($id_plan)){
             $id_plan=$this->Planes_model->min_plan();
         }
         $this->data['tareas'] = $this->Planes_model->tareaxplan($id_plan);
