@@ -204,6 +204,7 @@
                             <table class="tablesst">
                                 <thead>
                                 <th>Fecha</th>
+                                <th>Unidad</th>
                                 <th>Comentario</th>
                                 <th>Valor</th>
                                 <th>Usuario</th>
@@ -213,6 +214,7 @@
                                     <?php foreach ($valores as $v): ?>
                                         <tr>
                                             <td><?php echo $v->indVal_fechaCreacion ?></td>
+                                            <td><?php echo $v->indVal_unidad ?></td>
                                             <td><?php echo $v->indVal_comentario ?></td>
                                             <td><?php echo $v->indVal_valor ?></td>
                                             <td><?php echo $v->usu_id ?></td>
@@ -233,6 +235,14 @@
                                             </label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
                                                 <input type="text" name="valor" id="valor" class="form-control miles">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label for="valor" class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
+                                                Unidad
+                                            </label>
+                                            <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
+                                                <input type="text" name="unidad" id="unidad" class="form-control miles">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -584,6 +594,7 @@
                     $.each(msg,function(key,val){
                         body += "<tr>";
                         body += "<td>"+val.indVal_fechaCreacion+"</td>";
+                        body += "<td>"+val.indVal_unidad+"</td>";
                         body += "<td>"+val.indVal_comentario+"</td>";
                         body += "<td>"+val.indVal_valor+"</td>";
                         body += "<td>"+val.usu_id+"</td>";

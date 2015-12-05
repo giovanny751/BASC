@@ -203,6 +203,7 @@ class Indicador extends My_Controller {
                     "indVal_valor"=>$this->input->post("valor"),
                     "ind_id"=>$this->input->post("ind_id"),
                     "usu_idcreacion"=>$this->data["usu_id"],
+                    "indVal_unidad"=>$this->input->post("unidad"),
                     "indVal_fechaCreacion"=>date("Y-m-d H:i:s")
                 );
         $this->Indicadorvalores_model->guardarvalores($data);

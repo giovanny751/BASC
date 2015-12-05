@@ -41,6 +41,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <table class="tablesst" id="datatable_ajax">
                 <thead>
+                <th>Plan</th>
                 <th>Nombre archivo</th>
                 <th>Descripciòn</th>
                 <th>Versiòn</th>
@@ -322,6 +323,7 @@
                     var body = ""
                     $.each(msg.Json, function (key, val) {
                         body += "<tr>";
+                        body += "<td>" + (val.pla_nombre==null?'':val.pla_nombre) + "</td>";
                         body += "<td>" + (val.reg_archivo==null?'':val.reg_archivo) + "</td>";
                         body += "<td>" + (val.reg_descripcion==null?'':val.reg_descripcion) + "</td>";
                         body += "<td>" + val.reg_version + "</td>";

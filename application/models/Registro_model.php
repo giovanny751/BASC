@@ -170,6 +170,7 @@ class Registro_model extends CI_Model {
             $this->db->select("registro.reg_fechaCreacion");
             $this->db->select("registro.reg_fechaModificacion");
             $this->db->select("registro.userCreator");
+            $this->db->select("planes.pla_nombre");
             $this->db->join("planes", "planes.pla_id = registro.pla_id", "LEFT");
             $this->db->join("tarea", "tarea.tar_id = registro.tar_id", "LEFT");
             $this->db->join("empleado", "empleado.emp_id = tarea.emp_id", "LEFT");
