@@ -1045,7 +1045,6 @@
         });
     });
     $('#guardarplan').click(function() {
-//    alert($('#guardarplan').attr("metodo")); 
         if (obligatorio('obligatorio') == true) {
             $.post(
                     "<?php
@@ -1053,9 +1052,6 @@ echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base
 ?>",
                     $('#f7').serialize()
                     ).done(function(msg) {
-                if ($('#guardarplan').attr("title") == "Actualizar") {
-                    window.location = "<?php echo base_url("index.php/planes/listadoplanes"); ?>";
-                } else if ($('#guardarplan').attr("title") == "Guardar") {
                     if (confirm("Desea guardar otro Plan ?")) {
                         $('input,select,textarea').val("");
                     } else {
@@ -1065,8 +1061,6 @@ echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base
                             $('body').append(form);
                             $('#frmEditarPlan').submit();
                     }
-
-                }
                 alerta("verde", "Datos guardados correctamente");
             }).fail(function(msg) {
                 alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");

@@ -78,7 +78,7 @@ class Planes_model extends CI_Model {
             $query = "SELECT `planes` . * , sum( replace( tar_costopresupuestado, ',', '' ) ) AS tar_costopresupuestado
                     FROM `planes`
                     LEFT JOIN `tarea` ON `tarea`.`pla_id` = `planes`.`pla_id`
-                    WHERE `planes`.`pla_id` = '28'";
+                    WHERE `planes`.`pla_id` = '".$pla_id."'";
 //            $this->db->select("planes.*,sum(replace(tar_costopresupuestado,',','')) as tar_costopresupuestado",false);
 //            $this->db->where('planes.pla_id', $pla_id);
 //            $this->db->join("tarea","tarea.pla_id = planes.pla_id","LEFT");
