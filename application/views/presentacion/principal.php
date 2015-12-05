@@ -93,6 +93,8 @@
 
 <script>
     $('#pla_id').change(function() {
+        if($(this).val()=='')
+            return false;
         $('#form1').submit();
     })
 
