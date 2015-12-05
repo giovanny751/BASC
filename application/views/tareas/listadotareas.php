@@ -1,4 +1,12 @@
 <div class="row">
+    <div class="col-md-6">
+        <!-- <div class="circuloIcon" id="guardartarea"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon" id="guardartarea" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
+        <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div> -->
+        <a href="<?php echo base_url()."/index.php/tareas/nuevatarea" ?>"><div class="circuloIcon" title="Nueva Tarea" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-12">
         <div class="tituloCuerpo">
             <span class="txtTitulo">LISTADO TAREAS</span>
@@ -6,13 +14,6 @@
     </div>
 </div>
 <div class='cuerpoContenido'>
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <a href="<?php echo base_url("index.php/tareas/nuevatarea") ?>">
-                <button type="button" class="btn btn-default">Nueva tarea</button>
-            </a>
-        </div>
-    </div>
     <div class="row">
         <form method="post" id="f9">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -49,7 +50,7 @@
                 </select>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                <div style="margin-top: 28px"><button type="button" class="btn btn-success" id="consultar">Consultar</button></div>
+                <div style="margin-top: 28px"><button type="button" class="btn-sst" id="consultar">Consultar</button></div>
             </div>
         </form>
     </div>
@@ -87,7 +88,7 @@
             $.each(msg, function (idplan, nombreplan) {
                 table += "<table class='tablesst'>";
                 $.each(nombreplan, function (nombre, tareaid) {
-                    table += "<thead><tr><th colspan='9'>"+nombre+"</th></tr>";
+                    table += "<thead><tr><th colspan='10'>"+nombre+"</th></tr>";
                         table += "<tr>";
                         table += "<th>AGREGAR AVANCE</th>"
                         table += "<th>AVANCE</th>"
@@ -95,9 +96,10 @@
                         table += "<th>NOMBRE DE LA TAREA</th>"
                         table += "<th>FECHA INICIO</th>"
                         table += "<th>FECHA FIN</th>"
-                        table += "<th>DURACIÓN PRESUPUESTADA</th>"
+                        table += "<th>DURACIÃ“N PRESUPUESTADA</th>"
                         table += "<th>RESPONSABLES</th>"
-                        table += "<th>ACCIÓN</th>"
+                        table += "<th>EDITAR</th>"
+                        table += "<th>ELIMINAR</th>"
                         table += "</tr>";
                         table += "</thead>";
                         table += "<tbody>";
@@ -114,9 +116,11 @@
                                     table += "<td>"+numeracion.fechafinalizacion+"</td>";
                                     table += "<td style='text-align:center;'>"+numeracion.diferencia+"</td>";
                                     table += "<td>"+numeracion.nombre+"</td>";
-                                    table += '<td>';
-                                    table += '<i class="fa fa-times eliminar btn btn-danger" title="Eliminar" tar_id="'+ idtar+'" ></i>';
-                                    table += '<i class="fa fa-pencil-square-o  modificar btn btn-info" title="Modificar" tar_id="'+ idtar+'" ></i>';
+                                    table += '<td class="transparent">';
+                                    table += '<i class="fa fa-pencil-square-o fa-2x  modificar" title="Modificar" tar_id="'+ idtar+'" ></i>';
+                                    table += "</td>";
+                                    table += '<td class="transparent">';
+                                    table += '<i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" tar_id="'+ idtar+'" ></i>';
                                     table += "</td>";
                                     table += "</tr>";
                             }

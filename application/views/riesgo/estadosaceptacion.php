@@ -1,3 +1,8 @@
+<style>
+    thead{
+        margin-top: 20px;
+    }
+</style>
 <div class="row">
     <div class="col-md-6">
         <div class="circuloIcon estado" title="Guardar" ><i class="fa fa-floppy-o fa-3x"></i></div>
@@ -22,35 +27,38 @@
     </div>
     <div class="row">
         <table class="tablesst">
-            <thead>
-            <th>Estados</th>
-            <th>Color</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
-            </thead>
-            <tbody id="bodyestado">
-                <?php foreach ($estadoaceptacion as $ea): ?>
-                    <tr>
-                        <?php if(!empty($ea->col_id)){ ?>
-                        <td><?php echo $ea->estAce_estado ?></td>
-                        <td><?php echo $ea->col_color ?></td>
-                        <td></td>
-                        <td></td>
-                        <?php }else{ ?>
-                        <thead>
-                        <th colspan="4" style='text-align:center;font:bold;'><?php echo $ea->estAce_estado ?> </th>
-                        </thead>
-                        <?php } ?>
-                    </tr>
+            <?php foreach ($estadoaceptacion as $id=>$es): ?>
+                <?php foreach ($es as $descripcionEstado=>$col): ?>
+                    <thead>
+                        <tr>
+                            <th><b><?php echo $descripcionEstado; ?></b></th>
+                            <th><i class="fa fa-pencil-square-o fa-2x modificarEstado" title="Modificar Estado" estId="<?php echo $id ?>"></i></th>
+                            <th><i class="fa fa-trash-o fa-2x eliminarEstado" title="Eliminar Estado" estId="<?php echo $id ?>" descripcion="<?php echo $descripcionEstado; ?>"></i></th>
+                        </tr>
+                        <tr>
+                            <th width="80%"><b>Color</b></th>
+                            <th width="10%"><b>Editar</b></th>
+                            <th width="10%"><b>Eliminar</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($col as $colId=>$colColor): ?>
+                            <tr>
+                                <td><b><?php echo $colColor; ?></b></td>
+                                <td class="transparent"><i class="fa fa-pencil-square-o fa-2x modificarColor" title="Modificar Color" colId="<?php echo $colId ?>"></i></td>
+                                <td class="transparent"><i class="fa fa-trash-o fa-2x eliminarColor" title="Eliminar Color" colId="<?php echo $colId ?>" descripcion="<?php echo $colColor; ?>"></i></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
                 <?php endforeach; ?>
-            </tbody>
+            <?php endforeach; ?>
         </table>
     </div>
     <div class="row">
-        <button type="button" class="btn-sst" data-toggle="modal" data-target="#myModal">Nuevo</button>
+        <button type="button" class="btn-sst" data-toggle="modal" data-target="#nuevoColor">Nuevo</button>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <!-- Modal Nuevo Color -->
+    <div class="modal fade" id="nuevoColor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -88,12 +96,65 @@
             </div>
         </div>
     </div>
+    <!-- Modal Edtar Estado -->
+    <div class="modal fade" id="editarEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center"><div class="circuloIcon" id="guardarNuevoEstado" ><i class="fa fa-floppy-o fa-3x"></i></div> EDITAR ESTADO</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal" method="post" id="frmEditarNuevoEstado">
+                            <div class="form-group">
+                                <label for="editarNuevoEstado" class="col-sm-offset-2 col-sm-2">Estado</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="editarNuevoEstado" id="editarNuevoEstado" class="form-control">
+                                </div>
+                            </div>
+                            <input type="hidden" id="EditarNuevoEstadoId" name="EditarNuevoEstadoId" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Edtar Color -->
+    <div class="modal fade" id="editarColor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel" style="text-align: center"><div class="circuloIcon" id="guardarNuevoColor" ><i class="fa fa-floppy-o fa-3x"></i></div> EDITAR COLOR</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal" method="post" id="frmEditarNuevoColor">
+                            <div class="form-group">
+                                <label for="editarNuevoColor" class="col-sm-offset-2 col-sm-2">Color</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="editarNuevoColor" id="editarNuevoColor" class="form-control">
+                                </div>
+                                <input type="hidden" id="editarNuevoColorId" name="editarNuevoColorId" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 //    $('#estadoaceptacion').autocomplete({
 //        source: "<?php echo base_url("index.php/riesgo/autocompletarestadoaceptacion") ?>",
 //        minLength: 1
 //    });
+    $("#estadoaceptacion, #color").keypress(function(key){
+        if(key.charCode == 34){
+            return false;
+        }
+    });
     $('#guardarmodificacion').click(function(){
         
         $.post(
@@ -119,7 +180,7 @@
                 });
         
     });
-    
+    //Guardar Estado
     $('.estado').click(function () {
 
         var estadoaceptacion = $('#estadoaceptacion').val();
@@ -162,4 +223,123 @@ alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
                 })
                 ;
     });
+    //--------------------------------------------------------------------------
+    //                                  ESTADO
+    //--------------------------------------------------------------------------
+    $("body").on("click",".eliminarEstado",function(){
+        if(confirm("Deseas eliminar el estado?")){
+            var idEstado = $(this).attr("estId");
+            var descripcion = $(this).attr("descripcion");
+            var url = "<?php echo base_url("index.php/riesgo/eliminaestadoaceptacion") ?>";
+            $.post(url,{idEstado:idEstado,descripcion:descripcion})
+                    .done(function(msg){
+                        //Actualizamos tabla
+                        actualizarTabla();
+                        //alerta
+                        alerta("verde","Eliminado");
+                    })
+                    .fail(function(){
+                        alerta("rojo","Error eliminar")
+                    });
+        }
+    });
+    //Boton modificar Modal
+    $("body").on("click",".modificarEstado",function(){
+        var idEstado = $(this).attr("estId");
+        var url = "<?php echo base_url("index.php/riesgo/consultaestadoaceptacion") ?>";
+        $.post(url,{idEstado:idEstado})
+                .done(function(msg){
+                        $("#editarNuevoEstado").val(msg.estAce_estado);
+                        $("#EditarNuevoEstadoId").val(idEstado);
+                        $("#editarEstado").modal("toggle");
+                })
+                .fail(function(){
+                    alerta("rojo","Error consultar estado");
+                })
+    });
+    //Editar Estado
+    $("body").on("click","#guardarNuevoEstado",function(){
+        var url = "<?php echo base_url("index.php/riesgo/actualizarestadoaceptacion") ?>";
+        var envio = $("#frmEditarNuevoEstado").serialize();
+        $.post(url,envio)
+                .done(function(msg){
+                    if(msg != 1){
+                        //Actualizamos tabla
+                        actualizarTabla();
+                        //Cerramos Modal
+                        $("#editarNuevoEstado").val("");
+                        $("#EditarNuevoEstadoId").val("");
+                        $("#editarEstado").modal("toggle");
+                    }else{
+                        alerta("amarillo","Estado ya existe en el sistema");
+                    }
+                })
+                .fail(function(){
+                    alerta("rojo","Error editar estado");
+                })
+    });
+    //--------------------------------------------------------------------------
+    //                                  COLOR
+    //--------------------------------------------------------------------------
+    $("body").on("click",".eliminarColor",function(){
+        if(confirm("Deseas eliminar este Color?")){
+            var idColor = $(this).attr("colId");
+            var descripcion = $(this).attr("descripcion");
+            var url = "<?php echo base_url("index.php/riesgo/eliminacolor") ?>";
+            $.post(url,{idColor:idColor,descripcion:descripcion})
+                    .done(function(msg){
+                        //Actualizamos tabla
+                        actualizarTabla();
+                        //alerta
+                        alerta("verde","Color Eliminado");
+                    })
+                    .fail(function(){
+                        alerta("rojo","Error eliminar color")
+                    });
+        }
+    });
+    //Boton modificar Modal
+    $("body").on("click",".modificarColor",function(){
+        var idColor = $(this).attr("colId");
+        var url = "<?php echo base_url("index.php/riesgo/consultacolor") ?>";
+        $.post(url,{idColor:idColor})
+                .done(function(msg){
+                        $("#editarNuevoColor").val(msg.col_color);
+                        $("#editarNuevoColorId").val(idColor);
+                        $("#editarColor").modal("toggle");
+                })
+                .fail(function(){
+                    alerta("rojo","Error consultar color");
+                })
+    });
+    //Editar Estado
+    $("body").on("click","#guardarNuevoColor",function(){
+        var url = "<?php echo base_url("index.php/riesgo/actualizarcolor") ?>";
+        var envio = $("#frmEditarNuevoColor").serialize();
+        $.post(url,envio)
+                .done(function(msg){
+                    if(msg != 1){
+                        //Actualizamos tabla
+                        actualizarTabla();
+                        //Cerramos Modal
+                        $("#editarNuevoColor").val("");
+                        $("#editarNuevoColorId").val("");
+                        $("#editarColor").modal("toggle");
+                    }else{
+                        alerta("amarillo","Color ya existe en el sistema");
+                    }
+                })
+                .fail(function(){
+                    alerta("rojo","Error editar color");
+                })
+    });
+    //--------------------------------------------------------------------------
+    //                                  TABLA
+    //--------------------------------------------------------------------------
+    function actualizarTabla(){
+        
+    }
+    
+    
+    
 </script>    

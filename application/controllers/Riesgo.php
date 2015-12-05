@@ -197,7 +197,14 @@ class Riesgo extends My_Controller {
 
     function estadosaceptacion() {
         $this->load->model("Estadoaceptacion_model");
-        $this->data['estadoaceptacion'] = $this->Estadoaceptacion_model->detailandcolor();
+//        $this->data['estadoaceptacion'] = $this->Estadoaceptacion_model->detailandcolor();
+        
+        $estadoaceptacion = $this->Estadoaceptacion_model->detailandcolor();
+        $i = array();
+        foreach ($estadoaceptacion as $es) {
+            $i[$es->estAce_id][$es->estAce_estado][$es->col_id] = $es->col_color;
+        }
+        $this->data['estadoaceptacion'] = $i;
         $this->data['estadoaceptacionxcolor'] = $this->Estadoaceptacion_model->detail();
         $this->layout->view("riesgo/estadosaceptacion", $this->data);
     }
@@ -211,6 +218,38 @@ class Riesgo extends My_Controller {
         } else {
             echo 1;
         }
+    }
+    function consultaestadoaceptacion() {
+        $this->load->model("Estadoaceptacion_model");
+        $this->data["idDescripcion"] = $this->Estadoaceptacion_model->consult($this->input->post("idEstado"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($this->data['idDescripcion'][0]));
+    }
+    
+    function actualizarestadoaceptacion() {
+        $this->load->model("Estadoaceptacion_model");
+        if (empty($this->Estadoaceptacion_model->consultxnamexid($this->input->post("editarNuevoEstado"),$this->input->post("EditarNuevoEstadoId")))) {
+            $this->Estadoaceptacion_model->update($this->input->post("editarNuevoEstado"),$this->input->post("EditarNuevoEstadoId"));
+        } else {
+            echo 1;
+        }
+    }
+    
+    function eliminaestadoaceptacion() {
+        $this->load->model("Estadoaceptacion_model");
+        $this->Estadoaceptacion_model->delete($this->input->post("idEstado"),$this->input->post("descripcion"));
+    }
+    function consultacolor() {
+        $this->load->model("Color_model");
+        $this->data["idDescripcion"] = $this->Color_model->consult($this->input->post("idColor"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($this->data['idDescripcion'][0]));
+    }
+    function eliminacolor() {
+        $this->load->model("Color_model");
+        $this->Color_model->delete($this->input->post("idColor"),$this->input->post("descripcion"));
+    }
+    function actualizarcolor() {
+        $this->load->model("Color_model");
+        $this->Color_model->update($this->input->post("editarNuevoColor"),$this->input->post("editarNuevoColorId"));
     }
 
     function guardarcolorxestado() {
