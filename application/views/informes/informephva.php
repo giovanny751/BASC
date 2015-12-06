@@ -21,12 +21,11 @@
             $costoreal = 0;
             $tipo_t="";
             $valores_t="";
+            $avacenprogreso="";
             foreach ($tipo as $t):
-                //datos para la grafiaca
             $tipo_t.='"'.$t->tip_tipo.'",';
             $valores_t.=''.$t->numerotareas.',';
-                    // fin de datos para la grafica 
-                    
+            $avacenprogreso .=  ''.number_format($t->progreso,0).',';
                 $costopresupuestado += $t->tar_costopresupuestado;
                 $numerotareas += $t->numerotareas;
                 $costoreal += $t->costo;
@@ -58,7 +57,7 @@
         <canvas id="canvas" height="450" width="450"></canvas>
     </div>    
 </center>
-
+<?php echo $avacenprogreso;?>
 <script>
 
     var radarChartData = {
@@ -74,16 +73,16 @@
                 pointHighlightStroke: "rgba(220,220,220,1)",
                 data: [<?php echo $valores_t; ?>]
             },
-//            {
-//                label: "My Second dataset",
-//                fillColor: "rgba(151,187,205,0.2)",
-//                strokeColor: "rgba(151,187,205,1)",
-//                pointColor: "rgba(151,187,205,1)",
-//                pointStrokeColor: "#fff",
-//                pointHighlightFill: "#fff",
-//                pointHighlightStroke: "rgba(151,187,205,1)",
-//                data: [28, 48, 40, 19]
-//            }
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [<?php echo $avacenprogreso; ?>]
+            }
         ]
     };
     window.onload = function() {

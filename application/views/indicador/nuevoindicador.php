@@ -217,7 +217,7 @@
                                             <td><?php echo $v->indVal_unidad ?></td>
                                             <td><?php echo $v->indVal_comentario ?></td>
                                             <td><?php echo $v->indVal_valor ?></td>
-                                            <td><?php echo $v->usu_id ?></td>
+                                            <td><?php echo $v->usu_nombre." ".$v->usu_apellido ?></td>
                                             <td></td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -247,10 +247,10 @@
                                         </div>
                                         <div class="row">
                                             <label for="usuario" class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                Usuario
+                                                Fecha
                                             </label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" name="usuario" id="usuario" class="form-control">
+                                                <input type="text" name="fecha" value="<?= date("Y-m-d"); ?>" id="fecha" class="form-control fecha">
                                             </div>
                                         </div>
                                     </div>
@@ -446,6 +446,18 @@
 </div>
 </div>
 <script>
+    
+    $('#valor').change(function(){
+        if(($(this).val() >= $('#minimo').val()) && ($(this).val() <= $('#maximo').val())){
+            return true;
+        }else{
+            $(this).val('');
+            alert("El valor no esta en el rango establecido");
+            $(this).focus();
+        }
+    });
+    
+    
      $('#guardarregistro').click(function () {
         if (obligatorio("tarRegObligatorio")) {
             //Capturamos el archivo
@@ -593,11 +605,11 @@
                     var body = $("#bodyvalores *").remove();
                     $.each(msg,function(key,val){
                         body += "<tr>";
-                        body += "<td>"+val.indVal_fechaCreacion+"</td>";
+                        body += "<td>"+val.indVal_fecha+"</td>";
                         body += "<td>"+val.indVal_unidad+"</td>";
                         body += "<td>"+val.indVal_comentario+"</td>";
                         body += "<td>"+val.indVal_valor+"</td>";
-                        body += "<td>"+val.usu_id+"</td>";
+                        body += "<td>"+val.usu_nombre+" "+val.usu_apellido+"</td>";
                         body += "<td></td>";
                         body += "</tr>";
                     });

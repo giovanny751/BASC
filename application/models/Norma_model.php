@@ -15,6 +15,16 @@ class Norma_model extends CI_Model {
             
         }
     }
+    function normaarticulo($norma){
+        try {
+            $this->db->order_by("norArt_articulo");
+            $this->db->where("nor_id",$norma);
+            $norma = $this->db->get("norma_articulo");
+            return $norma->result();
+        } catch (exception $e) {
+            
+        }
+    }
 
 }
 

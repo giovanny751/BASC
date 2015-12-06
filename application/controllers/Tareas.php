@@ -33,7 +33,9 @@ class Tareas extends My_Controller {
             $this->data['tareas'] = $this->Tarea_model->detail();
             $this->load->model("Registrocarpeta_model");
             $this->load->model('Empresa_model');
+            $this->load->model('Norma_model');
             $this->data['empresa'] = $this->Empresa_model->detail();
+            $this->data['norma'] = $this->Norma_model->detail();
             if ((!empty($this->data['empresa'][0]->Dim_id)) && (!empty($this->data['empresa'][0]->Dimdos_id))) {
             if (!empty($this->input->post("tar_id"))):
                 if(!empty($this->input->post("nuevoavance")))
@@ -61,6 +63,7 @@ class Tareas extends My_Controller {
                 $this->data['carpeta'] = $d;
                 $this->data['tarea'] = $this->Tarea_model->detailxid($this->input->post("tar_id"))[0];
                 $this->data['tarea_norma'] = $this->Tarea_model->tarea_norma($this->input->post("tar_id"));
+                
                 $this->data["hijo"] = $this->Actividad_model->actividadxPlan($this->data['tarea']->pla_id);
                 $this->data['empleado'] = $this->Empleado_model->empleadoxcargo($this->data['tarea']->car_id);
             endif;
@@ -99,6 +102,11 @@ class Tareas extends My_Controller {
         $this->load->model("Registrocarpeta_model");
         $data = $this->Registrocarpeta_model->detailxid($this->input->post("carpeta"));
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
+    }
+    function consultaarticulo(){
+         $this->load->model("Norma_model");
+         $norma = $this->Norma_model->normaarticulo($this->input->post("norma"));
+         $this->output->set_content_type('application/json')->set_output(json_encode($norma));
     }
     
     function actualizarcarpeta(){
