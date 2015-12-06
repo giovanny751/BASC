@@ -131,7 +131,7 @@
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.des1 + "</td>";
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.des2 + "</td>";
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rie_zona + "</td>";
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'></td>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>"+val.rie_actividad+"</td>";
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'></td>";
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rie_fecha + "</td>";
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.estado + "</td>";

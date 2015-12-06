@@ -84,7 +84,8 @@ class Riesgo extends My_Controller {
                 "estAce_id" => $this->input->post("estado"),
                 "col_id" => $this->input->post("color"),
                 "rie_fecha" => $this->input->post("fecha"),
-                "rie_fechaCreacion" => date("Y-m-d H:i:s")
+                "rie_fechaCreacion" => date("Y-m-d H:i:s"),
+                "rie_actividad" => $this->input->post("actividades")
             );
             $id = $this->Riesgo_model->create($data);
             if (!empty($this->input->post("cargo"))):
@@ -115,7 +116,8 @@ class Riesgo extends My_Controller {
                 "estAce_id" => $this->input->post("estado"),
                 "col_id" => $this->input->post("color"),
                 "rie_fecha" => $this->input->post("fecha"),
-                "rie_fechaModificacion" => date("Y-m-d H:i:s")
+                "rie_fechaModificacion" => date("Y-m-d H:i:s"),
+                "rie_actividad" => $this->input->post("actividades")
             );
             $this->Riesgo_model->atualizarriesgo($this->input->post("rie_id"), $data);
             $this->Riesgocargo_model->eliminarcargoriesgo($this->input->post("rie_id"));
@@ -388,7 +390,8 @@ class Riesgo extends My_Controller {
                     "rie_descripcion" => $t->rie_descripcion,
                     "rie_fecha" => $t->rie_fecha,
                     "rieClaTip_tipo" => $t->rieClaTip_tipo,
-                    "rieCol_colorhtml" => $t->rieCol_colorhtml
+                    "rieCol_colorhtml" => $t->rieCol_colorhtml,
+                    "rie_actividad" => $t->rie_actividad
                 );
             }
             $this->output->set_content_type('application/json')->set_output(json_encode($i));

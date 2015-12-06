@@ -153,7 +153,7 @@
                         <label for="actividades"><span class="campoobligatorio">*</span>Actividades</label>
                     </div>    
                     <div class="col-lg-8 col-md-8 col-sx-8 col-sm-8 ">   
-                        <textarea name="actividades" id="actividades" class="form-control obligatorio"></textarea>
+                        <textarea name="actividades" id="actividades" class="form-control obligatorio"><?php echo ((!empty($riesgo->rie_actividad)) ? $riesgo->rie_actividad : ""); ?></textarea>
                     </div>
                 </div>
                 <div class="row">
