@@ -159,7 +159,7 @@ class Planes_model extends CI_Model {
         try {
             $sql = "
             select avaTar_id,tar_fechaInicio,Emp_Nombre,tip_tipo,tar_nombre,diferencia,tar_fechaFinalizacion
-            ,MAX(avaTar_fechaCreacion) as ultimafechacreacion,tar_id,progreso from (
+            ,MAX(avaTar_fechaCreacion) as ultimafechacreacion,tar_id,progreso,rieCla_id,tipRie_id from (
                     SELECT 
                     avance_tarea.avaTar_fechaCreacion as avaTar_fechaCreacion,
                     tarea.tar_id,
@@ -168,7 +168,7 @@ class Planes_model extends CI_Model {
                     `tipo`.`tip_tipo`, `tar_nombre`, `tarea`.`tar_fechaInicio`, 
                     `tarea`.`tar_fechaFinalizacion`, 
                     timestampdiff(HOUR, (tar_fechaInicio),(tar_fechaFinalizacion)) as diferencia, 
-                    `empleado`.`Emp_Nombre` 
+                    `empleado`.`Emp_Nombre`,tarea.rieCla_id,tarea.tipRie_id
                     FROM `planes` 
                     JOIN `tarea` ON `tarea`.`pla_id` = `planes`.`pla_id` 
                     LEFT JOIN `avance_tarea` ON `avance_tarea`.`tar_id` = `tarea`.`tar_id` 
@@ -388,6 +388,26 @@ class Planes_model extends CI_Model {
                 return '';
         } catch (exception $e) {
             
+        }
+    }
+    function obtener_tipo($id){
+        $this->db->where('rieClaTip_id',$id);
+        $datos=$this->db->get('riesgo_clasificacion_tipo');
+        $datos=$datos->result();
+        if(count($datos)){
+            return $datos[0]->rieClaTip_tipo;
+        }else{
+            return '';
+        }
+    }
+    function obtener_clasificacion($id){
+        $this->db->where('rieCla_id',$id);
+        $datos=$this->db->get('riesgo_clasificacion');
+        $datos=$datos->result();
+        if(count($datos)){
+            return $datos[0]->rieCla_categoria;
+        }else{
+            return '';
         }
     }
 

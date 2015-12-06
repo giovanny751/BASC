@@ -413,6 +413,14 @@ class Presentacion extends My_Controller {
         $this->load->model("User_model");
         echo $dato=$this->User_model->buscar_rol_usuario($this->input->post());
     }
+    function obtener_clasificacion($id){
+        $this->load->model('Planes_model');
+        return $this->Planes_model->obtener_clasificacion($id);
+    }
+    function obtener_tipo($id){
+        $this->load->model('Planes_model');
+        return $this->Planes_model->obtener_tipo($id);
+    }
 
 }
 
