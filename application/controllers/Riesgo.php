@@ -197,16 +197,36 @@ class Riesgo extends My_Controller {
 
     function estadosaceptacion() {
         $this->load->model("Estadoaceptacion_model");
-//        $this->data['estadoaceptacion'] = $this->Estadoaceptacion_model->detailandcolor();
+        $this->load->model("Color_model");
         
         $estadoaceptacion = $this->Estadoaceptacion_model->detailandcolor();
         $i = array();
         foreach ($estadoaceptacion as $es) {
-            $i[$es->estAce_id][$es->estAce_estado][$es->col_id] = $es->col_color;
+            if($es->col_id != null){
+                $i[$es->estAce_id][$es->estAce_estado][$es->col_id] = $es->col_color;
+            }else{
+                $i[$es->estAce_id][$es->estAce_estado] = null;
+            }
         }
         $this->data['estadoaceptacion'] = $i;
         $this->data['estadoaceptacionxcolor'] = $this->Estadoaceptacion_model->detail();
+        $this->data['color'] = $this->Color_model->detail();
         $this->layout->view("riesgo/estadosaceptacion", $this->data);
+    }
+    
+    function tablaestadosaceptacion(){
+        $this->load->model("Estadoaceptacion_model");
+        
+        $estadoaceptacion = $this->Estadoaceptacion_model->detailandcolor();
+        $i = array();
+        foreach ($estadoaceptacion as $es) {
+            if($es->col_id != null){
+                $i[$es->estAce_id][$es->estAce_estado][$es->col_id] = $es->col_color;
+            }else{
+                $i[$es->estAce_id][$es->estAce_estado] = null;
+            }
+        }
+        $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
 
     function guardaestadoaceptacion() {

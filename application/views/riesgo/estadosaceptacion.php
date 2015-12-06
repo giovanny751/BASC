@@ -1,8 +1,3 @@
-<style>
-    thead{
-        margin-top: 20px;
-    }
-</style>
 <div class="row">
     <div class="col-md-6">
         <div class="circuloIcon estado" title="Guardar" ><i class="fa fa-floppy-o fa-3x"></i></div>
@@ -26,7 +21,7 @@
         </div>
     </div>
     <div class="row">
-        <table class="tablesst">
+        <table class="tablesst" id="tablaPrincipal">
             <?php foreach ($estadoaceptacion as $id=>$es): ?>
                 <?php foreach ($es as $descripcionEstado=>$col): ?>
                     <thead>
@@ -35,21 +30,25 @@
                             <th><i class="fa fa-pencil-square-o fa-2x modificarEstado" title="Modificar Estado" estId="<?php echo $id ?>"></i></th>
                             <th><i class="fa fa-trash-o fa-2x eliminarEstado" title="Eliminar Estado" estId="<?php echo $id ?>" descripcion="<?php echo $descripcionEstado; ?>"></i></th>
                         </tr>
-                        <tr>
-                            <th width="80%"><b>Color</b></th>
-                            <th width="10%"><b>Editar</b></th>
-                            <th width="10%"><b>Eliminar</b></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($col as $colId=>$colColor): ?>
+                    <?php if($col != null){ ?>
                             <tr>
-                                <td><b><?php echo $colColor; ?></b></td>
-                                <td class="transparent"><i class="fa fa-pencil-square-o fa-2x modificarColor" title="Modificar Color" colId="<?php echo $colId ?>"></i></td>
-                                <td class="transparent"><i class="fa fa-trash-o fa-2x eliminarColor" title="Eliminar Color" colId="<?php echo $colId ?>" descripcion="<?php echo $colColor; ?>"></i></td>
+                                <th width="80%"><b>Color</b></th>
+                                <th width="10%"><b>Editar</b></th>
+                                <th width="10%"><b>Eliminar</b></th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($col as $colId=>$colColor): ?>
+                                <tr>
+                                    <td><b><?php echo $colColor; ?></b></td>
+                                    <td class="transparent"><i class="fa fa-pencil-square-o fa-2x modificarColor" title="Modificar Color" colId="<?php echo $colId ?>"></i></td>
+                                    <td class="transparent"><i class="fa fa-trash-o fa-2x eliminarColor" title="Eliminar Color" colId="<?php echo $colId ?>" descripcion="<?php echo $colColor; ?>"></i></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    <?php }else{ ?>
+                        </thead>
+                    <?php } ?>
                 <?php endforeach; ?>
             <?php endforeach; ?>
         </table>
@@ -67,11 +66,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-offset-2 col-sm-8">
-                            
-                        </div>
-                    </div>
-                    <div class="row">
                         <form class="form-horizontal" method="post" id="frmestadocolor">
                             <div class="form-group">
                                 <label for="estados" class="col-sm-offset-2 col-sm-2">Estados</label>
@@ -87,7 +81,12 @@
                             <div class="form-group">
                                 <label for="color" class="col-sm-offset-2 col-sm-2">Color</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="color" id="color" class="form-control">
+                                    <select name="color" id="color" class="form-control">
+                                        <option value="">::Seleccionar::</option>
+                                        <?php foreach ($color as $co): ?>
+                                            <option value="<?php echo $co->col_color ?>"><?php echo $co->col_color ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                         </form>
@@ -146,34 +145,16 @@
     </div>
 </div>
 <script>
-//    $('#estadoaceptacion').autocomplete({
-//        source: "<?php echo base_url("index.php/riesgo/autocompletarestadoaceptacion") ?>",
-//        minLength: 1
-//    });
     $("#estadoaceptacion, #color").keypress(function(key){
         if(key.charCode == 34){
             return false;
         }
     });
     $('#guardarmodificacion').click(function(){
-        
-        $.post(
-                "<?php echo base_url("index.php/riesgo/guardarcolorxestado") ?>",
-                $('#frmestadocolor').serialize()    
-                )
+        var url = "<?php echo base_url("index.php/riesgo/guardarcolorxestado") ?>";
+        $.post(url,$('#frmestadocolor').serialize())
                 .done(function(msg){
-                    
-                    $('#bodyestado *').remove();
-                    var fila = "";
-                    $.each(msg,function(key,val){
-                        fila += "<tr>";
-                        fila += "<td>"+val.estAce_estado+"</td>";
-                        fila += "<td>"+val.col_color+"</td>";
-                        fila += "<td></td>";
-                        fila += "<td></td>";
-                        fila += "</tr>";
-                    })
-                    $('#bodyestado').append(fila);
+                    actualizarTabla();
                     alerta("verde", "Estado guardada con exito");
                 }).fail(function(msg){
                     alerta("rojo","error en el sistema por favor comunicarse con el administrador");
@@ -182,46 +163,30 @@
     });
     //Guardar Estado
     $('.estado').click(function () {
-
+        var url = "<?php echo base_url("index.php/riesgo/guardaestadoaceptacion") ?>";
         var estadoaceptacion = $('#estadoaceptacion').val();
-
-        $.post("<?php echo base_url("index.php/riesgo/guardaestadoaceptacion") ?>",
-                {estadoaceptacion: estadoaceptacion}
-        ).done(function (msg) {
-            if (msg != 1) {
-                $('#bodyestado *').remove();
-                var body = "";
-                $.each(msg, function (key, val) { 
-                    $('#bodyestado').remove();
-                    if(val.col_id == null || val.col_id == '' ){
-                        if(val.estAce_estado != ""){
-                            body += "<thead>";  
-                            body += "<tr>";
-                            body += "<th colspan='4' style='text-align:center'>" + val.estAce_estado + "</th>";
-                            body += "</tr>";
-                            body += "</thead>"; 
-                        }
-                    }else{
-                        body += "<tr>";
-                        body += "<td>"+val.estAce_estado+"</td>";
-                        body += "<td>" + val.col_color+"</td>";
-                        body += "<td></td>";
-                        body += "<td></td>";
-                        body += "</tr>";
-                    }
-                    
-                });
-                $('.tablesst').append(body);
-                $('#estadoaceptacion').val(''); 
-                alerta("verde", "Estado guardado con exito")
-            } else {
-                alerta("amarillo","Estado ya existe en el sistema")
-            }
-        })
-                .fail(function (msg) {
-alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
-                })
-                ;
+        $.post(url,{estadoaceptacion: estadoaceptacion})
+            .done(function (msg) {
+                if (msg != 1) {
+                    var select = "<option value=''>::Seleccionar::</option>";
+                    $.each(msg,function(id,val){
+                        select += "<option value='"+id+"'>" + val.estAce_estado + "</option>";
+                    })
+                    //Restauramos el select
+                    $("#estados").html(select);
+                    //Actualizamos tabla
+                    actualizarTabla();
+                    //Dejamos en blanco el campo
+                    $('#estadoaceptacion').val(''); 
+                    //Alerta
+                    alerta("verde", "Estado guardado con exito")
+                } else {
+                    alerta("amarillo","Estado ya existe en el sistema")
+                }
+            })
+            .fail(function (msg) {
+                alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
+            });
     });
     //--------------------------------------------------------------------------
     //                                  ESTADO
@@ -337,7 +302,44 @@ alerta("rojo", "Error por favor comunicarse con el administrador del sistema");
     //                                  TABLA
     //--------------------------------------------------------------------------
     function actualizarTabla(){
-        
+        var url = "<?php echo base_url("index.php/riesgo/tablaestadosaceptacion") ?>";
+        $.post(url)
+                .done(function(msg){
+                    var table = "";
+                    $.each(msg,function(id,es){
+                        $.each(es,function(descripcionEstado,col){
+                            table += "<thead>";
+                            table += "<tr>";
+                            table += "<th><b>" + descripcionEstado + "</b></th>";
+                            table += "<th><i class='fa fa-pencil-square-o fa-2x modificarEstado' title='Modificar Estado' estId='" + id + "'></i></th>";
+                            table += "<th><i class='fa fa-trash-o fa-2x eliminarEstado' title='Eliminar Estado' estId='" + id + "' descripcion='" + descripcionEstado +"'></i></th>";
+                            table += "<tr>";
+                            if(col != null){
+                                table += "<tr>";
+                                table += "<th width='80%'><b>Color</b></th>";
+                                table += "<th width='10%'><b>Editar</b></th>";
+                                table += "<th width='10%'><b>Eliminar</b></th>";
+                                table += "</tr>";
+                                table += "</thead>";
+                                table += "<tbody>";
+                                $.each(col,function(colId,colColor){
+                                    table += "<tr>";
+                                    table += "<td><b>" + colColor + "</b></td>";
+                                    table += "<td class='transparent'><i class='fa fa-pencil-square-o fa-2x modificarColor' title='Modificar Color' colId='"+ colId +"'></i></td>";
+                                    table += "<td class='transparent'><i class='fa fa-trash-o fa-2x eliminarColor' title='Eliminar Color' colId='"+colId+"' descripcion='"+colColor+"'></i></td>";
+                                    table += "</tr>";
+                                });
+                                table += "</tbody>";
+                            }else{
+                                table += "</thead>";
+                            }
+                        });
+                    });
+                    $("#tablaPrincipal").html(table);
+                })
+                .fail(function(msg){
+                    alerta("rojo","Error cargar tabla");
+                })
     }
     
     
