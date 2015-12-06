@@ -426,7 +426,7 @@ $('document').ready(function(){
             $('#color *').remove();
             var option = "<option value=''>::Seleccionar::</option>"
             $.each(msg, function (key, val) {
-                option += "<option value='" + val.col_id + "'>" + val.col_color + "</option>";
+                option += "<option value='" + val.estAceCol_id + "'>" + val.rieCol_color + "</option>";
             })
             $('#color').append(option);
         }).fail(function (msg) {

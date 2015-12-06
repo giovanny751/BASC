@@ -42,7 +42,7 @@
                                 <tr>
                                     <td><b><?php echo $colColor; ?></b></td>
                                     <td class="transparent"><i class="fa fa-pencil-square-o fa-2x modificarColor" title="Modificar Color" colId="<?php echo $colId ?>"></i></td>
-                                    <td class="transparent"><i class="fa fa-trash-o fa-2x eliminarColor" title="Eliminar Color" colId="<?php echo $colId ?>" descripcion="<?php echo $colColor; ?>"></i></td>
+                                    <td class="transparent"><i class="fa fa-trash-o fa-2x eliminarColor" title="Eliminar Color" colId="<?php echo $colId ?>" estId="<?php echo $id ?>"></i></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -84,7 +84,7 @@
                                     <select name="color" id="color" class="form-control">
                                         <option value="">::Seleccionar::</option>
                                         <?php foreach ($color as $co): ?>
-                                            <option value="<?php echo $co->col_color ?>"><?php echo $co->col_color ?></option>
+                                            <option value="<?php echo $co->rieCol_id ?>"><?php echo $co->rieCol_color ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -133,7 +133,12 @@
                             <div class="form-group">
                                 <label for="editarNuevoColor" class="col-sm-offset-2 col-sm-2">Color</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="editarNuevoColor" id="editarNuevoColor" class="form-control">
+                                    <select name="editarNuevoColor" id="editarNuevoColor" class="form-control">
+                                        <option value="">::Seleccionar::</option>
+                                        <?php foreach ($color as $co): ?>
+                                            <option value="<?php echo $co->rieCol_id ?>"><?php echo $co->rieCol_color ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                                 <input type="hidden" id="editarNuevoColorId" name="editarNuevoColorId" />
                             </div>
@@ -154,12 +159,16 @@
         var url = "<?php echo base_url("index.php/riesgo/guardarcolorxestado") ?>";
         $.post(url,$('#frmestadocolor').serialize())
                 .done(function(msg){
-                    actualizarTabla();
-                    alerta("verde", "Estado guardada con exito");
+                    if (msg != 1) {
+                        actualizarTabla();
+                        $("#nuevoColor").modal("hide");
+                        alerta("verde", "Estado guardada con exito");
+                    } else {
+                        alerta("amarillo","El color ya existe en este estado")
+                    }
                 }).fail(function(msg){
                     alerta("rojo","error en el sistema por favor comunicarse con el administrador");
                 });
-        
     });
     //Guardar Estado
     $('.estado').click(function () {
@@ -170,7 +179,7 @@
                 if (msg != 1) {
                     var select = "<option value=''>::Seleccionar::</option>";
                     $.each(msg,function(id,val){
-                        select += "<option value='"+id+"'>" + val.estAce_estado + "</option>";
+                        select += "<option value='"+val.estAce_id+"'>" + val.estAce_estado + "</option>";
                     })
                     //Restauramos el select
                     $("#estados").html(select);
@@ -229,6 +238,12 @@
         $.post(url,envio)
                 .done(function(msg){
                     if(msg != 1){
+                        var select = "<option value=''>::Seleccionar::</option>";
+                        $.each(msg,function(id,val){
+                            select += "<option value='"+val.estAce_id+"'>" + val.estAce_estado + "</option>";
+                        })
+                        //Restauramos el select
+                        $("#estados").html(select);
                         //Actualizamos tabla
                         actualizarTabla();
                         //Cerramos Modal
@@ -249,9 +264,9 @@
     $("body").on("click",".eliminarColor",function(){
         if(confirm("Deseas eliminar este Color?")){
             var idColor = $(this).attr("colId");
-            var descripcion = $(this).attr("descripcion");
+            var idEstado = $(this).attr("estId");
             var url = "<?php echo base_url("index.php/riesgo/eliminacolor") ?>";
-            $.post(url,{idColor:idColor,descripcion:descripcion})
+            $.post(url,{idColor:idColor,idEstado:idEstado})
                     .done(function(msg){
                         //Actualizamos tabla
                         actualizarTabla();
@@ -269,7 +284,7 @@
         var url = "<?php echo base_url("index.php/riesgo/consultacolor") ?>";
         $.post(url,{idColor:idColor})
                 .done(function(msg){
-                        $("#editarNuevoColor").val(msg.col_color);
+                        $("#editarNuevoColor").val(msg.rieCol_id);
                         $("#editarNuevoColorId").val(idColor);
                         $("#editarColor").modal("toggle");
                 })
@@ -277,7 +292,7 @@
                     alerta("rojo","Error consultar color");
                 })
     });
-    //Editar Estado
+    //Editar Color
     $("body").on("click","#guardarNuevoColor",function(){
         var url = "<?php echo base_url("index.php/riesgo/actualizarcolor") ?>";
         var envio = $("#frmEditarNuevoColor").serialize();
@@ -326,7 +341,7 @@
                                     table += "<tr>";
                                     table += "<td><b>" + colColor + "</b></td>";
                                     table += "<td class='transparent'><i class='fa fa-pencil-square-o fa-2x modificarColor' title='Modificar Color' colId='"+ colId +"'></i></td>";
-                                    table += "<td class='transparent'><i class='fa fa-trash-o fa-2x eliminarColor' title='Eliminar Color' colId='"+colId+"' descripcion='"+colColor+"'></i></td>";
+                                    table += "<td class='transparent'><i class='fa fa-trash-o fa-2x eliminarColor' title='Eliminar Color' colId='"+colId+"' estId='" + id + "'></i></td>";
                                     table += "</tr>";
                                 });
                                 table += "</tbody>";

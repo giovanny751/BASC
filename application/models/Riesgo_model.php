@@ -44,6 +44,7 @@ class Riesgo_model extends CI_Model {
 
     function filtrobusqueda($cargo, $categoria, $dimension, $dimension2, $tipo) {
         try {
+            
             if (!empty($cargo))
                 $this->db->where("riesgo_cargo.rieCar_id", $cargo);
             if (!empty($categoria))
@@ -54,9 +55,10 @@ class Riesgo_model extends CI_Model {
                 $this->db->where("riesgo.dim1_id", $dimension);
             if (!empty($tipo))
                 $this->db->where("riesgo.rieClaTip_id", $tipo);
+            
             $this->db->select("riesgo.rie_id");
-            $this->db->select("dimension2.dim_descripcion des2");
-            $this->db->select("dimension.dim_descripcion des1");
+            $this->db->select("dimension2.dim_descripcion as des2");
+            $this->db->select("dimension.dim_descripcion as des1");
             $this->db->select("estado_aceptacion.estAce_estado as estado");
             $this->db->select("riesgo.rie_zona");
             $this->db->select("riesgo.rie_descripcion");
@@ -64,13 +66,14 @@ class Riesgo_model extends CI_Model {
             $this->db->select("riesgo_clasificacion_tipo.rieClaTip_tipo");
             $this->db->select("riesgo_clasificacion.rieCla_id");
             $this->db->select("riesgo_clasificacion.rieCla_categoria");
-            $this->db->join("riesgo_clasificacion", "riesgo_clasificacion.rieCla_id = riesgo.rieCla_id");
-            $this->db->join("riesgo_clasificacion_tipo", "riesgo_clasificacion_tipo.rieClaTip_id = riesgo.rieClaTip_id ", "left");
-            $this->db->join("dimension2", "dimension2.dim_id = riesgo.dim2_id","LEFT");
-            $this->db->join("dimension", "dimension.dim_id = riesgo.dim1_id","LEFT");
-            $this->db->join("estado_aceptacion", "estado_aceptacion.estAce_id = riesgo.estAce_id","LEFT");
+            $this->db->join("riesgo_clasificacion", "riesgo_clasificacion.rieCla_id = riesgo.rieCla_id","left");
+            $this->db->join("riesgo_clasificacion_tipo", "riesgo_clasificacion_tipo.rieClaTip_id = riesgo.rieClaTip_id", "left");
+            $this->db->join("dimension2", "dimension2.dim_id = riesgo.dim2_id","left");
+            $this->db->join("dimension", "dimension.dim_id = riesgo.dim1_id","left");
+            $this->db->join("estado_aceptacion", "estado_aceptacion.estAce_id = riesgo.estAce_id","left");
             $riesgo = $this->db->get("riesgo");
-//            echo $this->db->last_query();die;
+            
+            //echo $this->db->last_query();
             return $riesgo->result();
         } catch (exception $e) {
             

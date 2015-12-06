@@ -45,9 +45,14 @@ class Estadoaceptacion_model extends CI_Model {
     function delete($id,$estado) {
         //Confirmamos si es el id que deseamos eliminar con el estado
         try {
-            $this->db->where("estAce_estado", $estado);
-            $this->db->where("estAce_id",$id);
+            $this->db->where("estado_aceptacion.estAce_estado", $estado);
+            $this->db->where("estado_aceptacion.estAce_id",$id);
             $this->db->delete("estado_aceptacion");
+            
+            //Eliminar Hijos
+            $this->db->where("estado_aceptacion_color.estAce_id",$id);
+            $this->db->delete("estado_aceptacion_color");
+            
         } catch (exception $e) {
             
         }
@@ -66,11 +71,12 @@ class Estadoaceptacion_model extends CI_Model {
         try {
             $this->db->select("estado_aceptacion.estAce_id");
             $this->db->select("estado_aceptacion.estAce_estado");
-            $this->db->select("color.col_color");
-            $this->db->select("color.col_id");
-            $this->db->join("color", "color.estAce_id = estado_aceptacion.estAce_id", "LEFT");
+            $this->db->select("estado_aceptacion_color.estAceCol_id");
+            $this->db->select("riesgo_color.rieCol_color");
+            $this->db->join("estado_aceptacion_color", "estado_aceptacion_color.estAce_id = estado_aceptacion.estAce_id", "LEFT");
+            $this->db->join("riesgo_color", "riesgo_color.rieCol_id = estado_aceptacion_color.rieCol_id", "LEFT");
             $this->db->order_by("estado_aceptacion.estAce_id","asc");
-            $this->db->order_by("color.col_id","asc");
+            $this->db->order_by("estado_aceptacion_color.estAceCol_id","asc");
             $aceptacion = $this->db->get("estado_aceptacion");
             return $aceptacion->result();
         } catch (exception $e) {
