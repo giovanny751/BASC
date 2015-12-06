@@ -166,6 +166,15 @@ class Registrocarpeta_model extends CI_Model {
             
         }
     }
+    function detailxriesgocarpetas($rie_id){
+        try {
+        $this->db->where("registro_carpeta.rie_id",$rie_id);
+        $carpeta = $this->db->get("registro_carpeta");
+        return $carpeta->result();
+        } catch (exception $e) {
+            
+        }
+    }
     function allfolders(){
         try {
         $carpeta = $this->db->get("registro_carpeta");

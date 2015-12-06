@@ -34,6 +34,7 @@ class Riesgo extends My_Controller {
         $this->data['cargo'] = $this->Cargo_model->detail();
         if (!empty($this->data['empresa'][0]->Dim_id) && !empty($this->data['empresa'][0]->Dimdos_id)) {
             if (!empty($this->input->post("rie_id"))) {
+                $this->data['carpetas'] = $this->Registrocarpeta_model->detailxriesgocarpetas($this->input->post('rie_id'));
                  $carpeta = $this->Registrocarpeta_model->detailxriesgo($this->input->post('rie_id'));
                 $d = array();
                 foreach ($carpeta as $c) {

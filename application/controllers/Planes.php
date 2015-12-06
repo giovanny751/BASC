@@ -270,6 +270,12 @@ class Planes extends My_Controller {
         $data = $this->Actividadpadre_model->detailxplaid($this->input->post("pla_id"));
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
+    function detailxrieid(){
+        
+        $this->load->model("Actividadpadre_model");
+        $data = $this->Actividadpadre_model->detailxplaid($this->input->post("rie_id"));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
     
     function eliminar_actividad_hijo(){
         $this->load->model('Registro_model');

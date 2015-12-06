@@ -334,9 +334,11 @@
                                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar . 'r'; ?>" aria-expanded="false" id=""> 
                                                                         <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
                                                                     </a>
-                                                                    <i class="fa fa-file-archive-o nuevoregistro"  data-toggle="modal" data-target="#myModal15" car_id="<?php echo $idcar ?>"></i>
-                                                                    <i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
-                                                                    <i class="fa fa-times eliminarcarpeta" tipo="r" title="Eliminar" car_id="<?php echo $idcar ?>"></i>
+                                                                    <div class="posicionIconoAcordeon">
+                                                                        <i class="fa fa-file-archive-o nuevoregistro"  data-toggle="modal" data-target="#myModal15" car_id="<?php echo $idcar ?>"></i>
+                                                                        <i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
+                                                                        <i class="fa fa-times eliminarcarpeta" tipo="r" title="Eliminar" car_id="<?php echo $idcar ?>"></i>
+                                                                    </div>
                                                                 </h4>
                                                             </div>
                                                             <div id="collapse_<?php echo $idcar . 'r'; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -464,7 +466,7 @@
                                         <select id="carpeta" name="carpeta" class="form-control ">
                                             <option value="">::Seleccionar::</option>
                                             <?php foreach ($carpetas as $carp): ?>
-                                                <option value="<?php echo $carp->regCar_id ?>"><?php echo $carp->regCar_nombre ?></option>
+                                                <option value="<?php echo $carp->regCar_id ?>"><?php echo $carp->regCar_nombre." ".$carp->regCar_descripcion ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -505,31 +507,7 @@
 <?php endif; ?>
 </div>
 <script>
-    $('body').delegate(".carpeta", "click", function () {
-        var pla_id = $('#pla_id').val();
-        var car_id = $(this).attr('car_id');
-        $("#idpadre *").remove();
-        $.post(
-                "<?php echo base_url("index.php/planes/detailxplaid") ?>"
-                , {pla_id: pla_id}
-        ).done(function (msg) {
-            var option = "<option value=''>::Seleccionar::</option>";
-            $.each(msg, function (key, val) {
-                option += "<option " + ((car_id == val.actPad_id) ? "selected" : "") + " value='" + val.actPad_id + "'>" + val.actPad_nombre + " - " + val.actPad_codigo + "</option>"
-            });
 
-            $("#idpadre").append(option);
-        }).fail(function (msg) {
-            alerta("rojo", "Error, favor comunicarse con el administrador del sistema");
-        });
-
-        $('#eliminaractividad').remove();
-        $('#actPad_id').remove();
-        $('#nombrecarpeta').val("");
-        $('#descripcioncarpeta').val("");
-        $('.modificaractividad').replaceWith('<button class="btn btn-primary" id="guardaractividadpadre" type="button">Guardar</button>');
-
-    });
     $('body').delegate(".eliminarcarpeta", "click", function() {
         if (confirm("Confirma la eliminación")) {
             var carpeta = $(this).attr("car_id");
@@ -570,7 +548,7 @@
             $.post("<?php echo base_url("index.php/planes/guardarcarpetaregistroriesgo") ?>",
                     $('#frmcarpetaregistro').serialize()
                     ).done(function(msg) {
-                var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>"
+                var option = "<option value='" + msg.uno + "'>" + msg.dos +" "+msg.tres+"</option>"
                 var contenido = "<table class='tablesst'>\n\
                                         <thead>\n\
                                             <th>Nombre de archivo</th>\n\
@@ -652,13 +630,13 @@
                                                     <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.uno + destino + '" aria-expanded="false">\n\
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.dos + " - " + msg.tres + '\n\
                                                     </a>\n\
-                                                    <div class="posicionIconoActividad">';
-        if (destino == 'c')
-            acordeon += '<i class="fa fa-file-o carpeta nuevo_hijo" data-toggle="modal" data-target="#myModal8" title="ACTIVIDAD HIJO" car_id="' + msg.uno + '"></i> ';
-        if (destino == 'r')
-            acordeon += '<i class="fa fa-file-archive-o nuevoregistro"   data-toggle="modal" data-target="#myModal15" car_id="' + msg.uno + '"></i> ';
+                                                    <div class="posicionIconoAcordeon">';
+                                                        if (destino == 'c')
+                                                            acordeon += '<i class="fa fa-file-o carpeta nuevo_hijo" data-toggle="modal" data-target="#myModal8" title="ACTIVIDAD HIJO" car_id="' + msg.uno + '"></i> ';
+                                                        if (destino == 'r')
+                                                            acordeon += '<i class="fa fa-file-archive-o nuevoregistro"   data-toggle="modal" data-target="#myModal15" car_id="' + msg.uno + '"></i> ';
 
-        acordeon += '<i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
+                                                        acordeon += '<i class="fa fa-edit ' + clase + '" car_id="' + msg.uno + '"></i>\n\
                                                         <i class="fa fa-times eliminarcarpeta" title="Eliminar" tipo="' + destino + '" car_id="' + msg.uno + '"></i>\n\
                                                     </div>\n\
                                                 </h4>\n\
