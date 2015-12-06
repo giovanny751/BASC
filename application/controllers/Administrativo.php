@@ -876,6 +876,7 @@ class Administrativo extends My_Controller {
     public function subir_archivo() {
         ini_set('MAX_EXECUTION_TIME', -1);
         ini_set('memory_limit', -1);
+        $this->load->model("Empleado_model");
         $uploaddir = './uploads';
         if (isset($_FILES['file'])) {
             $uploadfile = $uploaddir . '/' . basename($_FILES['file']['name']);
@@ -894,38 +895,63 @@ class Administrativo extends My_Controller {
         $excel = PHPExcel_IOFactory::load($uploadfile)->setActiveSheetIndex(0);
 //        $myfile = fopen($uploaddir . "/" . $_FILES['file']['name'] . ".txt", "w"); //Log de errores
         $lastRow = $excel->getHighestRow();
+        $creados = 0;
+        $actulizados = 0;
+        $registros=0;
+        for ($row = 10; $row <= $lastRow; $row++) {
+            $registros++;
+            $info = array();
+            $info['Emp_Cedula'] = $excel->getCell('A' . $row)->getValue();
+            $info['Emp_Nombre'] = $excel->getCell('B' . $row)->getValue();
+            $info['Emp_Apellidos'] = $excel->getCell('C' . $row)->getValue();
+            $info['sex_Id'] = $excel->getCell('D' . $row)->getValue();
+            $info['Emp_FechaNacimiento'] = $excel->getCell('E' . $row)->getValue();
+            $info['Emp_Estatura'] = $excel->getCell('F' . $row)->getValue();
+            $info['Emp_Peso'] = $excel->getCell('G' . $row)->getValue();
+            $info['Emp_Telefono'] = $excel->getCell('H' . $row)->getValue();
+            $info['Emp_Direccion'] = $excel->getCell('I' . $row)->getValue();
+            $info['Emp_TelefonoContacto'] = $excel->getCell('J' . $row)->getValue();
+            $info['Emp_Email'] = $excel->getCell('K' . $row)->getValue();
+            $info['EstCiv_id'] = $excel->getCell('L' . $row)->getValue();
+            if (($excel->getCell('M' . $row)->getValue()) != '')
+                $info['TipCon_Id'] = $this->Empleado_model->buscar_tipo_contrato($excel->getCell('M' . $row)->getValue());
+            $info['Emp_FechaInicioContrato'] = $excel->getCell('N' . $row)->getValue();
+            $info['Emp_FechaFinContrato'] = $excel->getCell('O' . $row)->getValue();
+            $info['Emp_PlanObligatorioSalud'] = $excel->getCell('P' . $row)->getValue();
+            $info['Emp_FechaAfiliacionArl'] = $excel->getCell('Q' . $row)->getValue();
+            if (($excel->getCell('R' . $row)->getValue()) != '')
+                $info['TipAse_Id'] = $this->Empleado_model->buscar_tipo_aseguradora($excel->getCell('R' . $row)->getValue());
+            if (($excel->getCell('S' . $row)->getValue()) != '')
+                $info['Ase_Id'] = $this->Empleado_model->buscar_aseguradora($excel->getCell('S' . $row)->getValue(), $info['TipAse_Id']);
+            if (($excel->getCell('T' . $row)->getValue()) != '')
+                $info['Dim_id'] = $this->Empleado_model->buscar_dimencion1($excel->getCell('T' . $row)->getValue());
+            if (($excel->getCell('U' . $row)->getValue()) != '')
+                $info['Dim_IdDos'] = $this->Empleado_model->buscar_dimencion2($excel->getCell('U' . $row)->getValue());
+            if (($excel->getCell('V' . $row)->getValue()) != '')
+                $info['Car_id'] = $this->Empleado_model->cargo($excel->getCell('V' . $row)->getValue());
+//            $info['Emp_codigo'] = $excel->getCell('W' . $row)->getValue();
+            if (($excel->getCell('W' . $row)->getValue()) != '')
+                $info['TipDoc_id'] = $this->Empleado_model->tipo_documento($excel->getCell('W' . $row)->getValue());
+            $info['Est_id'] = $excel->getCell('X' . $row)->getValue();
+            $info['emp_fondo'] = $excel->getCell('Y' . $row)->getValue();
+            $info['Emp_contacto'] = $excel->getCell('Z' . $row)->getValue();
 
-$info=array();
-        for ($row = 2; $row <= $lastRow; $row++) {
-            $info[$row]['Emp_Cedula']=$excel->getCell('A' . $row)->getValue();
-            $info[$row]['Emp_Nombre']=$excel->getCell('B' . $row)->getValue();
-            $info[$row]['Emp_Apellidos']=$excel->getCell('C' . $row)->getValue();
-            $info[$row]['sex_Id']=$excel->getCell('D' . $row)->getValue();
-            $info[$row]['Emp_FechaNacimiento']=$excel->getCell('E' . $row)->getValue();
-            $info[$row]['Emp_Estatura']=$excel->getCell('F' . $row)->getValue();
-            $info[$row]['Emp_Peso']=$excel->getCell('G' . $row)->getValue();
-            $info[$row]['Emp_Telefono']=$excel->getCell('H' . $row)->getValue();
-            $info[$row]['Emp_Direccion']=$excel->getCell('I' . $row)->getValue();
-            $info[$row]['Emp_TelefonoContacto']=$excel->getCell('J' . $row)->getValue();
-            $info[$row]['Emp_Email']=$excel->getCell('K' . $row)->getValue();
-            $info[$row]['EstCiv_id']=$excel->getCell('L' . $row)->getValue();
-            $info[$row]['TipCon_Id']=$excel->getCell('M' . $row)->getValue();
-            $info[$row]['Emp_FechaInicioContrato']=$excel->getCell('N' . $row)->getValue();
-            $info[$row]['Emp_FechaFinContrato']=$excel->getCell('O' . $row)->getValue();
-            $info[$row]['Emp_PlanObligatorioSalud']=$excel->getCell('P' . $row)->getValue();
-            $info[$row]['Emp_FechaAfiliacionArl']=$excel->getCell('Q' . $row)->getValue();
-            $info[$row]['TipAse_Id']=$excel->getCell('R' . $row)->getValue();
-            $info[$row]['Ase_Id']=$excel->getCell('S' . $row)->getValue();
-            $info[$row]['Dim_id']=$excel->getCell('T' . $row)->getValue();
-            $info[$row]['Dim_IdDos']=$excel->getCell('U' . $row)->getValue();
-            $info[$row]['Car_id']=$excel->getCell('V' . $row)->getValue();
-            $info[$row]['Emp_codigo']=$excel->getCell('W' . $row)->getValue();
-            $info[$row]['TipDoc_id']=$excel->getCell('X' . $row)->getValue();
-            $info[$row]['Est_id']=$excel->getCell('Y' . $row)->getValue();
-            $info[$row]['emp_fondo']=$excel->getCell('Z' . $row)->getValue();
-            $info[$row]['Emp_contacto']=$excel->getCell('AA' . $row)->getValue();
+            $this->db->select('Emp_Id');
+            $this->db->where('Emp_Cedula', $info['Emp_Cedula']);
+            $datos = $this->db->get('empleado');
+            $datos = $datos->result();
+            if (count($datos)) {
+                $this->db->where('Emp_Cedula', $info['Emp_Cedula']);
+                $this->db->update('empleado', $info);
+                $actulizados++;
+            } else{
+                $this->db->insert('empleado', $info);
+                $creados++;
+            }
         }
-        $this->db->insert_batch('empleado',$info);
+        echo "<p><br>Numero de registros: ".$registros;
+        echo "<br>Registros actualizados : ".$actulizados;
+        echo "<br>Registros Creados : ".$creados;
     }
 
 }

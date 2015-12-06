@@ -194,6 +194,103 @@ class Empleado_model extends CI_Model {
         }
     }
 
+    function buscar_tipo_contrato($nombre_contrato) {
+        $this->db->select('TipCon_Id');
+        $this->db->like('TipCon_Descripcion', $nombre_contrato);
+        $datos = $this->db->get('tipo_contrato');
+        $datos = $datos->result();
+        if (count($datos)) {
+            return $datos[0]->TipCon_Id;
+        } else {
+            $this->db->set('TipCon_Descripcion', $nombre_contrato);
+            $this->db->insert('tipo_contrato');
+            return $this->db->insert_id();
+        }
+    }
+
+    function buscar_tipo_aseguradora($nombre) {
+        $this->db->select('TipAse_Id');
+        $this->db->like('TipAse_Nombre', $nombre);
+        $datos = $this->db->get('tipo_aseguradora');
+        $datos = $datos->result();
+        if (count($datos)) {
+            return $datos[0]->TipAse_Id;
+        } else {
+            $this->db->set('TipAse_Nombre', $nombre);
+            $this->db->insert('tipo_aseguradora');
+            return $this->db->insert_id();
+        }
+    }
+    function buscar_dimencion1($nombre) {
+        $this->db->select('dim_id');
+        $this->db->like('dim_descripcion', $nombre);
+        $datos = $this->db->get('dimension');
+        $datos = $datos->result();
+        if (count($datos)) {
+            return $datos[0]->dim_id;
+        } else {
+            $this->db->set('est_id', 1);
+            $this->db->set('dim_descripcion', $nombre);
+            $this->db->insert('dimension');
+            return $this->db->insert_id();
+        }
+    }
+    function buscar_dimencion2($nombre) {
+        $this->db->select('dim_id');
+        $this->db->like('dim_descripcion', $nombre);
+        $datos = $this->db->get('dimension2');
+        $datos = $datos->result();
+        if (count($datos)) {
+            return $datos[0]->dim_id;
+        } else {
+            $this->db->set('est_id', 1);
+            $this->db->set('dim_descripcion', $nombre);
+            $this->db->insert('dimension2');
+            return $this->db->insert_id();
+        }
+    }
+    function tipo_documento($nombre) {
+        echo $nombre;
+        $this->db->select('tipDoc_id');
+        $this->db->like('tipDoc_Descripcion', $nombre);
+        $datos = $this->db->get('tipo_documento');
+        $datos = $datos->result();
+        if (count($datos)) {
+            return $datos[0]->tipDoc_id;
+        } else {
+            $this->db->set('tipDoc_Descripcion', $nombre);
+            $this->db->insert('tipo_documento');
+            return $this->db->insert_id();
+        }
+    }
+    function cargo($nombre) {
+        $this->db->select('car_id');
+        $this->db->like('car_nombre', $nombre);
+        $datos = $this->db->get('cargo');
+        $datos = $datos->result();
+        if (count($datos)) {
+            return $datos[0]->car_id;
+        } else {
+            return '';
+        }
+    }
+
+    function buscar_aseguradora($nombre, $tipo) {
+        $this->db->select('ase_id');
+        $this->db->like('ase_nombre', $nombre);
+        $this->db->like('tipAse_id', $tipo);
+        $datos = $this->db->get('aseguradoras');
+        $datos = $datos->result();
+        if (count($datos)) {
+            return $datos[0]->ase_id;
+        } else {
+            $this->db->set('ase_nombre', $nombre);
+            $this->db->set('tipAse_id', $tipo);
+            $this->db->insert('aseguradoras');
+            return $this->db->insert_id();
+        }
+    }
+
 }
 
 ?>
