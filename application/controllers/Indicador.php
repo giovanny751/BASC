@@ -199,9 +199,10 @@ class Indicador extends My_Controller {
         $this->load->model("Indicadorvalores_model");
         $data = array(
                     "indVal_comentario"=>$this->input->post("comentarios"),
-                    "usu_id"=>$this->input->post("usuario"),
+                    "usu_id"=>$this->data["usu_id"],
                     "indVal_valor"=>$this->input->post("valor"),
                     "ind_id"=>$this->input->post("ind_id"),
+                    "indVal_fecha"=>$this->input->post("fecha"),
                     "usu_idcreacion"=>$this->data["usu_id"],
                     "indVal_unidad"=>$this->input->post("unidad"),
                     "indVal_fechaCreacion"=>date("Y-m-d H:i:s")
