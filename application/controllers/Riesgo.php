@@ -23,9 +23,9 @@ class Riesgo extends My_Controller {
         $this->load->model("Riesgo_model");
         $this->load->model("Tipo_model");
         $this->load->model("Riesgoclasificaciontipo_model");
-        
+
         $this->load->model("Estadoaceptacioncolor_model");
-        
+
         $this->load->model("Riesgocargo_model");
         $this->load->model("Cargo_model");
         $this->data['categoria'] = $this->Riesgoclasificacion_model->detail();
@@ -157,7 +157,7 @@ class Riesgo extends My_Controller {
 
     function consultatiporiesgo() {
 
-            $this->load->model("Riesgoclasificaciontipo_model");
+        $this->load->model("Riesgoclasificaciontipo_model");
         $data = $this->Riesgoclasificaciontipo_model->tipoxcategoria($this->input->post("categoria"));
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
@@ -201,13 +201,13 @@ class Riesgo extends My_Controller {
         $this->load->model("Estadoaceptacion_model");
         $this->load->model("Estadoaceptacioncolor_model");
         $this->load->model("Riesgocolor_model");
-        
+
         $estadoaceptacion = $this->Estadoaceptacion_model->detailandcolor();
         $i = array();
         foreach ($estadoaceptacion as $es) {
-            if($es->estAceCol_id != null){
+            if ($es->estAceCol_id != null) {
                 $i[$es->estAce_id][$es->estAce_estado][$es->estAceCol_id] = $es->rieCol_color;
-            }else{
+            } else {
                 $i[$es->estAce_id][$es->estAce_estado] = null;
             }
         }
@@ -216,16 +216,16 @@ class Riesgo extends My_Controller {
         $this->data['color'] = $this->Riesgocolor_model->detail();
         $this->layout->view("riesgo/estadosaceptacion", $this->data);
     }
-    
-    function tablaestadosaceptacion(){
+
+    function tablaestadosaceptacion() {
         $this->load->model("Estadoaceptacion_model");
-        
+
         $estadoaceptacion = $this->Estadoaceptacion_model->detailandcolor();
         $i = array();
         foreach ($estadoaceptacion as $es) {
-            if($es->estAceCol_id != null){
+            if ($es->estAceCol_id != null) {
                 $i[$es->estAce_id][$es->estAce_estado][$es->estAceCol_id] = $es->rieCol_color;
-            }else{
+            } else {
                 $i[$es->estAce_id][$es->estAce_estado] = null;
             }
         }
@@ -245,16 +245,17 @@ class Riesgo extends My_Controller {
             echo 1;
         }
     }
+
     function consultaestadoaceptacion() {
         $this->load->model("Estadoaceptacion_model");
         $this->data["idDescripcion"] = $this->Estadoaceptacion_model->consult($this->input->post("idEstado"));
         $this->output->set_content_type('application/json')->set_output(json_encode($this->data['idDescripcion'][0]));
     }
-    
+
     function actualizarestadoaceptacion() {
         $this->load->model("Estadoaceptacion_model");
-        if (empty($this->Estadoaceptacion_model->consultxnamexid($this->input->post("editarNuevoEstado"),$this->input->post("EditarNuevoEstadoId")))) {
-            $this->Estadoaceptacion_model->update($this->input->post("editarNuevoEstado"),$this->input->post("EditarNuevoEstadoId"));
+        if (empty($this->Estadoaceptacion_model->consultxnamexid($this->input->post("editarNuevoEstado"), $this->input->post("EditarNuevoEstadoId")))) {
+            $this->Estadoaceptacion_model->update($this->input->post("editarNuevoEstado"), $this->input->post("EditarNuevoEstadoId"));
             //Actualizamos el campo selector de estado aceptacion
             $this->data['estadoaceptacionxcolor'] = $this->Estadoaceptacion_model->detail();
             //Envio JSON
@@ -263,23 +264,26 @@ class Riesgo extends My_Controller {
             echo 1;
         }
     }
-    
+
     function eliminaestadoaceptacion() {
         $this->load->model("Estadoaceptacion_model");
-        $this->Estadoaceptacion_model->delete($this->input->post("idEstado"),$this->input->post("descripcion"));
+        $this->Estadoaceptacion_model->delete($this->input->post("idEstado"), $this->input->post("descripcion"));
     }
+
     function consultacolor() {
         $this->load->model("Estadoaceptacioncolor_model");
         $this->data["idDescripcion"] = $this->Estadoaceptacioncolor_model->consult($this->input->post("idColor"));
         $this->output->set_content_type('application/json')->set_output(json_encode($this->data['idDescripcion'][0]));
     }
+
     function eliminacolor() {
         $this->load->model("Estadoaceptacioncolor_model");
-        $this->Estadoaceptacioncolor_model->delete($this->input->post("idColor"),$this->input->post("idEstado"));
+        $this->Estadoaceptacioncolor_model->delete($this->input->post("idColor"), $this->input->post("idEstado"));
     }
+
     function actualizarcolor() {
         $this->load->model("Estadoaceptacioncolor_model");
-        $this->Estadoaceptacioncolor_model->update($this->input->post("editarNuevoColor"),$this->input->post("editarNuevoColorId"));
+        $this->Estadoaceptacioncolor_model->update($this->input->post("editarNuevoColor"), $this->input->post("editarNuevoColorId"));
     }
 
     function guardarcolorxestado() {
@@ -297,15 +301,15 @@ class Riesgo extends My_Controller {
             if (empty($this->Riesgoclasificacion_model->detailxcategoria($this->input->post('categoria')))) {
                 $this->Riesgoclasificacion_model->create($this->input->post('categoria'));
                 $categoria = $this->Riesgoclasificacion_model->detailandtipo();
-        $i = array();
-        foreach ($categoria as $c) {
-            $i[$c->rieCla_id][$c->rieCla_categoria][] = array(
-                $c->rieClaTip_id,
-                $c->rieClaTip_tipo
-            );
-        }
+                $i = array();
+                foreach ($categoria as $c) {
+                    $i[$c->rieCla_id][$c->rieCla_categoria][] = array(
+                        $c->rieClaTip_id,
+                        $c->rieClaTip_tipo
+                    );
+                }
 
-        $this->output->set_content_type('application/json')->set_output(json_encode($i));
+                $this->output->set_content_type('application/json')->set_output(json_encode($i));
             } else {
                 echo 1;
             }
@@ -320,16 +324,13 @@ class Riesgo extends My_Controller {
             $this->load->model("Riesgoclasificacion_model");
             $this->load->model("Riesgoclasificaciontipo_model");
             if (empty($this->Riesgoclasificaciontipo_model->exist($this->input->post("categoria"), $this->input->post("tipo")))) {
-                if($this->input->post("accion") == 1){
-                $this->Riesgoclasificaciontipo_model->create(
-                        $this->input->post("categoria"), $this->input->post("tipo")
-                );
-                
-                }else{
-                   $this->Riesgoclasificaciontipo_model->modificarClasificacionTipo(
-                           $this->input->post("categoria"),
-                           $this->input->post("tip_id"),
-                           $this->input->post("tipo")); 
+                if ($this->input->post("accion") == 1) {
+                    $this->Riesgoclasificaciontipo_model->create(
+                            $this->input->post("categoria"), $this->input->post("tipo")
+                    );
+                } else {
+                    $this->Riesgoclasificaciontipo_model->modificarClasificacionTipo(
+                            $this->input->post("categoria"), $this->input->post("tip_id"), $this->input->post("tipo"));
                 }
                 $categoria = $this->Riesgoclasificacion_model->detailandtipo();
                 $i = array();
@@ -361,21 +362,24 @@ class Riesgo extends My_Controller {
                 $this->input->post("cargo"), $this->input->post("categoria"), $this->input->post("dimensionuno"), $this->input->post("dimensiondos"), $this->input->post("tipo")
         );
         $i = array();
-        foreach ($planes as $t) {
-            $i["Json"][$t->rieCla_id][$t->rieCla_categoria][] = array(
-                "rie_id" => $t->rie_id,
-                "des2" => $t->des2,
-                "des1" => $t->des1,
-                "estado" => $t->estado,
-                "rie_zona" => $t->rie_zona,
-                "rie_descripcion" => $t->rie_descripcion,
-                "rie_fecha" => $t->rie_fecha,
-                "rieClaTip_tipo" => $t->rieClaTip_tipo
-            );
+        if (count($planes) > 0) {
+            foreach ($planes as $t) {
+                $i["Json"][$t->rieCla_id][$t->rieCla_categoria][] = array(
+                    "rie_id" => $t->rie_id,
+                    "des2" => $t->des2,
+                    "des1" => $t->des1,
+                    "estado" => $t->estado,
+                    "rie_zona" => $t->rie_zona,
+                    "rie_descripcion" => $t->rie_descripcion,
+                    "rie_fecha" => $t->rie_fecha,
+                    "rieClaTip_tipo" => $t->rieClaTip_tipo,
+                    "rieCol_colorhtml" => $t->rieCol_colorhtml
+                );
+            }
+            $this->output->set_content_type('application/json')->set_output(json_encode($i));
+        }else{
+            echo 1;
         }
-//        echo "<pre>";
-//        var_dump($i);die;
-        $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
 
     function eliminar() {
@@ -394,7 +398,8 @@ class Riesgo extends My_Controller {
 
         $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
-    function eliminarCategoria(){
+
+    function eliminarCategoria() {
         $this->load->model("Riesgoclasificacion_model");
         $this->Riesgoclasificacion_model->eliminarCategoria(
                 $this->input->post('rieCla_id')

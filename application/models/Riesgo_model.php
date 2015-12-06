@@ -66,14 +66,16 @@ class Riesgo_model extends CI_Model {
             $this->db->select("riesgo_clasificacion_tipo.rieClaTip_tipo");
             $this->db->select("riesgo_clasificacion.rieCla_id");
             $this->db->select("riesgo_clasificacion.rieCla_categoria");
+            $this->db->select("riesgo_color.rieCol_colorhtml");
             $this->db->join("riesgo_clasificacion", "riesgo_clasificacion.rieCla_id = riesgo.rieCla_id","left");
             $this->db->join("riesgo_clasificacion_tipo", "riesgo_clasificacion_tipo.rieClaTip_id = riesgo.rieClaTip_id", "left");
             $this->db->join("dimension2", "dimension2.dim_id = riesgo.dim2_id","left");
             $this->db->join("dimension", "dimension.dim_id = riesgo.dim1_id","left");
             $this->db->join("estado_aceptacion", "estado_aceptacion.estAce_id = riesgo.estAce_id","left");
+            $this->db->join("estado_aceptacion_color","estado_aceptacion_color.estAce_id = estado_aceptacion.estAce_id","LEFT");
+            $this->db->join("riesgo_color","riesgo_color.rieCol_id = estado_aceptacion_color.rieCol_id","LEFT");
             $riesgo = $this->db->get("riesgo");
-            
-            //echo $this->db->last_query();
+//            echo $this->db->last_query();die;
             return $riesgo->result();
         } catch (exception $e) {
             

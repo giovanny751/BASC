@@ -424,7 +424,7 @@ $('document').ready(function(){
                 {estado: $(this).val()}
         ).done(function (msg) {
             $('#color *').remove();
-            var option = "<option value=''>::Seleccionar::</option>"
+            var option = "";
             $.each(msg, function (key, val) {
                 option += "<option value='" + val.estAceCol_id + "'>" + val.rieCol_color + "</option>";
             })

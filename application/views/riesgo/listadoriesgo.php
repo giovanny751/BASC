@@ -76,39 +76,40 @@
     </form>
 </div>
 <script>
-    $('body').delegate('.modificar', "click", function() {
+    $('body').delegate('.modificar', "click", function () {
         $('#rie_id').val($(this).attr('rie_id'));
         $('#f13').submit();
     });
-    $('#categoria').change(function() {
+    $('#categoria').change(function () {
         $.post("<?php echo base_url("index.php/riesgo/consultatiporiesgo") ?>",
                 {categoria: $(this).val()})
-                .done(function(msg) {
+                .done(function (msg) {
                     $('#tipo *').remove();
                     var option = "<option value=''>::Seleccionar::</option>"
-                    $.each(msg, function(key, val) {
+                    $.each(msg, function (key, val) {
                         option += "<option value='" + val.rieClaTip_id + "'>" + val.rieClaTip_tipo + "</option>";
                     })
                     $('#tipo').append(option);
-                }).fail(function(msg) {
+                }).fail(function (msg) {
             alerta("rojo", "Error en el sistema por favor comunicarse con el administrador del sistema");
         });
 
     });
-    $(".limpiar").click(function() {
+    $(".limpiar").click(function () {
         $("select, input").val("");
     });
 
-    $('.buscar').click(function() {
+    $('.buscar').click(function () {
 
         $.post("<?php echo base_url("index.php/riesgo/busquedariesgo") ?>",
                 $('#busquedariesgo').serialize()
-                ).done(function(msg) {
-            $('#bodyRiesgo *').remove();
-            var tbody = "";
-            $.each(msg.Json, function(id, tipos) {
-                $.each(tipos, function(tipo, data) {
-                    tbody += "<table class='tablesst'>\n\
+                ).done(function (msg) {
+            if (msg != 1) {
+                $('#bodyRiesgo *').remove();
+                var tbody = "";
+                $.each(msg.Json, function (id, tipos) {
+                    $.each(tipos, function (tipo, data) {
+                        tbody += "<table class='tablesst'>\n\
                                         <thead style='text-align:center;'>\n\
                                         <tr><th colspan='11'>" + tipo + "</th></tr>\n\
                                         <th>Tipo</th>\n\
@@ -123,29 +124,30 @@
                                         <th>Tareas(activas)</th>\n\
                                         <th>Accion</th>\n\
                                     </thead>";
-                    $.each(data, function(key, val) {
-                        tbody += "<tr>";
-                        tbody += "<td>" + val.rieClaTip_tipo + "</td>";
-                        tbody += "<td>" + val.rie_descripcion + "</td>";
-                        tbody += "<td>" + val.des1 + "</td>";
-                        tbody += "<td>" + val.des2 + "</td>";
-                        tbody += "<td>" + val.rie_zona + "</td>";
-                        tbody += "<td></td>";
-                        tbody += "<td></td>";
-                        tbody += "<td>" + val.rie_fecha + "</td>";
-                        tbody += "<td>" + val.estado + "</td>";
-                        tbody += "<td></td>";
-                        tbody += '<td class="transparent">\n\
+                        $.each(data, function (key, val) {
+                            tbody += "<tr>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rieClaTip_tipo + "</td>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rie_descripcion + "</td>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.des1 + "</td>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.des2 + "</td>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rie_zona + "</td>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'></td>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'></td>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rie_fecha + "</td>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.estado + "</td>";
+                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'></td>";
+                            tbody += '<td class="transparent" style="background-color:'+val.rieCol_colorhtml+'">\n\
                                             <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" rie_id="' + val.rie_id + '" ></i>\n\
                                         </td>';
-                        tbody += "</tr>";
+                            tbody += "</tr>";
+                        });
+                        tbody += "</table>";
                     });
-                    tbody += "</table>";
                 });
-            });
-            $('#bodyRiesgo').append(tbody);
-            alerta("verde", "Consulta cargada con exito");
-        }).fail(function(msg) {
+                $('#bodyRiesgo').append(tbody);
+                alerta("verde", "Consulta cargada con exito");
+            }
+        }).fail(function (msg) {
             alerta("rojo", "Error en el sistema por favor comunicarse con el administrador");
         });
 
