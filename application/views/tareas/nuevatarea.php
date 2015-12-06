@@ -39,17 +39,13 @@
         <div class="row" style="margin-bottom: 30px">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="nombre"><span class="campoobligatorio">*</span>Nombre</label>
-                    </div>
+                    <label for="nombre" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><span class="campoobligatorio">*</span>Nombre</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <input type="text" name="nombre" id="nombre" class="form-control obligatorio" value="<?php echo (!empty($tarea->tar_nombre)) ? $tarea->tar_nombre : ""; ?>" />
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="plan"><span class="campoobligatorio">*</span>Plan</label>
-                    </div>
+                    <label for="plan" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><span class="campoobligatorio">*</span>Plan</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="plan" id="plan" class="form-control obligatorio" >
                             <option value="">::Seleccionar::</option>
@@ -62,9 +58,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="actividad">Actividad padre</label>
-                    </div>
+                    <label for="actividad" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Actividad padre</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="actividad" id="actividad" class="form-control" >
                             <option value="">::Seleccionar::</option>
@@ -80,9 +74,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="registro">Actividad</label>
-                    </div>
+                    <label for="registro" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Actividad</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="registro" id="registro" class="form-control" >
                             <option value="">::Seleccionar::</option>
@@ -94,9 +86,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="dimensionuno"><?php echo $empresa[0]->Dim_id ?></label>
-                    </div>
+                    <label for="dimensionuno" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><?php echo $empresa[0]->Dim_id ?></label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="dimensionuno" id="dimensionuno" class="form-control" >
                             <option value="">::Seleccionar::</option>
@@ -107,9 +97,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="dimensiondos"><?php echo $empresa[0]->Dimdos_id ?></label>
-                    </div>
+                    <label for="dimensiondos" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><?php echo $empresa[0]->Dimdos_id ?></label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select  name="dimensiondos" id="dimensiondos" class="form-control" >
                             <option value="">::Seleccionar::</option>
@@ -120,9 +108,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="tipo"><span class="campoobligatorio">*</span>Tipo</label>
-                    </div>
+                    <label for="tipo" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><span class="campoobligatorio">*</span>Tipo</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="tipo" id="tipo" class="form-control obligatorio" >
                             <option value="">::Seleccionar::</option>
@@ -133,68 +119,51 @@
                     </div>
                 </div>
                 <div class="row">
+                    <label for="norma" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Norma</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="norma">Norma</label>
-                    </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <?php
-                        if (isset($tarea->emp_id)) {
-                            foreach ($tarea_norma as $value) {
-                                $g[] = $value->nor_id;
-                            }
-                        } else {
-                            $g[] = 0;
-                        }
-                        ?>
-                        <?php // echo listaMultiple2("articulosnorma[]", "norma", "form-control", "norma", "nor_id", "nor_norma", $g, null, null) ?>
+                        <select name="norma" id="norma" class="form-control">
+                            <option value="">::Seleccionar::</option>
+                            <?php foreach ($norma as $value) { ?>
+                            <option value="<?= $value->nor_id ?>"><?= $value->nor_norma ?></option>
+                            <?php }?>
+                        </select>
                     </div>
                 </div> 
                 <div class="row">
+                    <label for="norma" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Artículo</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="norma">Artículo</label>
-                    </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        
+                        <select name="articulo" id="articulo" class="form-control">
+                            <option value="">::Seleccionar::</option>
+                        </select>
                     </div>
                 </div> 
-                
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="fechaIncio"><span class="campoobligatorio">*</span>Fecha Incio</label>
-                    </div>
+                    <label for="fechaIncio" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><span class="campoobligatorio">*</span>Fecha Incio</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <input type="text" name="fechaIncio"  id="fechaIncio" class="form-control fecha obligatorio compararfecha"  value="<?php echo (!empty($tarea->tar_fechaInicio)) ? $tarea->tar_fechaInicio : ""; ?>" />
                     </div> 
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="fechafinalizacion"><span class="campoobligatorio">*</span>Fecha Finalización</label>
-                    </div>
+                    <label for="fechafinalizacion" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><span class="campoobligatorio">*</span>Fecha Finalización</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <input type="text" name="fechafinalizacion" id="fechafinalizacion" class="form-control fecha obligatorio compararfecha"  value="<?php echo (!empty($tarea->tar_fechaFinalizacion)) ? $tarea->tar_fechaFinalizacion : ""; ?>"/>
                     </div> 
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="costrospresupuestados">Costos Presupuestados</label>
-                    </div>
+                    <label for="costrospresupuestados" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Costos Presupuestados</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <input type="text" name="costrospresupuestados" id="costrospresupuestados" class="form-control miles"  value="<?php echo (!empty($tarea->tar_costopresupuestado)) ? $tarea->tar_costopresupuestado : ""; ?>"/>
                     </div> 
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="peso">Peso</label>
-                    </div>
+                    <label for="peso" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Peso</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <input type="text" name="peso" id="peso" class="form-control"  value="<?php echo (!empty($tarea->tar_peso)) ? $tarea->tar_peso : ""; ?>" />
                     </div> 
                 </div>
                 <div class="alert alert-info" role="alert" style='margin-top:10px;font-weight: bold;text-align: center;'>Responsable</div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="cargo">Cargo</label>
-                    </div>
+                    <label for="cargo" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Cargo</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="cargo" id="cargo" class="form-control">
                             <option value="">::Seleccionar::</option>
@@ -205,9 +174,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="nombreempleado">Nombre</label>
-                    </div>
+                    <label for="nombreempleado" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Nombre</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="nombreempleado" id="nombreempleado" class="form-control">
                             <option value="">::Seleccionar::</option>
@@ -222,9 +189,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="tareapadre">Tarea Padre</label>
-                    </div>
+                    <label for="tareapadre" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Tarea Padre</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="tareapadre" id="tareapadre" class="form-control">
                             <option value="">::Seleccionar::</option>
@@ -239,9 +204,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <label for="estado">Estado</label>
-                            </div>
+                            <label for="estado" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Estado</label>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <select name="estado" id="estado" class="form-control" >
                                     <option value="">::Seleccionar::</option>
@@ -262,9 +225,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <label for="estado">Fecha de creación</label>
-                            </div>
+                            <label for="estado" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Fecha de creación</label>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <input type="text" value="<?php echo (!empty($tarea->tar_fechaCreacion)) ? $tarea->tar_fechaCreacion : date('Y-m-d'); ?>" name="fechacreacion" id="fechacreacion" readonly="readonly" class="form-control" >
                             </div>
@@ -274,9 +235,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <label for="fechamodificacion">Fecha de modificación</label>
-                            </div>
+                            <label for="fechamodificacion" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Fecha de modificación</label>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <input type="text" value="<?php echo (!empty($tarea->tar_fechaUltimaMod)) ? $tarea->tar_fechaUltimaMod : ""; ?>" name="fechamodificacion" id="fechamodificacion" readonly="readonly" class="form-control" >
                             </div>
@@ -285,9 +244,7 @@
                 </div>
                 <p class="alert alert-info"  style='margin-top:10px;font-weight: bold;text-align: center;'>Riesgos</p>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="clasificacionriesgo">Clasificación de riesgo</label>
-                    </div>
+                    <label for="clasificacionriesgo" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Clasificación de riesgo</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name='clasificacionriesgo' id='clasificacionriesgo' class="form-control">
                             <option value=''>::Seleccionar::</option>
@@ -298,9 +255,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <label for="tiposriesgos">Tipos de Riesgos</label>
-                    </div>
+                    <label for="tiposriesgos" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Tipos de Riesgos</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name='tiposriesgos' id='tiposriesgos' class="form-control">
                             <option value=''>::Seleccionar::</option>
@@ -362,18 +317,13 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                <label for="fecha">Fecha</label>
-                                            </div>
+                                            <label for="fecha" class="col-lg-3 col-md-3 col-sx-3 col-sm-3">Fecha</label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                
                                                 <input value="<?php echo (!empty($avance[0]->avaTar_fecha))?$avance[0]->avaTar_fecha:"";   ?>"  type="text" style="text-align:center" name="fecha" id="fecha" class="form-control fecha avance">
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                <label for="progreso">Progreso</label>
-                                            </div>
+                                            <label for="progreso" class="col-lg-3 col-md-3 col-sx-3 col-sm-3">Progreso</label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
                                                 <select name="progreso" id="progreso" class="form-control avance" style="text-align: center">
                                                     <option value="">::Seleccionar::</option>
@@ -384,17 +334,13 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                <label for="horastrabajadas">Horas Trabajadas</label>
-                                            </div>
+                                            <label for="horastrabajadas" class="col-lg-3 col-md-3 col-sx-3 col-sm-3">Horas Trabajadas</label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
                                                 <input value="<?php echo (!empty($avance[0]->avaTar_horasTrabajadas))?$avance[0]->avaTar_horasTrabajadas:"";?>" style="text-align:center" type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance number">
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
-                                                <label for="costo">Costo</label>
-                                            </div>
+                                            <label for="costo" class="col-lg-3 col-md-3 col-sx-3 col-sm-3">Costo</label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
                                                 <input value="<?php echo (!empty($avance[0]->avaTar_costo))?$avance[0]->avaTar_costo:""; ?>" type="text" style="text-align:center" name="costo" id="costo" class="form-control avance miles">
                                             </div>
@@ -412,9 +358,7 @@
                                         </div>
                                         <?php foreach ($notificacion as $n): ?>
                                             <div class="row">
-                                                <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                    <label for="creotarea"><?php echo $n->not_notificacion ?></label>
-                                                </div>
+                                                <label for="creotarea" class="col-lg-9 col-md-9 col-sx-9 col-sm-9"><?php echo $n->not_notificacion ?></label>
                                                 <div class="col-lg-3 col-md-3 col-sx-3 col-sm-3">
                                                     <input type="checkbox" name="notificar[]" value="<?php echo $n->not_id ?>" id="creotarea" class="form-control avance">
                                                 </div>
@@ -524,17 +468,13 @@
                         <form method="post" id="frmcarpetaregistro">
                             <input type="hidden" value="<?php echo $tarea->tar_id; ?>" name="tar_id" id="tar_id_carRegistro"/>
                             <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="nombrecarpeta">Nombre</label>
-                                </div>
+                                <label for="nombrecarpeta" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Nombre</label>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                     <input type="text" id="nombrecarpeta" name="nombrecarpeta" class="form-control carbligatorio">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                    <label for="descripcioncarpeta">Descripción:</label>
-                                </div>
+                                <label for="descripcioncarpeta" class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Descripción:</label>
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                     <input type="text" id="descripcioncarpeta" name="descripcioncarpeta" class="form-control carbligatorio">
                                 </div>
@@ -608,12 +548,25 @@
 
     <?php endif; ?>
     <input type="hidden" id="tareid" name="tareid" />
-
-
-
 </div> 
 <div id='planes'></div>
 <script>
+    $('body').delegate("#norma","change",function(){
+        $.post(
+                    "<?php echo base_url("index.php/tareas/consultaarticulo") ?>",
+                    {norma : $("#norma").val()}
+                ).done(function(msg){
+                    $('#articulo *').remove();
+                    var option = "<option value=''>::Seleccionar::</option>";
+                    $.each(msg,function(key,val){
+                        option += "<option value='"+val.norArt_id+"'>"+val.norArt_articulo+"</option>"
+                    });
+                    $('#articulo').append(option);
+                })
+                .fail(function(msg){
+                    alerta("rojo","Error,Comunicarse con el administrador del sistema");
+                });
+    });
     
     $('body').delegate("#actividad","change",function(){ 
         
