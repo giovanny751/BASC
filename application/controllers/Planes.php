@@ -58,6 +58,48 @@ class Planes extends My_Controller {
             
         }
     }
+    function guardarregistroriesgo() {
+        try { 
+            $post = $this->input->post();
+            $this->load->model('Registro_model');
+            $tamano = round($_FILES["archivo"]["size"] / 1024,1)." KB";
+            $post["reg_tamano"] = $tamano;
+            $fecha = new DateTime();
+            $post["reg_fechaCreacion"] = $fecha->format('Y-m-d H:i:s');
+
+            //Creamos carpeta con el ID del registro
+            if (isset($_FILES['archivo']['name']))
+                if (!empty($_FILES['archivo']['name']))
+                    $post['reg_ruta'] = basename($_FILES['archivo']['name']);
+
+            $rie_id = $post['rie_id'];
+            $targetPath = "./uploads/tareas/";
+
+            //De la carpeta idRegistro, creamos carpeta con el id del empleado
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+            $targetPath = "./uploads/tareas/". $rie_id;
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+
+            $post['reg_ruta']=$target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
+            $post['reg_archivo']= basename($_FILES['archivo']['name']);
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
+                
+            }
+            $post['userCreator'] = $this->data["usu_id"];
+            if(empty($this->input->post('reg_id')))
+                $this->Registro_model->guardar_registro($post);
+            else
+                $this->Registro_model->actualizar_registro($post,$this->input->post('reg_id'));
+            $data = $this->Registro_model->registroxcarpeta($post['regCar_id']);
+            $this->output->set_content_type('application/json')->set_output(json_encode($data));
+        } catch (exception $e) {
+            
+        }
+    }
     
     function eliminarregistroplan(){
         
@@ -243,6 +285,17 @@ class Planes extends My_Controller {
         $this->load->model("Registrocarpeta_model");
         $id = $this->Registrocarpeta_model->create(
                 $this->input->post("nombrecarpeta"), $this->input->post("descripcioncarpeta"), $this->input->post("pla_id")
+        );
+        $data = $this->Registrocarpeta_model->detailxid($id);
+        $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
+    }
+    function guardarcarpetaregistroriesgo() {
+        $this->load->model("Registrocarpeta_model");
+        $id = $this->Registrocarpeta_model->createRiesgo(
+                $this->input->post("nombrecarpeta"), 
+                $this->input->post("descripcioncarpeta"), 
+                $this->input->post("rie_id"),
+                $this->data["usu_id"]
         );
         $data = $this->Registrocarpeta_model->detailxid($id);
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));

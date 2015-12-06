@@ -23,7 +23,7 @@ class Riesgo extends My_Controller {
         $this->load->model("Riesgo_model");
         $this->load->model("Tipo_model");
         $this->load->model("Riesgoclasificaciontipo_model");
-
+        $this->load->model("Registrocarpeta_model");
         $this->load->model("Estadoaceptacioncolor_model");
 
         $this->load->model("Riesgocargo_model");
@@ -34,6 +34,20 @@ class Riesgo extends My_Controller {
         $this->data['cargo'] = $this->Cargo_model->detail();
         if (!empty($this->data['empresa'][0]->Dim_id) && !empty($this->data['empresa'][0]->Dimdos_id)) {
             if (!empty($this->input->post("rie_id"))) {
+                 $carpeta = $this->Registrocarpeta_model->detailxriesgo($this->input->post('rie_id'));
+                $d = array();
+                foreach ($carpeta as $c) {
+                    $d[$c->regCar_id][$c->regCar_nombre." - ".$c->regCar_descripcion][] = array(
+                        $c->reg_archivo, 
+                        $c->reg_descripcion, 
+                        $c->reg_version, 
+                        $c->usu_nombre." ".$c->usu_apellido, 
+                        $c->reg_tamano, 
+                        $c->reg_fechaCreacion,
+                        $c->reg_id
+                            );
+                }
+                $this->data['carpeta'] = $d;
                 $this->load->model("Planes_model");
                 $this->data['rie_id'] = $this->input->post("rie_id");
                 $this->data['tarea'] = $this->Tarea_model->tareaxRiesgo($this->data['rie_id']);

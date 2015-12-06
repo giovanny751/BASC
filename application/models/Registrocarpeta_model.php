@@ -36,6 +36,29 @@ class Registrocarpeta_model extends CI_Model {
             
         }
     }
+    function detailxriesgo($rie_id){
+        try {
+        $this->db->where("registro_carpeta.rie_id",$rie_id);
+        $this->db->select("registro_carpeta.regCar_id");
+        $this->db->select("registro_carpeta.regCar_nombre");
+        $this->db->select("registro_carpeta.regCar_descripcion");
+        $this->db->select("registro.reg_version");
+        $this->db->select("registro.reg_descripcion");
+        $this->db->select("registro.reg_fechaCreacion");
+        $this->db->select("registro.reg_id");
+        $this->db->select("registro.reg_archivo");
+        $this->db->select("registro.reg_tamano");
+        $this->db->select("user.usu_nombre");
+        $this->db->select("user.usu_apellido");
+        $this->db->join("registro","registro.regCar_id = registro_carpeta.regCar_id","LEFT");
+        $this->db->join("user","user.usu_id = registro.userCreator","left");
+        $carpeta = $this->db->get("registro_carpeta");
+//        echo $this->db->last_query();die; 
+        return $carpeta->result();
+        } catch (exception $e) {
+            
+        }
+    }
     function consultaCarpetaxIdIndicador($regCar_id){
         try {
         $this->db->where("registro_carpeta.regCar_id",$regCar_id);
@@ -181,6 +204,21 @@ class Registrocarpeta_model extends CI_Model {
           "regCar_descripcion"=>$descripcion,
           "regCar_fechaCreacion"=>date('Y-m-d H:i:s'),
           "pla_id"=> $pla_id 
+        );
+        $this->db->insert("registro_carpeta",$data);
+        return $this->db->insert_id();
+        } catch (exception $e) {
+            
+        }
+    }
+    function createRiesgo($nombre,$descripcion,$rie_id,$usu_id) {
+        try {
+        $data = array(
+          "regCar_nombre"=>$nombre,  
+          "regCar_descripcion"=>$descripcion,
+          "regCar_fechaCreacion"=>date('Y-m-d H:i:s'),
+          "rie_id"=> $rie_id,
+          "userCreator"=>$usu_id  
         );
         $this->db->insert("registro_carpeta",$data);
         return $this->db->insert_id();
