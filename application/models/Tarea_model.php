@@ -15,8 +15,11 @@ class Tarea_model extends CI_Model {
         }
     }
 
-    function tareanorma($data) {
+    function tareanorma($data,$idtarea) {
         try {
+            $this->db->where("tar_id",$idtarea);
+            $this->db->delete("norma_tarea");
+            
             $this->db->insert_batch("norma_tarea", $data);
         } catch (exception $e) {
             

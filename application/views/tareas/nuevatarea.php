@@ -121,19 +121,29 @@
                 <div class="row">
                     <label for="norma" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Norma</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <select name="norma" id="norma" class="form-control">
+                        <select name="norma" id="norma" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($norma as $value) { ?>
-                            <option value="<?= $value->nor_id ?>"><?= $value->nor_norma ?></option>
+                                <option <?php echo (!empty($tarea->nor_id) && ($value->nor_id == $tarea->nor_id)) ? "selected" : ""; ?> value="<?= $value->nor_id ?>"><?= $value->nor_norma ?></option>
                             <?php }?>
                         </select>
                     </div>
                 </div> 
                 <div class="row">
-                    <label for="norma" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Artículo</label>
+                    <label for="articulo" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Artículo</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <select name="articulo" id="articulo" class="form-control">
-                            <option value="">::Seleccionar::</option>
+                        <select multiple="multiple" name="articulosnorma[]" id="articulosnorma" class="form-control">
+                            <?php foreach ($normaarticulo as $value) { ?>
+                                <?php foreach ($tarea_norma as $tn) { 
+                                    $select = "";
+                                    if($tn->norArt_id == $value->norArt_id){
+                                        $select = "selected";
+                                        break;
+                                    }
+                                }?>
+                                
+                                <option <?php echo $select; ?> value="<?= $value->norArt_id ?>"><?= $value->norArt_articulo ?></option>
+                            <?php }?>
                         </select>
                     </div>
                 </div> 
@@ -552,16 +562,15 @@
 <div id='planes'></div>
 <script>
     $('body').delegate("#norma","change",function(){
-        $.post(
-                    "<?php echo base_url("index.php/tareas/consultaarticulo") ?>",
-                    {norma : $("#norma").val()}
+        var url = "<?php echo base_url("index.php/tareas/consultaarticulo") ?>";
+        $.post(url,{norma : $("#norma").val()}
                 ).done(function(msg){
-                    $('#articulo *').remove();
-                    var option = "<option value=''>::Seleccionar::</option>";
+                    $('#articulosnorma *').remove();
+                    var option = "";
                     $.each(msg,function(key,val){
                         option += "<option value='"+val.norArt_id+"'>"+val.norArt_articulo+"</option>"
                     });
-                    $('#articulo').append(option);
+                    $('#articulosnorma').append(option);
                 })
                 .fail(function(msg){
                     alerta("rojo","Error,Comunicarse con el administrador del sistema");
@@ -863,11 +872,11 @@
                 $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
                         $('#f8').serialize()
                         ).done(function (msg) {
-                            var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
-                                form += "<input type='hidden' value='"+msg.pla_id+"' name='pla_id'>";
-                                form += "</form>"
-                            $('#planes').append(form);
-                            $('#enviotarea').submit();
+//                            var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
+//                                form += "<input type='hidden' value='"+msg.pla_id+"' name='pla_id'>";
+//                                form += "</form>"
+//                            $('#planes').append(form);
+//                            $('#enviotarea').submit();
                     alerta("verde", "Datos guardados correctamente");
                 }).fail(function (msg) {
                     alerta("rojo", "Error por favor comunicarse con el administrador");
