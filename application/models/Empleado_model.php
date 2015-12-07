@@ -250,7 +250,7 @@ class Empleado_model extends CI_Model {
         }
     }
     function tipo_documento($nombre) {
-        echo $nombre;
+//        echo $nombre;
         $this->db->select('tipDoc_id');
         $this->db->like('tipDoc_Descripcion', $nombre);
         $datos = $this->db->get('tipo_documento');
