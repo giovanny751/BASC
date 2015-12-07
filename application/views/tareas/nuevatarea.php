@@ -872,11 +872,11 @@
                 $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
                         $('#f8').serialize()
                         ).done(function (msg) {
-//                            var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
-//                                form += "<input type='hidden' value='"+msg.pla_id+"' name='pla_id'>";
-//                                form += "</form>"
-//                            $('#planes').append(form);
-//                            $('#enviotarea').submit();
+                            var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
+                                form += "<input type='hidden' value='"+msg.pla_id+"' name='pla_id'>";
+                                form += "</form>"
+                            $('#planes').append(form);
+                            $('#enviotarea').submit();
                     alerta("verde", "Datos guardados correctamente");
                 }).fail(function (msg) {
                     alerta("rojo", "Error por favor comunicarse con el administrador");
