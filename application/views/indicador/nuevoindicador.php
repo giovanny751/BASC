@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="circuloIcon" id="<?php echo (empty($ind_id))?"guardar":"actualizar"; ?>" title="<?php echo (empty($ind_id))?"Guardar":"Actualizar"; ?>"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon" id="<?php echo (empty($ind_id)) ? "guardar" : "actualizar"; ?>" title="<?php echo (empty($ind_id)) ? "Guardar" : "Actualizar"; ?>"><i class="fa fa-floppy-o fa-3x"></i></div>
         <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div> /* ELIMINAR */  -->
-        <a href="<?php echo base_url()."/index.php/indicador/nuevoindicador" ?>"><div class="circuloIcon" title="Nuevo Indicador" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+        <a href="<?php echo base_url() . "/index.php/indicador/nuevoindicador" ?>"><div class="circuloIcon" title="Nuevo Indicador" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
     <div class="col-md-6">
         <div id="posicionFlecha">
@@ -211,13 +211,19 @@
                                 <th>Costo</th>
                                 </thead>
                                 <tbody id="bodyvalores">
-                                    <?php foreach ($valores as $v): ?>
+                                    <?php
+                                    $fechas = "";
+                                    $valores2 = "";
+                                    foreach ($valores as $v):
+                                        $fechas.='"' . $v->indVal_fecha . '",';
+                                        $valores2.=$v->indVal_valor . ',';
+                                        ?>
                                         <tr>
-                                            <td><?php echo $v->indVal_fechaCreacion ?></td>
+                                            <td><?php echo $v->indVal_fecha ?></td>
                                             <td><?php echo $v->indVal_unidad ?></td>
                                             <td><?php echo $v->indVal_comentario ?></td>
                                             <td><?php echo $v->indVal_valor ?></td>
-                                            <td><?php echo $v->usu_nombre." ".$v->usu_apellido ?></td>
+                                            <td><?php echo $v->usu_nombre . " " . $v->usu_apellido ?></td>
                                             <td></td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -265,7 +271,11 @@
                             </div>
                         </div>
                         <div id="tab3" class="tab-pane">
-                            
+
+
+                            <canvas id="buyers" width="600" height="400"></canvas>
+
+
                         </div>
                         <div id="tab4" class="tab-pane">
                             <div class="portlet box blue" style="margin-top: 30px;">
@@ -289,7 +299,7 @@
                                                         <div class="panel panel-default" id="<?php echo $idcar ?>">
                                                             <div class="panel-heading">
                                                                 <h4 class="panel-title">
-                                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar ; ?>" aria-expanded="false" id=""> 
+                                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_<?php echo $idcar; ?>" aria-expanded="false" id=""> 
                                                                         <i class="fa fa-folder-o carpeta"></i>&nbsp;<?php echo $nombrecar ?>
                                                                     </a>
                                                                     <div class="posicionIconoAcordeon">
@@ -444,21 +454,22 @@
         </div>
     <?php endif; ?>
 </div>
-</div>
+
+<script type="text/javascript" src="<?php echo base_url('js/graficas/Chart.min.js') ?>"></script>
 <script>
-    
-    $('#valor').change(function(){
-        if(($(this).val() >= $('#minimo').val()) && ($(this).val() <= $('#maximo').val())){
+
+    $('#valor').change(function() {
+        if (($(this).val() >= $('#minimo').val()) && ($(this).val() <= $('#maximo').val())) {
             return true;
-        }else{
+        } else {
             $(this).val('');
             alert("El valor no esta en el rango establecido");
             $(this).focus();
         }
     });
-    
-    
-     $('#guardarregistro').click(function () {
+
+
+    $('#guardarregistro').click(function() {
         if (obligatorio("tarRegObligatorio")) {
             //Capturamos el archivo
             var file_data = $('#nombreactividad').prop('files')[0];
@@ -478,18 +489,18 @@
                 processData: false,
                 data: form_data,
                 type: 'post',
-                success: function (result) {
+                success: function(result) {
                     $('#myModal').modal('hide')
                     result = jQuery.parseJSON(result);
                     var idcarpeta = $('#carpeta').val()
                     $('#collapse_' + idcarpeta).find('table tbody *').remove();
                     var filas = "";
-                    $.each(result, function (key, val) {
+                    $.each(result, function(key, val) {
                         filas += "<tr>";
                         filas += "<td>" + val.reg_archivo + "</td>";
                         filas += "<td>" + val.reg_descripcion + "</td>";
                         filas += "<td>" + val.reg_version + "</td>";
-                        filas += "<td>" +val.usu_nombre+" "+val.usu_apellido+"</td>";
+                        filas += "<td>" + val.usu_nombre + " " + val.usu_apellido + "</td>";
                         filas += "<td>" + val.reg_tamano + "</td>";
                         filas += "<td>" + val.reg_fechaCreacion + "</td>";
                         filas += "<td>";
@@ -508,14 +519,14 @@
             });
         }
     })
-    
-    $(".flechaHeader").click(function () {
+
+    $(".flechaHeader").click(function() {
         var url = "<?php echo base_url("index.php/administrativo/consultausuariosflechas") ?>";
         var idUsuarioCreado = $("#usuid").val();
         var metodo = $(this).attr("metodo");
         if (metodo != "documento") {
             $.post(url, {idUsuarioCreado: idUsuarioCreado, metodo: metodo})
-                    .done(function (msg) {
+                    .done(function(msg) {
                         $("input[type='text'],select").val("");
                         $("#usuid").val(msg.usu_id);
                         $("#cedula").val(msg.usu_cedula);
@@ -532,7 +543,7 @@
                             $("#cambiocontrasena").is(":checked");
                         }
                     })
-                    .fail(function (msg) {
+                    .fail(function(msg) {
                         alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
                         $("input[type='text'], select").val();
                     })
@@ -541,22 +552,22 @@
         }
 
     });
-    $("body").on("click", "#actualizar", function () {
+    $("body").on("click", "#actualizar", function() {
         if (obligatorio("obligatorio")) {
             $.post("<?php echo base_url("index.php/indicador/actualizarindicador") ?>", $("#indicador").serialize())
-                    .done(function (msg) {
+                    .done(function(msg) {
                         alerta("verde", "Actualizado");
                     })
-                    .fail(function (msg) {
+                    .fail(function(msg) {
                         alerta("rojo", "Error al actualizar.");
                     });
         }
 
     });
-    $("body").on("click", "#guardar", function () {
+    $("body").on("click", "#guardar", function() {
         if (obligatorio("obligatorio")) {
             $.post("<?php echo base_url("index.php/indicador/guardarindicador") ?>", $("#indicador").serialize())
-                    .done(function (msg) {
+                    .done(function(msg) {
                         alerta("verde", "Guardado con exito");
                         if (confirm("Desea guardar otro indicador?")) {
                             $("#indicador").find("input").val("");
@@ -565,83 +576,117 @@
                             $("#indicador").find("#nombreempleado").html("<option>::Seleccionar::</option>");
                         } else {
                             var form = "<form method='post' id='frmindicador'>";
-                            form += "<input type='hidden' value='"+msg+"' name='ind_id'>";
+                            form += "<input type='hidden' value='" + msg + "' name='ind_id'>";
                             form += "</form>";
                             $('body').append(form);
                             $('#frmindicador').submit();
                         }
                     })
-                    .fail(function (msg) {
+                    .fail(function(msg) {
                         alerta("rojo", "Error al guardar.");
                     });
         }
 
     });
-    $('#cargo').change(function () {
+    $('#cargo').change(function() {
 
         $.post(
                 "<?php echo base_url("index.php/administrativo/consultausuarioscargo") ?>",
                 {
                     cargo: $(this).val()
                 }
-        ).done(function (msg) {
+        ).done(function(msg) {
             var data = "";
             $('#nombreempleado *').remove();
             data += "<option>::Seleccionar::</option>";
-            $.each(msg, function (key, val) {
+            $.each(msg, function(key, val) {
                 data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
             });
             $('#nombreempleado').append(data);
-        }).fail(function (msg) {
+        }).fail(function(msg) {
 
         })
     });
 
-    $('#guardarindicador').click(function () {
+    $('#guardarindicador').click(function() {
         $.post(
                 "<?php echo base_url("index.php/indicador/guardarvalores") ?>",
                 $('#frmvalores').serialize()
-                ).done(function (msg) {
-                    var body = $("#bodyvalores *").remove();
-                    $.each(msg,function(key,val){
-                        body += "<tr>";
-                        body += "<td>"+val.indVal_fecha+"</td>";
-                        body += "<td>"+val.indVal_unidad+"</td>";
-                        body += "<td>"+val.indVal_comentario+"</td>";
-                        body += "<td>"+val.indVal_valor+"</td>";
-                        body += "<td>"+val.usu_nombre+" "+val.usu_apellido+"</td>";
-                        body += "<td></td>";
-                        body += "</tr>";
-                    });
-                    $("#bodyvalores").append(body);
+                ).done(function(msg) {
+            var body = $("#bodyvalores *").remove();
+            var fecha="";
+            var valor="";
+            $.each(msg[0], function(key, val) {
+                fecha='"'+val.indVal_fecha+'",';
+                valor=val.indVal_valor+',';
+                body += "<tr>";
+                body += "<td>" + val.indVal_fecha + "</td>";
+                body += "<td>" + val.indVal_unidad + "</td>";
+                body += "<td>" + val.indVal_comentario + "</td>";
+                body += "<td>" + val.indVal_valor + "</td>";
+                body += "<td>" + val.usu_nombre + " " + val.usu_apellido + "</td>";
+                body += "<td></td>";
+                body += "</tr>";
+            });
+            $("#bodyvalores").append(body);
+
+console.log(msg[1].labels)
+            var lineChartData = {
+            labels : "[" +  msg[1].labels + "]",
+            datasets : [
+                {
+                    label: "Recent Orders",
+                    fillColor : "rgba(150,150,245,0.2)",
+                    strokeColor : "rgba(0,0,255,1)",
+                    pointColor : "rgba(220,220,220,1)",
+                    pointStrokeColor : "#fff",
+                    pointHighlightFill : "#fff",
+                    pointHighlightStroke : "rgba(220,220,220,1)",
+                    data : "[" +  msg[1].points + "]",
+                }
+            ]
+
+        }
+
+        var ctx = document.getElementById("buyers").getContext("2d");
+        window.myLine = new Chart(ctx).Line(lineChartData, {
+            responsive: false
+        });
+        
+//            var buyers = document.getElementById('buyers').getContext('2d');
+//            new Chart(buyers).Line(buyerData);
+
+
+
+
             $('#frmvalores').find('input[type="text"]').val('');
             $('#frmvalores').find('textarea').val('');
             alerta("verde", "Guardado correctamente");
-        }).fail(function (msg) {
+        }).fail(function(msg) {
             alerta("rojo", "Error, por favor comunicarse con el administrador del sistema")
         });
 
     });
-    
-    $('body').delegate('.nuevoregistro','click',function(){
-    
+
+    $('body').delegate('.nuevoregistro', 'click', function() {
+
         $('#carpeta,#version,#descripcion,#nombreactividad').val('');
         $('#carpeta').val($(this).attr('car_id'));
-    
+
     })
-    
-    $('body').delegate("#guardarcarpeta","click",function () {
+
+    $('body').delegate("#guardarcarpeta", "click", function() {
         if (obligatorio("carbligatorio")) {
             $.post("<?php echo base_url("index.php/indicador/guardarcarpetatarea") ?>",
                     $('#frmcarpetaregistro').serialize()
-                    ).done(function (msg) {
-                var option = "<option value='" + msg.regCar_id+ "'>" + msg.regCar_nombre + " - " + msg.regCar_descripcion+"</option>"
+                    ).done(function(msg) {
+                var option = "<option value='" + msg.regCar_id + "'>" + msg.regCar_nombre + " - " + msg.regCar_descripcion + "</option>"
                 $('#carpeta').append(option);
-                                
+
                 var acordeon = '<div class="panel panel-default" id="' + msg.indCar_id + '">\n\
                                             <div class="panel-heading">\n\
                                                 <h4 class="panel-title">\n\
-                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.regCar_id  + '" aria-expanded="false">\n\
+                                                    <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse_' + msg.regCar_id + '" aria-expanded="false">\n\
                                                         <i class="fa fa-folder-o carpeta"></i> ' + msg.regCar_nombre + " - " + msg.regCar_descripcion + '\n\
                                                     </a>\n\
                                                     <div class="posicionIconoAcordeon">\n\
@@ -678,9 +723,30 @@
                 $('.carbligatorio').val("");
                 $('#modalCarpeta').modal("hide");
                 alerta("verde", "Carpeta agregada con exito");
-            }).fail(function (msg) {
+            }).fail(function(msg) {
                 alerta("rojo", "ha ocurrido un error por favor cumunicarse con el administrador del sistema");
             });
         }
     });
+
+
+
+
+    var buyerData = {
+        labels: [<?php echo $fechas; ?>],
+        datasets: [
+            {
+                fillColor: "rgba(172,194,132,0.4)",
+                strokeColor: "#ACC26D",
+                pointColor: "#fff",
+                pointStrokeColor: "#9DB86D",
+                data: [<?php echo $valores2; ?>]
+            }
+        ]
+    }
+    var buyers = document.getElementById('buyers').getContext('2d');
+    new Chart(buyers).Line(buyerData);
+
+
+
 </script> 

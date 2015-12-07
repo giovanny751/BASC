@@ -39,17 +39,16 @@ class Indicador extends My_Controller {
                 $this->data['registrocarpeta'] = $this->Registrocarpeta_model->detailxindicador($this->input->post("ind_id"));
                 $carpeta = $this->Registrocarpeta_model->consultaIndicadoryRegistroxInd($this->input->post("ind_id"));
                 $i = array();
-                foreach($carpeta as $c){
-                    $i[$c->regCar_id][$c->regCar_nombre." - ".$c->regCar_descripcion][] = 
-                            array(
+                foreach ($carpeta as $c) {
+                    $i[$c->regCar_id][$c->regCar_nombre . " - " . $c->regCar_descripcion][] = array(
                                 $c->reg_tamano
-                                ,$c->reg_version
-                                ,$c->reg_descripcion
-                                ,$c->reg_ruta
-                                ,$c->reg_archivo
-                                ,$c->reg_fechaCreacion
-                                ,$c->usu_nombre." ".$c->usu_apellido
-                            );
+                                , $c->reg_version
+                                , $c->reg_descripcion
+                                , $c->reg_ruta
+                                , $c->reg_archivo
+                                , $c->reg_fechaCreacion
+                                , $c->usu_nombre . " " . $c->usu_apellido
+                    );
                 }
                 $this->data['carpeta'] = $i;
                 $this->data['valores'] = $this->Indicadorvalores_model->consultaIndicadorxId($this->input->post("ind_id"));
@@ -74,13 +73,13 @@ class Indicador extends My_Controller {
             $this->data['dimension2'] = $this->Dimension2_model->detail();
             $this->data['tipo'] = $this->Indicadortipo_model->detail();
             $this->layout->view("indicador/verindicadores", $this->data);
-        }else {
+        } else {
             redirect('index.php/administrativo/empresa', 'location');
         }
     }
-    
-    function guardarindicador(){
-        try{
+
+    function guardarindicador() {
+        try {
             $this->load->model("Indicador_model");
             $data = array(
                 "ind_indicador" => $this->input->post("indicador"),
@@ -90,24 +89,24 @@ class Indicador extends My_Controller {
                 "dimdos_id" => $this->input->post("dimensiondos"),
                 "ind_frecuencia" => $this->input->post("frecuencia"),
                 "car_id" => $this->input->post("cargo"),
-                "emp_id" => $this->input->post("nombreempleado"), 
-                "ind_minimo" => $this->input->post("minimo"), 
-                "ind_maximo" => $this->input->post("maximo"), 
-                "est_id" => $this->input->post("estado"), 
-                "ind_objetivo" => $this->input->post("objetivo"), 
-                "ind_fecha" => $this->input->post("fecha"), 
-                "ind_observaciones" => $this->input->post("observaciones"), 
-                "ind_fechaCreacion" => date('Y-m-d H:i:s'), 
-                "userCreator"=>$this->data["usu_id"]
+                "emp_id" => $this->input->post("nombreempleado"),
+                "ind_minimo" => $this->input->post("minimo"),
+                "ind_maximo" => $this->input->post("maximo"),
+                "est_id" => $this->input->post("estado"),
+                "ind_objetivo" => $this->input->post("objetivo"),
+                "ind_fecha" => $this->input->post("fecha"),
+                "ind_observaciones" => $this->input->post("observaciones"),
+                "ind_fechaCreacion" => date('Y-m-d H:i:s'),
+                "userCreator" => $this->data["usu_id"]
             );
             $id = $this->Indicador_model->create($data);
             echo $id;
-        }catch(exception $e){
+        } catch (exception $e) {
             
         }
     }
-    
-    function actualizarindicador(){
+
+    function actualizarindicador() {
         $this->load->model("Indicador_model");
         $data = array(
             "ind_indicador" => $this->input->post("indicador"),
@@ -117,17 +116,18 @@ class Indicador extends My_Controller {
             "dimdos_id" => $this->input->post("dimensiondos"),
             "ind_frecuencia" => $this->input->post("frecuencia"),
             "car_id" => $this->input->post("cargo"),
-            "emp_id" => $this->input->post("nombreempleado"), 
-            "ind_minimo" => $this->input->post("minimo"), 
-            "ind_maximo" => $this->input->post("maximo"), 
-            "est_id" => $this->input->post("estado"), 
-            "ind_objetivo" => $this->input->post("objetivo"), 
+            "emp_id" => $this->input->post("nombreempleado"),
+            "ind_minimo" => $this->input->post("minimo"),
+            "ind_maximo" => $this->input->post("maximo"),
+            "est_id" => $this->input->post("estado"),
+            "ind_objetivo" => $this->input->post("objetivo"),
             "ind_observaciones" => $this->input->post("observaciones"),
             "ind_fechaModificacion" => date('Y-m-d H:i:s')
         );
-        $this->Indicador_model->actualizar($this->input->post("ind_id"),$data);
+        $this->Indicador_model->actualizar($this->input->post("ind_id"), $data);
     }
-        function consultaIndicadorFlechas() {
+
+    function consultaIndicadorFlechas() {
         try {
             $this->load->model("Indicador_model");
             $this->load->model('Empleado_model');
@@ -136,16 +136,17 @@ class Indicador extends My_Controller {
             $campos["campos"] = $this->Indicador_model->consultaIndicadorFlechas($idIndicador, $metodo)[0];
             if (!empty($campos)) {
                 $data["empleado"] = $this->Empleado_model->empleadoxcargo($campos["campos"]->car_id);
-                $campos = array_merge($campos,$data);
+                $campos = array_merge($campos, $data);
                 $this->output->set_content_type('application/json')->set_output(json_encode($campos));
-            }else{
+            } else {
                 $this->output->set_content_type('application/json')->set_output("vacio");
             }
         } catch (Exception $e) {
-            echo $e;die;
+            echo $e;
+            die;
         }
     }
-    
+
     function guardar_registro_tarea() {
         try {
             $this->load->model('Registro_model');
@@ -162,11 +163,15 @@ class Indicador extends My_Controller {
 //            $tar_id = $post['tar_id'];
             $targetPath = "./uploads/tareas_registro/";
             //De la carpeta idRegistro, creamos carpeta con el id del empleado
-            if (!file_exists($targetPath)) mkdir($targetPath, 0777, true);
+            if (!file_exists($targetPath))
+                mkdir($targetPath, 0777, true);
             $targetPath = "./uploads/tareas_registro/" . $post["tar_id"];
-            if (!file_exists($targetPath))  mkdir($targetPath, 0777, true);
+            if (!file_exists($targetPath))
+                mkdir($targetPath, 0777, true);
             $post['reg_ruta'] = $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
-            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) { }
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
+                
+            }
             $this->Registro_model->guardar_registro($post);
             $data = $this->Registro_model->registroxcarpeta($this->input->post('regCar_id'));
             $this->output->set_content_type('application/json')->set_output(json_encode($data));
@@ -174,60 +179,81 @@ class Indicador extends My_Controller {
             
         }
     }
-    
-    function consultarindicador(){
+
+    function consultarindicador() {
         $this->load->model("Indicador_model");
-        $tabla = $this->Indicador_model->search($this->input->post("tipo"),$this->input->post("dimensionUno"),$this->input->post("dimesionDos"));
+        $tabla = $this->Indicador_model->search($this->input->post("tipo"), $this->input->post("dimensionUno"), $this->input->post("dimesionDos"));
         $i = array();
-        foreach($tabla as $t){
+        foreach ($tabla as $t) {
             $i["Json"][$t->indTip_id][$t->indTip_tipo][] = array(
-                    "ind_id"=>$t->ind_id,
-                    "ind_indicador"=>$t->ind_indicador,
-                    "dimuno"=>$t->dimuno,
-                    "dimdos"=>$t->dimdos,
-                    "ind_mide"=>$t->ind_mide,
-                    "ind_frecuencia"=>$t->ind_frecuencia,
-                    "ind_minimo"=>$t->ind_minimo,
-                    "ind_maximo"=>$t->ind_maximo,
-                    "nombre"=>$t->nombre
+                "ind_id" => $t->ind_id,
+                "ind_indicador" => $t->ind_indicador,
+                "dimuno" => $t->dimuno,
+                "dimdos" => $t->dimdos,
+                "ind_mide" => $t->ind_mide,
+                "ind_frecuencia" => $t->ind_frecuencia,
+                "ind_minimo" => $t->ind_minimo,
+                "ind_maximo" => $t->ind_maximo,
+                "nombre" => $t->nombre
             );
         }
-        if(empty($i)) $i = 1;
+        if (empty($i))
+            $i = 1;
         $this->output->set_content_type('application/json')->set_output(json_encode($i));
     }
-    function guardarvalores(){
+
+    function guardarvalores() {
         $this->load->model("Indicadorvalores_model");
         $data = array(
-                    "indVal_comentario"=>$this->input->post("comentarios"),
-                    "usu_id"=>$this->data["usu_id"],
-                    "indVal_valor"=>$this->input->post("valor"),
-                    "ind_id"=>$this->input->post("ind_id"),
-                    "indVal_fecha"=>$this->input->post("fecha"),
-                    "usu_idcreacion"=>$this->data["usu_id"],
-                    "indVal_unidad"=>$this->input->post("unidad"),
-                    "indVal_fechaCreacion"=>date("Y-m-d H:i:s")
-                );
+            "indVal_comentario" => $this->input->post("comentarios"),
+            "usu_id" => $this->data["usu_id"],
+            "indVal_valor" => $this->input->post("valor"),
+            "ind_id" => $this->input->post("ind_id"),
+            "indVal_fecha" => $this->input->post("fecha"),
+            "usu_idcreacion" => $this->data["usu_id"],
+            "indVal_unidad" => $this->input->post("unidad"),
+            "indVal_fechaCreacion" => date("Y-m-d H:i:s")
+        );
         $this->Indicadorvalores_model->guardarvalores($data);
         $data = $this->Indicadorvalores_model->consultaIndicadorxId($this->input->post("ind_id"));
-        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+
+        $a = array();
+        foreach ($data as $key => $value) {
+            if (isset($a['fecha']))
+                $a['fecha'].= "'" . $value->indVal_fecha . "',";
+            else
+                $a['fecha'] = "'" . $value->indVal_fecha . "',";
+            if (isset($a['valores']))
+                $a['valores'].= $value->indVal_valor . ",";
+            else
+                $a['valores'] = $value->indVal_valor . ",";
+        }
+        $labels = array('29 April 2015', '30 April 2015', '1 May 2015', '2 May 2015', '3 May 2015', '4 May 2015', '5 May 2015');
+        $points = array('100', '250', '10', '35', '73', '0', '25');
+//        echo json_encode(array('labels' => $labels, 'points' => $points));
+
+        $this->output->set_content_type('application/json')->set_output(json_encode(array($data, array('labels' => $labels, 'points' => $points))));
     }
-    function guardarcarpetatarea(){
-        
+
+    function guardarcarpetatarea() {
+
         $this->load->model("Registrocarpeta_model");
         $data = array(
-                    "regCar_nombre"=>$this->input->post("nombrecarpeta"),
-                    "regCar_descripcion"=>$this->input->post("descripcioncarpeta"),
-                    "ind_id"=>$this->input->post("ind_id")
-                );
+            "regCar_nombre" => $this->input->post("nombrecarpeta"),
+            "regCar_descripcion" => $this->input->post("descripcioncarpeta"),
+            "ind_id" => $this->input->post("ind_id")
+        );
         $id = $this->Registrocarpeta_model->guardarCarpeta($data);
         $data = $this->Registrocarpeta_model->consultaCarpetaxIdIndicador($id);
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
-    function tipoindicador(){
+
+    function tipoindicador() {
         $this->load->model("Indicadortipo_model");
         $this->data["tipoindicadores"] = $this->Indicadortipo_model->detail();
-        $this->layout->view("indicador/tipoindicador",$this->data);
+        $this->layout->view("indicador/tipoindicador", $this->data);
     }
+
     function guardarmodificaciontipoindicador() {
         try {
             $this->load->model('Indicadortipo_model');
@@ -240,16 +266,19 @@ class Indicador extends My_Controller {
             
         }
     }
+
     function consultaIndicadorxid() {
 
         $this->load->model('Indicadortipo_model');
         $this->data['tipoIndicador'] = $this->Indicadortipo_model->consultadimensionxid($this->input->post('tipoIndicador'));
         $this->output->set_content_type('application/json')->set_output(json_encode($this->data['tipoIndicador'][0]));
     }
+
     function eliminarindicador() {
         $this->load->model('Indicadortipo_model');
         $this->Indicadortipo_model->delete($this->input->post('id'));
     }
+
     function guardarTipoIndicador() {
         $this->load->model('Indicadortipo_model');
         $data[0] = array(
@@ -262,6 +291,7 @@ class Indicador extends My_Controller {
         } else
             echo 1;
     }
+
 }
 
 /* End of file welcome.php */
