@@ -61,7 +61,12 @@ class Indicador extends My_Controller {
             redirect('index.php/administrativo/empresa', 'location');
         }
     }
-
+//    function graficaindicador(){
+//         $this->load->model("Indicadorvalores_model");
+//         $this->data['valores'] = $this->Indicadorvalores_model->consultaIndicadorxId(9);
+//         $this->output->set_content_type('application/json')->set_output(json_encode($campos));
+//        
+//    }
     function verindicadores() {
         $this->load->model('Indicadortipo_model');
         $this->load->model('Dimension2_model');

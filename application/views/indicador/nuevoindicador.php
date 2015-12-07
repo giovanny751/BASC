@@ -214,9 +214,17 @@
                                     <?php
                                     $fechas = "";
                                     $valores2 = "";
+                                    $contador = count($valores);
+                                    $e = 0;
                                     foreach ($valores as $v):
-                                        $fechas.='"' . $v->indVal_fecha . '",';
+                                        $e++;
+                                        if($contador == $e) 
+                                        {$fechas.='"' . $v->indVal_fecha . '"';
+                                        $valores2.=$v->indVal_valor ;
+                                        }
+                                        else {$fechas.='"' . $v->indVal_fecha . '",';
                                         $valores2.=$v->indVal_valor . ',';
+                                        }
                                         ?>
                                         <tr>
                                             <td><?php echo $v->indVal_fecha ?></td>
@@ -630,7 +638,7 @@
             });
             $("#bodyvalores").append(body);
 
-console.log(msg[1].labels)
+            console.log(msg[1].labels)
             var lineChartData = {
             labels : "[" +  msg[1].labels + "]",
             datasets : [
@@ -730,22 +738,24 @@ console.log(msg[1].labels)
     });
 
 
-
-
-    var buyerData = {
-        labels: [<?php echo $fechas; ?>],
-        datasets: [
-            {
-                fillColor: "rgba(172,194,132,0.4)",
-                strokeColor: "#ACC26D",
-                pointColor: "#fff",
-                pointStrokeColor: "#9DB86D",
-                data: [<?php echo $valores2; ?>]
-            }
-        ]
+    function grafica(fechas,valores){
+        var buyerData = {
+            labels: [<?php echo $fechas; ?>],
+            datasets: [
+                {
+                    fillColor: "rgba(172,194,132,0.4)",
+                    strokeColor: "#ACC26D",
+                    pointColor: "#fff",
+                    pointStrokeColor: "#9DB86D",
+                    data: [<?php echo $valores2; ?>]
+                }
+            ]
+        }
+        var buyers = document.getElementById('buyers').getContext('2d');
+        new Chart(buyers).Line(buyerData);
     }
-    var buyers = document.getElementById('buyers').getContext('2d');
-    new Chart(buyers).Line(buyerData);
+    grafica('','');
+    
 
 
 
