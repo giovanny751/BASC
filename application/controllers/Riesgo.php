@@ -213,6 +213,13 @@ class Riesgo extends My_Controller {
             redirect('index.php/administrativo/empresa', 'location');
         }
     }
+    
+    function listadoriesgocargos(){
+        $this->load->model('Riesgocargo_model');
+        $data["cargoId"] = $this->Riesgocargo_model->detailxcargoxid($this->input->post('rie_id'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($data["cargoId"]));
+    }
+    
 
     function estadosaceptacion() {
         $this->load->model("Estadoaceptacion_model");

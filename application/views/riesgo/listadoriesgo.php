@@ -75,7 +75,47 @@
         <input type="hidden" name="rie_id" id="rie_id">
     </form>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="modalCargos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">CARGOS</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="cargosMultiple" class="col-md-offset-2 col-md-2 control-label">Cargos</label>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <select name="cargosMultiple" class="form-control" disabled="disabled" multiple="multiple" id="cargosMultiple">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal -->
 <script>
+    $("body").on("click",".cargoMultiple",function(){
+        var url = "<?php echo base_url("index.php/riesgo/listadoriesgocargos") ?>";
+        var rie_id = $(this).attr("rie_id");
+        $.post(url,{rie_id:rie_id})
+                .done(function(msg){
+                    $("#cargosMultiple").html("");
+                    var option = "";
+                    $.each(msg,function(index,value){
+                        option += "<option value=''>"+value.car_nombre+"</option>"
+                    });
+                    $("#cargosMultiple").html(option);
+                    $("#modalCargos").modal("toggle");
+                })
+                .fail(function(){
+                    alerta("rojo","Error alistar cargos")
+                })
+    });
     $('body').delegate('.modificar', "click", function () {
         $('#rie_id').val($(this).attr('rie_id'));
         $('#f13').submit();
@@ -132,7 +172,9 @@
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.des2 + "</td>";
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rie_zona + "</td>";
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>"+val.rie_actividad+"</td>";
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'></td>";
+                            tbody += "<td class='transparent' style='background-color:"+val.rieCol_colorhtml+"'>\n\
+                                            <i class='fa fa-street-view fa-2x cargoMultiple' title='Cargos' rie_id='" + val.rie_id + "' ></i>\n\
+                                    </td>"; //Cargos
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rie_fecha + "</td>";
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.estado + "</td>";
                             tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'></td>";
