@@ -459,7 +459,7 @@
 <script>
 
     $('#valor').change(function() {
-        if (($(this).val() >= $('#minimo').val()) && ($(this).val() <= $('#maximo').val())) {
+        if ((parseInt($(this).val()) >= parseInt($('#minimo').val())) && (parseInt($(this).val()) <= parseInt($('#maximo').val()))) {
             return true;
         } else {
             $(this).val('');
