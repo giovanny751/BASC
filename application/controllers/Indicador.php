@@ -37,7 +37,9 @@ class Indicador extends My_Controller {
                 $this->load->model("Indicadorcarpeta_model");
                 $this->load->model("Registrocarpeta_model");
                 $this->data['registrocarpeta'] = $this->Registrocarpeta_model->detailxindicador($this->input->post("ind_id"));
+                
                 $carpeta = $this->Registrocarpeta_model->consultaIndicadoryRegistroxInd($this->input->post("ind_id"));
+//                var_dump($carpeta);die;
                 $i = array();
                 foreach ($carpeta as $c) {
                     $i[$c->regCar_id][$c->regCar_nombre . " - " . $c->regCar_descripcion][] = array(

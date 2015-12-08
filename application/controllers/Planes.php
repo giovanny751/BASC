@@ -390,7 +390,7 @@ class Planes extends My_Controller {
 
     function consultaplanes() {
         $this->load->model("Planes_model");
-        if(!empty($this->input->post('tareapropia')))$usu_id = $this->data["usu_id"];
+        if(!empty($this->input->post('tareapropia')))$usu_id = $this->session->userdata('emp_id');
         else $usu_id = "";    
         $planes = $this->Planes_model->filtrobusqueda(
                 $this->input->post("nombre"), 

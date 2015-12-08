@@ -49,6 +49,7 @@ class Planes_model extends CI_Model {
             $this->db->join("avance_tarea", "avance_tarea.tar_id = tarea.tar_id ", "LEFT");
             $this->db->group_by('planes.pla_id');
             $planes = $this->db->get("planes");
+//            echo $this->db->last_query();die;
             return $planes->result();
         } catch (exception $e) {
             

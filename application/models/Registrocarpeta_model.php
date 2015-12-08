@@ -93,7 +93,7 @@ class Registrocarpeta_model extends CI_Model {
             $this->db->select("user.usu_nombre");
             $this->db->select("user.usu_apellido");
             $this->db->where("registro_carpeta.ind_id", $id);
-            $this->db->join("registro","registro.regCar_id = registro_carpeta.regCar_id");
+            $this->db->join("registro","registro.regCar_id = registro_carpeta.regCar_id","left");
             $this->db->join("user","user.usu_id = registro.userCreator","Left");
             $valor = $this->db->get("registro_carpeta");
             return $valor->result();

@@ -192,7 +192,7 @@
                         <li>
                             <a data-toggle="tab" href="#tab2">Registrar valores</a>
                         </li>
-                        <li>
+                        <li id="graficar">
                             <a data-toggle="tab" href="#tab3">Gráfica</a>
                         </li>
                         <li>
@@ -248,7 +248,7 @@
                                                 Valor
                                             </label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" name="valor" id="valor" class="form-control miles">
+                                                <input type="text" name="valor" id="valor" class="form-control miles valorobligatorio">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -256,7 +256,7 @@
                                                 Unidad
                                             </label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" name="unidad" id="unidad" class="form-control miles">
+                                                <input type="text" name="unidad" id="unidad" class="form-control">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -264,7 +264,7 @@
                                                 Fecha
                                             </label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input type="text" name="fecha" value="<?= date("Y-m-d"); ?>" id="fecha" class="form-control fecha">
+                                                <input type="text" name="fecha" value="<?= date("Y-m-d"); ?>" id="fecha" class="form-control fecha valorobligatorio">
                                             </div>
                                         </div>
                                     </div>
@@ -279,11 +279,7 @@
                             </div>
                         </div>
                         <div id="tab3" class="tab-pane">
-
-
-                            <canvas id="buyers" width="600" height="400"></canvas>
-
-
+                            <canvas id="chart-area4" style="width: 100% !important;height: 100% !emportant;"></canvas>
                         </div>
                         <div id="tab4" class="tab-pane">
                             <div class="portlet box blue" style="margin-top: 30px;">
@@ -313,7 +309,7 @@
                                                                     <div class="posicionIconoAcordeon">
                                                                         <i class="fa fa-file-archive-o nuevoregistro" car_id="<?php echo $idcar ?>" data-toggle="modal" data-target="#myModal"></i>
                                                                         <i class="fa fa-edit editarcarpeta" car_id="<?php echo $idcar ?>"></i>
-                                                                        <i class="fa fa-times eliminarregistro" car_id="<?php echo $idcar ?>"></i>
+                                                                        <i class="fa fa-times eliminarcarpeta" car_id="<?php echo $idcar ?>"></i>
                                                                     </div>
                                                                 </h4>
                                                             </div>
@@ -462,9 +458,41 @@
         </div>
     <?php endif; ?>
 </div>
-
+<style>
+    canvas{
+        width: 100% !important;
+        /*max-width: 800px;*/
+        /*height: auto !important;*/
+    }
+</style>
 <script type="text/javascript" src="<?php echo base_url('js/graficas/Chart.min.js') ?>"></script>
 <script>
+    $('body').delegate(".eliminarregistro", "click", function() {
+        var reg_id = $(this).attr("reg_id");
+        var registro = $(this);
+        $.post(
+                "<?php echo base_url("index.php/planes/eliminarregistroplan") ?>",
+                {reg_id: reg_id}
+        ).done(function(msg) {
+            registro.parents('tr').remove();
+        }).fail(function(msg) {
+
+        })
+    });
+    
+    $('body').delegate(".eliminarcarpeta", "click", function() {
+        if (confirm("Confirma la eliminación")) {
+            var carpeta = $(this).attr("car_id");
+            var url = "<?php echo base_url("index.php/planes/eliminarcarpeta") ?>";
+            $.post(url,
+                    {carpeta: carpeta}
+            ).done(function(msg) {
+                $('a[href="#collapse_' + carpeta + '"]').parents('.panel-default').remove();
+            }).fail(function(msg) {
+                alerta("rojo", "Error, por favor comunicarse con el administrador del sistema");
+            });
+        }
+    });
 
     $('#valor').change(function() {
         if ((parseInt($(this).val()) >= parseInt($('#minimo').val())) && (parseInt($(this).val()) <= parseInt($('#maximo').val()))) {
@@ -617,16 +645,24 @@
     });
 
     $('#guardarindicador').click(function() {
+        if(obligatorio('valorobligatorio')){
         $.post(
                 "<?php echo base_url("index.php/indicador/guardarvalores") ?>",
                 $('#frmvalores').serialize()
                 ).done(function(msg) {
+                    $("#graficar").siblings().removeClass("active");
+                    $("#tab3").siblings().removeClass("active");
+                    $("#graficar").attr("class","active")
+                    $("#tab3").attr("class","tab-pane active")
+                    $("#graficar").trigger("click");
             var body = $("#bodyvalores *").remove();
             var fecha="";
             var valor="";
+            var label = [];
+            var valores = [];
             $.each(msg[0], function(key, val) {
-                fecha='"'+val.indVal_fecha+'",';
-                valor=val.indVal_valor+',';
+                label.push(val.indVal_fecha);
+                valores.push(parseInt(val.indVal_valor));
                 body += "<tr>";
                 body += "<td>" + val.indVal_fecha + "</td>";
                 body += "<td>" + val.indVal_unidad + "</td>";
@@ -637,43 +673,16 @@
                 body += "</tr>";
             });
             $("#bodyvalores").append(body);
-
-            console.log(msg[1].labels)
-            var lineChartData = {
-            labels : "[" +  msg[1].labels + "]",
-            datasets : [
-                {
-                    label: "Recent Orders",
-                    fillColor : "rgba(150,150,245,0.2)",
-                    strokeColor : "rgba(0,0,255,1)",
-                    pointColor : "rgba(220,220,220,1)",
-                    pointStrokeColor : "#fff",
-                    pointHighlightFill : "#fff",
-                    pointHighlightStroke : "rgba(220,220,220,1)",
-                    data : "[" +  msg[1].points + "]",
-                }
-            ]
-
-        }
-
-        var ctx = document.getElementById("buyers").getContext("2d");
-        window.myLine = new Chart(ctx).Line(lineChartData, {
-            responsive: false
-        });
-        
-//            var buyers = document.getElementById('buyers').getContext('2d');
-//            new Chart(buyers).Line(buyerData);
-
-
-
-
+            console.log(label)
+            console.log(valores)
+            grafi(label,valores);            
             $('#frmvalores').find('input[type="text"]').val('');
             $('#frmvalores').find('textarea').val('');
             alerta("verde", "Guardado correctamente");
         }).fail(function(msg) {
             alerta("rojo", "Error, por favor comunicarse con el administrador del sistema")
         });
-
+        }
     });
 
     $('body').delegate('.nuevoregistro', 'click', function() {
@@ -700,7 +709,7 @@
                                                     <div class="posicionIconoAcordeon">\n\
                                                         <i class="fa fa-file-archive-o nuevoregistro" car_id="' + msg.regCar_id + '" data-toggle="modal" data-target="#myModal"></i>\n\
                                                         <i class="fa fa-edit" car_id="' + msg.regCar_id + '"></i>\n\
-                                                        <i class="fa fa-times eliminarregistro" car_id="' + msg.regCar_id + '"></i>\n\
+                                                        <i class="fa fa-times eliminarcarpeta" car_id="' + msg.regCar_id + '"></i>\n\
                                                     </div>\n\
                                                 </h4>\n\
                                             </div>\n\
@@ -737,26 +746,38 @@
         }
     });
 
+    function grafi(label,valor){
+    var lineChartData = {
+			labels : label,
+			datasets : [
+				{
+					label: "Primera serie de datos",
+					fillColor : "rgba(220,220,220,0.2)",
+					strokeColor : "#6b9dfa",
+					pointColor : "#1e45d7",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(220,220,220,1)",
+					data : valor
+				}
+//                                ,
+//				{
+//					label: "Segunda serie de datos",
+//					fillColor : "rgba(151,187,205,0.2)",
+//					strokeColor : "#e9e225",
+//					pointColor : "#faab12",
+//					pointStrokeColor : "#fff",
+//					pointHighlightFill : "#fff",
+//					pointHighlightStroke : "rgba(151,187,205,1)",
+//					data : [40,50,70,40,85,55,15]
+//				}
+			]
 
-    function grafica(fechas,valores){
-        var buyerData = {
-            labels: [<?php echo $fechas; ?>],
-            datasets: [
-                {
-                    fillColor: "rgba(172,194,132,0.4)",
-                    strokeColor: "#ACC26D",
-                    pointColor: "#fff",
-                    pointStrokeColor: "#9DB86D",
-                    data: [<?php echo $valores2; ?>]
-                }
-            ]
-        }
-        var buyers = document.getElementById('buyers').getContext('2d');
-        new Chart(buyers).Line(buyerData);
+		}
+var ctx4 = document.getElementById("chart-area4").getContext("2d");
+ window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});
     }
-    grafica('','');
-    
-
+    grafi([<?php echo $fechas; ?>],[<?php echo $valores2; ?>]);
 
 
 </script> 
