@@ -193,6 +193,15 @@ class Registrocarpeta_model extends CI_Model {
             
         }
     }
+    function allfolders2($id) {
+        try {
+            $this->db->where("tar_id", $id);
+            $carpeta = $this->db->get("registro_carpeta");
+            return $carpeta->result();
+        } catch (exception $e) {
+            
+        }
+    }
     function detailxplannombre($pla_id,$nombre,$descripcion){
         try {
         $this->db->where("regCar_nombre",$nombre);

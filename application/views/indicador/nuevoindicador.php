@@ -760,24 +760,15 @@
 					pointHighlightStroke : "rgba(220,220,220,1)",
 					data : valor
 				}
-//                                ,
-//				{
-//					label: "Segunda serie de datos",
-//					fillColor : "rgba(151,187,205,0.2)",
-//					strokeColor : "#e9e225",
-//					pointColor : "#faab12",
-//					pointStrokeColor : "#fff",
-//					pointHighlightFill : "#fff",
-//					pointHighlightStroke : "rgba(151,187,205,1)",
-//					data : [40,50,70,40,85,55,15]
-//				}
 			]
 
 		}
 var ctx4 = document.getElementById("chart-area4").getContext("2d");
  window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});
     }
+    
+    <?php if(!empty($fechas) && !empty($valores2)) { ?>
     grafi([<?php echo $fechas; ?>],[<?php echo $valores2; ?>]);
-
+    <?php } ?>
 
 </script> 
