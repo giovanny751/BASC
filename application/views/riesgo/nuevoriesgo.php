@@ -139,8 +139,8 @@
                             if (!empty($rie_id)):
                                 foreach ($color as $co):
                                     ?>
-                                    <option <?php echo ((!empty($riesgo->col_id)) && ($co->col_id == $riesgo->col_id) ? "selected" : "") ?> value="<?php echo $co->col_id ?>"><?php echo $co->col_color ?></option> <?php
-                                endforeach;
+                                    <option <?php echo ((!empty($riesgo->col_id)) && ($co->estAceCol_id == $riesgo->col_id) ? "selected" : "") ?> value="<?php echo $co->estAceCol_id; ?>"><?php echo $co->rieCol_color; ?></option> 
+                                    <?php endforeach;
                             endif;
                             ?>
                         </select>
@@ -170,7 +170,7 @@
                             $select[] = 0;
                         }
                         ?>
-<?php echo listaMultiple2("cargo[]", "cargo", "form-control", "cargo", "car_id", "car_nombre", $select, null, null) ?> 
+<?php echo listaMultiple2("cargo[]", "cargo", "form-control", "cargo", "car_id", "car_nombre", $select, array("cargo.est_id"=>1), null) ?> 
                     </div>
                 </div>
                 <div class="row">
