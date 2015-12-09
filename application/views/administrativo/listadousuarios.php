@@ -188,8 +188,9 @@
 //                            $('input[type="checkbox"]').attr('checked',false)
                     $.each(msg, function (key, val) {
                         $('input[rol="' + val.rol_id + '"]').parent("span").addClass('checked');
-                        $('input[rol="' + val.rol_id + '"]').attr('checked', true);
+                        $('input[rol="' + val.rol_id + '"]').prop('checked', true);
                         $('input[rol="' + val.rol_id + '"]').is(":checked");
+                        $("#myModal3").modal("toggle");
                     });
                     
 //                    $('#myModal3').show(); 
@@ -243,7 +244,7 @@
                 body += "<td>" + val.usu_fechaActualizacion + "</td>";
                 body += "<td>" + val.usu_fechaCreacion + "</td>";
                 body += "<td>" + val.ing_fechaIngreso + "</td>";
-                body += '<td><button type="button"  data-toggle="modal" data-target="#myModal3"   class="btn btn-info permiso" usuarioid="' + val.usu_id + '">Roles</button></td>';
+                body += '<td><button type="button"  class="btn btn-info permiso" usuarioid="' + val.usu_id + '">Roles</button></td>';
                 body += '<td class="transparent">\n\
                             <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" usu_id="'+ val.usu_id+'"  data-toggle="modal" data-target="#myModal"></i>\n\
                         </td>';
