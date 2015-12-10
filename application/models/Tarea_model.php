@@ -179,6 +179,23 @@ class Tarea_model extends CI_Model {
             
         }
     }
+    function lista_riesgos() {
+        try {
+            $fecha = $this->db->get("riesgo");
+            return $fecha->result();
+        } catch (exception $e) {
+            
+        }
+    }
+    function lista_riesgos_guardados($id_tarea) {
+        try {
+            $this->db->where("tar_id",$id_tarea);
+            $fecha = $this->db->get("tarea_riesgos");
+            return $fecha->result();
+        } catch (exception $e) {
+            
+        }
+    }
 
     function tareaxRiesgo($id) {
         try {
@@ -205,6 +222,18 @@ class Tarea_model extends CI_Model {
             return $planes->result();
         } catch (exception $e) {
             
+        }
+    }
+    function guardar_lista_riesgos($idtarea,$lista_riesgos){
+        $this->db->where('tar_id',$idtarea);
+        $this->db->delete('tarea_riesgos');
+        
+        if(!empty($lista_riesgos)){
+            foreach ($lista_riesgos as $value) {
+                $this->db->set('tar_id',$idtarea);
+                $this->db->set('rie_id',$value);
+                $this->db->insert('tarea_riesgos');
+            }
         }
     }
 

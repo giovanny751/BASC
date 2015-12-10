@@ -11,7 +11,7 @@
 
         <link href="<?= base_url('assets/global/plugins/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css"/> 
 
-        <!--<link href="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.css') ?>" rel="stylesheet" type="text/css"/>-->
+        <link href="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.css') ?>" rel="stylesheet" type="text/css"/>
         <link href="<?= base_url('assets/global/plugins/jqvmap/jqvmap/jqvmap.css') ?>" rel="stylesheet" type="text/css"/>
         <!-- END PAGE LEVEL PLUGIN STYLES -->
         <!-- BEGIN PAGE STYLES -->
@@ -41,7 +41,7 @@
         <!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
         <script type="text/javascript" src="<?php echo base_url() ?>/js/jquery_1.11.3.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url() ?>/js/jquery_ui_1.11.4.min.js"></script>
-        <!--<script src="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.js') ?>" type="text/javascript"></script>-->
+        <script src="<?= base_url('assets/global/plugins/fullcalendar/fullcalendar.min.js') ?>" type="text/javascript"></script>
         <script src="<?= base_url('assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js') ?>" type="text/javascript"></script>
         <script src="<?= base_url('assets/global/plugins/jquery.sparkline.min.js') ?>" type="text/javascript"></script>
         <!-- END PAGE LEVEL PLUGINS -->
@@ -145,7 +145,7 @@
                                     </div>
                                     <div class="col-md-8 headerTxt">
                                         <a href="<?php echo base_url("index.php/riesgo/listadoriesgo") ?>" class="btn btn-headerTxt">
-                                            RIESGO <i class="m-icon-swapright m-icon-white"></i>
+                                            RIESGOS <i class="m-icon-swapright m-icon-white"></i>
                                         </a>
                                     </div>
                                 </div>

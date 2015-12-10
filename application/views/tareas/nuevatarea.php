@@ -272,6 +272,25 @@
                         </select>
                     </div>
                 </div>
+                <div class="row">
+                    <label for="tiposriesgos" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Riesgos</label>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <select name='lista_riesgos[]' id='lista_riesgos' class="form-control" multiple>
+                            <?php foreach ($riesgos as $e) { ?>
+                            <?php 
+                            $select = "";
+                            if(isset($riesgos_guardada))
+                            foreach ($riesgos_guardada as $tn) { 
+                                    if($tn->rie_id == $e->rie_id){
+                                        $select = "selected";
+                                        break;
+                                    }
+                                }?>
+                                        <option <?php echo $select; ?>  value="<?php echo $e->rie_id ?>"><?php echo $e->rie_descripcion ?></option>
+                                    <?php } ?>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -7,7 +7,7 @@
                 <?php } else { ?>
                     <div class="circuloIcon" id="btnguardar" title="Guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
                 <?php } ?>
-                <div class="circuloIcon limpiar"  title="Limpiar"><i class="fa fa-eraser fa-3x"></i></div>
+                <!--<div class="circuloIcon limpiar"  title="Limpiar"><i class="fa fa-eraser fa-3x"></i></div>-->
                 <a href="<?php echo base_url('index.php') . "/Tipo_contrato/consult_tipo_contrato" ?>">
                     <div class="circuloIcon"  title="Listado"><i class="fa fa-sticky-note fa-3x"></i></div>
                 </a>

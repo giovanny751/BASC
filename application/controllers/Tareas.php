@@ -41,6 +41,7 @@ class Tareas extends My_Controller {
             if (!empty($this->input->post("tar_id"))):
                 if(!empty($this->input->post("nuevoavance")))
                     $this->data["nuevoavance"] = $this->input->post("nuevoavance");
+                $this->data['riesgos_guardada'] = $this->Tarea_model->lista_riesgos_guardados($this->input->post('tar_id'));
                 $this->load->model('Empleado_model');
                 $carpeta = $this->Registrocarpeta_model->detailxtareas($this->input->post('tar_id'));
                 $this->data['carpetas'] = $this->Registrocarpeta_model->detailxtareascarpetas($this->input->post('tar_id'));
@@ -92,6 +93,7 @@ class Tareas extends My_Controller {
             $this->data['dimension'] = $this->Dimension_model->detail();
             $this->data['dimension2'] = $this->Dimension2_model->detail();
             $this->data['post'] = $this->input->post();
+            $this->data['riesgos'] = $this->Tarea_model->lista_riesgos();
             $this->layout->view("tareas/nuevatarea", $this->data);
             }else{
                 redirect('index.php/administrativo/empresa', 'location');
@@ -415,6 +417,7 @@ class Tareas extends My_Controller {
                 $idtarea = $this->Tarea_model->create($data);
                 $consultaxid = $this->Tarea_model->detailxid($idtarea);
             endif;
+            $this->Tarea_model->guardar_lista_riesgos($idtarea,$this->input->post("lista_riesgos"));
             $articulosnorma = $this->input->post("articulosnorma");
             $data = array();
             if (!empty($articulosnorma)) {
