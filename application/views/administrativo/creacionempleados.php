@@ -1,3 +1,8 @@
+<style type="text/css">
+    .tab-pane{
+        padding: 15px !important;
+    }
+</style>
 <form method="post" id="f1">
     <div class="row">
         <div class="col-md-6">
@@ -276,10 +281,62 @@
                 </ul>
                 <div class="tab-content">
                     <div id="tab1" class="tab-pane <?php echo (empty($avance) && empty($nuevoavance)) ? "active" : ""; ?>">
-
+                        <table class="tablesst">
+                            <thead>
+                                <tr>
+                                    <th>RESPONSABLE</th>
+                                    <th>FECHA INICIO</th>
+                                    <th>FECHA FINAL</th>
+                                    <th>TIEMPO EN DIAS</th>
+                                    <th>MOTIVO DE LA CAPACIDAD</th>
+                                    <th>OBSERVACIONES</th>
+                                    <th>USUARIO</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaIncapacidad">
+                            </tbody>
+                        </table>
                     </div>
-                    <div id="tab2" class="tab-pane">
-
+                    <div id="tab2" class="tab-pane ">
+                        <form id="crearIncapacidad" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="responsable" class="col-sm-3 control-label"><span class="campoobligatorio">*</span>Responsable</label>
+                                <div class="col-sm-3">
+                                    <select name="responsable" id="responsable" class="form-control obligatorioInc">
+                                        <option value="">::Seleccionar::</option>
+                                        <?php foreach($empleadoresponsable as $index => $value): ?>
+                                            <option value="<?php echo $value->empRes_id ?>"><?php echo $value->empRes_descripcion ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <label for="motivoInc" class="col-sm-3 control-label"><span class="campoobligatorio">*</span>Motivo de la incapacidad</label>
+                                <div class="col-sm-3">
+                                    <textarea name="motivoInc" id="motivoInc" class="form-control obligatorioInc"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaInicioInc" class="col-sm-3 control-label"><span class="campoobligatorio">*</span>Fecha Inicio</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control fecha obligatorioInc" id="fechaInicioInc" name="fechaInicioInc">
+                                </div>
+                                <label for="observacionInc" class="col-sm-3 control-label"><span class="campoobligatorio">*</span>Observaciones</label>
+                                <div class="col-sm-3">
+                                    <textarea name="observacionInc" id="observacionInc" class="form-control obligatorioInc"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fechaFinalInc" class="col-sm-3 control-label"><span class="campoobligatorio">*</span>Fecha Final</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control fecha obligatorioInc" id="fechaFinalInc" name="fechaFinalInc">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <button type="button" class="btn btn-sst" id="guardarInc">Guardar</button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="empleadoInc" name="empleadoInc" class="obligatorioInc"  value="<?php echo (!empty($empleado[0]->Emp_Id)) ? $empleado[0]->Emp_Id : ""; ?>" />
+                        </form>
                     </div>    
                     <div id="tab3" class="tab-pane">
                         <div class="portlet-title">
@@ -476,7 +533,7 @@ foreach ($tipoaseguradora as $ta):
 endforeach;
 ?>
 <script>
-
+    $(document).ready(<?php echo (!empty($empleado[0]->Emp_Id))? "tabla()":"" ?>);
     $('body').delegate(".modificarcarpeta", "click", function () {
 
         $.post("<?php echo base_url("index.php/administrativo/modificarcarpeta") ?>",
@@ -891,4 +948,47 @@ endforeach;
         }
 
     })
+    $("body").on("click","#guardarInc",function(){
+        var url = "<?php echo base_url("index.php/administrativo/guardarincapacidad"); ?>";
+        var valores = $("#crearIncapacidad").serialize();
+        if (obligatorio('obligatorioInc') == true){
+            if(difFecha("#fechaInicioInc","#fechaFinalInc") > 0 ){
+                $.post(url,valores)
+                        .done(function(msg){
+                            $("#crearIncapacidad").find("input[type='text']").val("");
+                            $("#crearIncapacidad").find("select").val("");
+                            $("#crearIncapacidad").find("textarea").val("");
+                            tabla();
+                            alerta("verde","Incapacidad Guardada")
+                        })
+                        .fail(function(msg){
+                            alerta("rojo","Error guardar incapacidad")
+                        })
+            }
+        }
+    });
+    function tabla(){
+        var tbody = "";
+        var url = "<?php echo base_url("index.php/administrativo/cargartablaincapacidad"); ?>";
+        var datos = {empleado: $("#emp_id").val()}
+        $.post(url,datos)
+                .done(function(msg){
+                    $.each(msg,function(indice,valor){
+                        tbody += "<tr>";
+                        tbody += "<td>"+valor.responsable+"</td>";
+                        tbody += "<td>"+valor.fechaInicio+"</td>";
+                        tbody += "<td>"+valor.fechaFinal+"</td>";
+                        tbody += "<td>"+valor.dias+"</td>";
+                        tbody += "<td>"+valor.motivo+"</td>";
+                        tbody += "<td>"+valor.observacion+"</td>";
+                        tbody += "<td>"+valor.usuario+"</td>";
+                        tbody += "</tr>"; 
+                    });
+                    $("#tablaIncapacidad *").remove();
+                    $("#tablaIncapacidad").html(tbody);
+                })
+                .fail(function(){
+                    alerta("rojo","Error al cargar tabla")
+                })
+    }
 </script>    

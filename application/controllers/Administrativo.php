@@ -33,6 +33,7 @@ class Administrativo extends My_Controller {
             $this->load->model('Empleadotipoaseguradora_model');
             $this->load->model('Empresa_model');
             $this->load->model('Empleadoregistro_model');
+            $this->load->model('Empleadoresponsable_model');
 
             $empleadoId = null;
             if (!empty($this->input->post('emp_id')))
@@ -55,6 +56,8 @@ class Administrativo extends My_Controller {
                 }
                 $this->data['registro'] = $i;
                 $this->session->guardadoExitoIdEmpleado = null;
+                
+                $this->data['empleadoresponsable'] = $this->Empleadoresponsable_model->detail();
             }
             $this->data['empresa'] = $this->Empresa_model->detail();
             if ((!empty($this->data['empresa'][0]->Dim_id)) && (!empty($this->data['empresa'][0]->Dimdos_id))) {
@@ -106,6 +109,35 @@ class Administrativo extends My_Controller {
         $carpeta = $this->Empleadocarpeta_model->eliminarcarpeta(
                 $this->input->post("empCar_id")
         );
+    }
+    function cargartablaincapacidad() {
+        try {
+            $this->load->model('Empleadoincapacidad_model');
+            $this->data["tablaincapacidad"] = $this->Empleadoincapacidad_model->detailxid($this->input->post("empleado"));
+            $this->output->set_content_type('application/json')->set_output(json_encode($this->data["tablaincapacidad"]));
+        } catch (exception $e) {
+            
+        }
+    }
+    function guardarincapacidad() {
+        try {
+            $this->load->model('Empleadoincapacidad_model');
+
+            $data = array(
+                'empRes_id' => $this->input->post('responsable'),
+                'empInc_fechaInicio' => $this->input->post('fechaInicioInc'),
+                'empInc_fechaFinal' => $this->input->post('fechaFinalInc'),
+                'empInc_motivo' => $this->input->post('motivoInc'),
+                'empInc_observacion' => $this->input->post('observacionInc'),
+                'usu_id' => $this->session->userdata('usu_id'),
+                'emp_id' => $this->input->post('empleadoInc'),
+                'empInc_fechaIngreso' => date("Y-m-d H:i:s")
+            );
+            $this->Empleadoincapacidad_model->create($data);
+
+        } catch (exception $e) {
+            
+        }
     }
 
     function searchxid() {
