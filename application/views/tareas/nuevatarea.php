@@ -1045,7 +1045,7 @@
             var array_fecha2 = fecha2.split("-");
             var comFecha1 = new Date(array_fecha1[0],array_fecha1[1],array_fecha1[2]);
             var comFecha2 = new Date(array_fecha2[0],array_fecha2[1],array_fecha2[2]);
-            if(comFecha1 < comFecha2){
+            if(comFecha1 <= comFecha2){
                 $("."+claseCompararFecha).removeClass("obligado");
                 return true;
             }else{

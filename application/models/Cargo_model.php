@@ -9,6 +9,7 @@ class Cargo_model extends CI_Model {
     function create($data) {
         try{
         $this->db->insert_batch("cargo", $data);
+//        echo $this->db->last_query();
         }catch(exception $e){
             
         }

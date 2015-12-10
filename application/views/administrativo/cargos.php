@@ -33,7 +33,7 @@
                 </div>
                 <label for="id" class="col-md-1 control-label"><span class="campoobligatorio">*</span>%Cotizacion ARL</label>
                 <div class="col-md-3">
-                    <input type="text" name="porcentaje[]" id="porcentaje" class="form-control obligatorio number texto" />
+                    <input type="text" name="porcentaje[]" id="porcentaje" class="form-control obligatorio number2 texto" />
                 </div>
             </div>
         </form>
