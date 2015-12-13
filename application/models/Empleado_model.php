@@ -265,7 +265,7 @@ class Empleado_model extends CI_Model {
     }
     function cargo($nombre) {
         $this->db->select('car_id');
-        $this->db->like('car_nombre', $nombre);
+        $this->db->like('UPPER(car_nombre)', strtoupper($nombre),false);
         $datos = $this->db->get('cargo');
         $datos = $datos->result();
         if (count($datos)) {
