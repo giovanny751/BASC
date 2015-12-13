@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-md-6">
-        <!-- <div class="circuloIcon" id="guardartarea"><i class="fa fa-floppy-o fa-3x"></i></div>
-        <div class="circuloIcon" id="guardartarea" ><i class="fa fa-pencil-square-o fa-3x"></i></div>
-        <div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div> -->
         <a href="<?php echo base_url()."/index.php/planes/nuevoplan" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
 </div>
@@ -90,21 +87,11 @@
         $('select,input').val("");
     });
 
-//    $('#responsable').autocomplete({
-//        source: "<?php echo base_url("index.php/tareas/autocompletar") ?>",
-//        minLength: 3
-//    });
-//    $('#fecha').autocomplete({
-//        source: "<?php echo base_url("index.php/tareas/autocompletarfechainicio") ?>",
-//        minLength: 3
-//    });
     $('#nombre').autocomplete({
         source: "<?php echo base_url("index.php/tareas/autocompletarresponsable") ?>",
         minLength: 3
     });
-//    $('.limpiar').click(function () {
-//        $('select,input').val('');
-//    });
+
     $('#consultar').click(function () {
         $.post("<?php echo base_url("index.php/planes/consultaplanes") ?>",
                 $('#f9').serialize()
@@ -118,7 +105,7 @@
                 body += "<td style='text-align:center'>" + val.pla_fechaFin + "</td>";
                 body += "<td></td>";
                 body += "<td>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</td>";
-                body += "<td style='text-align:right'>" + val.pla_presupuesto + "</td>";
+                body += "<td style='text-align:right'>" + num_miles(val.tar_costopresupuestado) + "</td>";
                 body += "<td>" + val.pla_descripcion + "</td>";
                 body += "<td style='text-align:center'>" + val.num_tareas + "</td>";
                 body += '<td class="transparent" align="center">\n\

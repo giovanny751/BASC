@@ -35,9 +35,10 @@ class Planes_model extends CI_Model {
                 $this->db->where("planes.est_id", $estado);
             if (!empty($tareaspropias))
                 $this->db->where("planes.emp_id", $tareaspropias);
+            
             $this->db->select("planes.*");
             $this->db->select("empleado.Emp_Nombre");
-            $this->db->select("empleado.Emp_Apellidos");
+            $this->db->select("empleado.Emp_Apellidos,sum(replace(tar_costopresupuestado,LTRIM(RTRIM(',')),'')) AS tar_costopresupuestado",false);
             $this->db->select("(select COUNT(emp_id) i
                             from tarea
                             where pla_id = planes.pla_id and emp_id=" . $this->session->userdata('usu_id') . "
