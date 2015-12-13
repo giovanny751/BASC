@@ -88,16 +88,17 @@
                         $.each(tipos, function (tipo, data) {
                             tbody += "<table class='tablesst'>\n\
                                         <thead style='text-align:center;'>\n\
-                                        <tr><th colspan='10'>" + tipo + "</th></tr>\n\
-                                        <th>Indicador</th>\n\
-                                        <th>Dimensión</th>\n\
-                                        <th>Dimensión 2</th>\n\
-                                        <th>Que miede</th>\n\
-                                        <th>Frecuencia</th>\n\
-                                        <th>Valor Mínimo</th>\n\
-                                        <th>Valor Máximo</th>\n\
-                                        <th>Responsable</th>\n\
-                                        <th>Editar</th></tr>\n\
+                                        <tr>\n\
+                                        <th colspan='10' style='width:20%'>" + tipo + "</th></tr>\n\
+                                        <th style='width:15%'>Indicador</th>\n\
+                                        <th style='width:8%'>Dimensión</th>\n\
+                                        <th style='width:8%'>Dimensión 2</th>\n\
+                                        <th style='width:15%'>Que miede</th>\n\
+                                        <th style='width:6%'>Frecuencia</th>\n\
+                                        <th style='width:4%'>Valor Mínimo</th>\n\
+                                        <th style='width:4%'>Valor Máximo</th>\n\
+                                        <th style='width:15%'>Responsable</th>\n\
+                                        <th style='width:5%'>Editar</th></tr>\n\
                                     </thead>";
                             $.each(data, function(key, val){
                                 tbody += "<tr>";
@@ -106,8 +107,8 @@
                                     tbody += "<td>" + val.dimdos + "</td>";
                                     tbody += "<td>" + val.ind_mide + "</td>";
                                     tbody += "<td>" + val.ind_frecuencia + "</td>";
-                                    tbody += "<td>" + val.ind_minimo + "</td>";
-                                    tbody += "<td>" + val.ind_maximo + "</td>";
+                                    tbody += "<td style='text-align:center'>" + val.ind_minimo + "</td>";
+                                    tbody += "<td style='text-align:center'>" + val.ind_maximo + "</td>";
                                     tbody += "<td>" + val.nombre + "</td>";
                                     tbody += '<td class="transparent">\n\
                                 <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" ind_id="' + val.ind_id + '"></i>\n\

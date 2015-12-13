@@ -184,34 +184,32 @@ class Tareas extends My_Controller {
         try {
             $post = $this->input->post();
             $this->load->model('Registro_model');
-            $tamano = round($_FILES["archivo"]["size"] / 1024, 1) . " KB";
-            $post["reg_tamano"] = $tamano;
+            $post["reg_tamano"] = round($_FILES["archivo"]["size"] / 1024, 1) . " KB";
             $fecha = new DateTime();
             $post["reg_fechaCreacion"] = $fecha->format('Y-m-d H:i:s');
             $post["userCreator"] = $this->data["usu_id"];
+            $post['reg_archivo'] = basename($_FILES['archivo']['name']);
             //Creamos carpeta con el ID del registro
             if (isset($_FILES['archivo']['name']))
                 if (!empty($_FILES['archivo']['name']))
-                    $post['reg_ruta'] = basename($_FILES['archivo']['name']);
+                    $post['reg_archivo'] = basename($_FILES['archivo']['name']);
 
             $ind_id = $post['ind_id'];
-            $targetPath = "./uploads/indicador/";
-
+            $targetPath = "./uploads/indicador/".$ind_id."/";
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
             //De la carpeta idRegistro, creamos carpeta con el id del empleado
-            if (!file_exists($targetPath)) {
-                mkdir($targetPath, 0777, true);
+            $post['reg_ruta'] = $targetPath;
+            $idregistro = $this->Registro_model->guardar_registro($post);
+            $targetPath = $targetPath .$idregistro;
+            mkdir($targetPath, 0777, true);
+            $targetPath = $targetPath.'/' . basename($_FILES['archivo']['name']);
+            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $targetPath)) {    
+//                echo "El fichero es válido y se subió con éxito.\n";
+            } else {
+//                echo "¡Posible ataque de subida de ficheros!\n";  
             }
-            $targetPath = "./uploads/indicador/" . $ind_id;
-            if (!file_exists($targetPath)) {
-                mkdir($targetPath, 0777, true);
-            }
-
-            $post['reg_ruta'] = $target_path = $targetPath . '/' . basename($_FILES['archivo']['name']);
-            $post['reg_archivo'] = basename($_FILES['archivo']['name']);
-            if (move_uploaded_file($_FILES['archivo']['tmp_name'], $target_path)) {
-                
-            }
-            $this->Registro_model->guardar_registro($post);
             $data = $this->Registro_model->registroxcarpeta($post['regCar_id']);
             $this->output->set_content_type('application/json')->set_output(json_encode($data));
         } catch (exception $e) {
