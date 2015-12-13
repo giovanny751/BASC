@@ -46,7 +46,7 @@ class Indicador extends My_Controller {
                                 $c->reg_tamano
                                 , $c->reg_version
                                 , $c->reg_descripcion
-                                , $c->reg_ruta
+                                , $c->reg_ruta.'/'.$c->reg_id.'/'.$c->reg_archivo
                                 , $c->reg_archivo
                                 , $c->reg_fechaCreacion
                                 , $c->usu_nombre . " " . $c->usu_apellido

@@ -403,6 +403,7 @@
                     <div class="modal-body">
                         <form method="post" id="formactividadpadre">
                             <input type="hidden" id="ind_id" name="ind_id" value="<?php echo (!empty($ind_id)) ? $ind_id : ""; ?>" />
+                            <input type="hidden" id="reg_id" name="reg_id" value="" />
                             <div class="row">
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                                     <label for="carpeta">Carpeta:</label>
@@ -508,6 +509,7 @@
             form_data.append('reg_version', $('#version').val());
             form_data.append('ind_id', $('#ind_id').val());
             form_data.append('reg_descripcion', $('#descripcion').val());
+            form_data.append('reg_id', $('#reg_id').val());
             $.ajax({
                 url: '<?php echo base_url("index.php/tareas/guardarregistroindicador") ?>',
                 dataType: 'text', // what to expect back from the PHP script, if anything
@@ -524,7 +526,7 @@
                     var filas = "";
                     $.each(result, function (key, val) {
                         filas += "<tr>";
-                        filas += "<td>" + val.reg_archivo + "</td>";
+                        filas += "<td><a target'_black' href='<?php echo base_url(); ?>"+val.reg_ruta+val.reg_id+"/"+val.reg_archivo+"'>" + val.reg_archivo + "</a></td>";
                         filas += "<td>" + val.reg_descripcion + "</td>";
                         filas += "<td>" + val.reg_version + "</td>";
                         filas += "<td>" + val.usu_nombre + " " + val.usu_apellido + "</td>";
@@ -670,12 +672,15 @@
     $('body').delegate('.nuevoregistro', 'click', function () {
         $('#carpeta,#version,#descripcion,#nombreactividad').val('');
         $('#carpeta').val($(this).attr('car_id'));
+        $('#reg_id').val('');
     });
     $('body').delegate('.modificarregistro', 'click', function () {
+        var registro=$(this).attr('reg_id');
         $.post(
                 "<?php echo base_url("index.php/planes/modificarregistro") ?>",
-                {registro: $(this).attr('reg_id')}
+                {registro: registro}
         ).done(function (msg) {
+            $('#reg_id').val(registro);
             $('#carpeta').val(msg.regCar_id);
             $('#version').val(msg.reg_version);
             $('#descripcion').val(msg.reg_descripcion);
