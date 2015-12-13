@@ -50,6 +50,7 @@ class Indicador extends My_Controller {
                                 , $c->reg_archivo
                                 , $c->reg_fechaCreacion
                                 , $c->usu_nombre . " " . $c->usu_apellido
+                                , $c->reg_id
                     );
                 }
                 $this->data['carpeta'] = $i;

@@ -17,33 +17,23 @@
     </div>
     <div class="form-group">
         <label for="rpassword">Repetir Contraseña</label>
-        <input type="rpassword" id="rpassword" class="form-control obligatorio" />
+        <input type="password" id="rpassword" class="form-control obligatorio" />
     </div>
     <div class="row alerta">
 
     </div>
 </div>
 <script>
-    $('body').delegate('.guardar', 'click', function () {
+    $('body').delegate('#guardar', 'click', function () {
         if (obligatorio('obligatorio') == true && $('#password').val() == $('#rpassword').val()) {
             $('.error').remove();
             $.post("<?php echo base_url('index.php/presentacion/guardarcontrasena') ?>",
                     {password: $('#password').val()}, function () {
-                $.notific8('', {
-                    horizontalEdge: 'bottom',
-                    life: 5000,
-                    theme: 'lime sticky',
-                    heading: 'Contraseña Actualizada'
-                });
+                        alerta("verde",'Contraseña Actualizada');
             });
         }
         if ($('#password').val() != $('#rpassword').val()) {
-            $.notific8('', {
-                horizontalEdge: 'bottom',
-                life: 5000,
-                theme: 'ruby sticky',
-                heading: 'No coinciden las contraseñas'
-            });
+            alerta("rojo",'No coinciden las contraseñas');
         }
 
     });

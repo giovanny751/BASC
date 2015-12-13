@@ -70,6 +70,7 @@ class Registro_model extends CI_Model {
     function guardar_registro($post) {
         try {
             $this->db->insert("registro", $post);
+            return $this->db->insert_id();
         } catch (exception $e) {
             
         }
