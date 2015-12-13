@@ -746,6 +746,10 @@ class Tareas extends My_Controller {
         else
             echo 1;
     }
+    function traer_riesgos(){
+        $this->load->model("Tarea_model");
+        $this->data['riesgos'] = $this->Tarea_model->lista_riesgos($this->input->post('clasificacionriesgo'),$this->input->post('tiposriesgos'));
+    }
 
 }
 

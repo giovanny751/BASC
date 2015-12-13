@@ -248,7 +248,7 @@
                 color: #FFF
             }
             .header_position a {
-                margin-left: -10%;
+                margin-left: -7%;
             }
         </style>
         <script>

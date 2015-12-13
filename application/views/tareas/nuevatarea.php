@@ -162,7 +162,7 @@
                 <div class="row">
                     <label for="costrospresupuestados" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Costos Presupuestados</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <input type="text" name="costrospresupuestados" id="costrospresupuestados" class="form-control miles"  value="<?php echo (!empty($tarea->tar_costopresupuestado)) ? $tarea->tar_costopresupuestado : ""; ?>"/>
+                        <input type="text" name="costrospresupuestados" id="costrospresupuestados" style='text-align:right' class="form-control miles"  value="<?php echo (!empty($tarea->tar_costopresupuestado)) ? $tarea->tar_costopresupuestado : ""; ?>"/>
                     </div> 
                 </div>
                 <div class="row">
@@ -1058,6 +1058,16 @@
         }
     }
     
+    $('#tiposriesgos').change(function(){
+        var url='<?php echo base_url("index.php/tareas/traer_riesgos") ?>';
+        $.post(url,{tiposriesgos:$(this).val(),clasificacionriesgo:$('#clasificacionriesgo').val()})
+                .done(function(msg){
+                    
+                })
+                .fail(function(){
+                    
+                })
+    });
     $('#fechaIncio').change(function(){
         <?php if(isset($post['fecha_inicio_plan'])){ ?>
                 var fecha_inicio_plan=new Date('<?php echo $post['fecha_inicio_plan'] ?>');
@@ -1069,7 +1079,10 @@
         <?php }?>
         
         
-    })
+    });
+    
+    
+    
     
     
 </script>    

@@ -179,8 +179,12 @@ class Tarea_model extends CI_Model {
             
         }
     }
-    function lista_riesgos() {
+    function lista_riesgos($clasificacionriesgo=null,$tiposriesgos=null) {
         try {
+            if($clasificacionriesgo!=null && $tiposriesgos!=null){
+            $this->db->where('rieCla_id',$clasificacionriesgo);
+            $this->db->where('rieClaTip_id',$tiposriesgos);
+            }
             $fecha = $this->db->get("riesgo");
             return $fecha->result();
         } catch (exception $e) {
