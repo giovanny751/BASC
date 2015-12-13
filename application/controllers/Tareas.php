@@ -747,6 +747,7 @@ class Tareas extends My_Controller {
     function traer_riesgos(){
         $this->load->model("Tarea_model");
         $this->data['riesgos'] = $this->Tarea_model->lista_riesgos($this->input->post('clasificacionriesgo'),$this->input->post('tiposriesgos'));
+        $this->output->set_content_type('application/json')->set_output(json_encode($this->data['riesgos']));
     }
 
 }

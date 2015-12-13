@@ -1062,7 +1062,10 @@
         var url='<?php echo base_url("index.php/tareas/traer_riesgos") ?>';
         $.post(url,{tiposriesgos:$(this).val(),clasificacionriesgo:$('#clasificacionriesgo').val()})
                 .done(function(msg){
-                    
+                    $('#lista_riesgos').html('');
+                    $.each(msg,function(key,val){
+                        $('#lista_riesgos').append('<option value="'+val.rie_id+'">'+val.rie_descripcion+'</option>');    
+                    })
                 })
                 .fail(function(){
                     

@@ -925,7 +925,6 @@ class Administrativo extends My_Controller {
 
 
         $excel = PHPExcel_IOFactory::load($uploadfile)->setActiveSheetIndex(0);
-//        $myfile = fopen($uploaddir . "/" . $_FILES['file']['name'] . ".txt", "w"); //Log de errores
         $lastRow = $excel->getHighestRow();
         $creados = 0;
         $actulizados = 0;
@@ -938,6 +937,9 @@ class Administrativo extends My_Controller {
             $info['Emp_Apellidos'] = $excel->getCell('C' . $row)->getValue();
             $info['sex_Id'] = $excel->getCell('D' . $row)->getValue();
             $info['Emp_FechaNacimiento'] = $excel->getCell('E' . $row)->getValue();
+            if(!empty($info['Emp_FechaNacimiento'])){
+                $info['Emp_FechaNacimiento'] = date('Y-m-d H:i:s', ($excel->getCell('E' . $row)->getValue() - 25569 - 0.08333) * 86400);
+            }
             $info['Emp_Estatura'] = $excel->getCell('F' . $row)->getValue();
             $info['Emp_Peso'] = $excel->getCell('G' . $row)->getValue();
             $info['Emp_Telefono'] = $excel->getCell('H' . $row)->getValue();
@@ -948,9 +950,18 @@ class Administrativo extends My_Controller {
             if (($excel->getCell('M' . $row)->getValue()) != '')
                 $info['TipCon_Id'] = $this->Empleado_model->buscar_tipo_contrato($excel->getCell('M' . $row)->getValue());
             $info['Emp_FechaInicioContrato'] = $excel->getCell('N' . $row)->getValue();
+            if(!empty($info['Emp_FechaInicioContrato'])){
+                $info['Emp_FechaInicioContrato'] = date('Y-m-d H:i:s', ($excel->getCell('N' . $row)->getValue() - 25569 - 0.08333) * 86400);
+            }
             $info['Emp_FechaFinContrato'] = $excel->getCell('O' . $row)->getValue();
+            if(!empty($info['Emp_FechaFinContrato'])){
+                $info['Emp_FechaFinContrato'] = date('Y-m-d H:i:s', ($excel->getCell('O' . $row)->getValue() - 25569 - 0.08333) * 86400);
+            }
             $info['Emp_PlanObligatorioSalud'] = $excel->getCell('P' . $row)->getValue();
             $info['Emp_FechaAfiliacionArl'] = $excel->getCell('Q' . $row)->getValue();
+            if(!empty($info['Emp_FechaAfiliacionArl'])){
+                $info['Emp_FechaAfiliacionArl'] = date('Y-m-d H:i:s', ($excel->getCell('Q' . $row)->getValue() - 25569 - 0.08333) * 86400);
+            }
             if (($excel->getCell('R' . $row)->getValue()) != '')
                 $info['TipAse_Id'] = $this->Empleado_model->buscar_tipo_aseguradora($excel->getCell('R' . $row)->getValue());
             if (($excel->getCell('S' . $row)->getValue()) != '')
@@ -961,7 +972,6 @@ class Administrativo extends My_Controller {
                 $info['Dim_IdDos'] = $this->Empleado_model->buscar_dimencion2($excel->getCell('U' . $row)->getValue());
             if (($excel->getCell('V' . $row)->getValue()) != '')
                 $info['Car_id'] = $this->Empleado_model->cargo($excel->getCell('V' . $row)->getValue());
-//            $info['Emp_codigo'] = $excel->getCell('W' . $row)->getValue();
             if (($excel->getCell('W' . $row)->getValue()) != '')
                 $info['TipDoc_id'] = $this->Empleado_model->tipo_documento($excel->getCell('W' . $row)->getValue());
             $info['Est_id'] = $excel->getCell('X' . $row)->getValue();
