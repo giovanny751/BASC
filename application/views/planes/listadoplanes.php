@@ -105,7 +105,9 @@
                 body += "<td style='text-align:center'>" + val.pla_fechaFin + "</td>";
                 body += "<td></td>";
                 body += "<td>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</td>";
-                body += "<td style='text-align:right'>" + num_miles(val.tar_costopresupuestado) + "</td>";
+                if(val.tar_costopresupuestado != null )var costopresupuesto = val.tar_costopresupuestado;
+                else var costopresupuesto = 0;
+                body += "<td style='text-align:right'>" + num_miles(costopresupuesto) + "</td>";
                 body += "<td>" + val.pla_descripcion + "</td>";
                 body += "<td style='text-align:center'>" + val.num_tareas + "</td>";
                 body += '<td class="transparent" align="center">\n\

@@ -109,7 +109,7 @@
             $.each(msg, function (idplan, nombreplan) {
                 table += "<table class='tablesst'>";
                 $.each(nombreplan, function (nombre, tareaid) {
-                    table += "<thead><tr><th colspan='11'>"+nombre+"</th></tr>";
+                    table += "<thead><tr><th colspan='12'>"+nombre+"</th></tr>";
                         table += "<tr>";
                         table += "<th>AGREGAR AVANCE</th>"
                         table += "<th>AVANCE</th>"
@@ -119,6 +119,7 @@
                         table += "<th>FECHA FIN</th>"
                         table += "<th>DURACIÓN PRESUPUESTADA</th>"
                         table += "<th>RESPONSABLES</th>"
+                        table += "<th># RIESGOS</th>"
                         table += "<th>RIESGOS</th>"
                         table += "<th>EDITAR</th>"
                         table += "<th>ELIMINAR</th>"
@@ -138,6 +139,7 @@
                                     table += "<td>"+numeracion.fechafinalizacion+"</td>";
                                     table += "<td style='text-align:center;'>"+numeracion.diferencia+"</td>";
                                     table += "<td>"+numeracion.nombre+"</td>";
+                                    table += "<td>"+numeracion.cantidadriesgo+"</td>";
                                     table += '<td class="transparent">';
                                     table += '<center><i class="fa fa-file-text-o fa-2x  riesgos" title="Riesgos" tar_id="'+ idtar+'"  data-toggle="modal" data-target="#myModal"></i>';
                                     table += "</td>";
@@ -152,7 +154,7 @@
                         });
                         }else{
                             table += "<tr>";
-                            table += "<td colspan='9'><center><b>No hay tareas asociadas al plan</b></center></td>";
+                            table += "<td colspan='12'><center><b>No hay tareas asociadas al plan</b></center></td>";
                             table += "</tr>";
                         }
                     });

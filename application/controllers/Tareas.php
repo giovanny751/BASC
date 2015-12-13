@@ -478,7 +478,8 @@ class Tareas extends My_Controller {
                         "diferencia" => $t->diferencia,
                         "nombretarea" => $t->tar_nombre,
                         "nombre" => $t->Emp_Nombre,
-                        "tipo" => $t->tip_tipo
+                        "tipo" => $t->tip_tipo,
+                        "cantidadriesgo" => $t->cantidadriesgo
                     )
                 );
             endforeach;

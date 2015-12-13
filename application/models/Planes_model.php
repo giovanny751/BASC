@@ -34,7 +34,7 @@ class Planes_model extends CI_Model {
             if (!empty($estado))
                 $this->db->where("planes.est_id", $estado);
             if (!empty($tareaspropias))
-                $this->db->where("planes.emp_id", $tareaspropias);
+                $this->db->where("tarea.emp_id", $tareaspropias);
             
             $this->db->select("planes.*");
             $this->db->select("empleado.Emp_Nombre");
