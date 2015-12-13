@@ -265,7 +265,7 @@
     <input type="hidden" id="emp_id" name="emp_id"  value="<?php echo (!empty($empleado[0]->Emp_Id)) ? $empleado[0]->Emp_Id : ""; ?>" />
 </form>
 <?php if (!empty($empleado[0]->Emp_Id)) { ?>
-    <div class="portlet box blue">
+<!--    <div class="portlet box blue">
         <div class="portlet-body">
             <div class="tabbable tabbable-tabdrop">
                 <ul class="nav nav-tabs">
@@ -338,7 +338,7 @@
                             <input type="hidden" id="empleadoInc" name="empleadoInc" class="obligatorioInc"  value="<?php echo (!empty($empleado[0]->Emp_Id)) ? $empleado[0]->Emp_Id : ""; ?>" />
                         </form>
                     </div>    
-                    <div id="tab3" class="tab-pane">
+                    <div id="tab3" class="tab-pane">-->
                         <div class="portlet-title">
                             <div class="caption" style="padding:0;">
                                 <span style="color: #0A7194;font-size: 20px" >Registro</span>
@@ -432,15 +432,15 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+<!--                    </div>
                 </div>
             </div>
             <p>   </p>
             <p>   </p>
             <div class="tabbable tabbable-tabdrop">
-            </div>
-        </div>
-    </div>
+            </div>-->
+<!--        </div>
+    </div>-->
 
 <?php } ?>
 <!-- Modal -->

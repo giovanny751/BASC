@@ -99,21 +99,21 @@
 </div>
 <!--End Modal -->
 <script>
-    $("body").on("click",".cargoMultiple",function(){
+    $("body").on("click", ".cargoMultiple", function () {
         var url = "<?php echo base_url("index.php/riesgo/listadoriesgocargos") ?>";
         var rie_id = $(this).attr("rie_id");
-        $.post(url,{rie_id:rie_id})
-                .done(function(msg){
+        $.post(url, {rie_id: rie_id})
+                .done(function (msg) {
                     $("#cargosMultiple").html("");
                     var option = "";
-                    $.each(msg,function(index,value){
-                        option += "<option value=''>"+value.car_nombre+"</option>"
+                    $.each(msg, function (index, value) {
+                        option += "<option value=''>" + value.car_nombre + "</option>"
                     });
                     $("#cargosMultiple").html(option);
                     $("#modalCargos").modal("toggle");
                 })
-                .fail(function(){
-                    alerta("rojo","Error alistar cargos")
+                .fail(function () {
+                    alerta("rojo", "Error alistar cargos")
                 })
     });
     $('body').delegate('.modificar', "click", function () {
@@ -166,20 +166,21 @@
                                     </thead>";
                         $.each(data, function (key, val) {
                             tbody += "<tr>";
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rieClaTip_tipo + "</td>";
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rie_descripcion + "</td>";
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.des1 + "</td>";
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.des2 + "</td>";
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rie_zona + "</td>";
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>"+val.rie_actividad+"</td>";
-                            tbody += "<td class='transparent' style='background-color:"+val.rieCol_colorhtml+"'>\n\
+                            tbody += "<td style='background-color:" + val.rieCol_colorhtml + "'>" + val.rieClaTip_tipo + "</td>";
+                            tbody += "<td style='background-color:" + val.rieCol_colorhtml + "'>" + val.rie_descripcion + "</td>";
+                            tbody += "<td style='background-color:" + val.rieCol_colorhtml + "'>" + val.des1 + "</td>";
+                            tbody += "<td style='background-color:" + val.rieCol_colorhtml + "'>" + val.des2 + "</td>";
+                            tbody += "<td style='background-color:" + val.rieCol_colorhtml + "'>" + val.rie_zona + "</td>";
+                            tbody += "<td style='background-color:" + val.rieCol_colorhtml + "'>" + val.rie_actividad + "</td>";
+                            tbody += "<td class='transparent' style='background-color:" + val.rieCol_colorhtml + "'>\n\
                                             <i class='fa fa-street-view fa-2x cargoMultiple' title='Cargos' rie_id='" + val.rie_id + "' ></i>\n\
                                     </td>"; //Cargos
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.rie_fecha + "</td>";
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'>" + val.estado + "</td>";
-                            tbody += "<td style='background-color:"+val.rieCol_colorhtml+"'></td>";
-                            tbody += '<td class="transparent" style="background-color:'+val.rieCol_colorhtml+'">\n\
+                            tbody += "<td style='background-color:" + val.rieCol_colorhtml + "'>" + val.rie_fecha + "</td>";
+                            tbody += "<td style='background-color:" + val.rieCol_colorhtml + "'>" + val.estado + "</td>";
+                            tbody += "<td style='background-color:" + val.rieCol_colorhtml + "'></td>";
+                            tbody += '<td class="transparent" style="background-color:' + val.rieCol_colorhtml + '">\n\
                                             <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" rie_id="' + val.rie_id + '" ></i>\n\
+                                            <i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" rie_id="' + val.rie_id + '" ></i>\n\
                                         </td>';
                             tbody += "</tr>";
                         });
@@ -194,4 +195,15 @@
         });
 
     });
+
+    $('body').delegate('.eliminar', 'click', function () {
+        var url = "<?php echo base_url("index.php/riesgo/eliminar_riesgos") ?>";
+        $.post(url, {rie_id: $(this).attr('rie_id')})
+                .done(function () {
+                    $('.buscar').trigger('click');
+                })
+                .fail(function () {
+                    alerta('Error al eliminar el registro')
+                })
+    })
 </script>    

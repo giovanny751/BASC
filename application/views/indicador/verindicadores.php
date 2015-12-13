@@ -109,7 +109,10 @@
                                     tbody += "<td>" + val.ind_minimo + "</td>";
                                     tbody += "<td>" + val.ind_maximo + "</td>";
                                     tbody += "<td>" + val.nombre + "</td>";
-                                    tbody += '<td class="transparent"><i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" ind_id="' + val.ind_id + '"></i></td>';
+                                    tbody += '<td class="transparent">\n\
+                                <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" ind_id="' + val.ind_id + '"></i>\n\
+                                <i class="fa fa-trash-o fa-2x eliminar" title="Eliminar" ind_id="' + val.ind_id + '"></i>\n\
+</td>';
                                 tbody += "</tr>";
                             });
                             tbody += "</table>";
@@ -125,4 +128,14 @@
                 });
 
     });
+    $('body').delegate('.eliminar', 'click', function () {
+        var url = "<?php echo base_url("index.php/Indicador/eliminar_Indicador") ?>";
+        $.post(url, {ind_id: $(this).attr('ind_id')})
+                .done(function () {
+                    $('#consultar').trigger('click');
+                })
+                .fail(function () {
+                    alerta('Error al eliminar el registro')
+                })
+    })
 </script>

@@ -1,8 +1,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="circuloIcon <?php echo (!empty($usuario[0]->usu_id)) ? "none":"" ?> guardar" metodo="guardar"><i class="fa fa-floppy-o fa-3x"></i></div>
-        <div class="circuloIcon <?php echo (!empty($usuario[0]->usu_id)) ? "":"none" ?> guardar" metodo="actualizar"><i class="fa fa-pencil-square-o fa-3x"></i></div>
-        <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
+        <div class="circuloIcon <?php echo (!empty($usuario[0]->usu_id)) ? "":"none" ?> guardar" metodo="actualizar"><i class="fa fa-floppy-o fa-3x"></i></div>
         <a href="<?php echo base_url()."/index.php/administrativo/creacionusuarios" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
     <div class="col-md-6">
@@ -28,15 +27,6 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <a href="<?php echo base_url('index.php/presentacion/roles')?>"><button type="button" class="btn-sst">Crear Rol</button></a>
             </div>
-            <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                <center>
-                    <div class="flecha flechaIzquierdaDoble" metodo="flechaIzquierdaDoble"></div>
-                    <div class="flecha flechaIzquierda" metodo="flechaIzquierda"></div>
-                    <div class="flecha flechaDerecha" metodo="flechaDerecha"></div>
-                    <div class="flecha flechaDerechaDoble" metodo="flechaDerechaDoble"></div>
-                    <div class="flecha documento" metodo="documento"></div>
-                </center>
-            </div>-->
         </div>
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">

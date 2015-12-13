@@ -47,7 +47,7 @@ class Indicador_model extends CI_Model {
 
             $this->db->join("dimension", "dimension.dim_id = indicador.dim_id", "LEFT");
             $this->db->join("dimension2", "dimension2.dim_id = indicador.dimdos_id", "LEFT");
-            $this->db->join("indicador_tipo", "indicador_tipo.indTip_id = indicador.indTip_id");
+            $this->db->join("indicador_tipo", "indicador_tipo.indTip_id = indicador.indTip_id",'left');
             $this->db->join("cargo", "cargo.car_id = indicador.car_id", "LEFT");
             $this->db->join("empleado", "empleado.emp_id = indicador.emp_id", "LEFT");
             $indicadores = $this->db->get("indicador");
@@ -55,6 +55,10 @@ class Indicador_model extends CI_Model {
         } catch (exception $e) {
             
         }
+    }
+    function eliminar_Indicador($post) {
+        $this->db->where("ind_id", $post['ind_id']);
+        $this->db->delete('indicador');
     }
 
     function detailxid($id) {

@@ -186,6 +186,10 @@ class Indicador extends My_Controller {
             
         }
     }
+    function eliminar_Indicador() {
+        $this->load->model("Indicador_model");
+        $this->Indicador_model->eliminar_Indicador($this->input->post());
+    }
 
     function consultarindicador() {
         $this->load->model("Indicador_model");

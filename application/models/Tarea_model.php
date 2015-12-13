@@ -196,6 +196,16 @@ class Tarea_model extends CI_Model {
             
         }
     }
+    function lista_riesgos_guardados2($id_tarea) {
+        try {
+            $this->db->where("tar_id",$id_tarea);
+            $this->db->join("riesgo",'riesgo.rie_id=tarea_riesgos.rie_id');
+            $fecha = $this->db->get("tarea_riesgos");
+            return $fecha->result();
+        } catch (exception $e) {
+            
+        }
+    }
 
     function tareaxRiesgo($id) {
         try {

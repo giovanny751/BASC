@@ -32,6 +32,10 @@ class Riesgo_model extends CI_Model {
         }
     }
 
+    function eliminar_riesgos($post) {
+        $this->db->where("rie_id", $post['rie_id']);
+        $this->db->delete('riesgo');
+    }
     function detailxid($id) {
         try {
             $this->db->where("rie_id", $id);

@@ -407,6 +407,10 @@ class Riesgo extends My_Controller {
         }
     }
 
+    function eliminar_riesgos() {
+        $this->load->model("Riesgo_model");
+        $this->Riesgo_model->eliminar_riesgos($this->input->post());
+    }
     function eliminar() {
         $this->load->model("Riesgoclasificacion_model");
         $this->Riesgoclasificacion_model->eliminar(

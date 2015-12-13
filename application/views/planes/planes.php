@@ -81,7 +81,7 @@
                 </div>
                 <div class="form-group">
                     <label for="costoreal">Costo Real</label>
-                    <input type="text" name="costoreal" id="costoreal" class="form-control" readonly="readonly" value="<?php echo (!empty($plan[0]->pla_costoReal) ) ? $plan[0]->pla_costoReal : ""; ?>"/>
+                    <input type="text" name="costoreal" id="costorealplan" class="form-control costoreal" readonly="readonly" value="<?php echo (!empty($plan[0]->avaTar_costo) ) ? $plan[0]->avaTar_costo : ""; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="norma"><span class="campoobligatorio">*</span>Norma</label>
@@ -672,7 +672,11 @@
 <script>  
     $('document').ready(function(){
         costo = $('#costo').text();
+        costoreal = $('#costorealplan').val();
+//        console.log(costoreal);
         $('#costo').text(num_miles(costo.replace(",","").replace(".","")));
+        $('#costorealplan').val(num_miles(costoreal.replace(",","").replace(".","")));
+//        console.log(num_miles(costoreal.replace(",","").replace(".","")));
         $('.presupuesto').val(num_miles($('.presupuesto').val()));
     });
 

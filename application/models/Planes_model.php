@@ -76,10 +76,14 @@ class Planes_model extends CI_Model {
     }    
     function planxid($pla_id) {
         try {
-            $query = "SELECT `planes` . * , sum( replace( tar_costopresupuestado, ',', '' ) ) AS tar_costopresupuestado
+            $query = "SELECT 
+                `planes` . * , sum( replace( tar_costopresupuestado, ',', '' ) ) AS tar_costopresupuestado
+                ,sum(replace( avance_tarea.avaTar_costo, ',', '' )) as avaTar_costo
                     FROM `planes`
                     LEFT JOIN `tarea` ON `tarea`.`pla_id` = `planes`.`pla_id`
-                    WHERE `planes`.`pla_id` = '".$pla_id."'";
+                    LEFT JOIN avance_tarea ON avance_tarea.tar_id = tarea.tar_id
+                    WHERE `planes`.`pla_id` = '".$pla_id."'  "
+                    . "group by pla_id ";
 //            $this->db->select("planes.*,sum(replace(tar_costopresupuestado,',','')) as tar_costopresupuestado",false);
 //            $this->db->where('planes.pla_id', $pla_id);
 //            $this->db->join("tarea","tarea.pla_id = planes.pla_id","LEFT");

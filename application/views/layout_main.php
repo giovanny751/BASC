@@ -247,6 +247,9 @@
                 background-color: #008ac9;
                 color: #FFF
             }
+            .header_position a {
+                margin-left: -10%;
+            }
         </style>
         <script>
             jQuery(document).ready(function () {
