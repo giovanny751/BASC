@@ -580,6 +580,17 @@
 </div> 
 <div id='planes'></div>
 <script>
+    $('document').ready(function(){
+    $('body').delegate("#registro","change",function(){
+            var url = "<?php echo base_url("index.php/tareas/consultaTipoActividad") ?>";
+            $.post(url,{actividad : $(this).val()}).done(function(msg){
+                        $('#tipo').val(parseInt(msg));
+                    })
+                    .fail(function(msg){
+                        alerta("rojo","Error,Comunicarse con el administrador del sistema");
+                    });
+        });
+    });
     $('body').delegate("#norma","change",function(){
         var url = "<?php echo base_url("index.php/tareas/consultaarticulo") ?>";
         $.post(url,{norma : $("#norma").val()}
@@ -606,7 +617,8 @@
                     var option = "<option value=''>::Seleccionar::</option>";
                     $.each(msg,function(key,val){
                         option += "<option value='"+val.actHij_id+"'>"+val.actHij_nombre+"</option>"
-                    })
+                    });
+                    $('#tipo').val("");
                     $("#registro").append(option);
                     
                     

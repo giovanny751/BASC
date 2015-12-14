@@ -6,7 +6,6 @@ class Actividad_model extends CI_Model {
         parent::__construct();
     }
 
-
     function detail() {
         try{
         $actividad = $this->db->get("actividad");
@@ -50,6 +49,15 @@ class Actividad_model extends CI_Model {
         $this->db->where("actHij_padreid",$id);
         $avance = $this->db->get("actividad_hijo");
         return $avance->result();
+        }catch(exception $e){
+            
+        }
+    }
+    function consultaXid($id){
+        try{
+            $this->db->where("actHij_id",$id);
+            $avance = $this->db->get("actividad_hijo");
+            return $avance->result();
         }catch(exception $e){
             
         }

@@ -112,6 +112,14 @@ class Tareas extends My_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($data[0]));
     }
 
+    function consultaTipoActividad(){
+        $this->load->model("Actividad_model");
+        if(!empty($this->input->post('actividad'))):
+        $data = $this->Actividad_model->consultaXid($this->input->post('actividad'));
+        echo $data[0]->tip_id;
+        endif;
+    }
+    
     function consultaarticulo() {
         $this->load->model("Norma_model");
         $norma = $this->Norma_model->normaarticulo($this->input->post("norma"));

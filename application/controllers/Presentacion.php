@@ -219,12 +219,21 @@ class Presentacion extends My_Controller {
             foreach ($nombrepapa as $nombrepapa => $menuidpadre)
                 foreach ($menuidpadre as $modulos => $menu)
                     foreach ($menu as $submenus):
-                        $html .= "<li>" . strtoupper($nombrepapa)
-                                . "<span  style='float: right;'>"
+                        $html .= "<li >" . strtoupper($nombrepapa)
+//                                ."<div >"
+                                . "<span >"
                                 . "<input title='Mostrar Menu' type='checkbox' class='seleccionados " . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' value='" . $padre . "' >"
+                                . "</span>"
+                                . "<span>"
                                 . "<input title='Crear'        type='checkbox' class='crear2 " . ($s == null ? '' : $s) . "_c'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='crear[]' value='" . $padre . "' >"
+                                . "</span>"
+                                . "<span>"
                                 . "<input title='Modificar'    type='checkbox' class='modificar2 " . ($s == null ? '' : $s) . "_m'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='modificar[]' value='" . $padre . "' >"
-                                . "<input title='Eliminar'     type='checkbox' class='eliminar2 " . ($s == null ? '' : $s) . "_e'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='eliminar[]' value='" . $padre . "' ></span>";
+                                . "</span>"
+                                . "<span>"
+                                . "<input title='Eliminar'     type='checkbox' class='eliminar2 " . ($s == null ? '' : $s) . "_e'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='eliminar[]' value='" . $padre . "' >"
+                                . "</span>";
+//                                . "</div>";
                         if (!empty($submenus[0]))
                             $html .=$this->permisoroles($submenus[0], ' ', str_replace(' ', '', strtoupper($nombrepapa)), 2);
                         $html .= "</li>";

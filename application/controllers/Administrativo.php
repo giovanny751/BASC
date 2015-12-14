@@ -995,7 +995,11 @@ class Administrativo extends My_Controller {
         echo "<br>Registros actualizados : ".$actulizados;
         echo "<br>Registros Creados : ".$creados;
     }
-
+    function accidente(){
+        
+        $this->layout->view("administrativo/accidente",$this->data);
+        
+    }
 }
 
 /* End of file welcome.php */
