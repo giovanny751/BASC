@@ -220,11 +220,11 @@ class Presentacion extends My_Controller {
                 foreach ($menuidpadre as $modulos => $menu)
                     foreach ($menu as $submenus):
                         $html .= "<li >" . strtoupper($nombrepapa)
-                                ."<div class='posicionIconoAcordeon'>"
-                                . "<input title='Mostrar Menu' type='checkbox' class='seleccionados " . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' value='" . $padre . "' >"
-                                . "<input title='Crear'        type='checkbox' class='crear2 " . ($s == null ? '' : $s) . "_c'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='crear[]' value='" . $padre . "' >"
-                                . "<input title='Modificar'    type='checkbox' class='modificar2 " . ($s == null ? '' : $s) . "_m'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='modificar[]' value='" . $padre . "' >"
-                                . "<input title='Eliminar'     type='checkbox' class='eliminar2 " . ($s == null ? '' : $s) . "_e'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='eliminar[]' value='" . $padre . "' >"
+                                ."<div class='posicionCheckDerecha' >"
+                                . "<input title='Mostrar Menu' type='checkbox' class='checkMargin seleccionados " . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' value='" . $padre . "' >"
+                                . "<input title='Crear'        type='checkbox' class='checkMargin crear2 " . ($s == null ? '' : $s) . "_c'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='crear[]' value='" . $padre . "' >"
+                                . "<input title='Modificar'    type='checkbox' class='checkMargin modificar2 " . ($s == null ? '' : $s) . "_m'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='modificar[]' value='" . $padre . "' >"
+                                . "<input title='Eliminar'     type='checkbox' class='checkMargin eliminar2 " . ($s == null ? '' : $s) . "_e'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='eliminar[]' value='" . $padre . "' >"
                                 . "</div>";
 //                        $html .= "<li >" . strtoupper($nombrepapa)
 //                                ."<div class='posicionIconoAcordeon'>"

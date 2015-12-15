@@ -203,4 +203,11 @@
     display:inline-block;
     float: right;
 }
-
+.posicionCheckDerecha{
+    display:inline-block;
+    float: right;
+    clear: right;
+}
+.checkMargin{
+    margin: 0 !important;
+}
