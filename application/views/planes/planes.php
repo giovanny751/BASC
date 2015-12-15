@@ -1,15 +1,17 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="circuloIcon" id="guardarplan" title="<?php echo (empty($plan[0]->pla_id)) ? "Guardar":"Actualizar"; ?>"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon" id="guardarplan" title="<?php echo (empty($plan[0]->pla_id)) ? "Guardar" : "Actualizar"; ?>"><i class="fa fa-floppy-o fa-3x"></i></div>
         <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
-        <a href="<?php echo base_url()."/index.php/planes/nuevoplan" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
+        <a href="<?php echo base_url() . "/index.php/planes/nuevoplan" ?>"><div class="circuloIcon" title="Nuevo Plan" ><i class="fa fa-folder-open fa-3x"></i></div></a>
     </div>
     <div class="col-md-6">
         <div id="posicionFlecha">
-            <div class="flechaHeader IzquierdaDoble" metodo="flechaIzquierdaDoble"><i class="fa fa-step-backward fa-2x"></i></div>
-            <div class="flechaHeader Izquierda" metodo="flechaIzquierda"><i class="fa fa-arrow-left fa-2x"></i></div>
-            <div class="flechaHeader Derecha" metodo="flechaDerecha"><i class="fa fa-arrow-right fa-2x"></i></div>
-            <div class="flechaHeader DerechaDoble" metodo="flechaDerechaDoble"><i class="fa fa-step-forward fa-2x"></i></div>
+
+
+            <div class="envio flechaHeader IzquierdaDoble" metodo="flechaIzquierdaDoble" nuevo="<?php echo (isset($todo_izq) ? $todo_izq : '') ?>"><i class="fa fa-step-backward fa-2x"></i></div>
+            <div class="envio flechaHeader Izquierda" metodo="flechaIzquierda" nuevo="<?php echo (isset($izq) ? $izq : '') ?>"><i class="fa fa-arrow-left fa-2x"></i></div>
+            <div class="envio flechaHeader Derecha" metodo="flechaDerecha" nuevo="<?php echo (isset($derecha) ? $derecha : '') ?>"><i class="fa fa-arrow-right fa-2x"></i></div>
+            <div class="envio flechaHeader DerechaDoble" metodo="flechaDerechaDoble" nuevo="<?php echo (isset($max_der) ? $max_der : '') ?>"><i class="fa fa-step-forward fa-2x"></i></div>
             <a href="<?php echo base_url('index.php/Planes/listadoplanes') ?>"><div class="flechaHeader Archivo" metodo="documento"><i class="fa fa-sticky-note fa-2x"></i></div></a>
         </div>
     </div>
@@ -240,7 +242,7 @@
                                     $costo = 0;
                                     foreach ($avances as $av):
                                         $horas += $av->avaTar_horasTrabajadas;
-                                        $costo += str_replace(",","",str_replace(".", "", $av->avaTar_costo));
+                                        $costo += str_replace(",", "", str_replace(".", "", $av->avaTar_costo));
                                         ?>
                                         <tr>
                                             <td><?php echo $av->avaTar_fecha ?></td>
@@ -669,25 +671,25 @@
         </div>
     <?php endif; ?>
 </div>
-<script>  
-    $('document').ready(function(){
+<script>
+    $('document').ready(function () {
         costo = $('#costo').text();
         costoreal = $('#costorealplan').val();
 //        console.log(costoreal);
-        $('#costo').text(num_miles(costo.replace(",","").replace(".","")));
-        $('#costorealplan').val(num_miles(costoreal.replace(",","").replace(".","")));
+        $('#costo').text(num_miles(costo.replace(",", "").replace(".", "")));
+        $('#costorealplan').val(num_miles(costoreal.replace(",", "").replace(".", "")));
 //        console.log(num_miles(costoreal.replace(",","").replace(".","")));
         $('.presupuesto').val(num_miles($('.presupuesto').val()));
     });
 
-    $('body').delegate(".editartarea", "click", function() {
+    $('body').delegate(".editartarea", "click", function () {
         var form = "<form method='post' id='frmFormAvance' action='<?php echo base_url("index.php/tareas/nuevatarea") ?>'>";
         form += "<input type='hidden' name='tar_id' value='" + $(this).attr("tar_id") + "'>"
         form += "</form>";
         $("body").append(form);
         $('#frmFormAvance').submit();
     });
-    $('body').delegate(".nuevoavance", "click", function() {
+    $('body').delegate(".nuevoavance", "click", function () {
         var form = "<form method='post' id='frmFormAvance' action='<?php echo base_url("index.php/tareas/nuevatarea") ?>'>";
         form += "<input type='hidden' name='tar_id' value='" + $(this).attr("tar_id") + "'>"
         form += "<input type='hidden' name='nuevoavance' value='" + $(this).attr("tar_id") + "'>"
@@ -696,7 +698,7 @@
         $('#frmFormAvance').submit();
     });
 
-    $('body').delegate(".editarhistorial", "click", function() {
+    $('body').delegate(".editarhistorial", "click", function () {
 
         var form = "<form method='post' id='frmFormAvance' action='<?php echo base_url("index.php/tareas/nuevatarea") ?>'>";
         form += "<input type='hidden' name='avaTar_id' value='" + $(this).attr("avance") + "'>"
@@ -706,34 +708,34 @@
         $('#frmFormAvance').submit();
     })
 
-    $('body').delegate(".eliminaravance", "click", function() {
+    $('body').delegate(".eliminaravance", "click", function () {
         var puntero = $(this);
         $.post(
                 "<?php echo base_url("index.php/tareas/eliminaravance") ?>",
                 {avaTar_id: $(this).attr("avaTar_id")}
-        ).done(function(msg) { 
+        ).done(function (msg) {
             puntero.parents("tr").remove();
             alerta("verde", "Avance eliminado correctamente");
-        }).fail(function(msg) {
+        }).fail(function (msg) {
             alerta("rojo", "Error, por favor comunicarse con el administrador del sistema")
         });
     });
 
-    $('body').delegate(".carpeta", "click", function() {
+    $('body').delegate(".carpeta", "click", function () {
         var pla_id = $('#pla_id').val();
         var car_id = $(this).attr('car_id');
         $("#idpadre *").remove();
         $.post(
                 "<?php echo base_url("index.php/planes/detailxplaid") ?>"
                 , {pla_id: pla_id}
-        ).done(function(msg) {
+        ).done(function (msg) {
             var option = "<option value=''>::Seleccionar::</option>";
-            $.each(msg, function(key, val) {
+            $.each(msg, function (key, val) {
                 option += "<option " + ((car_id == val.actPad_id) ? "selected" : "") + " value='" + val.actPad_id + "'>" + val.actPad_nombre + " - " + val.actPad_codigo + "</option>"
             });
 
             $("#idpadre").append(option);
-        }).fail(function(msg) {
+        }).fail(function (msg) {
             alerta("rojo", "Error, favor comunicarse con el administrador del sistema");
         });
 
@@ -745,7 +747,7 @@
 
     });
 
-    $('body').delegate(".eliminarcarpeta", "click", function() {
+    $('body').delegate(".eliminarcarpeta", "click", function () {
         if (confirm("Confirma la eliminación")) {
             var carpeta = $(this).attr("car_id");
             var tipo = $(this).attr("tipo");
@@ -755,20 +757,20 @@
                 var url = "<?php echo base_url("index.php/planes/eliminaractividad") ?>";
             $.post(url,
                     {carpeta: carpeta}
-            ).done(function(msg) {
+            ).done(function (msg) {
                 $('a[href="#collapse_' + carpeta + tipo + '"]').parents('.panel-default').remove();
-            }).fail(function(msg) {
+            }).fail(function (msg) {
                 alerta("rojo", "Error, por favor comunicarse con el administrador del sistema");
             });
         }
     });
 
-    $('body').delegate(".editarcarpeta", "click", function() {
+    $('body').delegate(".editarcarpeta", "click", function () {
         $.post(
                 "<?php echo base_url("index.php/planes/cargarplanescarpeta") ?>",
                 {carpeta: $(this).attr("car_id")}
         )
-                .done(function(msg) {
+                .done(function (msg) {
                     if ($('#plaCar_id').length == 0)
                         $('#frmcarpetaregistro').append("<input type='hidden' value='" + msg.regCar_id + "' name='plaCar_id' id='plaCar_id' >");
                     $('#nombrecarpeta').val(msg.regCar_nombre);
@@ -776,18 +778,18 @@
                     $('#guardarcarpeta').replaceWith("<button type='button' empCar_id='" + msg.regCar_id + "' class='btn btn-primary modificarcarpeta'>Actualizar</button>");
                     $('#myModal4').modal("show");
                 })
-                .fail(function(msg) {
+                .fail(function (msg) {
                     alerta("rojo", "Error,por favor comunicarse con el administrador del sistema");
                 });
 
     });
 
-    $('body').delegate(".editaractividad", "click", function() {
+    $('body').delegate(".editaractividad", "click", function () {
         $.post(
                 "<?php echo base_url("index.php/planes/datosactividad") ?>",
                 {carpeta: $(this).attr("car_id")}
         )
-                .done(function(msg) {
+                .done(function (msg) {
                     $('#actividadpadreid').remove();
                     $('#formactividadpadre').append("<input type='hidden' value='" + msg.actPad_id + "' name='actividadpadre' id='actividadpadreid' >");
                     $('#eliminaractividad').remove()
@@ -797,36 +799,36 @@
                     $('#guardaractividadpadre').replaceWith("<button type='button' empCar_id='" + msg.actPad_id + "' class='btn btn-primary modificaractividad'>Actualizar</button>");
                     $('#myModal').modal("show");
                 })
-                .fail(function(msg) {
+                .fail(function (msg) {
                     alerta("rojo", "Error,por favor comunicarse con el administrador del sistema");
                 });
     });
-    $('body').delegate(".modificaractividad", "click", function() {
+    $('body').delegate(".modificaractividad", "click", function () {
 
         $.post("<?php echo base_url("index.php/planes/modificaractividad") ?>",
                 $('#formactividadpadre').serialize()
-                ).done(function(msg) {
+                ).done(function (msg) {
             $('a[href="#collapse_' + msg.actPad_id + 'c"]').html("<i class='fa fa-folder-o carpeta'></i>&nbsp; " + msg.actPad_nombre + " - " + msg.actPad_codigo);
             $('#myModal').modal("toggle");
             alerta("verde", "Se actualizaron los datos correctamente");
-        }).fail(function(msg) {
+        }).fail(function (msg) {
 
         });
     });
-    $('body').delegate(".modificarcarpeta", "click", function() {
+    $('body').delegate(".modificarcarpeta", "click", function () {
 
         $.post("<?php echo base_url("index.php/planes/modificarpeta") ?>",
                 $('#frmcarpetaregistro').serialize()
-                ).done(function(msg) {
+                ).done(function (msg) {
             $('a[href="#collapse_' + msg.regCar_id + 'r"]').text(msg.regCar_descripcion);
             $('#myModal4').modal("toggle");
             alerta("verde", "Se actualizaron los datos correctamente");
-        }).fail(function(msg) {
+        }).fail(function (msg) {
 
         });
     });
 
-    $('body').delegate(".nuevoregistro,.modificarregistro", "click", function() {
+    $('body').delegate(".nuevoregistro,.modificarregistro", "click", function () {
         $('#carpeta').val("");
         $('#version').val("");
         $('#reg_descripcion').val("");
@@ -834,11 +836,11 @@
         $('#carpeta').val($(this).attr('car_id'));
     });
 
-    $('body').delegate('.modificarregistro', 'click', function() {
+    $('body').delegate('.modificarregistro', 'click', function () {
         $.post(
                 "<?php echo base_url("index.php/planes/modificarregistro") ?>",
                 {registro: $(this).attr('reg_id')}
-        ).done(function(msg) {
+        ).done(function (msg) {
             $('#carpeta').val(msg.regCar_id);
             $('#version').val(msg.reg_version);
             $('#reg_descripcion').val(msg.reg_descripcion);
@@ -851,25 +853,25 @@
                                     </div>\n\
                                 </div>"
             $('#frmagregarregistro').append(fila);
-        }).fail(function(msg) {
+        }).fail(function (msg) {
 
         })
                 ;
     });
-    $('body').delegate(".eliminarregistro", "click", function() {
+    $('body').delegate(".eliminarregistro", "click", function () {
         var reg_id = $(this).attr("reg_id");
         var registro = $(this);
         $.post(
                 "<?php echo base_url("index.php/planes/eliminarregistroplan") ?>",
                 {reg_id: reg_id}
-        ).done(function(msg) {
+        ).done(function (msg) {
             registro.parents('tr').remove();
-        }).fail(function(msg) {
+        }).fail(function (msg) {
 
         })
     });
 
-    $('body').delegate('.accordion-toggle', "click", function() {
+    $('body').delegate('.accordion-toggle', "click", function () {
 
         if ($(this).attr('aria-expanded') == "true") {
             $(this).children('.carpeta').removeClass('fa fa-folder-open-o');
@@ -880,11 +882,11 @@
         }
     });
 
-    $('#guardarcarpeta').click(function() {
+    $('#guardarcarpeta').click(function () {
         if (obligatorio("carbligatorio")) {
             $.post("<?php echo base_url("index.php/planes/guardarcarpetaregistro") ?>",
                     $('#frmcarpetaregistro').serialize()
-                    ).done(function(msg) {
+                    ).done(function (msg) {
                 var option = "<option value='" + msg.uno + "'>" + msg.dos + "</option>"
                 var contenido = "<table class='tablesst'>\n\
                                         <thead>\n\
@@ -909,13 +911,13 @@
                 $('.carbligatorio').val("");
                 $('#myModal4').modal("toggle")
                 alerta("verde", "Carpeta agregada con exito")
-            }).fail(function(msg) {
+            }).fail(function (msg) {
                 alerta("rojo", "ha ocurrido un error por favor cumunicarse con el administrador del sistema")
             });
         }
 
     });
-    $('.direccionar').click(function() {
+    $('.direccionar').click(function () {
 
         if ($(this).attr('num') == 1)
             $('#frmdireccionar').attr("action", "<?php echo base_url("index.php/tareas/nuevatarea") ?>");
@@ -923,43 +925,43 @@
             $('#frmdireccionar').attr("action", "<?php echo base_url("index.php/tareas/registro") ?>");
         $('#frmdireccionar').submit();
     });
-    $('body').delegate(".editarhistorial", "click", function() {
+    $('body').delegate(".editarhistorial", "click", function () {
         $('#internotarea').val($(this).attr('tar_id'));
     });
 
-    $('#guardar').click(function() {
-        if(obligatorio('actividadobligatoria')){
-        $.post(
-                "<?php echo base_url("index.php/planes/guardaractividadhijo") ?>",
-                $('#f6').serialize()
-                ).done(function(msg) {
-            var body = "";
-            var id = "";
-            $.each(msg, function(key, val) {
-                id = val.actHij_padreid;
-                body += "<tr>";
-                body += "<td>" + ((val.actHij_nombre != null) ? val.actHij_nombre : "") + "</td>";
-                body += "<td>" + ((val.actHij_fechaInicio != null) ? val.actHij_fechaInicio : "") + "</td>";
-                body += "<td>" + ((val.actHij_fechaFinalizacion != null) ? val.actHij_fechaFinalizacion : "") + "</td>";
-                body += "<td>" + ((val.actHij_presupuestoTotal != null) ? val.actHij_presupuestoTotal : "") + "</td>";
-                body += "<td>" + ((val.actHij_descripcion != null) ? val.actHij_descripcion : "") + "</td>";
-                body += "<td>" +
-                        '<i class="fa fa-times eliminar btn btn-danger" title="Eliminar" acthij_id="' + val.actHij_id + '"></i><i class="fa fa-pencil-square-o modificar btn btn-info" title="Modificar" acthij_id="' + val.actHij_id + '" data-toggle="modal" data-target="#myModal8"></i>'
-                        + "</td>";
-                body += "</tr>";
+    $('#guardar').click(function () {
+        if (obligatorio('actividadobligatoria')) {
+            $.post(
+                    "<?php echo base_url("index.php/planes/guardaractividadhijo") ?>",
+                    $('#f6').serialize()
+                    ).done(function (msg) {
+                var body = "";
+                var id = "";
+                $.each(msg, function (key, val) {
+                    id = val.actHij_padreid;
+                    body += "<tr>";
+                    body += "<td>" + ((val.actHij_nombre != null) ? val.actHij_nombre : "") + "</td>";
+                    body += "<td>" + ((val.actHij_fechaInicio != null) ? val.actHij_fechaInicio : "") + "</td>";
+                    body += "<td>" + ((val.actHij_fechaFinalizacion != null) ? val.actHij_fechaFinalizacion : "") + "</td>";
+                    body += "<td>" + ((val.actHij_presupuestoTotal != null) ? val.actHij_presupuestoTotal : "") + "</td>";
+                    body += "<td>" + ((val.actHij_descripcion != null) ? val.actHij_descripcion : "") + "</td>";
+                    body += "<td>" +
+                            '<i class="fa fa-times eliminar btn btn-danger" title="Eliminar" acthij_id="' + val.actHij_id + '"></i><i class="fa fa-pencil-square-o modificar btn btn-info" title="Modificar" acthij_id="' + val.actHij_id + '" data-toggle="modal" data-target="#myModal8"></i>'
+                            + "</td>";
+                    body += "</tr>";
+                });
+                $('#' + id).find('table tbody *').remove();
+                $('#' + id).find('table tbody').append(body);
+                $('#myModal8').modal("toggle")
+                $('#myModal8').find('input[type="text"],select,textarea').val("");
+                alerta("verde", "Datos guardados correctamente");
+            }).fail(function (msg) {
+                alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
             });
-            $('#' + id).find('table tbody *').remove();
-            $('#' + id).find('table tbody').append(body);
-            $('#myModal8').modal("toggle")
-            $('#myModal8').find('input[type="text"],select,textarea').val("");
-            alerta("verde", "Datos guardados correctamente");
-        }).fail(function(msg) {
-            alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
-        });
         }
     });
 
-    $('body').delegate("#guardaractividadpadre", "click", function() {
+    $('body').delegate("#guardaractividadpadre", "click", function () {
 
         numero = $('#accordion1').last('div').attr("id");
         if (obligatorio('acobligatorio')) {
@@ -967,7 +969,7 @@
             $.post("<?php echo base_url("index.php/planes/guardaractividadpadre") ?>",
                     $('#formactividadpadre').serialize()
                     )
-                    .done(function(msg) {
+                    .done(function (msg) {
                         $('.acobligatorio').val('');
                         var option = "<option value='" + msg.uno + "'>" + msg.dos + " - " + msg.tres + "</option>";
                         $('#idpadre').append(option);
@@ -993,7 +995,7 @@
                         $('#myModal').modal("toggle")
                         alerta("verde", "Actividad padre guardada con exito");
                     })
-                    .fail(function(msg) {
+                    .fail(function (msg) {
                         alerta("error", "Error por favor comunicarse con el administrador del sistema");
                     });
         }
@@ -1026,7 +1028,7 @@
         $('#' + tabla).append(acordeon);
     }
 
-    $('#cargo').change(function() {
+    $('#cargo').change(function () {
         if ($('#cargo').val() == '')
             return false;
         $.post(
@@ -1034,44 +1036,44 @@
                 {
                     cargo: $(this).val()
                 }
-        ).done(function(msg) {
+        ).done(function (msg) {
             var data = "";
             $('#empleado *').remove();
-            $.each(msg, function(key, val) {
+            $.each(msg, function (key, val) {
                 data += "<option value='" + val.Emp_Id + "'>" + val.Emp_Nombre + " " + val.Emp_Apellidos + "</option>"
             });
             $('#empleado').append(data);
 <?php if (isset($plan[0]->emp_id)) { ?>
                 $('#empleado').val('<?php echo $plan[0]->emp_id; ?>');
 <?php } ?>
-        }).fail(function(msg) {
+        }).fail(function (msg) {
 
         });
     });
-    $('#guardarplan').click(function() {
+    $('#guardarplan').click(function () {
         if (obligatorio('obligatorio') == true) {
             $.post(
                     "<?php
 echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base_url('index.php/tareas/actualizarplan');
 ?>",
                     $('#f7').serialize()
-                    ).done(function(msg) {
-                    if (confirm("Desea guardar otro Plan ?")) {
-                        $('input,select,textarea').val("");
-                    } else {
-                        var form = "<form method='post' id='frmEditarPlan'>";
-                            form += "<input type='hidden' value='"+msg+"' name='pla_id'>";
-                            form += "</form>";
-                            $('body').append(form);
-                            $('#frmEditarPlan').submit();
-                    }
+                    ).done(function (msg) {
+                if (confirm("Desea guardar otro Plan ?")) {
+                    $('input,select,textarea').val("");
+                } else {
+                    var form = "<form method='post' id='frmEditarPlan'>";
+                    form += "<input type='hidden' value='" + msg + "' name='pla_id'>";
+                    form += "</form>";
+                    $('body').append(form);
+                    $('#frmEditarPlan').submit();
+                }
                 alerta("verde", "Datos guardados correctamente");
-            }).fail(function(msg) {
+            }).fail(function (msg) {
                 alerta("rojo", "Error en el sistema por favor verificar la conexion de internet");
             });
         }
     });
-    $('#btnguardarregistro').click(function() {
+    $('#btnguardarregistro').click(function () {
         var file_data = $('#archivo').prop('files')[0];
         var form_data = new FormData();
         form_data.append('archivo', file_data);
@@ -1087,19 +1089,19 @@ echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base
             processData: false,
             data: form_data,
             type: 'post',
-            success: function(result) {
+            success: function (result) {
 
                 $("#myModal15").modal("toggle");
                 result = jQuery.parseJSON(result);
                 var idcarpeta = $('#carpeta').val()
                 $('#collapse_' + idcarpeta + 'r').find('table tbody *').remove();
                 var filas = "";
-                $.each(result, function(key, val) {
+                $.each(result, function (key, val) {
                     filas += "<tr>";
                     filas += "<td>" + val.reg_archivo + "</td>";
                     filas += "<td>" + val.reg_descripcion + "</td>";
                     filas += "<td>" + val.reg_version + "</td>";
-                    filas += "<td>" +val.usu_nombre +" "+val.usu_apellido +"</td>";
+                    filas += "<td>" + val.usu_nombre + " " + val.usu_apellido + "</td>";
                     filas += "<td>" + val.reg_tamano + "</td>";
                     filas += "<td>" + val.reg_fechaCreacion + "</td>";
                     filas += "<td>";
@@ -1118,12 +1120,12 @@ echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base
         });
     })
 
-    $('.crear_padre').click(function() {
+    $('.crear_padre').click(function () {
         $('#actPad_id').val('');
         $('#idactividad').val('');
         $('#nombreactividad').val('');
     })
-    $('body').delegate('.eliminar', 'click', function() {
+    $('body').delegate('.eliminar', 'click', function () {
         if ($(this).attr('acthij_id') == '')
             return false;
         var r = confirm('Desea eliminar el registro')
@@ -1133,13 +1135,13 @@ echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base
         $(this).parent().parent().remove();
         var url = '<?php echo base_url("index.php/tareas/eliminar_actividad_hijo") ?>';
         $.post(url, {actHij_id: $(this).attr('actHij_id')})
-                .done(function() {
+                .done(function () {
                     alerta('verde', 'Eliminado con exito')
-                }).fail(function() {
+                }).fail(function () {
             alerta('rojo', 'Error, por favor comunicarse con el administrador del sistema');
         })
     });
-    $('body').delegate('.modificar', 'click', function() {
+    $('body').delegate('.modificar', 'click', function () {
         var acthij_id = $(this).attr('acthij_id');
         if (acthij_id == "")
             return false;
@@ -1149,7 +1151,7 @@ echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base
                     acthij_id: acthij_id,
                     actPad_id: $(this).parents(".panel").attr('id')
                 })
-                .done(function(msg) {
+                .done(function (msg) {
                     $('#idpadre').val(msg[0].actHij_padreid)
                     $('.nombre2').val(msg[0].actHij_nombre)
                     $('.fechainicio2').val(msg[0].minimo)
@@ -1163,21 +1165,21 @@ echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base
                     $('.costoreal2').val(msg[0].actHij_costoReal)
                     $('#actHij_id').val(msg[0].actHij_id)
                 })
-                .fail(function() {
+                .fail(function () {
                     alerta('rojo', 'Error, por favor comunicarse con el administrador del sistema')
                 });
     });
-    $('.nuevo_hijo').click(function() {
+    $('.nuevo_hijo').click(function () {
         $('#actHij_id').val('')
     });
 
     var url = '<?php echo base_url("grant/index.php") ?>';
     $.post(url, $('#formulario_grant').serialize())
-            .done(function(msg) {
+            .done(function (msg) {
                 var imagen = '<img src="<?php echo base_url("grant") ?>/imagenprueba.jpg">';
                 $('#grafica_granf').html(imagen)
             })
-            .fail(function() {
+            .fail(function () {
 
             })
     $('#cargo').trigger('change');
@@ -1185,7 +1187,7 @@ echo (empty($plan[0]->pla_id)) ? base_url('index.php/planes/guardarplan') : base
 
 
 
-    $('.envio').click(function() {
+    $('.envio').click(function () {
         $('#pla_id_3').val($(this).attr('nuevo'));
         $('#formulario_siguiente').submit();
     })

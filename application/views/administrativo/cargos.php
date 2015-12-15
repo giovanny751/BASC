@@ -55,7 +55,7 @@
                             <td><?php echo $c->car_nombre ?></td> 
                             <td><?php echo $c->jefe ?></td> 
                             <td style="text-align:center;"><?php echo $c->car_porcentajearl ?></td> 
-                            <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="<?php echo $c->car_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
+                            <td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Riesgos" car_id="<?php echo $c->car_id ?>" data-toggle="modal" data-target="#riesgo"></i></td>
                             <td class="transparent">
                                 <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" car_id="<?php echo $c->car_id ?>"  data-toggle="modal" data-target="#myModal"></i>
                             </td> 
@@ -201,7 +201,9 @@
                     .done(function (msg) {
                         if (msg == 1) {
                             alerta("rojo", "Tiene personas a cargo");
-                        } else {
+                        } else if (msg == 2) {
+                            alerta("rojo", "Existen empleados con este cargo");
+                        }else {
                             $('select *').remove();
                             var select = "";
                             $.each(msg, function (key, val) {
@@ -246,7 +248,7 @@
                                 body += "<td>" + val.car_nombre + "</td>";
                                 body += "<td>" + val.jefe + "</td>";
                                 body += "<td style='text-align: center'>" + val.car_porcentajearl + "</td>";
-                                body += '<td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Eliminar" car_id="' + val.car_id + '" data-toggle="modal" data-target="#riesgo"></i></td>';
+                                body += '<td style="text-align: center"><i class="fa fa-child fa-2x riesgo btn btn-default" title="Riesgos" car_id="' + val.car_id + '" data-toggle="modal" data-target="#riesgo"></i></td>';
                                 body += '<td class="transparent">\n\
                                             <i class="fa fa-pencil-square-o fa-2x modificar" title="Modificar" car_id="' + val.car_id + '"  data-toggle="modal" data-target="#myModal"></i>\n\
                                         </td>';

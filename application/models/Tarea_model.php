@@ -127,12 +127,12 @@ class Tarea_model extends CI_Model {
             $this->db->select("tipo.tip_tipo");
             $this->db->select("planes.pla_nombre");
             $this->db->select("planes.pla_id");
-            $this->db->select("count(rie_id) as cantidadriesgo");
+            $this->db->select("(select count(rie_id) as cantidadriesgo from tarea_riesgos where tarea_riesgos.tar_id = tarea.tar_id) cantidadriesgo",false);
             $this->db->order_by("planes.pla_id");
             $this->db->order_by("tarea.tar_id");
             $this->db->join("tarea", "planes.pla_id = tarea.pla_id", "left");
             $this->db->join("avance_tarea", "avance_tarea.tar_id = tarea.tar_id ", "LEFT");
-            $this->db->join("tarea_riesgos","tarea_riesgos.tar_id = tarea.tar_id","LEFT");
+//            $this->db->join("tarea_riesgos","tarea_riesgos.tar_id = tarea.tar_id","LEFT");
             $this->db->join("tipo", "tipo.tip_id = tarea.tip_id", "left");
             $this->db->join("empleado", "empleado.Emp_id = tarea.emp_id", "left");
             $this->db->group_by('tarea.tar_id');

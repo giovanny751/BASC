@@ -30,6 +30,7 @@
             $.post("<?php echo base_url('index.php/presentacion/guardarcontrasena') ?>",
                     {password: $('#password').val()}, function () {
                         alerta("verde",'Contraseña Actualizada');
+                        location.href='<?php echo base_url('index.php/login/logout')?>';
             });
         }
         if ($('#password').val() != $('#rpassword').val()) {

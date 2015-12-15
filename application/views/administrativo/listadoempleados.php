@@ -160,15 +160,15 @@
             var body = "";
             $.each(msg, function (key, val) {
                 body += "<tr>";
-                body += "<td>" + val.Emp_Cedula + "</td>";
-                body += "<td>" + val.Emp_Nombre + "</td>";
-                body += "<td>" + val.Emp_Apellidos + "</td>";
-                body += "<td>" + val.Emp_Telefono + "</td>";
-                body += "<td>" + val.est_nombre + "</td>";
-                body += "<td>" + val.TipCon_Descripcion + "</td>";
-                body += "<td>" + val.car_nombre + "</td>";
-                body += "<td>" + val.Emp_FechaInicioContrato + "</td>";
-                body += "<td>" + val.Emp_FechaFinContrato + "</td>";
+                body += "<td>" + (val.Emp_Cedula==null?'':val.Emp_Cedula) + "</td>";
+                body += "<td>" + (val.Emp_Nombre==null?'':val.Emp_Nombre) + "</td>";
+                body += "<td>" + (val.Emp_Apellidos==null?'':val.Emp_Apellidos) + "</td>";
+                body += "<td>" + (val.Emp_Telefono==null?'':val.Emp_Telefono) + "</td>";
+                body += "<td>" + (val.est_nombre==null?'':val.est_nombre) + "</td>";
+                body += "<td>" + (val.TipCon_Descripcion==null?'':val.TipCon_Descripcion) + "</td>";
+                body += "<td>" + (val.car_nombre==null?'':val.car_nombre) + "</td>";
+                body += "<td>" + (val.Emp_FechaInicioContrato==null?'':val.Emp_FechaInicioContrato) + "</td>";
+                body += "<td>" + (val.Emp_FechaFinContrato==null?'':val.Emp_FechaFinContrato) + "</td>";
                 body += '<td class="transparent">\n\
                                 <i class="fa fa-pencil-square-o fa-2x  modificar" aria-hidden="true" title="Modificar"  emp_id="' + val.Emp_Id + '"  data-toggle="modal" data-target="#myModal"></i>\n\
                                 </td>';

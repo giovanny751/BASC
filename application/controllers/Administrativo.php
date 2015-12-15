@@ -648,9 +648,12 @@ class Administrativo extends My_Controller {
 
         $this->load->model('Cargo_model');
         $consulta = $this->Cargo_model->consultahijos($this->input->post('id'));
+        $consultaEmpleados = $this->Cargo_model->consultaEmpleados($this->input->post('id'));
         if ($consulta > 0) {
             echo 1;
-        } else {
+        } else if ($consultaEmpleados>0) {
+            echo 2;
+        }else{
             $this->Cargo_model->delete($this->input->post('id'));
             $this->data["cargo"] = $this->Cargo_model->detail();
             $this->output->set_content_type('application/json')->set_output(json_encode($this->data["cargo"]));

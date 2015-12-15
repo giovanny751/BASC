@@ -91,7 +91,7 @@
                 echo "<li><a href='" . base_url('index.php/presentacion/rol') . "'>CAMBIAR ROL</a></li>";
                 echo "</ul>";
                 echo "</li>";
-                echo "<li><a href='" . base_url('index.php/login/logout') . "'>CERRAR SESION</a></li>";
+                echo "<li><a href='" . base_url('index.php/login/logout') . "' id='cerrar_sesion'>CERRAR SESION</a></li>";
 //            echo "<li><a href='#'> strtoupper($nombre) </a></li>";
             }
             echo "</ul>";

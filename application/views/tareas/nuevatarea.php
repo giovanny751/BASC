@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="circuloIcon" id="guardartarea" title="<?php echo (empty($tarea->tar_id)) ? "Guardar":"Actualizar" ?>"><i class="fa fa-floppy-o fa-3x"></i></div>
+        <div class="circuloIcon" id="guardartarea" title="<?php echo (empty($tarea->tar_id)) ? "Guardar" : "Actualizar" ?>"><i class="fa fa-floppy-o fa-3x"></i></div>
         <!--<div class="circuloIcon" ><i class="fa fa-pencil-square-o fa-3x"></i></div>-->
         <!--<div class="circuloIcon" ><i class="fa fa-trash-o fa-3x"></i></div>-->
         <!--<div class="circuloIcon" ><i class="fa fa-folder-open fa-3x"></i></div>-->
@@ -28,12 +28,12 @@
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                 <!-- <button type="button" id="guardartarea" class="btn btn-success">
-                    <?php echo (!empty($tarea->tar_id)) ? "Actualizar" : "Guardar"; ?>
+                <?php echo (!empty($tarea->tar_id)) ? "Actualizar" : "Guardar"; ?>
                 </button> -->
                 <button type="button" id="" class="btn btn-danger">Eliminar</button>
-                <?php if(!empty($pla_id)):?>
-                <button type="button" id="cancelar" class="btn btn-default"  plan="<?php echo $pla_id ?>">Cancelar</button>
-                <?php endif;?>
+                <?php if (!empty($pla_id)): ?>
+                    <button type="button" id="cancelar" class="btn btn-default"  plan="<?php echo $pla_id ?>">Cancelar</button>
+                <?php endif; ?>
             </div>   
         </div>
         <div class="row" style="margin-bottom: 30px">
@@ -63,10 +63,10 @@
                         <select name="actividad" id="actividad" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php
-                                if(!empty($actividades))
+                            if (!empty($actividades))
                                 foreach ($actividades as $h):
                                     ?>
-                                    <option <?php echo ((!empty($tarea->actPad_id)) && ($h->actPad_id == $tarea->actPad_id)) ? "selected" : ""; ?> value='<?php echo $h->actPad_id ?>'><?php echo $h->actPad_nombre." - ".$h->actPad_codigo ?></option>
+                                    <option <?php echo ((!empty($tarea->actPad_id)) && ($h->actPad_id == $tarea->actPad_id)) ? "selected" : ""; ?> value='<?php echo $h->actPad_id ?>'><?php echo $h->actPad_nombre . " - " . $h->actPad_codigo ?></option>
                                     <?php
                                 endforeach;
                             ?>
@@ -78,10 +78,11 @@
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="registro" id="registro" class="form-control" >
                             <option value="">::Seleccionar::</option>
-                            <?php if(!empty($actividadhijo))
-                            foreach ($actividadhijo as $ah) { ?>
-                            <option   <?php echo ((!empty($tarea->actHij_id)) && $tarea->actHij_id == $ah->actHij_id) ? "selected" : ""; ?> value="<?php echo $ah->actHij_id ?>"><?php echo $ah->actHij_nombre ?></option>
-                            <?php } ?>
+                            <?php if (!empty($actividadhijo))
+                                foreach ($actividadhijo as $ah) {
+                                    ?>
+                                    <option   <?php echo ((!empty($tarea->actHij_id)) && $tarea->actHij_id == $ah->actHij_id) ? "selected" : ""; ?> value="<?php echo $ah->actHij_id ?>"><?php echo $ah->actHij_nombre ?></option>
+    <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -91,8 +92,8 @@
                         <select name="dimensionuno" id="dimensionuno" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($dimension as $d1) { ?>
-                            <option  <?php echo ((!empty($tarea->dim_id)) && $tarea->dim_id == $d1->dim_id) ? "selected" : ""; ?> value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
-                            <?php } ?>
+                                <option  <?php echo ((!empty($tarea->dim_id)) && $tarea->dim_id == $d1->dim_id) ? "selected" : ""; ?> value="<?php echo $d1->dim_id ?>"><?php echo $d1->dim_descripcion ?></option>
+<?php } ?>
                         </select> 
                     </div>
                 </div>
@@ -102,8 +103,8 @@
                         <select  name="dimensiondos" id="dimensiondos" class="form-control" >
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($dimension2 as $d2) { ?>
-                            <option  <?php echo ((!empty($tarea->dim2_id)) && $tarea->dim2_id == $d2->dim_id) ? "selected" : ""; ?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
-                            <?php } ?>
+                                <option  <?php echo ((!empty($tarea->dim2_id)) && $tarea->dim2_id == $d2->dim_id) ? "selected" : ""; ?> value="<?php echo $d2->dim_id ?>"><?php echo $d2->dim_descripcion ?></option>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -114,7 +115,7 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($tipo as $t) { ?>
                                 <option  <?php echo (!empty($tarea->tip_id) && $tarea->tip_id == $t->tip_id) ? "selected" : ""; ?> value="<?php echo $t->tip_id ?>"><?php echo $t->tip_tipo ?></option>
-                            <?php } ?>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -125,7 +126,7 @@
                             <option value="">::Seleccionar::</option>
                             <?php foreach ($norma as $value) { ?>
                                 <option <?php echo (!empty($tarea->nor_id) && ($value->nor_id == $tarea->nor_id)) ? "selected" : ""; ?> value="<?= $value->nor_id ?>"><?= $value->nor_norma ?></option>
-                            <?php }?>
+<?php } ?>
                         </select>
                     </div>
                 </div> 
@@ -134,16 +135,18 @@
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select multiple="multiple" name="articulosnorma[]" id="articulosnorma" class="form-control">
                             <?php foreach ($normaarticulo as $value) { ?>
-                                <?php foreach ($tarea_norma as $tn) { 
+                                <?php
+                                foreach ($tarea_norma as $tn) {
                                     $select = "";
-                                    if($tn->norArt_id == $value->norArt_id){
+                                    if ($tn->norArt_id == $value->norArt_id) {
                                         $select = "selected";
                                         break;
                                     }
-                                }?>
-                                
+                                }
+                                ?>
+
                                 <option <?php echo $select; ?> value="<?= $value->norArt_id ?>"><?= $value->norArt_articulo ?></option>
-                            <?php }?>
+<?php } ?>
                         </select>
                     </div>
                 </div> 
@@ -177,9 +180,9 @@
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="cargo" id="cargo" class="form-control">
                             <option value="">::Seleccionar::</option>
-                            <?php foreach ($cargo as $c) { ?>
+<?php foreach ($cargo as $c) { ?>
                                 <option  <?php echo (!empty($tarea->car_id) && $tarea->car_id == $c->car_id) ? "selected" : ""; ?> value="<?php echo $c->car_id ?>"><?php echo $c->car_nombre ?></option> 
-                            <?php } ?>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -188,13 +191,15 @@
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="nombreempleado" id="nombreempleado" class="form-control">
                             <option value="">::Seleccionar::</option>
-                            <?php if(!empty($empleado)){
-                                foreach($empleado as $e):
-                            ?>
-                            <option <?php echo ($e->Emp_Id == $tarea->emp_id)?"Selected":"";?> value='<?php echo $e->Emp_Id ?>'><?php echo $e->Emp_Nombre." ".$e->Emp_Apellidos ?></option>
-                            <?php        
-                                endforeach;
-                            }?>
+                            <?php
+                            if (!empty($empleado)) {
+                                foreach ($empleado as $e):
+                                    ?>
+                                    <option <?php echo ($e->Emp_Id == $tarea->emp_id) ? "Selected" : ""; ?> value='<?php echo $e->Emp_Id ?>'><?php echo $e->Emp_Nombre . " " . $e->Emp_Apellidos ?></option>
+        <?php
+    endforeach;
+}
+?>
                         </select>
                     </div>
                 </div>
@@ -203,9 +208,9 @@
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name="tareapadre" id="tareapadre" class="form-control">
                             <option value="">::Seleccionar::</option>
-                            <?php foreach($tareas as $t): ?>
-                            <option <?php echo (!empty($tarea->tar_idpadre) && $t->tar_id == $tarea->tar_idpadre)?"Selected":"";?> value="<?php echo $t->tar_id ?>"><?php echo $t->tar_nombre ?></option>
-                            <?php endforeach; ?>
+<?php foreach ($tareas as $t): ?>
+                                <option <?php echo (!empty($tarea->tar_idpadre) && $t->tar_id == $tarea->tar_idpadre) ? "Selected" : ""; ?> value="<?php echo $t->tar_id ?>"><?php echo $t->tar_nombre ?></option>
+<?php endforeach; ?>
                         </select>
                     </div>
                 </div>
@@ -218,9 +223,9 @@
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <select name="estado" id="estado" class="form-control" >
                                     <option value="">::Seleccionar::</option>
-                                    <?php foreach ($estados as $e) { ?>
+<?php foreach ($estados as $e) { ?>
                                         <option <?php echo ((!empty($tarea->est_id) && $tarea->est_id == $e->est_id) ? "selected" : ((empty($tarea->est_id) && $e->est_id == 1) ? "selected" : "" )); ?>  value="<?php echo $e->est_id ?>"><?php echo $e->est_nombre ?></option>
-                                    <?php } ?>
+<?php } ?>
                                 </select>
                             </div>
                         </div>
@@ -258,9 +263,9 @@
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <select name='clasificacionriesgo' id='clasificacionriesgo' class="form-control">
                             <option value=''>::Seleccionar::</option>
-                            <?php foreach ($categoria as $ca) { ?>
+<?php foreach ($categoria as $ca) { ?>
                                 <option value="<?php echo $ca->rieCla_id ?>"><?php echo $ca->rieCla_categoria ?></option>
-                            <?php } ?>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -275,19 +280,20 @@
                 <div class="row">
                     <label for="tiposriesgos" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">Riesgos</label>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <select name='lista_riesgos[]' id='lista_riesgos' class="form-control" multiple>
+                        <select name='lista_riesgos[]' id='lista_riesgos' class="form-control" multiple onchange="marcar(this)">
                             <?php foreach ($riesgos as $e) { ?>
-                            <?php 
-                            $select = "";
-                            if(isset($riesgos_guardada))
-                            foreach ($riesgos_guardada as $tn) { 
-                                    if($tn->rie_id == $e->rie_id){
-                                        $select = "selected";
-                                        break;
+                                <?php
+                                $select = "";
+                                if (isset($riesgos_guardada))
+                                    foreach ($riesgos_guardada as $tn) {
+                                        if ($tn->rie_id == $e->rie_id) {
+                                            $select = "selected";
+                                            break;
+                                        }
                                     }
-                                }?>
-                                        <option <?php echo $select; ?>  value="<?php echo $e->rie_id ?>"><?php echo $e->rie_descripcion ?></option>
-                                    <?php } ?>
+                                ?>
+                                <option <?php echo $select; ?>  value="<?php echo $e->rie_id ?>"><?php echo $e->rie_descripcion ?></option>
+<?php } ?>
                         </select>
                     </div>
                 </div>
@@ -295,15 +301,15 @@
         </div>
 
     </form>
-    <?php if (!empty($tarea->tar_id)): ?>
+<?php if (!empty($tarea->tar_id)): ?>
         <div class="portlet box blue">
             <div class="portlet-body">
                 <div class="tabbable tabbable-tabdrop">
                     <ul class="nav nav-tabs">
-                        <li <?php  echo (empty($avance) && empty($nuevoavance) )?"class='active'":""; ?>>
+                        <li <?php echo (empty($avance) && empty($nuevoavance) ) ? "class='active'" : ""; ?>>
                             <a data-toggle="tab" href="#tab1">Avance</a>
                         </li>
-                        <li <?php  echo (!empty($avance) || !empty($nuevoavance))?"class='active'":""; ?>>
+                        <li <?php echo (!empty($avance) || !empty($nuevoavance)) ? "class='active'" : ""; ?>>
                             <a data-toggle="tab" href="#tab2">Agregar Avance</a>
                         </li>
                         <li>
@@ -311,7 +317,7 @@
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div id="tab1" class="tab-pane <?php  echo (empty($avance) && empty($nuevoavance))?"active":""; ?>">
+                        <div id="tab1" class="tab-pane <?php echo (empty($avance) && empty($nuevoavance)) ? "active" : ""; ?>">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="portlet">
@@ -339,16 +345,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="tab2"  class="tab-pane <?php  echo (!empty($avance) || !empty($nuevoavance))?"active":""; ?>">
+                        <div id="tab2"  class="tab-pane <?php echo (!empty($avance) || !empty($nuevoavance)) ? "active" : ""; ?>">
                             <form method="post" id="guardaravance">
                                 <input type="hidden" value="<?php echo (!empty($tarea->tar_id)) ? $tarea->tar_id : ""; ?>" name="idtarea" id="interno">
-                                <input type="hidden" value="<?php echo (!empty($avance[0]->avaTar_id))?$avance[0]->avaTar_id:"";   ?>" name="avaTar_id" id="avaTar_id">
+                                <input type="hidden" value="<?php echo (!empty($avance[0]->avaTar_id)) ? $avance[0]->avaTar_id : ""; ?>" name="avaTar_id" id="avaTar_id">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sx-6 col-sm-6">
                                         <div class="row">
                                             <label for="fecha" class="col-lg-3 col-md-3 col-sx-3 col-sm-3">Fecha</label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input value="<?php echo (!empty($avance[0]->avaTar_fecha))?$avance[0]->avaTar_fecha:"";   ?>"  type="text" style="text-align:center" name="fecha" id="fecha" class="form-control fecha avance">
+                                                <input value="<?php echo (!empty($avance[0]->avaTar_fecha)) ? $avance[0]->avaTar_fecha : ""; ?>"  type="text" style="text-align:center" name="fecha" id="fecha" class="form-control fecha avance">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -356,22 +362,22 @@
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
                                                 <select name="progreso" id="progreso" class="form-control avance" style="text-align: center">
                                                     <option value="">::Seleccionar::</option>
-                                                    <?php for ($i = 1; $i < 101; $i++) { ?>
-                                                    <option <?php echo ((!empty($avance[0]->avaTar_progreso)) && ($avance[0]->avaTar_progreso == $i))?"selected":"";  ?> value="<?php echo $i; ?>"><?php echo $i . " " . "%"; ?></option>
-                                                    <?php } ?>
+    <?php for ($i = 1; $i < 101; $i++) { ?>
+                                                        <option <?php echo ((!empty($avance[0]->avaTar_progreso)) && ($avance[0]->avaTar_progreso == $i)) ? "selected" : ""; ?> value="<?php echo $i; ?>"><?php echo $i . " " . "%"; ?></option>
+    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label for="horastrabajadas" class="col-lg-3 col-md-3 col-sx-3 col-sm-3">Horas Trabajadas</label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input value="<?php echo (!empty($avance[0]->avaTar_horasTrabajadas))?$avance[0]->avaTar_horasTrabajadas:"";?>" style="text-align:center" type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance number">
+                                                <input value="<?php echo (!empty($avance[0]->avaTar_horasTrabajadas)) ? $avance[0]->avaTar_horasTrabajadas : ""; ?>" style="text-align:center" type="text" name="horastrabajadas" id="horastrabajadas" class="form-control avance number">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <label for="costo" class="col-lg-3 col-md-3 col-sx-3 col-sm-3">Costo</label>
                                             <div class="col-lg-9 col-md-9 col-sx-9 col-sm-9">
-                                                <input value="<?php echo (!empty($avance[0]->avaTar_costo))?$avance[0]->avaTar_costo:""; ?>" type="text" style="text-align:center" name="costo" id="costo" class="form-control avance miles">
+                                                <input value="<?php echo (!empty($avance[0]->avaTar_costo)) ? $avance[0]->avaTar_costo : ""; ?>" type="text" style="text-align:center" name="costo" id="costo" class="form-control avance miles">
                                             </div>
                                         </div>
                                     </div>
@@ -379,7 +385,7 @@
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-sx-12 col-sm-12">
                                                 <label for="comentarios">Comentarios</label>
-                                                <textarea  name="comentarios" id="comentarios" class="form-control avance"><?php echo (!empty($avance[0]->avaTar_comentarios))?$avance[0]->avaTar_comentarios:""; ?></textarea>
+                                                <textarea  name="comentarios" id="comentarios" class="form-control avance"><?php echo (!empty($avance[0]->avaTar_comentarios)) ? $avance[0]->avaTar_comentarios : ""; ?></textarea>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -392,7 +398,7 @@
                                                     <input type="checkbox" name="notificar[]" value="<?php echo $n->not_id ?>" id="creotarea" class="form-control avance">
                                                 </div>
                                             </div>
-                                        <?php endforeach; ?>
+    <?php endforeach; ?>
                                     </div>
 
                                 </div>
@@ -415,11 +421,11 @@
                                         <div class="tab-content">
                                             <br>
                                             <div class="panel-group accordion" id="accordion5">
-                                                <?php
-                                                $o = 1;
-                                                foreach ($carpeta as $idcar => $nomcar):
-                                                    foreach ($nomcar as $nombrecar => $numcar):
-                                                        ?>
+    <?php
+    $o = 1;
+    foreach ($carpeta as $idcar => $nomcar):
+        foreach ($nomcar as $nombrecar => $numcar):
+            ?>
                                                         <div class="panel panel-default" id="<?php echo $idcar ?>">
                                                             <div class="panel-heading">
                                                                 <h4 class="panel-title">
@@ -446,7 +452,7 @@
                                                                         <th>Acción</th>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <?php foreach ($numcar as $numerocar => $campocar): ?>
+            <?php foreach ($numcar as $numerocar => $campocar): ?>
                                                                                 <tr>
                                                                                     <td><?php echo $campocar[0] ?></td>
                                                                                     <td><?php echo $campocar[1] ?></td>
@@ -459,17 +465,17 @@
                                                                                         <i class="fa fa-pencil-square-o fa-2x modificarregistro btn btn-info" title="Modificar" reg_id="<?php echo $campocar[6] ?>" data-target="#myModal15" data-toggle="modal"></i>
                                                                                     </td>
                                                                                 </tr>   
-                                                                            <?php endforeach; ?>
+                                                        <?php endforeach; ?>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <?php
-                                                        $o++;
-                                                    endforeach;
-                                                endforeach;
-                                                ?>
+            <?php
+            $o++;
+        endforeach;
+    endforeach;
+    ?>
                                             </div> 
                                         </div>
                                     </div>
@@ -535,9 +541,9 @@
                                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                     <select id="carpeta" name="regCar_id" class="form-control tarRegObligatorio">
                                         <option value=""></option>
-                                        <?php foreach ($carpetas as $carp): ?>
-                                            <option value="<?php echo $carp->regCar_id ?>"><?php echo $carp->regCar_nombre.' - '.$carp->regCar_descripcion ?></option>
-                                        <?php endforeach; ?>
+    <?php foreach ($carpetas as $carp): ?>
+                                            <option value="<?php echo $carp->regCar_id ?>"><?php echo $carp->regCar_nombre . ' - ' . $carp->regCar_descripcion ?></option>
+    <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -575,115 +581,115 @@
             </div>
         </div>
 
-    <?php endif; ?>
+<?php endif; ?>
     <input type="hidden" id="tareid" name="tareid" />
 </div> 
 <div id='planes'></div>
 <script>
-    $('document').ready(function(){
-    $('body').delegate("#registro","change",function(){
+    $('document').ready(function () {
+        $('body').delegate("#registro", "change", function () {
             var url = "<?php echo base_url("index.php/tareas/consultaTipoActividad") ?>";
-            $.post(url,{actividad : $(this).val()}).done(function(msg){
-                        $('#tipo').val(parseInt(msg));
-                    })
-                    .fail(function(msg){
-                        alerta("rojo","Error,Comunicarse con el administrador del sistema");
+            $.post(url, {actividad: $(this).val()}).done(function (msg) {
+                $('#tipo').val(parseInt(msg));
+            })
+                    .fail(function (msg) {
+                        alerta("rojo", "Error,Comunicarse con el administrador del sistema");
                     });
         });
     });
-    $('body').delegate("#norma","change",function(){
+    $('body').delegate("#norma", "change", function () {
         var url = "<?php echo base_url("index.php/tareas/consultaarticulo") ?>";
-        $.post(url,{norma : $("#norma").val()}
-                ).done(function(msg){
-                    $('#articulosnorma *').remove();
-                    var option = "";
-                    $.each(msg,function(key,val){
-                        option += "<option value='"+val.norArt_id+"'>"+val.norArt_articulo+"</option>"
-                    });
-                    $('#articulosnorma').append(option);
-                })
-                .fail(function(msg){
-                    alerta("rojo","Error,Comunicarse con el administrador del sistema");
+        $.post(url, {norma: $("#norma").val()}
+        ).done(function (msg) {
+            $('#articulosnorma *').remove();
+            var option = "";
+            $.each(msg, function (key, val) {
+                option += "<option value='" + val.norArt_id + "'>" + val.norArt_articulo + "</option>"
+            });
+            $('#articulosnorma').append(option);
+        })
+                .fail(function (msg) {
+                    alerta("rojo", "Error,Comunicarse con el administrador del sistema");
                 });
     });
-    
-    $('body').delegate("#actividad","change",function(){ 
-        
-            $.post(
-                    "<?php echo base_url("index.php/tareas/consultaactividad") ?>",
-                    {carpeta : $(this).val()}
-                ).done(function(msg){
-                    $("#registro *").remove();
-                    var option = "<option value=''>::Seleccionar::</option>";
-                    $.each(msg,function(key,val){
-                        option += "<option value='"+val.actHij_id+"'>"+val.actHij_nombre+"</option>"
-                    });
-                    $('#tipo').val("");
-                    $("#registro").append(option);
-                    
-                    
-                })
-                .fail(function(msg){
-                    alerta("rojo","Error,Comunicarse con el administrador del sistema");
+
+    $('body').delegate("#actividad", "change", function () {
+
+        $.post(
+                "<?php echo base_url("index.php/tareas/consultaactividad") ?>",
+                {carpeta: $(this).val()}
+        ).done(function (msg) {
+            $("#registro *").remove();
+            var option = "<option value=''>::Seleccionar::</option>";
+            $.each(msg, function (key, val) {
+                option += "<option value='" + val.actHij_id + "'>" + val.actHij_nombre + "</option>"
+            });
+            $('#tipo').val("");
+            $("#registro").append(option);
+
+
+        })
+                .fail(function (msg) {
+                    alerta("rojo", "Error,Comunicarse con el administrador del sistema");
                 });
-        
+
     });
-    
-    $('body').delegate(".eliminarregistro","click",function(){
+
+    $('body').delegate(".eliminarregistro", "click", function () {
         var puntero = $(this).attr("car_id");
-       $.post(
-               "<?php echo base_url("index.php/tareas/eliminarregistrocarpeta") ?>",
-                {carpeta : puntero}
-                )
-                .done(function(msg){
-                    $("#"+puntero).remove();
-                    alerta("verde","Registro eliminado correctamente");
-                }) 
-                .fail(function(msg){
-                    alerta("rojo","Error, por favor comunicarse con el administrador del sistema")
-                }) 
-        
+        $.post(
+                "<?php echo base_url("index.php/tareas/eliminarregistrocarpeta") ?>",
+                {carpeta: puntero}
+        )
+                .done(function (msg) {
+                    $("#" + puntero).remove();
+                    alerta("verde", "Registro eliminado correctamente");
+                })
+                .fail(function (msg) {
+                    alerta("rojo", "Error, por favor comunicarse con el administrador del sistema")
+                })
+
     });
-    
-    $('body').delegate(".carpeta","click",function(){
+
+    $('body').delegate(".carpeta", "click", function () {
         $('#nombrecarpeta').val("");
         $('#descripcioncarpeta').val("");
         $('#tarCar_id').remove();
-        $('#actualizar').text("Guardar").attr("id","guardarcarpeta").removeAttr("car_id");
+        $('#actualizar').text("Guardar").attr("id", "guardarcarpeta").removeAttr("car_id");
     });
-    
-    $("body").delegate("#actualizar","click",function(){
-        
+
+    $("body").delegate("#actualizar", "click", function () {
+
         $.post(
                 "<?php echo base_url("index.php/tareas/actualizarcarpeta") ?>",
                 $('#frmcarpetaregistro').serialize()
-                ).done(function(msg){
-                    $("a[href='#collapse_"+msg.uno+"r']").text(msg.dos+" - "+msg.tres);
-                    $("#modalCarpeta").modal("hide")
-                    alerta("verde","Se actualizaron los datos correctamente")
-                }).fail(function(msg){
-                    alerta("rojo","Error, por favor comunicarse con el administrador del sistema");
-                });
-        
+                ).done(function (msg) {
+            $("a[href='#collapse_" + msg.uno + "r']").text(msg.dos + " - " + msg.tres);
+            $("#modalCarpeta").modal("hide")
+            alerta("verde", "Se actualizaron los datos correctamente")
+        }).fail(function (msg) {
+            alerta("rojo", "Error, por favor comunicarse con el administrador del sistema");
+        });
+
     });
-    
-    $('body').delegate(".editarcarpeta","click",function(){
-        
+
+    $('body').delegate(".editarcarpeta", "click", function () {
+
         $.post(
-                "<?php echo base_url("index.php/tareas/consultacarpeta")?>",
-                {carpeta : $(this).attr("car_id")}
-                ).done(function(msg){
-                    $('#nombrecarpeta').val(msg.dos);
-                    $('#descripcioncarpeta').val(msg.tres);
-                    $('#frmcarpetaregistro').append("<input type='hidden' value='"+msg.uno+"' name='tarCar_id' id='tarCar_id'>");
-                    $('#guardarcarpeta').text("Actualizar").attr("id","actualizar").attr("car_id",msg.uno);
-                    $("#modalCarpeta").modal("show");
-                }).fail(function(){
-                    alerta("Error, por favor comunicarse con el administrador del sistema")
-                });
-        
+                "<?php echo base_url("index.php/tareas/consultacarpeta") ?>",
+                {carpeta: $(this).attr("car_id")}
+        ).done(function (msg) {
+            $('#nombrecarpeta').val(msg.dos);
+            $('#descripcioncarpeta').val(msg.tres);
+            $('#frmcarpetaregistro').append("<input type='hidden' value='" + msg.uno + "' name='tarCar_id' id='tarCar_id'>");
+            $('#guardarcarpeta').text("Actualizar").attr("id", "actualizar").attr("car_id", msg.uno);
+            $("#modalCarpeta").modal("show");
+        }).fail(function () {
+            alerta("Error, por favor comunicarse con el administrador del sistema")
+        });
+
     });
-    
+
     $('document').ready(function () {
         jQuery(document).ready(function () {
             TableAjax.init();
@@ -720,7 +726,7 @@
                     var costo = 0;
                     $.each(msg, function (key, val) {
                         totalhoras += parseInt(val.avaTar_horasTrabajadas);
-                        costo += parseInt( val.avaTar_costo.replace(".","").replace(",",""));
+                        costo += parseInt(val.avaTar_costo.replace(".", "").replace(",", ""));
                         html += "<tr>"
                                 + "<td>"
                                 + "<a href='javascript:' class='avances_ fa fa-pencil-square-o fa-2x btn btn-info' avaTar_id='" + val.avaTar_id + "' ></a>"
@@ -735,30 +741,30 @@
                     });
                     html += "<tr>\n\
                                         <td colspan='4' style='text-align:right;'><b>Total</b></td>\n\
-                                        <td>"+totalhoras+"</td>\n\
-                                        <td>"+num_miles(costo)+"</td>\n\
+                                        <td>" + totalhoras + "</td>\n\
+                                        <td>" + num_miles(costo) + "</td>\n\
                                         <td></td>\n\
                                         </tr>"
                     $('.datatable_ajax12').html(html);
                 })
                 .fail(function () {
-                    alerta("rojo","Error, comunicarse con el administrador del sistema")
+                    alerta("rojo", "Error, comunicarse con el administrador del sistema")
                 })
     }
     tabla();
-    
-    $('body').delegate('.eliminaravance','click',function(){
+
+    $('body').delegate('.eliminaravance', 'click', function () {
         var puntero = $(this);
         $.post(
                 "<?php echo base_url("index.php/tareas/eliminaravance") ?>",
-                {avaTar_id : $(this).attr("avaTar_id")}
-                ).done(function(msg){
-                    puntero.parents("tr").remove();
-                    alerta("verde","Avance eliminado correctamente")
-                }).fail(function(){
-                    alerta("rojo","Error, Comunicarse con el administrador del sistema");
-                })
-        
+                {avaTar_id: $(this).attr("avaTar_id")}
+        ).done(function (msg) {
+            puntero.parents("tr").remove();
+            alerta("verde", "Avance eliminado correctamente")
+        }).fail(function () {
+            alerta("rojo", "Error, Comunicarse con el administrador del sistema");
+        })
+
     });
 
     $('document').ready(function () {
@@ -799,7 +805,7 @@
                 $('#nombreempleado').append(data);
                 $('#nombreempleado').val('<?php echo (isset($tarea->emp_id) ? $tarea->emp_id : '') ?>');
             }).fail(function (msg) {
-                alerta("rojo","Error, por favor comunicarse con el administrador del sistema");
+                alerta("rojo", "Error, por favor comunicarse con el administrador del sistema");
             });
         });
     });
@@ -859,15 +865,15 @@
                     alerta("Error", "Error por favor comunicarse con el administrador");
                 })
     });
-    $('document').ready(function(){
-    $('.tabbable a[href="#tab2"]').click(function () {
-        $('#avaTar_id').val('')
-        $('#fecha').val('')
-        $('#progreso').val('')
-        $('#horastrabajadas').val('')
-        $('#costo').val('')
-        $('#comentarios').val('')
-    });
+    $('document').ready(function () {
+        $('.tabbable a[href="#tab2"]').click(function () {
+            $('#avaTar_id').val('')
+            $('#fecha').val('')
+            $('#progreso').val('')
+            $('#horastrabajadas').val('')
+            $('#costo').val('')
+            $('#comentarios').val('')
+        });
     });
 
     $(".flechaHeader").click(function () {
@@ -888,35 +894,35 @@
             window.location = "<?php echo base_url("index.php/tareas/listadotareas"); ?>";
         }
     });
-    $('#cancelar').click(function(){
-                var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
-                                form += "<input type='hidden' value='"+$(this).attr('plan')+"' name='pla_id'>";
-                                form += "</form>"
-                            $('#planes').append(form);
-                            $('#enviotarea').submit();
+    $('#cancelar').click(function () {
+        var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
+        form += "<input type='hidden' value='" + $(this).attr('plan') + "' name='pla_id'>";
+        form += "</form>"
+        $('#planes').append(form);
+        $('#enviotarea').submit();
     });
     $('#guardartarea').click(function () {
-        if(compararfecha($("#fechaIncio").val(),$("#fechafinalizacion").val(),"compararfecha")){
+        if (compararfecha($("#fechaIncio").val(), $("#fechafinalizacion").val(), "compararfecha")) {
             $('#fechaIncio').addClass("obligado");
             $('#fechafinalizacion').addClass("obligado");
             if (obligatorio("obligatorio")) {
                 $.post("<?php echo base_url("index.php/tareas/guardartarea") ?>",
                         $('#f8').serialize()
                         ).done(function (msg) {
-                            var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
-                                form += "<input type='hidden' value='"+msg.pla_id+"' name='pla_id'>";
-                                form += "</form>"
-                            $('#planes').append(form);
-                            $('#enviotarea').submit();
+                    var form = "<form method='post' id='enviotarea' action='<?php echo base_url("index.php/planes/nuevoplan") ?>'>";
+                    form += "<input type='hidden' value='" + msg.pla_id + "' name='pla_id'>";
+                    form += "</form>"
+                    $('#planes').append(form);
+                    $('#enviotarea').submit();
                     alerta("verde", "Datos guardados correctamente");
                 }).fail(function (msg) {
                     alerta("rojo", "Error por favor comunicarse con el administrador");
                 });
             }
-        }else{
+        } else {
             $('#fechaIncio').addClass("obligado");
             $('#fechafinalizacion').addClass("obligado");
-            alerta("amarillo","Por favor validar las fechas")
+            alerta("amarillo", "Por favor validar las fechas")
         }
     });
 
@@ -927,12 +933,12 @@
 //                          Guardar Registro
 // -----------------------------------------------------------------------------
 
-    $('body').delegate("#guardarcarpeta","click",function () {
+    $('body').delegate("#guardarcarpeta", "click", function () {
         if (obligatorio("carbligatorio")) {
             $.post("<?php echo base_url("index.php/tareas/guardarcarpetatarea") ?>",
                     $('#frmcarpetaregistro').serialize()
                     ).done(function (msg) {
-                var option = "<option value='" + msg.regCar_id + "'>" + msg.regCar_nombre + " - " + msg.regCar_descripcion+"</option>"
+                var option = "<option value='" + msg.regCar_id + "'>" + msg.regCar_nombre + " - " + msg.regCar_descripcion + "</option>"
                 var contenido = "<table class='table table-hover table-bordered'>\n\
                                         <thead>\n\
                                             <th>Nombre de archivo</th>\n\
@@ -996,7 +1002,7 @@
                         filas += "<td>" + val.reg_archivo + "</td>";
                         filas += "<td>" + val.reg_descripcion + "</td>";
                         filas += "<td>" + val.reg_version + "</td>";
-                        filas += "<td>"+val.usu_nombre+" "+val.usu_apellido+"</td>";
+                        filas += "<td>" + val.usu_nombre + " " + val.usu_apellido + "</td>";
                         filas += "<td>" + val.reg_tamano + "</td>";
                         filas += "<td>" + val.reg_fechaCreacion + "</td>";
                         filas += "<td>";
@@ -1045,58 +1051,67 @@
                                     </div>';
         $('#accordion5').append(acordeon);
     }
-    $('body').delegate(".nuevoregistro","click",function(){
-        
+    $('body').delegate(".nuevoregistro", "click", function () {
+
         $('#carpeta').val($(this).attr("car_id"));
-        
+
     });
-    
-    function compararfecha(fecha1,fecha2,claseCompararFecha){
-        if((fecha1 != "" && fecha2 != "") && ((fecha1 != null && fecha2 != null))){
+
+    function compararfecha(fecha1, fecha2, claseCompararFecha) {
+        if ((fecha1 != "" && fecha2 != "") && ((fecha1 != null && fecha2 != null))) {
             var array_fecha1 = fecha1.split("-");
             var array_fecha2 = fecha2.split("-");
-            var comFecha1 = new Date(array_fecha1[0],array_fecha1[1],array_fecha1[2]);
-            var comFecha2 = new Date(array_fecha2[0],array_fecha2[1],array_fecha2[2]);
-            if(comFecha1 <= comFecha2){
-                $("."+claseCompararFecha).removeClass("obligado");
+            var comFecha1 = new Date(array_fecha1[0], array_fecha1[1], array_fecha1[2]);
+            var comFecha2 = new Date(array_fecha2[0], array_fecha2[1], array_fecha2[2]);
+            if (comFecha1 <= comFecha2) {
+                $("." + claseCompararFecha).removeClass("obligado");
                 return true;
-            }else{
-                $("."+claseCompararFecha).addClass("obligado");
-                alerta("naranja","Fecha inicial mayor a la fecha final");
+            } else {
+                $("." + claseCompararFecha).addClass("obligado");
+                alerta("naranja", "Fecha inicial mayor a la fecha final");
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
     }
-    
-    $('#tiposriesgos').change(function(){
-        var url='<?php echo base_url("index.php/tareas/traer_riesgos") ?>';
-        $.post(url,{tiposriesgos:$(this).val(),clasificacionriesgo:$('#clasificacionriesgo').val()})
-                .done(function(msg){
+
+    $('#tiposriesgos').change(function () {
+        var url = '<?php echo base_url("index.php/tareas/traer_riesgos") ?>';
+        $.post(url, {tiposriesgos: $(this).val(), clasificacionriesgo: $('#clasificacionriesgo').val()})
+                .done(function (msg) {
                     $('#lista_riesgos').html('');
-                    $.each(msg,function(key,val){
-                        $('#lista_riesgos').append('<option value="'+val.rie_id+'">'+val.rie_descripcion+'</option>');    
+                    $.each(msg, function (key, val) {
+                        $('#lista_riesgos').append('<option value="' + val.rie_id + '">' + val.rie_descripcion + '</option>');
                     })
                 })
-                .fail(function(){
-                    
+                .fail(function () {
+
                 })
     });
-    $('#fechaIncio').change(function(){
-        <?php if(isset($post['fecha_inicio_plan'])){ ?>
-                var fecha_inicio_plan=new Date('<?php echo $post['fecha_inicio_plan'] ?>');
-                var fecha_inicio_tarea=new Date($(this).val());
-                if(fecha_inicio_plan>fecha_inicio_tarea){
-                    alerta('rojo','La fecha del plan es superior');
-                    $(this).val('');
-                }
-        <?php }?>
-        
-        
+    $('#fechaIncio').change(function () {
+<?php if (isset($post['fecha_inicio_plan'])) { ?>
+            var fecha_inicio_plan = new Date('<?php echo $post['fecha_inicio_plan'] ?>');
+            var fecha_inicio_tarea = new Date($(this).val());
+            if (fecha_inicio_plan > fecha_inicio_tarea) {
+                alerta('rojo', 'La fecha del plan es superior');
+                $(this).val('');
+            }
+<?php } ?>
+
+
     });
-    
-    
+
+todos = new Array();
+function marcar(s) {
+cual=s.selectedIndex;
+for(y=0;y<s.options.length;y++){
+if(y==cual){
+s.options[y].selected=(todos[y]==true)?false:true;
+todos[y]=(todos[y]==true)?false:true;
+}else{
+s.options[y].selected=todos[y];
+}}} 
     
     
     
