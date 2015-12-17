@@ -86,20 +86,13 @@ class Presentacion extends My_Controller {
     }
 
     public function creacionmenu() {
-//        if ($this->consultaacceso($this->data["usu_id"])):
         $this->data['hijo'] = $this->input->post('menu');
         $this->data['nombrepadre'] = $this->input->post('nombrepadre');
         $this->data['idgeneral'] = $this->input->post('idgeneral');
-        if (empty($this->data['idgeneral']))
-            $this->data['hijo'] = 0;
+        if (empty($this->data['idgeneral']))$this->data['hijo'] = 0;
         $this->data['menu'] = $this->Ingreso_model->consultahijos($this->data['idgeneral']);
-        if (!empty($this->data['idgeneral'])) {
-            $this->data['menu'] = $this->Ingreso_model->hijos($this->data['idgeneral']);
-        }
+        if (!empty($this->data['idgeneral'])) $this->data['menu'] = $this->Ingreso_model->hijos($this->data['idgeneral']);
         $this->layout->view('presentacion/creacionmenu', $this->data);
-//            else:
-//            $this->layout->view("permisos");
-//        endif;
     }
 
     function guardarmodulo() {
@@ -219,28 +212,12 @@ class Presentacion extends My_Controller {
             foreach ($nombrepapa as $nombrepapa => $menuidpadre)
                 foreach ($menuidpadre as $modulos => $menu)
                     foreach ($menu as $submenus):
-                        $html .= "<li >" . strtoupper($nombrepapa)
-                                ."<div class='posicionCheckDerecha' >"
-                                . "<input title='Mostrar Menu' type='checkbox' class='checkMargin seleccionados " . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' value='" . $padre . "' >"
-                                . "<input title='Crear'        type='checkbox' class='checkMargin crear2 " . ($s == null ? '' : $s) . "_c'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='crear[]' value='" . $padre . "' >"
-                                . "<input title='Modificar'    type='checkbox' class='checkMargin modificar2 " . ($s == null ? '' : $s) . "_m'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='modificar[]' value='" . $padre . "' >"
-                                . "<input title='Eliminar'     type='checkbox' class='checkMargin eliminar2 " . ($s == null ? '' : $s) . "_e'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='eliminar[]' value='" . $padre . "' >"
-                                . "</div>";
-//                        $html .= "<li >" . strtoupper($nombrepapa)
-//                                ."<div class='posicionIconoAcordeon'>"
-//                                . "<span>"
-//                                . "<input title='Mostrar Menu' type='checkbox' class='seleccionados " . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' value='" . $padre . "' >"
-//                                . "</span>"
-//                                . "<span>"
-//                                . "<input title='Crear'        type='checkbox' class='crear2 " . ($s == null ? '' : $s) . "_c'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='crear[]' value='" . $padre . "' >"
-//                                . "</span>"
-//                                . "<span>"
-//                                . "<input title='Modificar'    type='checkbox' class='modificar2 " . ($s == null ? '' : $s) . "_m'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='modificar[]' value='" . $padre . "' >"
-//                                . "</span>"
-//                                . "<span>"
-//                                . "<input title='Eliminar'     type='checkbox' class='eliminar2 " . ($s == null ? '' : $s) . "_e'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='eliminar[]' value='" . $padre . "' >"
-//                                . "</span>"
-//                                . "</div>";
+                        $html .= "<li>" . strtoupper($nombrepapa)
+                                . "<span  style='float: right;'>"
+                                . "<input title='Mostrar Menu' type='checkbox' class='seleccionados " . ($s == null ? '' : $s) . "'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='permisorol[]' value='" . $padre . "' >"
+                                . "<input title='Crear'        type='checkbox' class='crear2 " . ($s == null ? '' : $s) . "_c'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='crear[]' value='" . $padre . "' >"
+                                . "<input title='Modificar'    type='checkbox' class='modificar2 " . ($s == null ? '' : $s) . "_m'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='modificar[]' value='" . $padre . "' >"
+                                . "<input title='Eliminar'     type='checkbox' class='eliminar2 " . ($s == null ? '' : $s) . "_e'  atr='" . str_replace(' ', '', strtoupper($nombrepapa)) . "' name='eliminar[]' value='" . $padre . "' ></span>";
                         if (!empty($submenus[0]))
                             $html .=$this->permisoroles($submenus[0], ' ', str_replace(' ', '', strtoupper($nombrepapa)), 2);
                         $html .= "</li>";
@@ -410,13 +387,8 @@ class Presentacion extends My_Controller {
     }
 
     function rol() {
-//        if ($this->consultaacceso($this->data["usu_id"])):
         $this->data['roles'] = $this->Roles_model->rolxusuario($this->session->userdata('usu_id'));
         $this->layout->view("presentacion/rol", $this->data);
-//            else:
-//            $this->layout->view("permisos");
-//            
-//        endif;
     }
 
     function guardarroldefecto() {
@@ -436,6 +408,18 @@ class Presentacion extends My_Controller {
     function obtener_tipo($id){
         $this->load->model('Planes_model');
         return $this->Planes_model->obtener_tipo($id);
+    }
+    function guardarMetodos(){
+        try{
+            $metodoEliminar = $this->input->post("TxtMetodoEliminar");
+            $metodoConsultar = $this->input->post("TxtMetodoConsultar");
+            $metodoActualizar = $this->input->post("TxtMetodoActualizar");
+            $metodoInsertar = $this->input->post("TxtMetodoInsertar");
+            
+            
+        }catch(exception $e){
+            
+        }
     }
 
 }
